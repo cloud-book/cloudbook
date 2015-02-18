@@ -28,4 +28,3 @@ You need jsdoc (npm install -g jsdoc)
 jsdoc src -c conf.json 
 ```
 
-...
