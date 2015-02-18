@@ -1,0 +1,22 @@
+{
+  "main": "index.html",
+  "name": "CloudBook",
+  "description": "Graphical editor book",
+  "version": "0.1.0",
+  "keywords": [ "editor", "book","resources" ],
+  "window": {
+    "title": "CloudBook",
+    "icon": "logo.png",
+    "toolbar": true,
+    "frame": true,
+    "width": 1024,
+    "height": 768,
+    "position": "mouse"
+  },
+  "webkit": {
+    "plugin": true
+  },
+  "dependencies":{
+    "jquery":"2.1.3"
+  }
+}

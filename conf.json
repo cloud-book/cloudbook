@@ -1,0 +1,11 @@
+{
+	"source": {
+		"exclude": [ "src/components/core/text/lib","src/node_modules/jquery/"]
+	},
+	"opts":{
+		"encoding" : "utf-8",
+		"recurse" : true,
+		"destination" : "src/doc",
+		"package" : "src/package.json"
+	}
+}
