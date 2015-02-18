@@ -27,4 +27,4 @@ You need jsdoc (npm install -g jsdoc)
 ```sh
 jsdoc src -c conf.json 
 ```
-
+---
