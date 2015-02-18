@@ -1,0 +1,80 @@
+{
+ "name": "Nombre temporal",
+ "author": "Usuario 1 <micorreo@midominio.com>",
+ "data": {
+  "sections": [
+   [
+    {
+     "position": [
+      345,
+      111
+     ],
+     "type": "core.text-editor",
+     "text": "Lorem ipsum"
+    },
+    {
+     "position": [
+      188,
+      242
+     ],
+     "type": "core.text-editor",
+     "text": "Lorem ipsum"
+    },
+    {
+     "position": [
+      145,
+      92
+     ],
+     "type": "core.text-editor",
+     "text": "Lorem ipsum"
+    }
+   ],
+   [
+    {
+     "position": [
+      288,
+      140
+     ],
+     "type": "core.text",
+     "text": "Lorem ipsum"
+    },
+    {
+     "position": [
+      200,
+      200
+     ],
+     "type": "core.images",
+     "imgpath": "./img/1.png"
+    }
+   ],
+   [
+    {
+     "position": [
+      318,
+      163
+     ],
+     "type": "core.images",
+     "imgpath": "./img/1.png"
+    },
+    {
+     "position": [
+      200,
+      200
+     ],
+     "type": "core.text",
+     "text": "Lorem ipsum"
+    }
+   ],
+   [
+    {
+     "position": [
+      277,
+      147
+     ],
+     "type": "core.text-editor",
+     "text": "Lorem ipsum"
+    }
+   ]
+  ]
+ }
+}

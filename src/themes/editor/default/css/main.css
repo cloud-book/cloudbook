@@ -1,0 +1,37 @@
+#navactions button img{
+    display: inline-block;
+    vertical-align: middle;
+    height: 25px;
+    width: auto;
+}
+
+#navsections{
+    width: 20%;
+    padding: 10px;
+    height: 100%;
+    overflow: scroll;
+    float: left;
+
+}
+#navsections img{
+    width: 100%;
+    height: auto;
+    margin: 5px;
+    border: 1px solid black;
+}
+
+#navsections img.sectionselected{
+    border: 3px solid red;
+}
+#targetcontent{
+    float: left;
+    width: 77%;
+}
+#targetcontent img{
+    height: 100%;
+    width: 100%;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
