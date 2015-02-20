@@ -49,13 +49,15 @@ Util.prototype.inherits = function inherits(ctor, superCtor) {
 	  });
 };
 
-Util.prototype.require = function require(filepath){
+Util.prototype.req = function req(filepath){
 	var fs = require('fs');
+	var path = require('path');
 	var _mod = {};
+	var __module_path__ = path.dirname(filepath) + "/";
 	_mod.exports = {};
 	miclase = fs.readFileSync(filepath,'utf-8');
-	var _function_require = new Function('module','exports',miclase);
-	_function_require(_mod,_mod.exports);
+	var _function_require = new Function('module','exports','__module_path__',miclase);
+	_function_require(_mod,_mod.exports,__module_path__);
 	return _mod.exports;
 }
 Util.prototype.uniqueId = function() {

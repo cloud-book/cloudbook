@@ -14,8 +14,8 @@
     function saveAs() {
         var pathelement = $(document.createElement('input')).attr('type','file').attr('nwsaveas','');
         pathelement.change(function(evt) {
-              CBUtil.createNameSpace('Project.UI.Data.Info');
-              Project.UI.Data.Info.projectname = $(this).val();
+              CBUtil.createNameSpace('Project.Info');
+              Project.Info.projectname = $(this).val();
               core.saveProject($(this).val());
             });
         pathelement.trigger('click');
@@ -25,7 +25,7 @@
     var save_project = {
       label: 'Save Project',
       click: function saveProject() {
-        if ( Project.UI.Data.Info.hasOwnProperty('projectname')){
+        if ( Project.Info.hasOwnProperty('projectname')){
           core.saveProject(Project.UI.Data.Info.projectname);
         }
         else{

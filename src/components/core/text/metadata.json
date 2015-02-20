@@ -1,5 +1,5 @@
 {
-  "namespace" : "core.text",
+  "id" : "438eef56-06c2-4ece-b516-16937ef42208",
   "description":"Append textbox to content",
   "label": "Textbox",
   "icon" : "icon.png",

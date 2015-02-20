@@ -59,24 +59,27 @@ function Core() {
 
 /**
  * Go over components path to find components and append this components on Project.Actions namespace. 
- * Also load extra scripts needed to components work fine
  */
 Core.prototype.loadComponents = function loadComponents() {
   this.loadComponentsRecursive('./components');
 
 };
 
+/**
+ * Go over components path to find components and append this components on Cloudbook.Actions with id
+ * Also load extra scripts needed to components work fine
+ * @param  {String} componentpath Path to load component
+ */
 Core.prototype.loadComponentsRecursive = function loadComponentsRecursive(componentpath) {
   var fs = require('fs');
   var path = require('path');
   var that = this;
   var metadatapath = path.join(componentpath,'metadata.json');
-  console.log(metadatapath);
   if(fs.existsSync(metadatapath)){
     var description = require("./"+metadatapath);
     Cloudbook.Actions[description.id] = {};
     Cloudbook.Actions[description.id]['path'] = componentpath;
-    Cloudbook.Actions[description.id]['component'] = require("./"+path.join(componentpath,'core.js'));
+    Cloudbook.Actions[description.id]['component'] = CBUtil.req(path.join(componentpath,'core.js'));
     that.loadComponentExtraScripts(componentpath , description);
   }
   else{
@@ -109,11 +112,14 @@ Core.prototype.renderActionsButtons = function renderActionsButtons(){
             var fullobject = new Cloudbook.Actions[component]['component']();
             var viewobject = $(fullobject.editorView());
             $(Cloudbook.UI.targetcontent).append(viewobject);
+            fullobject.add_callback(viewobject,fullobject);
+            
             //eval('function _____x_____(jquerycbo,objectcbo){'+ Project.Actions[section][action].add_callback + '}; _____x_____(fullobject,viewobject); ');
+            /*
             add_callback = Function('jquerycbo','objectcbo',Cloudbook.Actions[component]['component'].add_callback);
             add_callback(viewobject,fullobject);
+            */
             
-            //loadElement(viewobject,fullobject);
             Project.Data.Sections[Cloudbook.UI.selected.attr('id')-1].push(fullobject);
           })
           .html(that.calculeButtonContent(componentpath, description)));
@@ -132,7 +138,7 @@ Core.prototype.loadComponentExtraScripts = function loadComponentExtraScripts(pl
       var fs = require('fs');
       var path = require('path');
       infobutton['external_scripts'].forEach(function(scriptpath){
-        var script = fs.readFileSync(path.join(pluginpath,scriptpath),'utf8');
+        var script = fs.readFileSync("./"+ path.join(pluginpath,scriptpath),'utf8');
         eval(script);
       });
   } 
@@ -222,16 +228,16 @@ Core.prototype.addSection = function addSection() {
 Core.prototype.loadProject = function(projectPath) {
   var fs = require('fs');
   if (fs.existsSync(projectPath)){
-
-    var projectdata = require(projectPath);
+    var contentproject = fs.readFileSync(projectPath);
+    var projectdata = JSON.parse(contentproject);
     this.voidProject();
-    Project.UI.Data.Info.projectname = projectPath;
+    Project.Info.projectname = projectPath;
     projectdata.data.sections.forEach(function(section){
       var tempsection = [];
       section.forEach(function(element){
-        tempsection.push(CBUtil.getObjectFromString('Project.Actions.' + element['type']).restore(element));
+        tempsection.push(new Cloudbook.Actions[element['idtype']]['component'](element));
       });
-      Project.UI.Data.Sections.push(tempsection);
+      Project.Data.Sections.push(tempsection);
     });
   }
   
@@ -240,13 +246,13 @@ Core.prototype.loadProject = function(projectPath) {
 
 Core.prototype.saveProject = function(projectPath) {
   var fs = require('fs');
-    var objectProject = {};
-    objectProject['name'] = "Nombre temporal";
-    objectProject['author'] = "Usuario 1 <micorreo@midominio.com>";
-    objectProject['data'] = {};
-    objectProject['data']['sections'] = Project.Data.Sections;
-    var result_string = JSON.stringify(objectProject,null," ");
-    fs.writeFile(projectPath,result_string);
+  var objectProject = {};
+  objectProject['name'] = "Nombre temporal";
+  objectProject['author'] = "Usuario 1 <micorreo@midominio.com>";
+  objectProject['data'] = {};
+  objectProject['data']['sections'] = Project.Data.Sections;
+  var result_string = JSON.stringify(objectProject,null," ");
+  fs.writeFile(projectPath,result_string);
 };
 
 Core.prototype.voidProject = function() {
