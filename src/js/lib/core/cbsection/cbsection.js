@@ -1,4 +1,3 @@
-var $ = require('jquery');
 /**
  * Base object to create sections . This object storate others sections and cbobjects elements 
  * @class CBSection
@@ -13,7 +12,7 @@ function CBSection(dataobject){
 	dataobject = typeof dataobject !== 'undefined' ? dataobject : {};
 	this.sections = typeof dataobject.sections !== 'undefined' ? dataobject.sections : [];
 	this.content = typeof dataobject.content !== 'undefined' ? dataobject.content : [];
-	this.type = "section.base";
+	this.idtype = "section.base";
 	this.name = typeof dataobject.name !== 'undefined' ? dataobject.name : "";
 }
 

@@ -1,5 +1,3 @@
-var $ = require('jquery');
-
 /**
  * Base object to components. This object include position, size, type and others common elemens
  * @param {Object} objectdata Object base definition
@@ -11,7 +9,7 @@ var $ = require('jquery');
 function CBObject(objectdata){
 	this.position = typeof objectdata.position !== 'undefined' ? objectdata.position : [200,200];
 	this.size = typeof objectdata.size !== 'undefined' ? objectdata.size : [0,0];
-	this.type = typeof objectdata.type !== 'undefined' ? objectdata.type : "CBObject";
+	this.idtype = typeof objectdata.idtype !== 'undefined' ? objectdata.idtype : "CBObject";
 
 }
 
@@ -32,6 +30,9 @@ CBObject.prototype.editorView = function editorView() {
  * This string is return core to bind on button click event on editor view
  * @return {String} Function string.
  */
-CBObject.add_callback = "jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }});";
+CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
+	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }});
+};
+
 
 module.exports = CBObject;
