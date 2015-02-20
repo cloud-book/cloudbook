@@ -12,6 +12,7 @@ var core = new Core();
 core.loadComponents();
 
 $(document).ready(function () {
+  core.loadSectionsObjects();
   core.loadTheme();
   core.renderActionsButtons();
   core.initSections();

@@ -13,14 +13,49 @@
     float: left;
 
 }
-#navsections img{
-    width: 100%;
+#navsections .cbsection{
+    position: relative;
+}
+#navsections .cbsection .appendbefore{
+    position: absolute;
+    left: 45%;
+    top: -8%;
+}
+
+#navsections .cbsection .appendsubsection{
+    position: absolute;
+    left: 91%;
+    top: 35%;
+}
+
+#navsections .cbsection .appendafter{
+    position: absolute;
+    left: 45%;
+    top: 80%;
+}
+
+#navsections .cbsection .appendbefore , #navsections .cbsection .appendsubsection, #navsections .cbsection .appendafter{
+
+    opacity: 0;
+    transition: opacity 0.2s linear;
+    -webkit-transition: opacity 0.2s linear;
+}
+
+#navsections .cbsection:hover .appendbefore , #navsections .cbsection:hover .appendsubsection, #navsections .cbsection:hover .appendafter{
+
+    opacity: 1;
+}
+
+
+
+#navsections .sectionimage img{
+    width: 95%;
     height: auto;
     margin: 5px;
     border: 1px solid black;
 }
 
-#navsections img.sectionselected{
+#navsections .sectionselected{
     border: 3px solid red;
 }
 #targetcontent{

@@ -20,6 +20,12 @@ function Core() {
    */
   CBUtil.createNameSpace('Cloudbook.Actions');
   /**
+   * Sections are available
+   * @namespace Sections
+   * @memberOf Cloudbook
+   */
+  CBUtil.createNameSpace('Cloudbook.Sections');
+  /**
    * Ui information
    * @namespace UI
    * @memberOf Cloudbook
@@ -38,7 +44,6 @@ function Core() {
    */
   CBUtil.createNameSpace('Project.Data');
 
-  Project.Data.Sections = [];
   /**
    * Define jquery selector where render CBObjects
    * @type {String}
@@ -77,9 +82,9 @@ Core.prototype.loadComponentsRecursive = function loadComponentsRecursive(compon
   var metadatapath = path.join(componentpath,'metadata.json');
   if(fs.existsSync(metadatapath)){
     var description = require("./"+metadatapath);
-    Cloudbook.Actions[description.id] = {};
-    Cloudbook.Actions[description.id]['path'] = componentpath;
-    Cloudbook.Actions[description.id]['component'] = CBUtil.req(path.join(componentpath,'core.js'));
+    Cloudbook.Actions[description.idtype] = {};
+    Cloudbook.Actions[description.idtype]['path'] = componentpath;
+    Cloudbook.Actions[description.idtype]['component'] = CBUtil.req(path.join(componentpath,'core.js'));
     that.loadComponentExtraScripts(componentpath , description);
   }
   else{
@@ -90,6 +95,14 @@ Core.prototype.loadComponentsRecursive = function loadComponentsRecursive(compon
     });
   }
 
+};
+
+/**
+ * Load all sections available 
+ */
+Core.prototype.loadSectionsObjects = function() {
+  Cloudbook.Sections = {};
+  Cloudbook.Sections['basic'] = CBUtil.req('js/lib/core/cbsection/cbsection.js');
 };
 
 
@@ -113,14 +126,8 @@ Core.prototype.renderActionsButtons = function renderActionsButtons(){
             var viewobject = $(fullobject.editorView());
             $(Cloudbook.UI.targetcontent).append(viewobject);
             fullobject.add_callback(viewobject,fullobject);
+            jQuery.data(Cloudbook.UI.selected[0],'cbsection').content.push(fullobject);
             
-            //eval('function _____x_____(jquerycbo,objectcbo){'+ Project.Actions[section][action].add_callback + '}; _____x_____(fullobject,viewobject); ');
-            /*
-            add_callback = Function('jquerycbo','objectcbo',Cloudbook.Actions[component]['component'].add_callback);
-            add_callback(viewobject,fullobject);
-            */
-            
-            Project.Data.Sections[Cloudbook.UI.selected.attr('id')-1].push(fullobject);
           })
           .html(that.calculeButtonContent(componentpath, description)));
     });
@@ -199,13 +206,41 @@ Core.prototype.initSections = function initSections() {
    * List sections. See {@link CBSection}
    * @namespace Project.UI.Data.Sections
    */
-  Project.Data.Sections = [];
-  var addsection = $(document.createElement('img'))
-                    .attr('id','addsection')
-                    .attr('src', Cloudbook.UI.themeeditorpath + '/img/add.png')
-                    .bind('click', that.addSection);
+  Project.Data.Sections = new Cloudbook.Sections['basic']();
+  var addsection = this.getNewSectionObject(Project.Data.Sections,'basic');
+  jQuery.data($(Cloudbook.UI.navsections)[0],'cbsection',Project.Data.Sections);
   $(Cloudbook.UI.navsections).html(addsection);
+  selectThumbnail(addsection);
 };
+
+Core.prototype.getNewSectionObject = function(cbsection,typesection) {
+  var auxcbsection = new Cloudbook.Sections[typesection]();
+  cbsection.sections.push(auxcbsection);
+  var section = $(document.createElement('div')).addClass('cbsection');
+  jQuery.data(section[0],'cbsection',auxcbsection);
+  var appendbefore = $(document.createElement('div')).addClass('appendbefore');
+  var sectionimage = $(document.createElement('div')).addClass('sectionimage');
+  var appendsubsection = $(document.createElement('div')).addClass('appendsubsection');
+  var appendafter = $(document.createElement('div')).addClass('appendafter');
+  appendbefore.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
+  appendsubsection.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
+  appendafter.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
+  sectionimage.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/white.png"));
+  section.append([appendbefore,sectionimage,appendsubsection,appendafter]);
+  return section ;
+};
+
+
+function selectThumbnail(thumbnail){
+  if (Cloudbook.UI.selected !== undefined){
+    Cloudbook.UI.selected.removeClass('sectionselected');
+  } 
+  Cloudbook.UI.selected = $(thumbnail);
+  $(thumbnail).addClass('sectionselected');
+}
+
+
+
 
 /**
  * Create {@link CBSection} object and append it on namespace Section.
@@ -220,6 +255,12 @@ Core.prototype.addSection = function addSection() {
                             
   $(this).before(sectionthumbnail);
 };
+
+
+
+
+
+
 
 /**
  * Load project from path. This method void project and discard not saved changes. 
