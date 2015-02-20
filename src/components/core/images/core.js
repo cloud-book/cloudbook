@@ -1,11 +1,12 @@
 var Project = window.Project;
-var $ = require('jquery');
 var util = require('util');
-var CBobject = require('cbobject');
+var CBobject = CBUtil.req("js/lib/core/cbobject/cbobject.js");
+var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function ImageBox(objectdata){
   objectdata = typeof objectdata !== 'undefined' ? objectdata : {"imgpath":"./img/1.png", "position" : [200,200]};
-  ImageBox.super_.call(this,objectdata.position,'core.images');
+  objectdata.idtype = metadata['id']
+  ImageBox.super_.call(this,objectdata);
   this.imgpath = objectdata.imgpath;
 }
 
@@ -20,7 +21,10 @@ ImageBox.prototype.editorView = function editorView() {
   return aux;
 };
 
-ImageBox.add_callback =  CBobject.add_callback;
+ImageBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
+  ImageBox.super_.prototype.add_callback.call(this,jquerycbo,objectcbo);
+};
+//ImageBox.add_callback =  CBobject.add_callback;
 /*
 exports.add = function add() {
   return new ImageBox();

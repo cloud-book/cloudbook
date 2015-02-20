@@ -1,8 +1,7 @@
 var Project = window.Project;  
-var $ = require('jquery');
 var util = require('util');
-var CBobject = require('cbobject');
-var metadata = require('./metadata.json');
+var CBobject = CBUtil.req("js/lib/core/cbobject/cbobject.js");
+var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 /**
  * Class textbox 
@@ -14,7 +13,8 @@ var metadata = require('./metadata.json');
 
 function TextBox(objectdata){
   objectdata = typeof objectdata !== 'undefined' ? objectdata : {"text":"Lorem ipsum", "position" : [200,200]};
-  TextBox.super_.call(this,objectdata.position,metadata['namespace']);
+  objectdata.idtype = metadata['id']
+  TextBox.super_.call(this,objectdata);
   this.text = objectdata.text;
 }
 
@@ -27,6 +27,33 @@ TextBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+
+TextBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
+	TextBox.super_.prototype.add_callback.call(this,jquerycbo,objectcbo);
+	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }});
+	$(".raptor").raptor({
+		plugins:{
+			insertFile: false, 
+			languageMenu: false, 
+			clearFormatting: false, 
+			textSub: false, 
+			textSuper: false, 
+			guides: false, 
+			floatLeft: false, 
+			floatNone: false, 
+			floatRight: false, 
+			logo: false, 
+			dockToElement: false, 
+			dockToScreen: false, 
+			snippetMenu: false, 
+			specialCharacters: false, 
+			embed: false, 
+			classMenu: false, 
+			statistics: false 
+		}
+	});
+};
+/*
 TextBox.add_callback = CBobject.add_callback + '; $( ".raptor" ).raptor({  \
 										plugins:{ \
 											insertFile: false, \
