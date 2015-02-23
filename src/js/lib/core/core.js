@@ -126,8 +126,8 @@ Core.prototype.renderActionsButtons = function renderActionsButtons(){
             var viewobject = $(fullobject.editorView());
             $(Cloudbook.UI.targetcontent).append(viewobject);
             fullobject.add_callback(viewobject,fullobject);
-            jQuery.data(Cloudbook.UI.selected[0],'cbsection').content.push(fullobject);
-            
+            var z = CBStorage.getSectionById(Cloudbook.UI.selected.attr('data-cbsectionid'));
+            z.content.push(fullobject);
           })
           .html(that.calculeButtonContent(componentpath, description)));
     });
@@ -206,35 +206,50 @@ Core.prototype.initSections = function initSections() {
    * List sections. See {@link CBSection}
    * @namespace Project.UI.Data.Sections
    */
+  
   Project.Data.Sections = new Cloudbook.Sections['basic']();
   var son = getNewSectionObject(Project.Data.Sections,'basic');
-  jQuery.data($(Cloudbook.UI.navsections)[0],'cbsection',Project.Data.Sections);
-  $(Cloudbook.UI.navsections).html(son);
-  selectThumbnail(son);
+
+  //jQuery.data($(Cloudbook.UI.navsections)[0],'cbsection',Project.Data.Sections);
+  var list = $(document.createElement('ul')).addClass("connectedSortable");
+  list.append(son);
+  $(Cloudbook.UI.navsections).html(list);
+  $($(son.children('.thumbnail')).children('.sectionimage')).click();
 };
 
 function getNewSectionObject(cbsection,typesection) {
+
+  var cbsecid = CBUtil.uniqueId();
+
   var auxcbsection = new Cloudbook.Sections[typesection]();
   
+  CBStorage.setSectionById(auxcbsection,cbsecid)
   cbsection.sections.push(auxcbsection);
-  var section = $(document.createElement('div')).addClass('cbsection');
-  jQuery.data(section[0],'cbsection',auxcbsection);
+
+  var section = $(document.createElement('li')).addClass('cbsection');
+  section.attr('data-cbsectionid',cbsecid);
+
   var thumbnail = $(document.createElement('div')).addClass('thumbnail');
+
   var appendbefore = $(document.createElement('div')).addClass('appendbefore');
   var sectionimage = $(document.createElement('div')).addClass('sectionimage');
   var appendsubsection = $(document.createElement('div')).addClass('appendsubsection');
   var appendafter = $(document.createElement('div')).addClass('appendafter');
+  var subsections = $(document.createElement('ul')).addClass('subsections').addClass("connectedSortable");
+
   appendbefore.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
-  appendbefore.click(appendBefore);
   appendsubsection.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
-  appendsubsection.click(appendSubsection);
   appendafter.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
-  appendafter.click(appendAfter);
   sectionimage.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/white.png"));
+  
+  appendbefore.click(appendBefore);
+  appendsubsection.click(appendSubsection);
+  appendafter.click(appendAfter);
   sectionimage.click(selectThumbnail);
+
   thumbnail.append([appendbefore,sectionimage,appendsubsection,appendafter]);
 
-  section.append(thumbnail);
+  section.append([thumbnail,subsections]);
   return section ;
 };
 
@@ -242,10 +257,10 @@ function appendBefore(e){
   var listparents = $(e.currentTarget).parents('.cbsection');
   var parent = null;
   if (listparents.length <2){
-    parent = Project.Data.Sections;
+    parent = CBStorage.getRoot();
   } 
   else{
-    parent = jQuery.data(listparents[1],'cbsection');
+    parent = CBStorage.getSectionById($(listparents[1]).attr('data-cbsectionid'));
   }
   var son = getNewSectionObject(parent,'basic');
   $(listparents[0]).before(son);
@@ -254,20 +269,19 @@ function appendBefore(e){
 
 function appendSubsection(e){
   var parent = $(e.currentTarget).parents('.cbsection');
-  var parentObjectSection = jQuery.data(parent[0],'cbsection');
+  var parentObjectSection = CBStorage.getSectionById($(parent[0]).attr('data-cbsectionid'));
   var newsection = getNewSectionObject(parentObjectSection,'basic');
-  
-  $(parent[0]).append(newsection);
+  $(parent[0]).children("ul").append(newsection);
 }
 
 function appendAfter(e){
   var listparents = $(e.currentTarget).parents('.cbsection');
   var parentObjectSection = null;
   if (listparents.length <2){
-    parentObjectSection = Project.Data.Sections;
+    parentObjectSection = CBStorage.getRoot();
   } 
   else{
-    parentObjectSection = jQuery.data(listparents[1],'cbsection');
+    parentObjectSection = CBStorage.getSectionById($(listparents[1]).attr('data-cbsectionid'));
   }
   
   var son = getNewSectionObject(parentObjectSection,'basic');
@@ -278,32 +292,10 @@ function selectThumbnail(thumbnail){
   if (Cloudbook.UI.selected !== undefined){
     $(Cloudbook.UI.selected.children('.thumbnail')).removeClass('sectionselected');
   } 
-  Cloudbook.UI.selected = $(thumbnail);
-  $(Cloudbook.UI.selected.children('.thumbnail')).addClass('sectionselected');
+  Cloudbook.UI.selected = $($(this).parents('.cbsection')[0]);
+  Cloudbook.UI.selected.children('.thumbnail').addClass('sectionselected');
+  loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 }
-
-
-
-
-/**
- * Create {@link CBSection} object and append it on namespace Section.
- * Also render section on navsections and bind click event to load content on targetcontent
- */
-Core.prototype.addSection = function addSection() {
-  Project.Data.Sections.push([]);
-  var sectionthumbnail = $(document.createElement('img'))
-                            .attr('src', Cloudbook.UI.themeeditorpath +  '/img/white.png')
-                            .attr('id', Project.Data.Sections.length)
-                            .bind('click', function () {loadThumbnailSelected(this); });
-                            
-  $(this).before(sectionthumbnail);
-};
-
-
-
-
-
-
 
 /**
  * Load project from path. This method void project and discard not saved changes. 
@@ -372,23 +364,18 @@ function loadThumbnailSelected(thumbnail) {
 
 function loadContent(id){
   $(Cloudbook.UI.targetcontent).html("");
-  if (Project.Data.Sections[id] !== undefined ){
-    Project.Data.Sections[id].forEach(function (element){
+  var section = CBStorage.getSectionById(id);
+  if (section !== undefined ){
+    section.content.forEach(function (element){
       var x = element.editorView();
       $(Cloudbook.UI.targetcontent).append(x);
-      /**
-       * @todo replace function loadElement by callbacks function from element
-       */
-      loadElement(x);
+      element.add_callback(x,element);
     });
   }
 }
 
 
-function loadElement(miobjeto , relativeobject){
-            $(function() {
-                $( ".draggable" ).draggable({stop: function (event,ui){relativeobject.position = [ui.position.left,ui.position.top];}});
-                //miobjeto.draggable({stop: function (event,ui){relativeobject.position = [ui.position.left,ui.position.top];}});
-                $( ".raptor" ).raptor({});
-            });
+function reloadSortable(){
+  $(".connectedSortable").sortable({connectWith:".connectedSortable"}).disableSelection();
 }
+

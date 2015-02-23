@@ -13,35 +13,35 @@
     float: left;
 
 }
-#navsections .cbsection{
+#navsections .thumbnail{
     position: relative;
 }
-#navsections .cbsection .appendbefore{
+#navsections .thumbnail .appendbefore{
     position: absolute;
     left: 45%;
     top: -8%;
 }
 
-#navsections .cbsection .appendsubsection{
+#navsections .thumbnail .appendsubsection{
     position: absolute;
     left: 91%;
     top: 35%;
 }
 
-#navsections .cbsection .appendafter{
+#navsections .thumbnail .appendafter{
     position: absolute;
     left: 45%;
     top: 80%;
 }
 
-#navsections .cbsection .appendbefore , #navsections .cbsection .appendsubsection, #navsections .cbsection .appendafter{
+#navsections .thumbnail .appendbefore , #navsections .thumbnail .appendsubsection, #navsections .thumbnail .appendafter{
 
     opacity: 0;
     transition: opacity 0.2s linear;
     -webkit-transition: opacity 0.2s linear;
 }
 
-#navsections .cbsection:hover .appendbefore , #navsections .cbsection:hover .appendsubsection, #navsections .cbsection:hover .appendafter{
+#navsections .thumbnail:hover .appendbefore , #navsections .thumbnail:hover .appendsubsection, #navsections .thumbnail:hover .appendafter{
 
     opacity: 1;
 }
@@ -67,6 +67,27 @@
     width: 100%;
 }
 body{
+    margin: 0;
+    padding: 0;
+}
+
+#navsections ul{
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    margin-left: 10px;
+}
+#navsections ul li{
+    margin: 0;
+    padding: 0;
+}
+
+#navsections > ul{
+    margin: 0;
+    padding: 0;
+}
+
+#navsections > ul > li{
     margin: 0;
     padding: 0;
 }

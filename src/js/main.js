@@ -9,6 +9,7 @@
 
 CBUtil = new Util();
 var core = new Core();
+CBStorage = new StorageManager();
 core.loadComponents();
 
 $(document).ready(function () {
