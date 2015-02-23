@@ -192,7 +192,7 @@ Core.prototype.calculeButtonContent = function calculeButtonContent(pluginpath, 
     }
   }
   if (infobutton.hasOwnProperty('label')) {
-    result += infobutton.label;
+    result += "<div>"+infobutton.label+"</div>";
   }
   return result;
 };
@@ -215,6 +215,7 @@ Core.prototype.initSections = function initSections() {
   list.append(son);
   $(Cloudbook.UI.navsections).html(list);
   $($(son.children('.thumbnail')).children('.sectionimage')).click();
+  reloadSortable();
 };
 
 function getNewSectionObject(cbsection,typesection) {
@@ -238,7 +239,7 @@ function getNewSectionObject(cbsection,typesection) {
   var subsections = $(document.createElement('ul')).addClass('subsections').addClass("connectedSortable");
 
   appendbefore.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
-  appendsubsection.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
+  appendsubsection.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/subsection.png"));
   appendafter.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
   sectionimage.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/white.png"));
   
@@ -264,6 +265,7 @@ function appendBefore(e){
   }
   var son = getNewSectionObject(parent,'basic');
   $(listparents[0]).before(son);
+  reloadSortable();
 }
 
 
@@ -272,6 +274,7 @@ function appendSubsection(e){
   var parentObjectSection = CBStorage.getSectionById($(parent[0]).attr('data-cbsectionid'));
   var newsection = getNewSectionObject(parentObjectSection,'basic');
   $(parent[0]).children("ul").append(newsection);
+  reloadSortable();
 }
 
 function appendAfter(e){
@@ -286,6 +289,7 @@ function appendAfter(e){
   
   var son = getNewSectionObject(parentObjectSection,'basic');
   $(listparents[0]).after(son);
+  reloadSortable();
 }
 
 function selectThumbnail(thumbnail){
@@ -375,7 +379,7 @@ function loadContent(id){
 }
 
 
-function reloadSortable(){
+function reloadSortable(element){
   $(".connectedSortable").sortable({connectWith:".connectedSortable"}).disableSelection();
 }
 

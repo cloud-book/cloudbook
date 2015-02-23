@@ -1,3 +1,12 @@
+#navactions{
+    padding: 5px 10px;
+    height: 5%;
+    background: linear-gradient(#707070,#4c4c4c);
+}
+#navactions button{
+    border-radius: 0px;
+}
+
 #navactions button img{
     display: inline-block;
     vertical-align: middle;
@@ -5,16 +14,19 @@
     width: auto;
 }
 
+
 #navsections{
-    width: 20%;
+    width: 200px;
     padding: 10px;
-    height: 100%;
+    height: 91%;
     overflow: scroll;
     float: left;
-
+    background: #4c4c4c;
 }
 #navsections .thumbnail{
     position: relative;
+    width: 95%;
+    margin: 15px auto;
 }
 #navsections .thumbnail .appendbefore{
     position: absolute;
@@ -37,26 +49,27 @@
 #navsections .thumbnail .appendbefore , #navsections .thumbnail .appendsubsection, #navsections .thumbnail .appendafter{
 
     opacity: 0;
-    transition: opacity 0.2s linear;
-    -webkit-transition: opacity 0.2s linear;
+    transition: opacity 0.2s, background-color 0.2s, box-shadow 0.2s linear;
+    /*-webkit-transition: opacity 0.2s linear;*/
 }
 
 #navsections .thumbnail:hover .appendbefore , #navsections .thumbnail:hover .appendsubsection, #navsections .thumbnail:hover .appendafter{
 
     opacity: 1;
+    background-color: rgba(255,255,255,0.8);
+    box-shadow: 0 0 10px black;
 }
 
 
 
 #navsections .sectionimage img{
-    width: 95%;
+    width: 100%;
     height: auto;
-    margin: 5px;
     border: 1px solid black;
 }
 
 #navsections .sectionselected{
-    border: 3px solid red;
+    box-shadow: 0 0 25px 2px #88d;
 }
 #targetcontent{
     float: left;
@@ -90,4 +103,19 @@ body{
 #navsections > ul > li{
     margin: 0;
     padding: 0;
+}
+
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.5); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.7); 
 }
