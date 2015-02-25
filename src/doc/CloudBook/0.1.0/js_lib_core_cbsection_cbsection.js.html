@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: js/lib/core/cbsection/cbsection.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,36 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: js/lib/core/cbsection/cbsection.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Base object to create sections . This object storate others sections and cbobjects elements 
+ * @class CBSection
+ * @param {Object} dataobject
+ * @param {CBSection[]} dataobject.sections Subsections inside this section
+ * @param {CBObject[]} dataobject.content Elements available in this section
+ * @param {String} dataobject.type Type of object. This info is usefull to restore when load project
+ * @param {String} dataobject.name Secion name.
+ */
+function CBSection(dataobject){
 
+	dataobject = typeof dataobject !== 'undefined' ? dataobject : {};
+	this.sections = typeof dataobject.sections !== 'undefined' ? dataobject.sections : [];
+	this.content = typeof dataobject.content !== 'undefined' ? dataobject.content : [];
+	this.idtype = "section.base";
+	this.name = typeof dataobject.name !== 'undefined' ? dataobject.name : "";
+}
 
-    <h3>CloudBook 0.1.0</h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+module.exports = CBSection;</code></pre>
+        </article>
+    </section>
 
 
 

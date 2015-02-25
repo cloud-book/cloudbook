@@ -142,89 +142,6 @@
 
     
 
-    <h4 class="name" id="addSection"><span class="type-signature"></span>addSection<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Create <a href="CBSection.html">CBSection</a> object and append it on namespace Section.
-Also render section on navsections and bind click event to load content on targetcontent
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line192">line 192</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
     <h4 class="name" id="calculeButtonContent"><span class="type-signature"></span>calculeButtonContent<span class="signature">(pluginpath, infobutton)</span><span class="type-signature"></span></h4>
 
     
@@ -395,7 +312,139 @@ When user click this button, on targetcontent to been added an element.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line155">line 155</a>
+        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line192">line 192</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getCBObjectFromButton"><span class="type-signature"></span>getCBObjectFromButton<span class="signature">(component)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Create element from component. This include cbobject and rendered view on targetcontent. 
+When append rendered view on targetcontent then trigger add_callback function related with component
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>component</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Component idtype indicated on metadata file.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line134">line 134</a>
     </li></ul></dd>
     
 
@@ -477,7 +526,7 @@ When user click this button, on targetcontent to been added an element.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line173">line 173</a>
+        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line211">line 211</a>
     </li></ul></dd>
     
 
@@ -655,7 +704,7 @@ function or elements created by component . This method is reponsible read metad
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line133">line 133</a>
+        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line170">line 170</a>
     </li></ul></dd>
     
 
@@ -833,7 +882,7 @@ This method is reponsible read metadata info to be include all files indicate on
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line114">line 114</a>
+        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line151">line 151</a>
     </li></ul></dd>
     
 
@@ -871,8 +920,7 @@ This method is reponsible read metadata info to be include all files indicate on
 
 
 <div class="description">
-    Go over components path to find components and append this components on Project.Actions namespace. 
-Also load extra scripts needed to components work fine
+    Go over components path to find components and append this components on Project.Actions namespace.
 </div>
 
 
@@ -916,7 +964,139 @@ Also load extra scripts needed to components work fine
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line56">line 56</a>
+        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="loadComponentsRecursive"><span class="type-signature"></span>loadComponentsRecursive<span class="signature">(componentpath)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Go over components path to find components and append this components on Cloudbook.Actions with id
+Also load extra scripts needed to components work fine
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>componentpath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Path to load component</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line78">line 78</a>
     </li></ul></dd>
     
 
@@ -1047,7 +1227,7 @@ Also load extra scripts needed to components work fine
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line206">line 206</a>
+        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line325">line 325</a>
     </li></ul></dd>
     
 
@@ -1078,18 +1258,14 @@ Also load extra scripts needed to components work fine
 
     
 
-    <h4 class="name" id="renderActionsButtons"><span class="type-signature"></span>renderActionsButtons<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="loadSectionsObjects"><span class="type-signature"></span>loadSectionsObjects<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Create components buttons to append elements into selected section.
-Here method call editorView and add_callback methods of CBObjects. 
-See 
-<a href="CBObject.html#editorView">CBObject#editorView</a> and 
-<a href="CBObject.html#.add_callback">CBObject.add_callback</a>
+    Load all sections available
 </div>
 
 
@@ -1133,7 +1309,93 @@ See
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line81">line 81</a>
+        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line103">line 103</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="renderActionsButtons"><span class="type-signature"></span>renderActionsButtons<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Create components buttons to append elements into selected section.
+Here method call editorView and add_callback methods of CBObjects. 
+See 
+<a href="CBObject.html#editorView">CBObject#editorView</a> and 
+CBObject.add_callback
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="js_lib_core_core.js.html">js/lib/core/core.js</a>, <a href="js_lib_core_core.js.html#line116">line 116</a>
     </li></ul></dd>
     
 
@@ -1175,13 +1437,13 @@ See
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CBObject.html">CBObject</a></li><li><a href="CBSection.html">CBSection</a></li><li><a href="Core.html">Core</a></li><li><a href="TextBox.html">TextBox</a></li></ul><h3>Namespaces</h3><ul><li><a href="Project.html">Project</a></li><li><a href="Project.Actions.html">Actions</a></li><li><a href="Project.UI.html">UI</a></li><li><a href="Project.UI.Data.html">Data</a></li><li><a href="Project.UI.Data.Info.html">Info</a></li><li><a href="Project.UI.Data.Sections.html">Sections</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CBObject.html">CBObject</a></li><li><a href="CBSection.html">CBSection</a></li><li><a href="Core.html">Core</a></li><li><a href="TextBox.html">TextBox</a></li></ul><h3>Namespaces</h3><ul><li><a href="Cloudbook.html">Cloudbook</a></li><li><a href="Cloudbook.Actions.html">Actions</a></li><li><a href="Cloudbook.Sections.html">Sections</a></li><li><a href="Cloudbook.UI.html">UI</a></li><li><a href="Project.html">Project</a></li><li><a href="Project.Data.html">Data</a></li><li><a href="Project.Data.Sections.html">Sections</a></li><li><a href="Project.Info.html">Info</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Tue Feb 17 2015 14:47:13 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Wed Feb 25 2015 14:45:34 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

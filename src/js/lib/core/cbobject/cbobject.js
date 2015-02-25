@@ -31,7 +31,7 @@ CBObject.prototype.editorView = function editorView() {
  * @return {String} Function string.
  */
 CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
-	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }});
+	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }, scroll:true});
 };
 
 

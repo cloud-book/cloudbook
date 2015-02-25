@@ -13,7 +13,7 @@ var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function TextBox(objectdata){
   objectdata = typeof objectdata !== 'undefined' ? objectdata : {"text":"Lorem ipsum", "position" : [200,200]};
-  objectdata.idtype = metadata['id']
+  objectdata.idtype = metadata['idtype'];
   TextBox.super_.call(this,objectdata);
   this.text = objectdata.text;
 }
