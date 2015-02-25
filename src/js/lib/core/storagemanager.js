@@ -7,6 +7,10 @@ StorageManager.prototype.getRoot = function() {
 	return Project.Data.Sections;
 };
 
+StorageManager.prototype.setRoot = function(section) {
+	Project.Data.Sections = section;
+};
+
 StorageManager.prototype.getSectionById = function(cbsecid) {
 	return Project.Data._rawsections[cbsecid];
 };
