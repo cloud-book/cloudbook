@@ -8,6 +8,7 @@
  */
 
 CBUtil = new Util();
+CBI18n = new Translator(require('./i18n/es.js'));
 var core = new Core();
 CBStorage = new StorageManager();
 core.loadComponents();

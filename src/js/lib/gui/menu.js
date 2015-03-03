@@ -23,7 +23,7 @@
 
 
     var save_project = {
-      label: 'Save Project',
+      label: CBI18n.gettext('Save Project'),
       click: function saveProject() {
         if ( Project.Info.hasOwnProperty('projectname')){
           core.saveProject(Project.UI.Data.Info.projectname);
@@ -35,13 +35,13 @@
     };
 
     var save_as_project = {
-      label: 'Save Project as ...',
+      label: CBI18n.gettext('Save Project as ...'),
       click: saveAs
     };
 
 
     var load_project = {
-      label: 'Load Project',
+      label: CBI18n.gettext('Load Project'),
       click: function load_project() {
         var pathelement = $(document.createElement('input')).attr('type','file');
         pathelement.change(function(evt) {
@@ -52,7 +52,7 @@
     };
 
     var quit = {
-      label: 'Quit',
+      label: CBI18n.gettext('Quit'),
       click: function quit() {
         window.close();
     }};
@@ -67,7 +67,7 @@
     file.append(new gui.MenuItem(save_project));
     file.append(new gui.MenuItem(quit));
 
-    menubar.append(new gui.MenuItem({ label: 'File', submenu: file}));
+    menubar.append(new gui.MenuItem({ label: CBI18n.gettext('File'), submenu: file}));
 
     win.menu = menubar;
 })();
