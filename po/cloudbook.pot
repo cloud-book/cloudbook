@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2015-03-03 12:20+0000\n"
+
+#: src/js/lib/gui/menu.js:26
+msgid "Save Project"
+msgstr ""
+
+#: src/js/lib/gui/menu.js:38
+msgid "Save Project as ..."
+msgstr ""
+
+#: src/js/lib/gui/menu.js:44
+msgid "Load Project"
+msgstr ""
+
+#: src/js/lib/gui/menu.js:55
+msgid "Quit"
+msgstr ""
+
+#: src/js/lib/gui/menu.js:70
+msgid "File"
+msgstr ""
