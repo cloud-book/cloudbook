@@ -36,5 +36,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jsdoc']);
   grunt.registerTask('xgettext', ['jsxgettext']);
   grunt.registerTask('po', ['po2json']);
+  grunt.registerTask('production', ['jsdoc','po2json']);
 
 };
