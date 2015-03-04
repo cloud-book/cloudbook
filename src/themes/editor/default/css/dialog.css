@@ -1,0 +1,116 @@
+input{
+	font-size:0.8em;
+}
+
+.metadata-box{
+	width:77%;
+	margin-bottom:1px;
+	height:24px;
+	font-size:0.8em;
+	margin-right: 1px;
+}
+
+/*Ocupa todo el ancho + texto*/
+.metadata-box-long-wtext{
+	width:83%;
+	margin-bottom:1px;
+	height:24px;
+	font-size:0.8em;
+	margin-left:5px;
+}
+
+/*Ocupa todo el ancho + botones*/
+.metadata-box-long{
+	width:93%;
+	margin-bottom:1px;
+	height:24px;
+	font-size:0.8em;
+	margin-right:1px;
+}
+
+/*Ocupa todo el ancho*/
+.metadata-box-all{
+	width:100%;
+	margin-bottom:1px;
+	height:24px;
+	font-size:0.8em;
+}
+/*Ocupa la mitad del espacio + botones*/
+.metadata-box-half{
+	width:30%;
+	margin-bottom:1px;
+	margin-right: 2px;
+	height:24px;
+    font-size:0.8em;
+	float: left;
+}
+/*Ocupa la mitad del espacio SIN botones*/
+.metadata-box-half-wbuttons{
+    width:33%;
+    display: block;
+	float: left;
+	margin-bottom:2px;
+	margin-left:4px;
+    font-size:0.8em;
+}
+/*Ocupa la mitad del espacio sin texto*/
+.metadata-box-half-plus{
+    width:348px;
+    display: block;
+	float: left;
+	margin-bottom:2px;
+    font-size:0.8em;
+}
+.metadata-text{
+    width:121px;
+    display: block;
+	float: left;
+	margin-bottom:1px;
+    font-size:0.8em;
+}
+
+.metadata-text-right{
+    width:120px;
+    display: block;
+	float: left;
+	margin-bottom:1px;
+    font-size:0.8em;
+    margin-left: 12px;
+    margin-right: -6px;
+}
+
+.button{
+	margin-left:2px;
+}
+#accordion{
+	margin-top:20px;
+	padding: 0px;
+}
+
+legend{
+	font-size:0.9em;
+}
+#accordion div{
+	padding: 15px;
+}
+#dialog select{    
+	font-size:0.8em;
+}
+#dialog fieldset {   
+  -moz-border-radius:5px;  
+  border-radius: 5px;  
+  -webkit-border-radius: 5px;
+}
+#dialog fieldset div{
+	padding-top:3px;
+	padding-bottom:1px;
+}
+#dialog button{
+	width:24px;
+	height:24px;
+	font-size: 0.6em;
+}
+#dialog fieldset div div{
+	margin-left:-15px;
+	margin-right:-15px;
+}

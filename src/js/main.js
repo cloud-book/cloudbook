@@ -8,6 +8,7 @@
  */
 
 CBUtil = new Util();
+CBDialog = new Dialog();
 var core = new Core();
 CBStorage = new StorageManager();
 core.loadComponents();

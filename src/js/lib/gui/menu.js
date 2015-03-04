@@ -57,17 +57,27 @@
         window.close();
     }};
 
+    var load_metadata = {
+      label: 'Metadata',
+      click: function load_metadata(){
+        CBDialogMetadata = new DialogMetadata();
+        CBDialogMetadata.showDialog();
+      }
+    };
 
     /**
      * Generate menubar
      */
     var file = new gui.Menu();
+    var project = new gui.Menu();
     file.append(new gui.MenuItem(load_project));
     file.append(new gui.MenuItem(save_as_project));
     file.append(new gui.MenuItem(save_project));
     file.append(new gui.MenuItem(quit));
+    project.append(new gui.MenuItem(load_metadata));
 
     menubar.append(new gui.MenuItem({ label: 'File', submenu: file}));
+    menubar.append(new gui.MenuItem({ label: 'Project', submenu: project}));
 
     win.menu = menubar;
 })();
