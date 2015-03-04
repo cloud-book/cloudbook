@@ -11,7 +11,8 @@
     "grunt-jsdoc": "~0.6.2",
     "jsxgettext": "~0.6.2",
     "grunt-jsxgettext": "0.0.3",
-    "grunt-po2json": "~0.3.0"
+    "grunt-po2json": "~0.3.0",
+    "grunt-node-webkit-builder": "~1.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

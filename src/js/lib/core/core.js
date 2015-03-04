@@ -2,7 +2,8 @@
  * @class Core
  * @classdesc This class is responsible to manage all app. 
  */
-function Core() {
+function Core(main) {
+  this.main = main;
   /**
    * Root all project info
    * @namespace Project
@@ -59,8 +60,25 @@ function Core() {
    * @type {String}
    */
   Cloudbook.UI.navsections = '#navsections';
+
+
+  CBUtil.createNameSpace('Cloudbook.workspace');
+  Cloudbook.workspace = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + "/Cloudbook/";
 }
 
+
+Core.prototype.prepareWorkspace = function prepareWorkspace() {
+  var fs = require('fs');
+  if ( ! fs.existsSync(Cloudbook.workspace)){
+    fs.mkdirSync(Cloudbook.workspace);
+  }
+  var conffile = Cloudbook.workspace + ".conf";
+  if ( ! fs.existsSync(conffile) ){
+
+    initialproject = {"recentprojects":[]};
+    fs.writeFileSync(conffile,JSON.stringify(initialproject),{encoding:"utf-8"});
+  }
+};
 
 /**
  * Go over components path to find components and append this components on Project.Actions namespace. 
@@ -122,6 +140,7 @@ Core.prototype.renderActionsButtons = function renderActionsButtons(){
       that.loadComponentExtraCss(componentpath,description);
       $(Cloudbook.UI.navactions).append($(document.createElement('button'))
           .bind('click', function () {that.getCBObjectFromButton(component)})
+          .addClass('btn').addClass('btn-default')
           .html(that.calculeButtonContent(componentpath, description)));
     });
 }
@@ -357,20 +376,6 @@ Core.prototype.voidProject = function() {
 };
 
 
-Core.prototype.loadTheme = function loadTheme(){
-  var fs = require('fs');
-  var path = require('path');
-  Cloudbook.UI.themeeditorpath = path.join('themes','editor','default');
-  var cssbasepath = path.join(Cloudbook.UI.themeeditorpath,'css');
-  fs.readdirSync(cssbasepath).forEach(function(csspath){
-    var css = document.createElement('link');
-    css.rel = 'stylesheet';
-    css.href = path.join(cssbasepath,csspath);
-    document.head.appendChild(css);
-  });
-}
-
-
 Core.prototype.loadContent = function loadContent(id){
   $(Cloudbook.UI.targetcontent).html("");
   var section = CBStorage.getSectionById(id);
@@ -409,3 +414,14 @@ Core.prototype.regenerateSubsection = function regenerateSubsection(sectionid,su
   });
   section.sections = listsubsections;
 };
+
+Core.prototype.createProject = function createProject(projectname) {
+  var fs = require('fs');
+
+  Project.Info.projectpath = Cloudbook.workspace + projectname;
+  Project.Info.projectname = projectname;
+  fs.mkdirSync(Project.Info.projectpath,0775);
+  fs.mkdirSync(Project.Info.projectpath+"/rsrc",0775);
+};
+
+
