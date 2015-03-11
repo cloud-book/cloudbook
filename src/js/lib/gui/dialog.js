@@ -1,8 +1,15 @@
+var languages = [];
 /**
  * @class Dialog
- * @classdesc This class is responsible for creating elements of a Dialog. 
+ * @classdesc This class is responsible for creating elements of a Dialog and loads languages from JSON. 
  */
-function Dialog(){}
+function Dialog(){
+  $.getJSON('js/lib/gui/languages.json', function(data){
+      data.forEach(function(languageelement){
+       languages.push(languageelement.name);
+     });
+    });
+}
 /**
  * This method is responsible for creating an Input element
  * @param  {String} name of the component
@@ -73,11 +80,13 @@ function addRow(id){
   $clon = $("#" + id).clone();
   $clon.attr("id",id.split("_")[0] + "_" + id.split("_")[1] + "_" + actual);
   $clon.attr("name",id.split("_")[0] + "_" + id.split("_")[1] + "_" + actual);
+  $clon.val("");
   $clon.children().each(function(){
     if($(this).text() != "<br>")
     {
       $(this).attr("id", $(this).attr("id").split("_")[0] + "_" + id.split("_")[1] + "_" + actual);
       $(this).attr("name", $(this).attr("name").split("_")[0] + "_" + id.split("_")[1] + "_" + actual);
+      $(this).val("");
       if($(this).prop('tagName') == "BUTTON")
       {
        $(this).attr("onclick", $(this).attr("onclick").split("_")[0] + "_" + id.split("_")[1] + "_" + actual + "')"); 
@@ -85,7 +94,7 @@ function addRow(id){
       }
     }
     })
-  $("#" + id).parent().append($clon);
+    $("#" + id).parent().append($clon);
 }
 /**
  * This method allows to add a row to an element. This function is similar to previous but it can work with div elements
@@ -99,18 +108,21 @@ function addRowDiv(id){
   $clon = $("#" + id.split("_")[0] + "_" + num).clone();
   $clon.attr("id",id.split("_")[0] + "_" + actual);
   $clon.attr("name",id.split("_")[0] + "_" + actual);
+  $clon.val("");
   $clon.children().each(function(){
     if($(this).attr("name") != null)
     {
     if($(this).prop('tagName') == "DIV"){
       $(this).attr("id", $(this).attr("id").split("_")[0] + "_" + actual + "_" + $(this).attr("id").split("_")[2]);
       $(this).attr("name", $(this).attr("name").split("_")[0] + "_" + actual + "_" + $(this).attr("id").split("_")[2]);
+      $(this).val("");
       $(this).children().each(function(){
         if($(this).text() != "<br>")
         {
           $(this).attr("id", $(this).attr("id").split("_")[0] + "_" + actual + "_" + $(this).attr("id").split("_")[2]);
           $(this).attr("name", $(this).attr("name").split("_")[0] + "_" + actual + "_" + $(this).attr("id").split("_")[2]);
-          if($(this).prop('tagName') == "BUTTON")
+          $(this).val("");
+         if($(this).prop('tagName') == "BUTTON")
           {
             var nombre = $(this).attr("onclick").split("_")[0].replace("Div","");
            $(this).attr("onclick", nombre + "_" + actual + "_" + $(this).attr("id").split("_")[2] + "')"); 
@@ -122,6 +134,7 @@ function addRowDiv(id){
     {
       $(this).attr("id", $(this).attr("id").split("_")[0] + "_" + actual);
       $(this).attr("name", $(this).attr("name").split("_")[0] + "_" + actual );
+      $(this).val("");
       if($(this).prop('tagName') == "BUTTON")
       {
        $(this).attr("onclick", $(this).attr("onclick").split("_")[0] + "_" + actual + "')"); 
@@ -182,13 +195,9 @@ Dialog.prototype.createSelectLanguages = function createSelectLanguages(id, styl
     .addClass(style)
     .addClass("ui-corner-all");
 
-    $.getJSON('js/lib/gui/languages.json', function(data){
-      data.forEach(function(languageelement){
-        selectLanguageElement.append($(window.document.createElement('option'))
-          .attr("value", languageelement.code)
-          .text(languageelement.name));
-      });
-    });
+      languages.forEach(function(element){
+        selectLanguageElement.append(new Option(element));
+      })
     return selectLanguageElement;
 }
 /**
@@ -205,6 +214,28 @@ Dialog.prototype.createSelect = function createSelect(id, values, style)
     .attr("id", id)
     .addClass("ui-corner-all")
     .addClass(style);
+
+    values.forEach(function(element){
+      selectElement.append(new Option(element));
+    })
+    return selectElement;
+}
+/**
+ * This method is responsible for creating a select element with values and a dependency
+ * @param  {String} Id of the element
+ * @param  {String[]} List of values
+ * @param  {String} name of the style (CSS) of the component
+ * @param  {String} name of the onclick function
+ * @selectElement {Object} Select element with parameters passed
+ */
+Dialog.prototype.createSelectWithDependency = function createSelectWithDependency(id, values, style, onclickFunction)
+{
+  var selectElement = $(window.document.createElement('select'))
+    .attr("name", id)
+    .attr("id", id)
+    .addClass("ui-corner-all")
+    .addClass(style)
+    .attr("onclick", onclickFunction);
 
     values.forEach(function(element){
       selectElement.append(new Option(element));
@@ -332,11 +363,14 @@ Dialog.prototype.createFieldsetWithDivElements = function createFieldsetWithDivE
       case "SelectLanguageWithBr": elem = that.createSelectLanguages(element[1], element[2]); break;
       case "Span": elem = that.createSpan(element[1], element[2], element[3]); break;
       case "AddButton": elem = that.createAddButton(element[1], element[2], element[3]); break;
-      case "DeleteButton": 
+      case "AddButtonDiv": elem = that.createAddButtonDiv(element[1], element[2], element[3]); break;
+      case "DeleteButton":
+      case "DeleteButtonDiv": 
       case "DeleteButtonWithBr":elem = that.createDeleteButton(element[1], element[2], element[3]); break;
       case "Select": elem = that.createSelect(element[1], element[2], element[3]); break;
       case "Div": 
       case "DivWithBr": elem = that.createDivWithElements(element[1], element[2]);break;
+      case "SelectWithDependency": elem = that.createSelectWithDependency(element[1], element[2], element[3], element[4]); break;
     }
 
     if(element[0].search("Br") != -1)
@@ -374,6 +408,7 @@ Dialog.prototype.createDivWithElements = function createDivWithElements(divTitle
       case "DeleteButtonDiv": elem = that.createDeleteButton(element[1], element[2], element[3]); break;
       case "AddButtonDiv": elem = that.createAddButtonDiv(element[1], element[2], element[3]); break;
       case "Select": elem = that.createSelect(element[1], element[2], element[3]); break;
+      case "SelectWithDependency": elem = that.createSelectWithDependency(element[1], element[2], element[3], element[4]); break;
     }
 
     divElement.append(elem);
