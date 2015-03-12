@@ -1,51 +1,38 @@
-var arrayStructures = ["Atómica", "Colección", "Lineal", "Jerárquica","En red"];
-var arrayAgregations = ["Nivel 1 - Medias y medias integradas", "Nivel 2 - Objetos de aprendizaje", 
-"Nivel 3 - Secuencias didácticas", "Nivel 4 - Cursos, planes y programas de formación"];
-var arrayStatus = ["Borrador", "Final", "Revisado", "No disponible"]
-var arrayRoles = ["Autor", "Editor de publicación", "Iniciador", "Terminador","Revisor", "Editor de contenido",
-"Diseñador gráfico","Desarrollador técnico", "Proveedor de contenidos","Revisor técnico", "Revisor educativo", "Guionista",
-"Diseñador educativo", "Experto en la materia"];
-var arrayTechnicalType = ["Sistema operativo", "Navegador"];
-var arrayNamesOS = ["PC-dos", "MS-Windows", "Linux", "MacOS", "Unix", "Multi-so", "Ninguno"];
-var arrayNameBrowser = ["Cualquiera", "Mozilla Firefox", "Netscape Communicator", "MS Internet Explorer", 
-"Opera", "Amaya"];
-var arrayInterType = ["Activo", "Expositivo", "Combinado"];
-var arrayResourceType = ["Fotografía", "Ilustración", "Vídeo", "Animación","Música", "Efecto sonoro", "Locución", "Audio compuesto", 
-"Texto narrativo", "Hipertexto", "Grafismo", "Media integrado", "Base de datos", "Tabla", "Gráfico" , "Mapa conceptual", "Mapa de navegación", 
-"Presentación multimedia", "Tutorial", "Diccionario digital", "Enciclopedia digital", "Publicación digital periódica",
-"Web/portal temático o corporativo", "Wiki", "Weblog", "Herramienta de creación/edición multimedia", "Herramienta de creación/edición web",
-"Herramienta de ofimática", "Herramienta de programación", "Herramienta de análisis/organización de información/conocimiento", 
-"Herramienta de apoyo a procesos/procedimientos", "Herramienta de gestión de aprendizaje/trabajo individual/cooperativo/colaborativo",
-"Servicio de creación/edición multimedia", "Servicio de creación/edición web",
-"Servicio de ofimática", "Servicio de programación", "Servicio de análisis/organización de información/conocimiento", 
-"Herramienta de apoyo a procesos/procedimientos", "Servicio de gestión de aprendizaje/trabajo individual/cooperativo/colaborativo",
-"Lecturas guiadas", "Lección magistral", "Comentario de texto-imagen", "Actividad de discusión", "Ejercicio o problema cerrado",
-"Caso contextualizado", "Problema abierto" , "Escenario real o virtual de aprendizaje" , "Juego didáctico", "Webquest", 
-"Experimento", "Proyecto real", "Simulación", "Cuestionario","Examen", "Autoevaluación"];
-var arrayInteractivityLevel = ["Muy bajo", "Bajo", "Medio", "Alto", "Muy alto"];
-var arraySemanticDensity = ["Muy baja", "Baja", "Media", "Alta", "Muy alta"];
-var arrayEndUser = ["Alumno", "Alumno con necesidades educativas especiales", "Alumno con altas capacidades intelectuales",
-"Alumno con integración tardía en sistema educativo", "Alumno con otras necesidades específicas de apoyo educativo","Público en general",
-"Individual", "Grupal", "Docente", "Tutor", "Familia", "Documentalista", "Informático", "Administrador", "Experto en educación", "Experto en la materia"];
-var arrayContext = ["Aula", "Laboratorio", "Entorno real", "Domicilio", "Combinado", "Docente", "Tutor", "Familia", "Compañero", "Independiente", 
-"Asistencia Mixta", "Presencial", "Semipresencial", "Distancia"];
-var arrayDifficulty = ["Muy fácil", "Fácil", "Medio", "Difícil", "Muy difícil"];
-var arrayCognitiveProcess = ["Analizar", "Aplicar","Colaborar","Comparar","Compartir", "Competir","Comprender"
-,"Comprobar","Comunicar", "Contextualizar","Controlar","Cooperar","Crear","Decidir", "Definir","Describir"
-,"Discutir","Diseñar","Evaluarse", "Explicar","Extrapolar","Innovar","Investigar","Juzgar","Motivar","Observar"
-,"Organizar","Organizarse","Planificar","Practicar","Producir","Reconocer","Recordar", "Redactar","Reflexionar"
-,"Relacionar","Representar", "Resolver","Simular","Sintetizar", "Valorar"];
-var arrayCost = ["Sí", "No"];
-var arrayAuthorRights = ["Licencia propietaria", "Licencia libre EUPL", "Licencia libre GPL", "Licencia libre dual GPL y EUPL",
-"Otras licencias libres", "Dominio público", "No corresponde", "Licencia propietaria intelectual", "Creative commons: reconocimiento", "Creative commons: reconocimiento - sin obra derivada"
-,"Creative commons: reconocimiento - sin obra derivada - no comercial", "Creative commons: reconocimiento - no comercial",
-"Creative commons: reconocimiento - no comercial - compartir igual", "Creative commons: reconocimiento - compartir igual", 
-"Licencia GFDL"];
+var arrayStructures = ["Atomic", "Collection", "Linear", "Hierarchical", "Networked"];
+var arrayAgregations = ["Level 1 - Resources and integrated resources", "Level 2 - Learning objects","Level 3 - Teaching sequences", "Level 4 - Training programmes, courses and plans"];
+var arrayStatus = [ "Draft", "Final", "Revised", "Unavailable"];
+var arrayRoles = [ "Author", "Publisher", "Initiator", "Terminator", "Validator", "Editor",
+  "Graphical designer", "Technical implementer", "Content provider", "Technical validator", "Educational validator",
+  "Script writer", "Instructional designer", "Subject matter expert"];
+var arrayTechnicalType = ["Operating system", "Browser"];
+var arrayNamesOS = ["PC-DOS", "MS-Windows", "Linux", "MacOS", "Unix", "Multi-os", "None"];
+var arrayNameBrowser = ["Any", "Mozilla Firefox", "Netscape Communicator", "MS Internet Explorer","Opera", "Amaya"];
+var arrayInterType = ["Active", "Expositive", "Mixed"];
+var arrayResourceType = ["Photograph", "Illustration", "Video", "Animation", "Music", "Sound effect", "Voice-over", "Compound audio", "Narrative text", "Hipertext", 
+  "Computer graphics", "Integrated media", "Database", "Table", "Graph", "Conceptual map", "Navigation map", "Multimedia presentation", "Tutorial", "Digital dictionary", "Digital encyclopaedia", 
+  "Digital periodical publication", "Thematic or corporate webs/web portals", "Wiki", "Weblog", "Multimedia creation/edition tool", "Web design tool", "Office tool", "Programming tool", 
+  "Information/knowledge analysys/organization", "Process procedure supporting tools", "Individual/cooperative/collaborative learning/working management tool",
+  "Multimedia creation/edition service", "Web design service", "Office service", "Programming service", "Information/knowledge analysis/organization service", "Process/procedure supporting service",
+  "Individual/cooperative/collaborative learning/working management service","Guided reading", "Master class", "Textual-image analysis", "Discussion activity", "Closed exercise or problem",
+  "Contextualized case problem", "Open problem", "Real or virtual learning environment", "Didactic game", "Webquest","Experiment", "Real project", "Simulation", "Questionnaire", "Exam", "Self assessment"];
+var arrayInteractivityLevel = ["Very low", "Low", "Medium", "High", "Very high"];
+var arraySemanticDensity = ["Very low", "Low", "Medium", "High", "Very high"];
+var arrayEndUser = ["Learner", "Special needs learner", "Gifted learner", "Learners late integration into the education system", , "Learner with other specific educational support needs", 
+  "General public", "Individual", "Group", "Teacher", "Tutor", "Family", "Information scientist", "Computer scientist", "Manager", "Education expert", "Subject ammter expert"];
+var arrayContext = ["Classroom", "Laboratory", "Real environment", "Home", "Mixed", "Teacher", "Tutor", "Family", "Schoolmate", "Independent", "Blended", "Presencial", "Face to face", "Distance"];
+var arrayDifficulty = ["Very easy", "Easy", "Medium", "Difficult", "Very difficult"];
+var arrayCognitiveProcess = ["Analyse", "Implement", "Collaborate", "Compare", "Share", "Compete", "Understand", "Prove", "Communicate", "Contextualize", "Control", "Cooperate", "Create",
+  "Decide", "Define", "Describe", "Discuss", "Desing", "Self assessment", "Explain", "Extrapolate", "Innovate", "Investigate", "Judge", "Motivate", "Observe",
+  "Organize", "Organize oneself", "Plan", "Practise", "Produce", "Recognize", "Remember", "Write up", "Consider", "Connect", "Represent", "Solve", "Simulate", "Summarize", "Value"];
+var arrayCost = ["Yes", "No"];
+var arrayAuthorRights = ["Propietary license", "Free software license EUPL", "Free software license GPL", "Dual free content license GPL and EUPL",
+  "Other free software licenses", "Public domain", "Intellectual property license", "Not appropriate", "Creative commons: attribution", 
+  "Creative commons: attribution - non derived work", "Creative commons: attribution - non derived work - non commercial", "Creative commons: attribution - non commercial", 
+  "Creative commons: attribution - non commercial - share alike", "Creative commons: attribution - share alike", "License GFDL"];
 var arrayAccesstype = ["Universal", "No universal"];
-var arrayRelationType = ["Es parte de", "Tiene parte", "Es versión de", "Tiene versión", "Es formato de", "Tiene formato",
-"Referencia", "Es referenciado por", "Se basa en", "Es base para", "Requiere", "Es requerido por"];
-var arrayPurposes = ["Disciplina", "Idea", "Prerrequisito", "Objetivo educativo", "Restricciones de accesibilidad",
-"Nivel educativo", "Nivel de habilidad", "Nivel de seguridad", "Competencia"];
+var arrayRelationType = ["ispartof", "haspart", "isversionof", "hasversion", "isformatof", "hasformat", "references", "isreferencedby", "isbasedon", "isbasisfor", "requires", "isrequiredby"];
+var arrayPurposes = ["Discipline", "Idea", "Prerrequisite", "Educational objective", "Accesibility restrictions", "Educational level", "Skill level", "Security level", "Competency"];
+
 var arrayGUINameElementsDublin = ['title','subject','description','type','source','relation','coverage','creator','publisher',
 'contributor','rights','date','formatData','identifier','language'];
 var arrayGUINameElementsLOM = [['cat_', ['catalog_', 'entry_'] , 'addCatalog_'],['tit_', ['title_', 'titleLang_'] , 'addtitle_'], 
@@ -84,16 +71,16 @@ function DialogMetadata(){
     dialog.append(CBDialog.createList([["#dublincore", "Dublin Core"],["#accordion", "LOM-ES"]]));
 
     var dialogDublin = CBDialog.createDiv("dublincore")
-    .append(CBDialog.createFieldsetWithElements("Content", [['Text', "Title:", "metadata-text"], ['Input', "title","metadata-box"],
-       ['Text', "Subject:", "metadata-text"], ['Input', "subject","metadata-box"], ['Text', "Description:", "metadata-text"], ['Input', "description","metadata-box"],
-       ['Text', "Type:", "metadata-text"], ['Input', "type","metadata-box"],['Text', "Source:", "metadata-text"], ['Input', "source","metadata-box"],
-       ['Text', "Relation:", "metadata-text"], ['Input', "relation","metadata-box"],['Text', "Coverage:", "metadata-text"], ['Input', "coverage","metadata-box"]]))
-    .append(CBDialog.createFieldsetWithElements("Intellectual property", [['Text', "Creator:", "metadata-text"], ['Input', "creator","metadata-box"],
-      ['Text', "Publisher:", "metadata-text"], ['Input', "publisher","metadata-box"],['Text', "Contributor:", "metadata-text"], ['Input', "contributor","metadata-box"],
-      ['Text', "Rights:", "metadata-text"], ['Input', "rights","metadata-box"]]))
-    .append(CBDialog.createFieldsetWithElements("Instantiation", [['Text', "Date:", "metadata-text"], ['Date', "date","metadata-box"],
-      ['Text', "Format:", "metadata-text"], ['Input', "formatData","metadata-box"],['Text', "Identifier:", "metadata-text"], ['Input', "identifier","metadata-box"],
-      ['Text', "Language:", "metadata-text"], ['SelectLanguage', "language","metadata-box"]]));
+    .append(CBDialog.createFieldsetWithElements("Content", [['Text', "Title", "metadata-text"], ['Input', "title","metadata-box"],
+       ['Text', "Subject", "metadata-text"], ['Input', "subject","metadata-box"], ['Text', "Description", "metadata-text"], ['Input', "description","metadata-box"],
+       ['Text', "Type", "metadata-text"], ['Input', "type","metadata-box"],['Text', "Source", "metadata-text"], ['Input', "source","metadata-box"],
+       ['Text', "Relation", "metadata-text"], ['Input', "relation","metadata-box"],['Text', "Coverage", "metadata-text"], ['Input', "coverage","metadata-box"]]))
+    .append(CBDialog.createFieldsetWithElements("Intellectual property", [['Text', "Creator", "metadata-text"], ['Input', "creator","metadata-box"],
+      ['Text', "Publisher", "metadata-text"], ['Input', "publisher","metadata-box"],['Text', "Contributor", "metadata-text"], ['Input', "contributor","metadata-box"],
+      ['Text', "Rights", "metadata-text"], ['Input', "rights","metadata-box"]]))
+    .append(CBDialog.createFieldsetWithElements("Instantiation", [['Text', "Date", "metadata-text"], ['Date', "date","metadata-box"],
+      ['Text', "Format", "metadata-text"], ['Input', "formatData","metadata-box"],['Text', "Identifier", "metadata-text"], ['Input', "identifier","metadata-box"],
+      ['Text', "Language", "metadata-text"], ['SelectLanguage', "language","metadata-box"]]));
 
     var dialogLOM = CBDialog.createDiv("accordion")
     .append(CBDialog.createHeader("General"))
@@ -252,7 +239,7 @@ function DialogMetadata(){
 
     .append(CBDialog.createHeader("Classification"))
       .append(CBDialog.createDiv("classification")
-        .append(CBDialog.createFieldsetWithDivElements("Clasificaciones", "classificationsClassification_1", [["Span", "Purpose", "spanPurpose_1", "metadata-text"],
+        .append(CBDialog.createFieldsetWithDivElements("Classifications", "classificationsClassification_1", [["Span", "Purpose", "spanPurpose_1", "metadata-text"],
           ['Select', "typePurposeClassification_1",arrayPurposes,  "metadata-box"], ["AddButton", "addPurposeClassification_1", "ui-icon-locked", "classificationsClassification_1"],
           ["DeleteButtonWithBr", "deletePurposeClassification_1", "ui-icon-locked", "classificationsClassification_1"], ["Span", "Description", "spanDescriptionTaxon_1_1", "metadata-text"],
           ['Input', "DescriptionTaxonClassification_1","metadata-box-half"], ["Span", "Language", "spanLanguageTaxon_1", "metadata-text-right"],
@@ -338,57 +325,48 @@ function getNumElements(element){
  */
 function loadData(){
 
-  if(Project.Info.DublinCore != null)
-  {
-      arrayGUINameElementsDublin.forEach(function(element){
-          $("#"+element).val(Project.Info.DublinCore[element]);
-      });
-      arrayGUINameElementsLOM.forEach(function(element){
-        if(element.length > 1)
+  arrayGUINameElementsDublin.forEach(function(element){
+      $("#"+element).val(Project.Info.DublinCore[element]);
+  });
+  arrayGUINameElementsLOM.forEach(function(element){
+    if(element.length > 1)
+    {
+        for(i=1;i<=getNumElements(element);i++)
         {
-            for(i=1;i<=getNumElements(element);i++)
+          if(getNumElements(element) > 1 && i < getNumElements(element)) 
+            $("#"+element[2] + i).click(); 
+
+          element[1].forEach(function(element1){
+            if(element1[0].length > 1)
             {
-              if(getNumElements(element) > 1 && i < getNumElements(element)) 
-                $("#"+element[2] + i).click(); 
-
-              element[1].forEach(function(element1){
-                if(element1[0].length > 1)
-                {
-                      for(j=1;j<=getNumElements(element1);j++)
+                  for(j=1;j<=getNumElements(element1);j++)
+                  {
+                      if(getNumElements(element1) > 1 && j < getNumElements(element1))
+                       $("#"+element1[2].split("_")[0] + "_" + i + "_" + j).click(); 
+                      
+                      element1[1].forEach(function(element2)
                       {
-                          if(getNumElements(element1) > 1 && j < getNumElements(element1))
-                           $("#"+element1[2].split("_")[0] + "_" + i + "_" + j).click(); 
-                          
-                          element1[1].forEach(function(element2)
-                          {
-                              $("#" + element2.split("_")[0] + "_" + i+ "_" +j).val(Project.Info.LOM[element[0]+i][element1[0].split("_")[0] + "_" + i + "_" +j][element2.split("_")[0] + "_" + i + "_" +j]);  
-                          });
-                       }
-                }
-                else
-                  $("#" + element1+i).val(Project.Info.LOM[element[0] + i][element1+i]);  
-              });  
-            }    
-        }
-        else
-        {
-          $("#"+element).val(Project.Info.DublinCore[element]);
-        }
-      });
-
-      $.each(Project.Info.LOM, function (intValue, currentelement){
-        if(intValue.indexOf('requirementsTechnical_') >=0){ 
-            var index = intValue.split("_")[1]
-            changeNames($('#typeTechnicalReq_'+index), 'nameTechnicalReq_'+index, Project.Info.LOM['requirementsTechnical_'+index]['nameTechnicalReq_'+index]);      
-        }
-      });
-
+                          $("#" + element2.split("_")[0] + "_" + i+ "_" +j).val(Project.Info.LOM[element[0]+i][element1[0].split("_")[0] + "_" + i + "_" +j][element2.split("_")[0] + "_" + i + "_" +j]);  
+                      });
+                   }
+            }
+            else
+              $("#" + element1+i).val(Project.Info.LOM[element[0] + i][element1+i]);  
+          });  
+        }    
     }
     else
     {
-      CBUtil.createNameSpace('Project.Info.DublinCore');
-      CBUtil.createNameSpace('Project.Info.LOM');
+      $("#"+element).val(Project.Info.DublinCore[element]);
     }
+  });
+
+  $.each(Project.Info.LOM, function (intValue, currentelement){
+    if(intValue.indexOf('requirementsTechnical_') >=0){ 
+        var index = intValue.split("_")[1]
+        changeNames($('#typeTechnicalReq_'+index), 'nameTechnicalReq_'+index, Project.Info.LOM['requirementsTechnical_'+index]['nameTechnicalReq_'+index]);      
+    }
+  });
 }
 
 /**

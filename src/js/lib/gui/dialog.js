@@ -103,7 +103,7 @@ function addRow(id){
 function addRowDiv(id){
 
   var num = parseInt(id.split("_")[1]);
-  var actual = num + 1;
+  var actual = $("div[id^="+id.split("_")[0] + "_]").length + 1;
 
   $clon = $("#" + id.split("_")[0] + "_" + num).clone();
   $clon.attr("id",id.split("_")[0] + "_" + actual);

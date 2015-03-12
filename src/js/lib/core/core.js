@@ -38,6 +38,18 @@ function Core() {
    */
   CBUtil.createNameSpace('Project.Info');
   /**
+   * Information of metadata Dublin Core
+   * @namespace Info
+   * @memberOf Project
+   */
+  CBUtil.createNameSpace('Project.Info.DublinCore');
+  /**
+   * Information of metadata LOM-ES
+   * @namespace Info
+   * @memberOf Project
+   */
+  CBUtil.createNameSpace('Project.Info.LOM');
+  /**
    * All sections, subsections and components of project
    * @namespace Data
    * @memberOf Project
