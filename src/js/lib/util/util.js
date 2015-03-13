@@ -70,3 +70,17 @@ Util.prototype.include = function include(path) {
 	script.type = "text/javascript";
 	document.head.appendChild(script);
 };
+
+Util.prototype.singleton = function singleton(Library) {
+	var instance;
+	function createInstance(){
+		var object = new Library();
+		return object;
+	}
+	return {getInstance: function(){
+		if(!instance){
+			instance = createInstance();
+		}
+		return instance;
+	}};
+};

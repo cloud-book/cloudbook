@@ -4,27 +4,32 @@
 		<script type="text/javascript" src="js/lib_external/jquery/jquery.min.js"></script>
 		
 		<script type="text/javascript" src="js/lib_external/jquery-ui/jquery-ui.min.js"></script>
-
+		<script type="text/javascript" src="js/lib_external/jquery-layout/stable/jquery.layout.min.js" ></script>
 		<script type="text/javascript" src="node_modules/jed/jed.js"></script>
 
 		<!-- Internal utils libs -->
 		<script type="text/javascript" src="js/lib/util/util.js"></script>
+		<script type="text/javascript" src="js/lib/gui/i18n.js"></script>
+		<script type="text/javascript" charset="utf-8" async defer>
+			CBUtil = new Util();
+			CBI18n = new Translator(require('./i18n/es.js'));
+		</script>
 
 		<script type="text/javascript" src="js/lib/core/core.js"></script>
 		<script type="text/javascript" src="js/lib/gui/ui.js"></script>
 		<script type="text/javascript" src="js/lib/core/storagemanager.js"></script>
 		<!-- Create Menu -->
-		<script type="text/javascript" src="js/lib/gui/i18n.js"></script>
+		
 	</head>
 	<body>
 	
-		
-		<div id="navactions"></div>
-		<div id="navsections"></div>
-		<div id="targetcontent"></div></script>
+		<div id="navactions" class="ui-layout-north"></div>
+		<div id="navsections" class="ui-layout-west"></div>
+		<div id="targetcontent" class="ui-layout-center"></div>
+		<div id="statusbar" class="ui-layout-south"></div>
+
 		<div id="modal"></div>
 		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript" src="js/lib/util/konami.js"></script>
-		
 	</body>
 </html>

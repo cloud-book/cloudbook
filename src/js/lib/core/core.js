@@ -2,8 +2,7 @@
  * @class Core
  * @classdesc This class is responsible to manage all app. 
  */
-function Core(main) {
-  this.main = main;
+function Core() {
   /**
    * Root all project info
    * @namespace Project
@@ -62,8 +61,9 @@ function Core(main) {
   Cloudbook.UI.navsections = '#navsections';
 
 
-  CBUtil.createNameSpace('Cloudbook.workspace');
   Cloudbook.workspace = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + "/Cloudbook/";
+  Cloudbook.userconfigpath = Cloudbook.workspace + ".conf";
+
 }
 
 
@@ -72,11 +72,8 @@ Core.prototype.prepareWorkspace = function prepareWorkspace() {
   if ( ! fs.existsSync(Cloudbook.workspace)){
     fs.mkdirSync(Cloudbook.workspace);
   }
-  var conffile = Cloudbook.workspace + ".conf";
-  if ( ! fs.existsSync(conffile) ){
-
-    initialproject = {"recentprojects":[]};
-    fs.writeFileSync(conffile,JSON.stringify(initialproject),{encoding:"utf-8"});
+  if ( ! fs.existsSync(Cloudbook.userconfigpath) ){
+    this.saveUserConfig({projects:[]});
   }
 };
 
@@ -125,42 +122,6 @@ Core.prototype.loadSectionsObjects = function() {
 
 
 /**
- * Create components buttons to append elements into selected section.
- * Here method call editorView and add_callback methods of CBObjects. 
- * See 
- * {@link CBObject#editorView} and 
- * {@link CBObject.add_callback}
- */
-Core.prototype.renderActionsButtons = function renderActionsButtons(){
-    var that = this;
-    var path = require('path');
-    Object.keys(Cloudbook.Actions).forEach(function (component) {
-      var componentpath = Cloudbook.Actions[component]['path'];
-      var description = require("./" + path.join(componentpath,"metadata.json"));
-      that.loadComponentExtraCss(componentpath,description);
-      $(Cloudbook.UI.navactions).append($(document.createElement('button'))
-          .bind('click', function () {that.getCBObjectFromButton(component)})
-          .addClass('btn').addClass('btn-default')
-          .html(that.calculeButtonContent(componentpath, description)));
-    });
-}
-
-/**
- * Create element from component. This include cbobject and rendered view on targetcontent. 
- * When append rendered view on targetcontent then trigger add_callback function related with component
- * @param  {String} component Component idtype indicated on metadata file.
- */
-Core.prototype.getCBObjectFromButton = function getCBObjectFromButton(component) {
-  var fullobject = new Cloudbook.Actions[component]['component']();
-  var viewobject = $(fullobject.editorView());
-  $(Cloudbook.UI.targetcontent).append(viewobject);
-  fullobject.add_callback(viewobject,fullobject);
-  var sectionWhereAppend = CBStorage.getSectionById(Cloudbook.UI.selected.attr('data-cbsectionid'));
-  sectionWhereAppend.content.push(fullobject);
-};
-
-
-/**
  * On component metadata file may be field "external_scripts" . This field include libraries must be included on head file to work component fine.
  * This method is reponsible read metadata info to be include all files indicate on "external_scripts". This files are loaded 
  * @param  {String} pluginpath relative path to root component
@@ -200,35 +161,11 @@ Core.prototype.loadComponentExtraCss = function loadComponentExtraCss(pluginpath
 
 
 /**
- * On component metadata file may be field "icon" and "label". This fields are used to create action component button. 
- * When user click this button, on targetcontent to been added an element.
- * @param  {String} pluginpath relative path to root component
- * @param  {Object} infobutton JSON created from metadata file.
- * @param  {String} infobutton.icon relative icon path 
- * @param  {String} infobutton.label Label button.
- * @result {String} Html code to be included on button tag
- */
-Core.prototype.calculeButtonContent = function calculeButtonContent(pluginpath, infobutton) {
-  var result = "";
-  var fs = require('fs');
-  var path = require('path');
-  if (infobutton.hasOwnProperty('icon')) {
-    var iconpath = path.join(pluginpath,infobutton.icon);
-    if (fs.existsSync(iconpath)) {
-      result = '<img src="' + iconpath + '" />';
-    }
-  }
-  if (infobutton.hasOwnProperty('label')) {
-    result += "<div>"+infobutton.label+"</div>";
-  }
-  return result;
-};
-
-/**
  * Initalize sections. This void Sections namespace and render initial section
  */
 Core.prototype.initSections = function initSections() {
   var that = this;
+  var CBStorage = base.storagemanager.getInstance();
   /**
    * List sections. See {@link CBSection}
    * @namespace Project.Data.Sections
@@ -239,103 +176,26 @@ Core.prototype.initSections = function initSections() {
   CBStorage.setRoot(auxcbsection);
   CBStorage.setSectionById(auxcbsection,'1');
 
-  var son = this.getNewSectionObject(Project.Data.Sections,'basic');
-
-  //jQuery.data($(Cloudbook.UI.navsections)[0],'cbsection',Project.Data.Sections);
-  var list = $(document.createElement('ul')).addClass("connectedSortable");
-  list.append(son);
-  $(Cloudbook.UI.navsections).html(list).attr('data-cbsectionid','1');
-  $($(son.children('.thumbnail')).children('.sectionimage')).click();
-  this.reloadSortable();
+  return this.appendNewSectionObject(Project.Data.Sections,'basic');
 };
 
-Core.prototype.getNewSectionObject = function getNewSectionObject(cbsection,typesection) {
-
+Core.prototype.appendNewSectionObject = function appendNewSectionObject(cbsection,typesection) {
   var cbsecid = CBUtil.uniqueId();
-
   var auxcbsection = new Cloudbook.Sections[typesection]();
-  
+  var CBStorage = base.storagemanager.getInstance();
   CBStorage.setSectionById(auxcbsection,cbsecid)
   cbsection.sections.push(auxcbsection);
-
-  var section = $(document.createElement('li')).addClass('cbsection');
-  section.attr('data-cbsectionid',cbsecid);
-
-  var thumbnail = $(document.createElement('div')).addClass('thumbnail');
-
-  var appendbefore = $(document.createElement('div')).addClass('appendbefore');
-  var sectionimage = $(document.createElement('div')).addClass('sectionimage');
-  var appendsubsection = $(document.createElement('div')).addClass('appendsubsection');
-  var appendafter = $(document.createElement('div')).addClass('appendafter');
-  var subsections = $(document.createElement('ul')).addClass('subsections').addClass("connectedSortable");
-
-  appendbefore.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
-  appendsubsection.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/subsection.png"));
-  appendafter.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
-  sectionimage.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/white.png"));
-  
-
-  appendbefore.click({that:this},this.appendBefore);
-  appendsubsection.click({that:this},this.appendSubsection);
-  appendafter.click({that:this},this.appendAfter);
-  sectionimage.click({that:this},this.selectThumbnail);
-
-  thumbnail.append([appendbefore,sectionimage,appendsubsection,appendafter]);
-
-  section.append([thumbnail,subsections]);
-  return section ;
+  return cbsecid;
 };
 
-Core.prototype.appendBefore = function appendBefore(e){
-  var that = e.data.that;
-  var listparents = $(e.currentTarget).parents('.cbsection');
-  var parent = null;
-  if (listparents.length <2){
-    parent = CBStorage.getRoot();
-  } 
-  else{
-    parent = CBStorage.getSectionById($(listparents[1]).attr('data-cbsectionid'));
-  }
-  var son = that.getNewSectionObject(parent,'basic');
-  $(listparents[0]).before(son);
-  that.reloadSortable();
-}
-
-
-Core.prototype.appendSubsection = function appendSubsection(e){
-  var that = e.data.that;
-  var parent = $(e.currentTarget).parents('.cbsection');
-  var parentObjectSection = CBStorage.getSectionById($(parent[0]).attr('data-cbsectionid'));
-  var newsection = that.getNewSectionObject(parentObjectSection,'basic');
-  $(parent[0]).children("ul").append(newsection);
-  that.reloadSortable();
-}
-
-Core.prototype.appendAfter = function appendAfter(e){
-  var that = e.data.that;
-  var listparents = $(e.currentTarget).parents('.cbsection');
-  var parentObjectSection = null;
-  if (listparents.length <2){
-    parentObjectSection = CBStorage.getRoot();
-  } 
-  else{
-    parentObjectSection = CBStorage.getSectionById($(listparents[1]).attr('data-cbsectionid'));
-  }
-  
-  var son = that.getNewSectionObject(parentObjectSection,'basic');
-  $(listparents[0]).after(son);
-  that.reloadSortable();
-}
-
-Core.prototype.selectThumbnail = function selectThumbnail(e){
-  var that = e.data.that;
-  if (Cloudbook.UI.selected !== undefined){
-    $(Cloudbook.UI.selected.children('.thumbnail')).removeClass('sectionselected');
-  } 
-  Cloudbook.UI.selected = $($(this).parents('.cbsection')[0]);
-  Cloudbook.UI.selected.children('.thumbnail').addClass('sectionselected');
-  that.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
-}
+Core.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectByUID(cbuid,typesection) {
+  var cbsecid = CBUtil.uniqueId();
+  var auxcbsection = new Cloudbook.Sections[typesection]();
+  var CBStorage = base.storagemanager.getInstance();
+  CBStorage.setSectionById(auxcbsection,cbsecid)
+  CBStorage.getSectionById(cbuid).sections.push(auxcbsection);
+  return cbsecid;
+};
 
 /**
  * Load project from path. This method void project and discard not saved changes. 
@@ -363,6 +223,7 @@ Core.prototype.loadProject = function(projectPath) {
 Core.prototype.saveProject = function(projectPath) {
   var fs = require('fs');
   var objectProject = {};
+  var CBStorage = base.storagemanager.getInstance();
   objectProject['name'] = "Nombre temporal";
   objectProject['author'] = "Usuario 1 <micorreo@midominio.com>";
   objectProject['data'] = {};
@@ -377,6 +238,7 @@ Core.prototype.voidProject = function() {
 
 
 Core.prototype.loadContent = function loadContent(id){
+  var CBStorage = base.storagemanager.getInstance();
   $(Cloudbook.UI.targetcontent).html("");
   var section = CBStorage.getSectionById(id);
   if (section !== undefined ){
@@ -388,25 +250,8 @@ Core.prototype.loadContent = function loadContent(id){
   }
 }
 
-
-Core.prototype.reloadSortable = function reloadSortable(element){
-  var that = this;
-  $(".connectedSortable").sortable({
-    start:function(ev,ui){that.oldparent = ui.item.parent().parent().attr('data-cbsectionid');},
-    stop:function(ev,ui){
-      that.newparent = ui.item.parent().parent().attr('data-cbsectionid');
-      if (that.oldparent !== that.newparent ){
-        listoldparent = $("[data-cbsectionid=" + that.oldparent + "] > ul > li").map(function(element){return this.dataset.cbsectionid});
-        listnewparent = $("[data-cbsectionid=" + that.newparent + "] > ul > li").map(function(element){return this.dataset.cbsectionid});
-        that.regenerateSubsection(that.oldparent,listoldparent.toArray());
-        that.regenerateSubsection(that.newparent,listnewparent.toArray());
-      }
-    },
-    connectWith:".connectedSortable"}).disableSelection();
-}
-
-
 Core.prototype.regenerateSubsection = function regenerateSubsection(sectionid,subsectionsids) {
+  var CBStorage = base.storagemanager.getInstance();
   var section = CBStorage.getSectionById(sectionid);
   var listsubsections = [];
   subsectionsids.forEach(function(element){
@@ -422,6 +267,37 @@ Core.prototype.createProject = function createProject(projectname) {
   Project.Info.projectname = projectname;
   fs.mkdirSync(Project.Info.projectpath,0775);
   fs.mkdirSync(Project.Info.projectpath+"/rsrc",0775);
+  // Save project into userconfig
+  var userconfig = this.getUserConfig();
+  var project = {}
+  project.date = new Date();
+  project.name = projectname;
+  project.path = Project.Info.projectpath;
+  userconfig.projects.push(project);
+  this.saveUserConfig(userconfig);
 };
 
 
+Core.prototype.checkProjectExists = function checkProjectExists(projectname) {
+  var fs = require('fs');
+  if(fs.existsSync(Cloudbook.workspace + projectname)){
+    return true;
+  }
+  return false;
+};
+
+Core.prototype.getUserConfig = function getUserConfig() {
+  var fs = require('fs');
+  return JSON.parse(fs.readFileSync(Cloudbook.userconfigpath));
+};
+
+
+Core.prototype.saveUserConfig = function saveUserConfig(jsoninfo) {
+  var fs = require('fs');
+  fs.writeFileSync(Cloudbook.userconfigpath,JSON.stringify(jsoninfo),{encoding:"utf-8"});
+  return true;
+};
+
+
+CBUtil.createNameSpace('base.core');
+base.core = CBUtil.singleton(Core);

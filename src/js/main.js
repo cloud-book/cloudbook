@@ -9,22 +9,36 @@
 
 function Main(){
 
+	$(document).ready(function(){
+		$('body').layout({
+			applyDefaultStyles:true,
+			north:{
+				resizable:false,
+				closable:false,
+				size: 40
+
+			},
+			south:{
+				resizable:false,
+				cssReq:{height:"2px"},
+				initClosed:true
+			},
+			west:{
+				size:200
+			}
+		});
+	});
 }
 
 
 Main.prototype.run = function() {
 
-	CBUtil = new Util();
-	CBI18n = new Translator(require('./i18n/es.js'));
+	var core = base.core.getInstance();
+	var ui = base.ui.getInstance();
 
-
-	this.core = new Core(this);
-	this.ui = new UI(this);
-	CBStorage = new StorageManager();
-
-	this.core.prepareWorkspace();
-	this.core.loadComponents();
-	this.ui.loadTheme();
+	core.prepareWorkspace();
+	core.loadComponents();
+	ui.loadTheme();
 
 
 	var gui = require('nw.gui');
@@ -35,21 +49,21 @@ Main.prototype.run = function() {
 	}
 	else{
 		var fs = require('fs');
-		this.ui.showIntro(JSON.parse(fs.readFileSync(Cloudbook.workspace + ".conf")));
+		ui.showIntro();
 	}	
 };
 
 Main.prototype.createProProject = function(name) {
 
 	  CBUtil.include("js/lib/gui/menu.js");
-	  if( ! this.core.createProject(name)) {
-	  	
-	  }
+	  var core = base.core.getInstance()
+	  var ui = base.ui.getInstance()
+	  core.createProject(name);
 
-	  this.core.loadSectionsObjects();
-	  
-	  this.core.renderActionsButtons();
-	  this.core.initSections();
+
+	  core.loadSectionsObjects();
+	  ui.renderActionsButtons();
+	  ui.initSectionsPro();
 
 };
 
@@ -57,5 +71,11 @@ Main.prototype.createSimpleProject = function(name) {
 	
 };
 
-var main = new Main();
+CBUtil.createNameSpace('base.main');
+base.main = CBUtil.singleton(Main);
+
+
+
+
+var main = base.main.getInstance();
 main.run();
