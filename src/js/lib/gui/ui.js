@@ -10,11 +10,11 @@ UI.prototype.showIntro = function showIntro() {
 
 UI.prototype.showSelectOption = function showSelectOption(e) {
 	var that = e.data.that;
-	var core = base.core.getInstance();
+	var backend = application.backend.getInstance();
 
 	$("#wizard").empty();
 	var listprojects = $(document.createElement('table')).attr('id','listProjects').addClass('table').addClass('table-striped');
-	datainfo = core.getUserConfig();
+	datainfo = backend.getUserConfig();
 	datainfo.projects.forEach(function(element){
 		var row = $(document.createElement('tr'));
 		var tdname = $(document.createElement('td')).addClass('name').html(element.name);
@@ -43,8 +43,8 @@ UI.prototype.showTypeProject = function(e) {
   .attr('id','advprojbtn')
   .attr("disabled","disabled")
   .click(function(){
-   var main = base.main.getInstance();
-   main.createProProject($("#projectname").val()); 
+   var controller = application.controller.getInstance();
+   controller.createProProject($("#projectname").val()); 
    $('#wizard').dialog('close');
  });
   var simpletype = $(document.createElement('button'))
@@ -52,7 +52,7 @@ UI.prototype.showTypeProject = function(e) {
   .attr('id','smplprojbtn')
   .attr("disabled","disabled")
   .click(function(){
-    var main = base.main.getInstance();
+    var main = application.main.getInstance();
     main.createSimpleProject($("#projectname").val());
     $('#wizard').dialog('close');
   });
@@ -61,8 +61,8 @@ UI.prototype.showTypeProject = function(e) {
   .click({that:that},that.showSelectOption);
   $("#wizard").append([projectname,advancedtype,simpletype,goback]);
   $("#projectname").keyup(function(e){
-    var core = base.core.getInstance();
-    if(core.checkProjectExists(this.value)){
+    var backend = application.backend.getInstance();
+    if(backend.checkProjectExists(this.value)){
      $("#projectnamecontainer").removeClass("has-success").addClass("has-error");
      $("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
      $("#advprojbtn").attr("disabled","disabled");
@@ -112,12 +112,12 @@ UI.prototype.loadTheme = function loadTheme(){
  */
  UI.prototype.renderActionsButtons = function renderActionsButtons(){
   var that = this;
-  var core = base.core.getInstance();
+  var backend = application.backend.getInstance();
   var path = require('path');
   Object.keys(Cloudbook.Actions).forEach(function (component) {
     var componentpath = Cloudbook.Actions[component]['path'];
     var description = require("./" + path.join(componentpath,"metadata.json"));
-    core.loadComponentExtraCss(componentpath,description);
+    backend.loadComponentExtraCss(componentpath,description);
     $(Cloudbook.UI.navactions).append($(document.createElement('button'))
       .bind('click', function () {that.getCBObjectFromButton(component)})
       .addClass('btn').addClass('btn-default')
@@ -131,7 +131,7 @@ UI.prototype.loadTheme = function loadTheme(){
  * @param  {String} component Component idtype indicated on metadata file.
  */
  UI.prototype.getCBObjectFromButton = function getCBObjectFromButton(component) {
-  var CBStorage = base.storagemanager.getInstance();
+  var CBStorage = application.storagemanager.getInstance();
   var fullobject = new Cloudbook.Actions[component]['component']();
   var viewobject = $(fullobject.editorView());
   $(Cloudbook.UI.targetcontent).append(viewobject);
@@ -167,8 +167,8 @@ UI.prototype.loadTheme = function loadTheme(){
 
 
 UI.prototype.initSectionsPro = function initSectionsPro() {
-  var core = base.core.getInstance();
-  var cbsecid = core.initSections();
+  var backend = application.backend.getInstance();
+  var cbsecid = backend.initSections();
   var son = this.createSectionProView(cbsecid);
   var list = $(document.createElement('ul')).addClass("connectedSortable");
   list.append(son);
@@ -181,7 +181,7 @@ UI.prototype.initSectionsPro = function initSectionsPro() {
 
 UI.prototype.reloadSortable = function reloadSortable(element){
   var that = this;
-  var core = base.core.getInstance();
+  var backend = application.backend.getInstance();
   $(".connectedSortable").sortable({
     placeholder: "ui-state-highlight",
     opacity:0.5,
@@ -192,8 +192,8 @@ UI.prototype.reloadSortable = function reloadSortable(element){
       if (that.oldparent !== that.newparent ){
         listoldparent = $("[data-cbsectionid=" + that.oldparent + "] > ul > li").map(function(element){return this.dataset.cbsectionid});
         listnewparent = $("[data-cbsectionid=" + that.newparent + "] > ul > li").map(function(element){return this.dataset.cbsectionid});
-        core.regenerateSubsection(that.oldparent,listoldparent.toArray());
-        core.regenerateSubsection(that.newparent,listnewparent.toArray());
+        backend.regenerateSubsection(that.oldparent,listoldparent.toArray());
+        backend.regenerateSubsection(that.newparent,listnewparent.toArray());
       }
     },
     connectWith:".connectedSortable"}).disableSelection();
@@ -261,10 +261,10 @@ UI.prototype.createSectionPageView = function createSectionPageView(cbsecid) {
 
 
 UI.prototype.appendBefore = function appendBefore(e){
-  var CBStorage = base.storagemanager.getInstance();
+  var CBStorage = application.storagemanager.getInstance();
   var that = e.data.that;
   var listparents = $(e.currentTarget).parents('.cbsection');
-  var core = base.core.getInstance();
+  var backend = application.backend.getInstance();
   var parent = null;
   if (listparents.length <2){
     parent = "1";
@@ -272,7 +272,7 @@ UI.prototype.appendBefore = function appendBefore(e){
   else{
     parent = $(listparents[1]).attr('data-cbsectionid');
   }
-  var cbsecid = core.appendNewSectionObjectByUID(parent,'basic');
+  var cbsecid = backend.appendNewSectionObjectByUID(parent,'basic');
   var son = that.createSectionProView(cbsecid);
   $(listparents[0]).before(son);
   that.reloadSortable();
@@ -281,11 +281,11 @@ UI.prototype.appendBefore = function appendBefore(e){
 
 UI.prototype.appendSubsection = function appendSubsection(e){
   var that = e.data.that;
-  var CBStorage = base.storagemanager.getInstance();
+  var CBStorage = application.storagemanager.getInstance();
   var parent = $(e.currentTarget).parents('.cbsection');
-  var core = base.core.getInstance();
+  var backend = application.backend.getInstance();
   var parentObjectSection = $(parent[0]).attr('data-cbsectionid');
-  var cbsecid = core.appendNewSectionObjectByUID(parentObjectSection,'basic');
+  var cbsecid = backend.appendNewSectionObjectByUID(parentObjectSection,'basic');
   var newsection = that.createSectionProView(cbsecid);
   $(parent[0]).children("ul").append(newsection);
   that.reloadSortable();
@@ -293,8 +293,8 @@ UI.prototype.appendSubsection = function appendSubsection(e){
 
 UI.prototype.appendAfter = function appendAfter(e){
   var that = e.data.that;
-  var CBStorage = base.storagemanager.getInstance();
-  var core = base.core.getInstance();
+  var CBStorage = application.storagemanager.getInstance();
+  var backend = application.backend.getInstance();
   var listparents = $(e.currentTarget).parents('.cbsection');
   var parentObjectSection = null;
   if (listparents.length <2){
@@ -303,7 +303,7 @@ UI.prototype.appendAfter = function appendAfter(e){
   else{
     parentObjectSection = $(listparents[1]).attr('data-cbsectionid');
   }
-  var cbsecid = core.appendNewSectionObjectByUID(parentObjectSection,'basic');
+  var cbsecid = backend.appendNewSectionObjectByUID(parentObjectSection,'basic');
   var son = that.createSectionProView(cbsecid);
   $(listparents[0]).after(son);
   that.reloadSortable();
@@ -320,7 +320,7 @@ UI.prototype.selectSection = function selectSection(e){
 }
 
 UI.prototype.loadContent = function loadContent(id){
-  var CBStorage = base.storagemanager.getInstance();
+  var CBStorage = application.storagemanager.getInstance();
   $(Cloudbook.UI.targetcontent).html("");
   var section = CBStorage.getSectionById(id);
   if (section !== undefined ){
@@ -338,5 +338,5 @@ UI.prototype.updateSectionName = function(name,cbsectionid) {
 
 
 
-CBUtil.createNameSpace('base.ui');
-base.ui = CBUtil.singleton(UI);
+CBUtil.createNameSpace('application.ui');
+application.ui = CBUtil.singleton(UI);

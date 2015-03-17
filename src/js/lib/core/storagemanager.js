@@ -19,5 +19,5 @@ StorageManager.prototype.setSectionById = function(section,cbsecid) {
 	Project.Data._rawsections[cbsecid] = section;
 };
 
-CBUtil.createNameSpace('base.storagemanager');
-base.storagemanager = CBUtil.singleton(StorageManager);
+CBUtil.createNameSpace('application.storagemanager');
+application.storagemanager = CBUtil.singleton(StorageManager);
