@@ -113,3 +113,17 @@ body{
 .ui-state-highlight{
     height: 30px;
 }
+
+#navactions button{
+    max-height: 40;
+    position: relative;
+}
+
+#navactions button img{
+    height: 100%;
+    display: inline-block;
+}
+
+#navactions button div{
+    display: inline-block;
+}
