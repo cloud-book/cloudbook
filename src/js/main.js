@@ -33,11 +33,11 @@
 
  Main.prototype.run = function() {
 
- 	var core = base.core.getInstance();
- 	var ui = base.ui.getInstance();
+ 	var backend = application.backend.getInstance();
+ 	var ui = application.ui.getInstance();
 
- 	core.prepareWorkspace();
- 	core.loadComponents();
+ 	backend.prepareWorkspace();
+ 	backend.loadComponents();
  	ui.loadTheme();
 
 
@@ -53,30 +53,11 @@
  	}	
  };
 
- Main.prototype.createProProject = function(name) {
-
- 	CBUtil.include("js/lib/gui/menu.js");
- 	var core = base.core.getInstance()
- 	var ui = base.ui.getInstance()
- 	core.createProject(name);
-
-
- 	core.loadSectionsObjects();
- 	ui.renderActionsButtons();
- 	ui.initSectionsPro();
-
- };
-
- Main.prototype.createSimpleProject = function(name) {
- 	
- 	
- };
-
- CBUtil.createNameSpace('base.main');
- base.main = CBUtil.singleton(Main);
+ CBUtil.createNameSpace('application.main');
+ application.main = CBUtil.singleton(Main);
 
 
 
 
- var main = base.main.getInstance();
+ var main = application.main.getInstance();
  main.run();
