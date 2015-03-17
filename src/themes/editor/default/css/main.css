@@ -109,3 +109,7 @@ body{
 .no-close .ui-dialog-titlebar-close{
     display: none;
 }
+
+.ui-state-highlight{
+    height: 30px;
+}

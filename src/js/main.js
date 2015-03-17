@@ -7,75 +7,76 @@
  * These libraries be load before 
  */
 
-function Main(){
+ function Main(){
 
-	$(document).ready(function(){
-		$('body').layout({
-			applyDefaultStyles:true,
-			north:{
-				resizable:false,
-				closable:false,
-				size: 40
+ 	$(document).ready(function(){
+ 		$('body').layout({
+ 			applyDefaultStyles:true,
+ 			north:{
+ 				resizable:false,
+ 				closable:false,
+ 				size: 40
 
-			},
-			south:{
-				resizable:false,
-				cssReq:{height:"2px"},
-				initClosed:true
-			},
-			west:{
-				size:200
-			}
-		});
-	});
-}
-
-
-Main.prototype.run = function() {
-
-	var core = base.core.getInstance();
-	var ui = base.ui.getInstance();
-
-	core.prepareWorkspace();
-	core.loadComponents();
-	ui.loadTheme();
+ 			},
+ 			south:{
+ 				resizable:false,
+ 				cssReq:{height:"2px"},
+ 				initClosed:true
+ 			},
+ 			west:{
+ 				size:200
+ 			}
+ 		});
+ 	});
+ }
 
 
-	var gui = require('nw.gui');
+ Main.prototype.run = function() {
 
-	if (gui.App.argv.length > 0 ){
-		var path = require('path');
-		var auxprojectpath = path.resolve(gui.App.argv[0]);
-	}
-	else{
-		var fs = require('fs');
-		ui.showIntro();
-	}	
-};
+ 	var core = base.core.getInstance();
+ 	var ui = base.ui.getInstance();
 
-Main.prototype.createProProject = function(name) {
-
-	  CBUtil.include("js/lib/gui/menu.js");
-	  var core = base.core.getInstance()
-	  var ui = base.ui.getInstance()
-	  core.createProject(name);
+ 	core.prepareWorkspace();
+ 	core.loadComponents();
+ 	ui.loadTheme();
 
 
-	  core.loadSectionsObjects();
-	  ui.renderActionsButtons();
-	  ui.initSectionsPro();
+ 	var gui = require('nw.gui');
 
-};
+ 	if (gui.App.argv.length > 0 ){
+ 		var path = require('path');
+ 		var auxprojectpath = path.resolve(gui.App.argv[0]);
+ 	}
+ 	else{
+ 		var fs = require('fs');
+ 		ui.showIntro();
+ 	}	
+ };
 
-Main.prototype.createSimpleProject = function(name) {
-	
-};
+ Main.prototype.createProProject = function(name) {
 
-CBUtil.createNameSpace('base.main');
-base.main = CBUtil.singleton(Main);
-
-
+ 	CBUtil.include("js/lib/gui/menu.js");
+ 	var core = base.core.getInstance()
+ 	var ui = base.ui.getInstance()
+ 	core.createProject(name);
 
 
-var main = base.main.getInstance();
-main.run();
+ 	core.loadSectionsObjects();
+ 	ui.renderActionsButtons();
+ 	ui.initSectionsPro();
+
+ };
+
+ Main.prototype.createSimpleProject = function(name) {
+ 	
+ 	
+ };
+
+ CBUtil.createNameSpace('base.main');
+ base.main = CBUtil.singleton(Main);
+
+
+
+
+ var main = base.main.getInstance();
+ main.run();

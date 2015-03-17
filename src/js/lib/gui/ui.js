@@ -32,50 +32,50 @@ UI.prototype.showTypeProject = function(e) {
 	var that = e.data.that;
 	$("#wizard").empty();
 	var projectname = '<div id="projectnamecontainer" class="form-group has-feedback "> \
-						<label for="projectname">'+CBI18n.gettext('Project name')+'</label> \
-						<input id="projectname" class="form-control" placeholder="'+CBI18n.gettext('Enter project name')+'" aria-describedby="inputSuccess2Status"> \
-						<span id="validateindicator" class="glyphicon form-control-feedback" aria-hidden="true"></span> \
-						<span id="inputSuccess2Status" class="sr-only">(success)</span> \
-					</div>';
-	
-	var advancedtype = $(document.createElement('button'))
-					.html('Advanced Project')
-					.attr('id','advprojbtn')
-					.attr("disabled","disabled")
-					.click(function(){
-							var main = base.main.getInstance();
-							main.createProProject($("#projectname").val()); 
-							$('#wizard').dialog('close');
-					});
-	var simpletype = $(document.createElement('button'))
-					.html('Simple Project')
-					.attr('id','smplprojbtn')
-					.attr("disabled","disabled")
-					.click(function(){
-						var main = base.main.getInstance();
-						main.createSimpleProject($("#projectname").val());
-						$('#wizard').dialog('close');
-					});
-	var goback = $(document.createElement('button'))
-				 .html("go back")
-				 .click({that:that},that.showSelectOption);
-	$("#wizard").append([projectname,advancedtype,simpletype,goback]);
-	$("#projectname").keyup(function(e){
-		var core = base.core.getInstance();
-		if(core.checkProjectExists(this.value)){
-			$("#projectnamecontainer").removeClass("has-success").addClass("has-error");
-			$("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-			$("#advprojbtn").attr("disabled","disabled");
-			$("#smplprojbtn").attr("disabled","disabled");
-			
-		}
-		else{
-			$("#projectnamecontainer").addClass("has-success").removeClass("has-error");
-			$("#validateindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
-			$("#advprojbtn").removeAttr("disabled");
-			$("#smplprojbtn").removeAttr("disabled");
-		}
-	})
+  <label for="projectname">'+CBI18n.gettext('Project name')+'</label> \
+  <input id="projectname" class="form-control" placeholder="'+CBI18n.gettext('Enter project name')+'" aria-describedby="inputSuccess2Status"> \
+  <span id="validateindicator" class="glyphicon form-control-feedback" aria-hidden="true"></span> \
+  <span id="inputSuccess2Status" class="sr-only">(success)</span> \
+  </div>';
+
+  var advancedtype = $(document.createElement('button'))
+  .html('Advanced Project')
+  .attr('id','advprojbtn')
+  .attr("disabled","disabled")
+  .click(function(){
+   var main = base.main.getInstance();
+   main.createProProject($("#projectname").val()); 
+   $('#wizard').dialog('close');
+ });
+  var simpletype = $(document.createElement('button'))
+  .html('Simple Project')
+  .attr('id','smplprojbtn')
+  .attr("disabled","disabled")
+  .click(function(){
+    var main = base.main.getInstance();
+    main.createSimpleProject($("#projectname").val());
+    $('#wizard').dialog('close');
+  });
+  var goback = $(document.createElement('button'))
+  .html("go back")
+  .click({that:that},that.showSelectOption);
+  $("#wizard").append([projectname,advancedtype,simpletype,goback]);
+  $("#projectname").keyup(function(e){
+    var core = base.core.getInstance();
+    if(core.checkProjectExists(this.value)){
+     $("#projectnamecontainer").removeClass("has-success").addClass("has-error");
+     $("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+     $("#advprojbtn").attr("disabled","disabled");
+     $("#smplprojbtn").attr("disabled","disabled");
+
+   }
+   else{
+     $("#projectnamecontainer").addClass("has-success").removeClass("has-error");
+     $("#validateindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+     $("#advprojbtn").removeAttr("disabled");
+     $("#smplprojbtn").removeAttr("disabled");
+   }
+ })
   .focus();
 
 };
@@ -96,7 +96,7 @@ UI.prototype.loadTheme = function loadTheme(){
     });
   }
   var scriptsbasepath = path.join(Cloudbook.UI.themeeditorpath,'js');
-   if(fs.existsSync(scriptsbasepath)){
+  if(fs.existsSync(scriptsbasepath)){
     fs.readdirSync(scriptsbasepath).forEach(function(jspath){
       CBUtil.include(path.join(scriptsbasepath,jspath))
     });
@@ -110,19 +110,19 @@ UI.prototype.loadTheme = function loadTheme(){
  * {@link CBObject#editorView} and 
  * {@link CBObject.add_callback}
  */
-UI.prototype.renderActionsButtons = function renderActionsButtons(){
-    var that = this;
-    var core = base.core.getInstance();
-    var path = require('path');
-    Object.keys(Cloudbook.Actions).forEach(function (component) {
-      var componentpath = Cloudbook.Actions[component]['path'];
-      var description = require("./" + path.join(componentpath,"metadata.json"));
-      core.loadComponentExtraCss(componentpath,description);
-      $(Cloudbook.UI.navactions).append($(document.createElement('button'))
-          .bind('click', function () {that.getCBObjectFromButton(component)})
-          .addClass('btn').addClass('btn-default')
-          .html(that.calculeButtonContent(componentpath, description)));
-    });
+ UI.prototype.renderActionsButtons = function renderActionsButtons(){
+  var that = this;
+  var core = base.core.getInstance();
+  var path = require('path');
+  Object.keys(Cloudbook.Actions).forEach(function (component) {
+    var componentpath = Cloudbook.Actions[component]['path'];
+    var description = require("./" + path.join(componentpath,"metadata.json"));
+    core.loadComponentExtraCss(componentpath,description);
+    $(Cloudbook.UI.navactions).append($(document.createElement('button'))
+      .bind('click', function () {that.getCBObjectFromButton(component)})
+      .addClass('btn').addClass('btn-default')
+      .html(that.calculeButtonContent(componentpath, description)));
+  });
 }
 
 /**
@@ -130,7 +130,7 @@ UI.prototype.renderActionsButtons = function renderActionsButtons(){
  * When append rendered view on targetcontent then trigger add_callback function related with component
  * @param  {String} component Component idtype indicated on metadata file.
  */
-UI.prototype.getCBObjectFromButton = function getCBObjectFromButton(component) {
+ UI.prototype.getCBObjectFromButton = function getCBObjectFromButton(component) {
   var CBStorage = base.storagemanager.getInstance();
   var fullobject = new Cloudbook.Actions[component]['component']();
   var viewobject = $(fullobject.editorView());
@@ -149,7 +149,7 @@ UI.prototype.getCBObjectFromButton = function getCBObjectFromButton(component) {
  * @param  {String} infobutton.label Label button.
  * @result {String} Html code to be included on button tag
  */
-UI.prototype.calculeButtonContent = function calculeButtonContent(pluginpath, infobutton) {
+ UI.prototype.calculeButtonContent = function calculeButtonContent(pluginpath, infobutton) {
   var result = "";
   var fs = require('fs');
   var path = require('path');
@@ -173,7 +173,7 @@ UI.prototype.initSectionsPro = function initSectionsPro() {
   var list = $(document.createElement('ul')).addClass("connectedSortable");
   list.append(son);
   $(Cloudbook.UI.navsections).html(list).attr('data-cbsectionid','1');
-  $($(son.children('.displaysection')).children('.sectionimage')).click();
+  $($(son.children('.displaysection')).children('.divselector')).click();
   this.reloadSortable();
 };
 
@@ -181,15 +181,19 @@ UI.prototype.initSectionsPro = function initSectionsPro() {
 
 UI.prototype.reloadSortable = function reloadSortable(element){
   var that = this;
+  var core = base.core.getInstance();
   $(".connectedSortable").sortable({
+    placeholder: "ui-state-highlight",
+    opacity:0.5,
+    axis:"y",
     start:function(ev,ui){that.oldparent = ui.item.parent().parent().attr('data-cbsectionid');},
     stop:function(ev,ui){
       that.newparent = ui.item.parent().parent().attr('data-cbsectionid');
       if (that.oldparent !== that.newparent ){
         listoldparent = $("[data-cbsectionid=" + that.oldparent + "] > ul > li").map(function(element){return this.dataset.cbsectionid});
         listnewparent = $("[data-cbsectionid=" + that.newparent + "] > ul > li").map(function(element){return this.dataset.cbsectionid});
-        that.regenerateSubsection(that.oldparent,listoldparent.toArray());
-        that.regenerateSubsection(that.newparent,listnewparent.toArray());
+        core.regenerateSubsection(that.oldparent,listoldparent.toArray());
+        core.regenerateSubsection(that.newparent,listnewparent.toArray());
       }
     },
     connectWith:".connectedSortable"}).disableSelection();
@@ -202,18 +206,23 @@ UI.prototype.createSectionProView = function createSectionProView(cbsecid) {
   section.attr('data-cbsectionid',cbsecid);
 
   var displaysection = $(document.createElement('div')).addClass('displaysection');
-  var textsection = $(document.createElement('div')).addClass('textsection');
-  var actions = $(document.createElement('button')).html('+');
+  var textsection = $(document.createElement('div')).addClass('divselector');
+  var actions = $(document.createElement('button')).html('+').attr('data-toggle','dropdown').attr('id',cbsecid);
   var subsections = $(document.createElement('ul')).addClass('subsections').addClass("connectedSortable");
-
   textsection.append($(document.createElement('span')).html("1.Seccion"));
   
   textsection.click({that:this},this.selectSection);
-
+  actions.click({that:this},this.createMenu);
   displaysection.append([textsection,actions]);
-
   section.append([displaysection,subsections]);
   return section ;
+};
+
+UI.prototype.createMenu = function createMenu(e) {
+  var that = e.data.that;
+  var element = $(e.currentTarget);
+  element.contextMenu([{name:'Insertar antes',fun:function(){that.appendBefore(e)}},{name:'Insertar despues',fun:function(){that.appendAfter(e)}},{name:'Insertar Submenu',fun:function(){that.appendSubsection(e)}},{name:'Borrar'},{name:'Editar'}]);
+  element.trigger('click.contextMenu',[e]);
 };
 
 
@@ -226,7 +235,7 @@ UI.prototype.createSectionPageView = function createSectionPageView(cbsecid) {
   var thumbnail = $(document.createElement('div')).addClass('displaysection');
 
   var appendbefore = $(document.createElement('div')).addClass('appendbefore');
-  var sectionimage = $(document.createElement('div')).addClass('sectionimage');
+  var sectionimage = $(document.createElement('div')).addClass('divselector');
   var appendsubsection = $(document.createElement('div')).addClass('appendsubsection');
   var appendafter = $(document.createElement('div')).addClass('appendafter');
   var subsections = $(document.createElement('ul')).addClass('subsections').addClass("connectedSortable");
@@ -323,6 +332,9 @@ UI.prototype.loadContent = function loadContent(id){
   }
 }
 
+UI.prototype.updateSectionName = function(name,cbsectionid) {
+  $("li[data-cbsectionid='"+cbsectionid+"'] > div.displaysection > div.divselector").html("<span>"+name+"</span>");
+};
 
 
 

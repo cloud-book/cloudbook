@@ -298,6 +298,14 @@ Core.prototype.saveUserConfig = function saveUserConfig(jsoninfo) {
   return true;
 };
 
+Core.prototype.updateSectionName = function(name,cbsectionid) {
+  var CBStorage = base.storagemanager.getInstance();
+  x = CBStorage.getSectionById(cbsectionid);
+  x.name = name;
+  CBStorage.setSectionById(x,cbsectionid);
+};
+
+
 
 CBUtil.createNameSpace('base.core');
 base.core = CBUtil.singleton(Core);
