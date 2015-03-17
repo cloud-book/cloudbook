@@ -7,20 +7,57 @@
  * These libraries be load before 
  */
 
-CBUtil = new Util();
-var core = new Core();
-CBStorage = new StorageManager();
-core.loadComponents();
+ function Main(){
 
-$(document).ready(function () {
-  core.loadSectionsObjects();
-  core.loadTheme();
-  core.renderActionsButtons();
-  core.initSections();
+ 	$(document).ready(function(){
+ 		$('body').layout({
+ 			applyDefaultStyles:true,
+ 			north:{
+ 				resizable:false,
+ 				closable:false,
+ 				size: 40
 
-  /**
-   * Create initial page and select this
-   */
-  $('#addsection').click();
-  $('#addsection').prev().click();
-});
+ 			},
+ 			south:{
+ 				resizable:false,
+ 				cssReq:{height:"2px"},
+ 				initClosed:true
+ 			},
+ 			west:{
+ 				size:200
+ 			}
+ 		});
+ 	});
+ }
+
+
+ Main.prototype.run = function() {
+
+ 	var backend = application.backend.getInstance();
+ 	var ui = application.ui.getInstance();
+
+ 	backend.prepareWorkspace();
+ 	backend.loadComponents();
+ 	ui.loadTheme();
+
+
+ 	var gui = require('nw.gui');
+
+ 	if (gui.App.argv.length > 0 ){
+ 		var path = require('path');
+ 		var auxprojectpath = path.resolve(gui.App.argv[0]);
+ 	}
+ 	else{
+ 		var fs = require('fs');
+ 		ui.showIntro();
+ 	}	
+ };
+
+ CBUtil.createNameSpace('application.main');
+ application.main = CBUtil.singleton(Main);
+
+
+
+
+ var main = application.main.getInstance();
+ main.run();

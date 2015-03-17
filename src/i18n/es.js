@@ -1,0 +1,1 @@
+module.exports = {"domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural_forms":"nplurals=2; plural=(n != 1);","lang":"es"},"Save Project":["Salvar proyecto"],"Save Project as ...":["Salvar proyecto como ..."],"Load Project":["Cargar proyecto"],"Quit":["Salir"],"File":["Archivo"]}}};
