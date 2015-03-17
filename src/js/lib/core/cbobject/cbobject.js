@@ -19,10 +19,12 @@ function CBObject(objectdata){
  */
 CBObject.prototype.editorView = function editorView() {
 	var aux = $(window.document.createElement('div'));
-	aux.css('left', this.position[0]);
-	aux.css('top', this.position[1]);
-	aux.addClass('draggable');
-	aux.css('position','relative');
+	aux.css('left', this.position[0])
+	   .css('top', this.position[1])
+	   .addClass('draggable')
+	   .addClass('cbobject')
+	   .addClass('cbobject-editable')
+	   .css('position','relative');
 	return aux;
 };
 
