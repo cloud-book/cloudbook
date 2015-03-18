@@ -11,21 +11,22 @@ UI.prototype.showIntro = function showIntro() {
 UI.prototype.showSelectOption = function showSelectOption(e) {
 	var that = e.data.that;
 	var backend = application.backend.getInstance();
-
+  var fs = require('fs');
 	$("#wizard").empty();
-	var listprojects = $(document.createElement('table')).attr('id','listProjects').addClass('table').addClass('table-striped');
-	datainfo = backend.getUserConfig();
-	datainfo.projects.forEach(function(element){
-		var row = $(document.createElement('tr'));
-		var tdname = $(document.createElement('td')).addClass('name').html(element.name);
-		var open = $(document.createElement('button')).addClass('open').html(CBI18n.gettext("Open"));
-		var tdopen = $(document.createElement('td')).addClass('open').append(open);
-		row.append([tdname,tdopen]);
-		listprojects.append(row);
-	});
-	var newproject = $(document.createElement('button')).attr('id','newproject').html(CBI18n.gettext('New project')).css("float","left").click({that:that},that.showTypeProject);
-	var openproject = $(document.createElement('button')).attr('id','openproject').html(CBI18n.gettext('Open project')).css("float","right");
-	$("#wizard").append([listprojects,newproject,openproject]);
+
+	var datainfo = backend.getUserConfig();
+  var template = fs.readFileSync('./templates/initialwizard.step1.mst',{encoding:'utf8'});
+  var templatecompiled = application.util.template.compile(template);
+
+  var data = {
+    projects : datainfo.projects,
+    open : CBI18n.gettext("Open"),
+    openproject :  CBI18n.gettext('Open project'),
+    newproject : CBI18n.gettext('New project')
+  }
+
+	$("#wizard").append((templatecompiled(data)));
+  $('#newproject').click({that:that},that.showTypeProject);
 };
 
 UI.prototype.showTypeProject = function(e) {
@@ -334,6 +335,12 @@ UI.prototype.loadContent = function loadContent(id){
 
 UI.prototype.updateSectionName = function(name,cbsectionid) {
   $("li[data-cbsectionid='"+cbsectionid+"'] > div.displaysection > div.divselector").html("<span>"+name+"</span>");
+};
+
+UI.prototype.dialogUpdateSectionName = function dialogUpdateSectionName(cbsectionid) {
+  var controller = application.controller.getInstance();
+
+  controller.updateSectionName(name,cbsectionid);
 };
 
 

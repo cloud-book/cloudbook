@@ -21,7 +21,6 @@ Controller.prototype.createProProject = function createProProject(name) {
  	ui.initSectionsPro();
 };
 
-
 Controller.prototype.createSimpleProject = function createSimpleProject(name) {
 	// body...
 };
