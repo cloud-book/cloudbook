@@ -36,6 +36,12 @@
  	var backend = application.backend.getInstance();
  	var ui = application.ui.getInstance();
 
+
+ 	CBUtil.createNameSpace('application.util.template');
+ 	application.util.template = CBUtil.req('js/lib_external/handlebars/handlebars-v3.0.0.js');
+ 	application.util.template.registerHelper('gettext',function(str){return CBI18n.gettext(str);});
+
+
  	backend.prepareWorkspace();
  	backend.loadComponents();
  	ui.loadTheme();
