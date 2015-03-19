@@ -19,48 +19,33 @@ UI.prototype.showSelectOption = function showSelectOption(e) {
   var templatecompiled = application.util.template.compile(template);
 
   var data = {
-    projects : datainfo.projects,
-    open : CBI18n.gettext("Open"),
-    openproject :  CBI18n.gettext('Open project'),
-    newproject : CBI18n.gettext('New project')
+    projects : datainfo.projects
   }
 
-	$("#wizard").append((templatecompiled(data)));
+	$("#wizard").append(templatecompiled(data));
   $('#newproject').click({that:that},that.showTypeProject);
 };
 
 UI.prototype.showTypeProject = function(e) {
 	var that = e.data.that;
+  var fs = require('fs');
 	$("#wizard").empty();
-	var projectname = '<div id="projectnamecontainer" class="form-group has-feedback "> \
-  <label for="projectname">'+CBI18n.gettext('Project name')+'</label> \
-  <input id="projectname" class="form-control" placeholder="'+CBI18n.gettext('Enter project name')+'" aria-describedby="inputSuccess2Status"> \
-  <span id="validateindicator" class="glyphicon form-control-feedback" aria-hidden="true"></span> \
-  <span id="inputSuccess2Status" class="sr-only">(success)</span> \
-  </div>';
+  var template = fs.readFileSync('./templates/initialwizard.step2.mst',{encoding:'utf8'});
+  var templatecompiled = application.util.template.compile(template);
+  $("#wizard").append(templatecompiled());
 
-  var advancedtype = $(document.createElement('button'))
-  .html('Advanced Project')
-  .attr('id','advprojbtn')
-  .attr("disabled","disabled")
-  .click(function(){
+  $("#advprojbtn").click(function(){
    var controller = application.controller.getInstance();
    controller.createProProject($("#projectname").val()); 
    $('#wizard').dialog('close');
- });
-  var simpletype = $(document.createElement('button'))
-  .html('Simple Project')
-  .attr('id','smplprojbtn')
-  .attr("disabled","disabled")
-  .click(function(){
+  });
+  $("#smplprojbtn").click(function(){
     var main = application.main.getInstance();
     main.createSimpleProject($("#projectname").val());
     $('#wizard').dialog('close');
   });
-  var goback = $(document.createElement('button'))
-  .html("go back")
-  .click({that:that},that.showSelectOption);
-  $("#wizard").append([projectname,advancedtype,simpletype,goback]);
+  $("#wzrdgoback").click({that:that},that.showSelectOption);
+  
   $("#projectname").keyup(function(e){
     var backend = application.backend.getInstance();
     if(backend.checkProjectExists(this.value)){

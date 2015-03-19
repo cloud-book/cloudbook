@@ -2,11 +2,11 @@
 	<tbody>
 		{{#each projects}}
 		<tr>
-		<td class="name">{{this.name}}</td><td><button type="button" class="open">{{../open}}</button></td>
+		<td class="name">{{this.name}}</td><td><button type="button" class="open">{{gettext "Open"}}</button></td>
 		</tr>
 		{{/each}}
 	</tbody>
 </table>
 
-<button id="newproject" type="button" style="float:left">{{newproject}}</button>
-<button id="openproject" type="button" style="float:right">{{openproject}}</button>
+<button id="newproject" type="button" style="float:left">{{gettext "New project"}}</button>
+<button id="openproject" type="button" style="float:right">{{gettext "Open project"}}</button>
