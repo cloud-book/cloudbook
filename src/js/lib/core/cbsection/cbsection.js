@@ -6,6 +6,7 @@
  * @param {CBObject[]} dataobject.content Elements available in this section
  * @param {String} dataobject.type Type of object. This info is usefull to restore when load project
  * @param {String} dataobject.name Secion name.
+ * @param {String} objectdata.numbering Number of section. This number is similar to 1.1.3. Numeration
  */
 function CBSection(dataobject){
 
@@ -14,6 +15,7 @@ function CBSection(dataobject){
 	this.content = typeof dataobject.content !== 'undefined' ? dataobject.content : [];
 	this.idtype = "section.base";
 	this.name = typeof dataobject.name !== 'undefined' ? dataobject.name : "";
+	this.numbering = typeof dataobject.numbering !== 'undefined' ? dataobject.numbering : "1";
 }
 
 module.exports = CBSection;
