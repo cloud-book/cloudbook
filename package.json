@@ -15,6 +15,7 @@
     "grunt-node-webkit-builder": "~1.0.0"
   },
   "scripts": {
+    "preinst" : "npm -i -g grunt"
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
