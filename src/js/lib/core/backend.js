@@ -60,13 +60,22 @@ function Backend() {
    */
   Cloudbook.UI.navsections = '#navsections';
 
-
-  Cloudbook.workspace = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + "/Cloudbook/";
+  /**
+   * Path to workspace folder by default
+   * @type {String}
+   */
+  Cloudbook.workspace = process.env['HOME'] + "/Cloudbook/";
+  /**
+   * File where store all project project metadata
+   * @type {String}
+   */
   Cloudbook.userconfigpath = Cloudbook.workspace + ".conf";
 
 }
 
-
+/**
+ * Check exists workspace and userconfig. If any not exists, create it.
+ */
 Backend.prototype.prepareWorkspace = function prepareWorkspace() {
   var fs = require('fs');
   if ( ! fs.existsSync(Cloudbook.workspace)){
@@ -162,16 +171,12 @@ Backend.prototype.loadComponentExtraCss = function loadComponentExtraCss(pluginp
 
 /**
  * Initalize sections. This void Sections namespace and render initial section
+ * @return {String} Identifier initial section created by default  
  */
 Backend.prototype.initSections = function initSections() {
-  var that = this;
-  var CBStorage = application.storagemanager.getInstance();
-  /**
-   * List sections. See {@link CBSection}
-   * @namespace Project.Data.Sections
-   */
-  
-  var auxcbsection = new Cloudbook.Sections['basic']();
+  var that = this,
+      CBStorage = application.storagemanager.getInstance(),
+      auxcbsection = new Cloudbook.Sections['basic']();
 
   CBStorage.setRoot(auxcbsection);
   CBStorage.setSectionById(auxcbsection,'1');
@@ -179,6 +184,13 @@ Backend.prototype.initSections = function initSections() {
   return this.appendNewSectionObject(Project.Data.Sections,'basic');
 };
 
+
+/**
+ * Create new section and append into section indicate on method.
+ * @param  {CBSection} cbsection   Object section where new section will be added
+ * @param  {String} typesection Type of section to create
+ * @return {String}             Identifier that section created
+ */
 Backend.prototype.appendNewSectionObject = function appendNewSectionObject(cbsection,typesection) {
   var cbsecid = CBUtil.uniqueId();
   var auxcbsection = new Cloudbook.Sections[typesection]();
@@ -188,6 +200,13 @@ Backend.prototype.appendNewSectionObject = function appendNewSectionObject(cbsec
   return cbsecid;
 };
 
+
+/**
+ * Create new section and append into section indicate. This section is identifier string instead of CBSection object. 
+ * @param  {String} cbuid       Section identifier where new section will be added
+ * @param  {String} typesection Type of section to create.
+ * @return {String}             Identifier that section created
+ */
 Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectByUID(cbuid,typesection) {
   var cbsecid = CBUtil.uniqueId();
   var auxcbsection = new Cloudbook.Sections[typesection]();
@@ -219,7 +238,11 @@ Backend.prototype.loadProject = function(projectPath) {
   
 };
 
-
+/**
+ * Save project into path indicate. This function don't save binary files. This files are stored 
+ * into folder created for this purpose on workspace folder.  
+ * @param  {String} projectPath Path where project will be stored
+ */
 Backend.prototype.saveProject = function(projectPath) {
   var fs = require('fs');
   var objectProject = {};
@@ -232,11 +255,18 @@ Backend.prototype.saveProject = function(projectPath) {
   fs.writeFile(projectPath,result_string);
 };
 
+
+/**
+ * Empty project sections
+ */
 Backend.prototype.voidProject = function() {
   this.initSections();
 };
 
-
+/**
+ * Empty targetcontent and render objects from section id indicate into targetcontent.
+ * @param  {String} id Section id.
+ */
 Backend.prototype.loadContent = function loadContent(id){
   var CBStorage = application.storagemanager.getInstance();
   $(Cloudbook.UI.targetcontent).html("");
@@ -250,6 +280,11 @@ Backend.prototype.loadContent = function loadContent(id){
   }
 }
 
+/**
+ * Replace subsections of a section by subsections indicate into argument. 
+ * @param  {String} sectionid      Id of section
+ * @param  {String[]} subsectionsids Id's subsections
+ */
 Backend.prototype.regenerateSubsection = function regenerateSubsection(sectionid,subsectionsids) {
   var CBStorage = application.storagemanager.getInstance();
   var section = CBStorage.getSectionById(sectionid);
@@ -260,6 +295,10 @@ Backend.prototype.regenerateSubsection = function regenerateSubsection(sectionid
   section.sections = listsubsections;
 };
 
+/**
+ * Create new project with its folder. Also add information into userconfig.
+ * @param  {String} projectname Project name
+ */
 Backend.prototype.createProject = function createProject(projectname) {
   var fs = require('fs');
 
@@ -267,6 +306,7 @@ Backend.prototype.createProject = function createProject(projectname) {
   Project.Info.projectname = projectname;
   fs.mkdirSync(Project.Info.projectpath,0775);
   fs.mkdirSync(Project.Info.projectpath+"/rsrc",0775);
+  
   // Save project into userconfig
   var userconfig = this.getUserConfig();
   var project = {}
@@ -277,7 +317,11 @@ Backend.prototype.createProject = function createProject(projectname) {
   this.saveUserConfig(userconfig);
 };
 
-
+/**
+ * Check if project exists
+ * @param  {[type]} projectname [description]
+ * @return {Boolean}             True exists project, False not exists
+ */
 Backend.prototype.checkProjectExists = function checkProjectExists(projectname) {
   var fs = require('fs');
   if(fs.existsSync(Cloudbook.workspace + projectname)){
@@ -286,18 +330,31 @@ Backend.prototype.checkProjectExists = function checkProjectExists(projectname) 
   return false;
 };
 
+/**
+ * Return JSON object with user configuration and metadata from projects
+ * @return {Object[]} JSON with user config
+ */
 Backend.prototype.getUserConfig = function getUserConfig() {
   var fs = require('fs');
   return JSON.parse(fs.readFileSync(Cloudbook.userconfigpath));
 };
 
-
+/**
+ * Save user config on file system
+ * @param  {Object[]} jsoninfo JSON with user config and projects metadata
+ * @return {Boolean}          Success
+ */
 Backend.prototype.saveUserConfig = function saveUserConfig(jsoninfo) {
   var fs = require('fs');
   fs.writeFileSync(Cloudbook.userconfigpath,JSON.stringify(jsoninfo),{encoding:"utf-8"});
   return true;
 };
 
+/**
+ * Update section name. 
+ * @param  {String} name        New section name
+ * @param  {String} cbsectionid Section identifier to update name.
+ */
 Backend.prototype.updateSectionName = function(name,cbsectionid) {
   var CBStorage = application.storagemanager.getInstance();
   x = CBStorage.getSectionById(cbsectionid);
@@ -305,7 +362,17 @@ Backend.prototype.updateSectionName = function(name,cbsectionid) {
   CBStorage.setSectionById(x,cbsectionid);
 };
 
+Backend.prototype.deleteSection = function(cbsectionid) {
+  /**
+   * @todo This method must delete binary files related with section and subsections
+   */
+  throw "Method not implemented";
+};
 
-
+/**
+ * This namespace has singleton instance of Backend class
+ * @namespace backend
+ * @memberOf application
+ */
 CBUtil.createNameSpace('application.backend');
 application.backend = CBUtil.singleton(Backend);

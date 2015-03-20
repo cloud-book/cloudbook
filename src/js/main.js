@@ -38,7 +38,17 @@
 
 
  	CBUtil.createNameSpace('application.util.template');
- 	application.util.template = CBUtil.req('js/lib_external/handlebars/handlebars-v3.0.0.js');
+ 	application.util.template = CBUtil.req('js/lib_external/handlebars/handlebars.js');
+ 	application.util.template.getTemplate = function getTemplate(path){
+ 		var fs = require('fs');
+ 		if(fs.existsSync(path)){
+	 		var template = fs.readFileSync(path,{encoding:'utf8'});
+	  		return application.util.template.compile(template);
+ 		}
+ 		else{
+ 			throw "Path " + path + " not exists";
+ 		}
+ 	}
  	application.util.template.registerHelper('gettext',function(str){return CBI18n.gettext(str);});
 
 
