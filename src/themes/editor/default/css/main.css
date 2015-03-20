@@ -4,11 +4,6 @@ body{
     padding: 0;
 }
 
-.contentlayout{
-
-    
-}
-
 .ui-layout-west{
     padding: 0 !important;
     background: #4c4c4c url('../img/back.png') repeat !important;
@@ -87,7 +82,8 @@ body{
 .displaysection:hover button{
     opacity: 1;
     }
-.displaysection .text div{
+
+.displaysection div.caption{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
@@ -127,3 +123,6 @@ body{
 #navactions button div{
     display: inline-block;
 }
+
+
+

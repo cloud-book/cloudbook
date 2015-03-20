@@ -21,6 +21,13 @@ Controller.prototype.createProProject = function createProProject(name) {
  	ui.initSectionsPro();
 };
 
+Controller.prototype.deleteSection = function(cbsectionid) {
+	var backend = application.backend.getInstance();
+	var ui = application.ui.getInstance();
+	backend.deleteSection(cbsectionid);
+	ui.deleteSection(cbsectionid);
+};
+
 Controller.prototype.createSimpleProject = function createSimpleProject(name) {
 	// body...
 };

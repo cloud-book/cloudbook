@@ -3,7 +3,7 @@ function UI(){
 
 UI.prototype.showIntro = function showIntro() {
 	var container = $(document.createElement('div')).attr('id','wizard');
-	container.dialog({modal:true,dialogClass: "no-close"});
+	container.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
 	var e = {data:{that:this}};
 	this.showSelectOption(e);
 };
@@ -28,41 +28,43 @@ UI.prototype.showSelectOption = function showSelectOption(e) {
 
 UI.prototype.showTypeProject = function(e) {
 	var that = e.data.that;
-  var fs = require('fs');
+	var fs = require('fs');
 	$("#wizard").empty();
-  var template = fs.readFileSync('./templates/initialwizard.step2.mst',{encoding:'utf8'});
-  var templatecompiled = application.util.template.compile(template);
-  $("#wizard").append(templatecompiled());
+	var template = fs.readFileSync('./templates/initialwizard.step2.mst',{encoding:'utf8'});
+	var templatecompiled = application.util.template.compile(template);
+	$("#wizard").append(templatecompiled());
 
-  $("#advprojbtn").click(function(){
-   var controller = application.controller.getInstance();
-   controller.createProProject($("#projectname").val()); 
-   $('#wizard').dialog('close');
-  });
-  $("#smplprojbtn").click(function(){
-    var main = application.main.getInstance();
-    main.createSimpleProject($("#projectname").val());
-    $('#wizard').dialog('close');
-  });
-  $("#wzrdgoback").click({that:that},that.showSelectOption);
-  
-  $("#projectname").keyup(function(e){
-    var backend = application.backend.getInstance();
-    if(backend.checkProjectExists(this.value)){
-     $("#projectnamecontainer").removeClass("has-success").addClass("has-error");
-     $("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-     $("#advprojbtn").attr("disabled","disabled");
-     $("#smplprojbtn").attr("disabled","disabled");
+	$("#advprojbtn").click(function(){
+		var controller = application.controller.getInstance();
+		controller.createProProject($("#projectname").val()); 
+		$('#wizard').dialog('close');
+		$('#wizard').remove();
+	});
+	$("#smplprojbtn").click(function(){
+		var controller = application.controller.getInstance();
+		controller.createSimpleProject($("#projectname").val());
+		$('#wizard').dialog('close');
+		$('#wizard').remove();
+	});
+	$("#wzrdgoback").click({that:that},that.showSelectOption);
 
-   }
-   else{
-     $("#projectnamecontainer").addClass("has-success").removeClass("has-error");
-     $("#validateindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
-     $("#advprojbtn").removeAttr("disabled");
-     $("#smplprojbtn").removeAttr("disabled");
-   }
- })
-  .focus();
+	$("#projectname").keyup(function(e){
+		var backend = application.backend.getInstance();
+		if(backend.checkProjectExists(this.value)){
+			$("#projectnamecontainer").removeClass("has-success").addClass("has-error");
+			$("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+			$("#advprojbtn").attr("disabled","disabled");
+			$("#smplprojbtn").attr("disabled","disabled");
+
+		}
+		else{
+			$("#projectnamecontainer").addClass("has-success").removeClass("has-error");
+			$("#validateindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+			$("#advprojbtn").removeAttr("disabled");
+			$("#smplprojbtn").removeAttr("disabled");
+		}
+	})
+	.focus();
 
 };
 
@@ -195,7 +197,7 @@ UI.prototype.createSectionProView = function createSectionProView(cbsecid) {
   var textsection = $(document.createElement('div')).addClass('divselector');
   var actions = $(document.createElement('button')).html('+').attr('data-toggle','dropdown').attr('id',cbsecid);
   var subsections = $(document.createElement('ul')).addClass('subsections').addClass("connectedSortable");
-  textsection.append($(document.createElement('span')).html("1.Seccion"));
+  textsection.append($(document.createElement('div')).html("1.Seccion").addClass('caption'));
   
   textsection.click({that:this},this.selectSection);
   actions.click({that:this},this.createMenu);
@@ -205,10 +207,34 @@ UI.prototype.createSectionProView = function createSectionProView(cbsecid) {
 };
 
 UI.prototype.createMenu = function createMenu(e) {
-  var that = e.data.that;
-  var element = $(e.currentTarget);
-  element.contextMenu([{name:'Insertar antes',fun:function(){that.appendBefore(e)}},{name:'Insertar despues',fun:function(){that.appendAfter(e)}},{name:'Insertar Submenu',fun:function(){that.appendSubsection(e)}},{name:'Borrar'},{name:'Editar'}]);
-  element.trigger('click.contextMenu',[e]);
+	var that = e.data.that;
+	var element = $(e.currentTarget);
+	element.contextMenu([
+	{
+		name: CBI18n.gettext('Insert before'),
+		fun:function(){that.appendBefore(e)}
+	},
+	{
+		name:CBI18n.gettext('Insert after'),
+		fun:function(){that.appendAfter(e)}
+	},
+	{
+		name:CBI18n.gettext('Insert subsection'),
+		fun:function(){that.appendSubsection(e)}
+	},
+	{
+		name:CBI18n.gettext('Delete'),
+		fun: function(){
+			that.dialogDeleteSection($(element).closest('[data-cbsectionid]').attr('data-cbsectionid'));
+		}
+	},
+	{
+		name:CBI18n.gettext('Edit'),
+		fun: function(){
+			that.dialogUpdateSectionName($(element).closest('[data-cbsectionid]').attr('data-cbsectionid'));
+		}
+	}]);
+	element.trigger('click.contextMenu',[e]);
 };
 
 
@@ -262,6 +288,7 @@ UI.prototype.appendBefore = function appendBefore(e){
   var son = that.createSectionProView(cbsecid);
   $(listparents[0]).before(son);
   that.reloadSortable();
+  that.dialogUpdateSectionName(cbsecid);
 }
 
 
@@ -275,6 +302,7 @@ UI.prototype.appendSubsection = function appendSubsection(e){
   var newsection = that.createSectionProView(cbsecid);
   $(parent[0]).children("ul").append(newsection);
   that.reloadSortable();
+  that.dialogUpdateSectionName(cbsecid);
 }
 
 UI.prototype.appendAfter = function appendAfter(e){
@@ -293,6 +321,7 @@ UI.prototype.appendAfter = function appendAfter(e){
   var son = that.createSectionProView(cbsecid);
   $(listparents[0]).after(son);
   that.reloadSortable();
+  that.dialogUpdateSectionName(cbsecid);
 }
 
 UI.prototype.selectSection = function selectSection(e){
@@ -319,14 +348,32 @@ UI.prototype.loadContent = function loadContent(id){
 }
 
 UI.prototype.updateSectionName = function(name,cbsectionid) {
-  $("li[data-cbsectionid='"+cbsectionid+"'] > div.displaysection > div.divselector").html("<span>"+name+"</span>");
+  $("li[data-cbsectionid='"+cbsectionid+"'] > div.displaysection > div.divselector").html("<div>"+name+"</div>");
 };
 
 UI.prototype.dialogUpdateSectionName = function dialogUpdateSectionName(cbsectionid) {
   var controller = application.controller.getInstance();
+  var template = application.util.template.getTemplate('templates/updateSectionName.mst');
+  var dialog = $(template());
+  dialog.find('button').click(function(){
+  	var name = $('#sectionname').val();
+  	controller.updateSectionName(name,cbsectionid);
+  	dialog.dialog('close');
+  	dialog.remove();
+  });
+  dialog.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
+}
 
-  controller.updateSectionName(name,cbsectionid);
+UI.prototype.deleteSection = function deleteSection(cbsectionid) {
+	$('[data-cbsectionid="'+cbsectionid+'"]').remove();
 };
+
+
+UI.prototype.dialogDeleteSection = function dialogDeleteSection(cbsectionid) {
+	var controller = application.controller.getInstance();
+	controller.deleteSection(cbsectionid);
+};
+
 
 
 

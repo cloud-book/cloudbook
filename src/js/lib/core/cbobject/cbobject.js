@@ -10,7 +10,7 @@ function CBObject(objectdata){
 	this.position = typeof objectdata.position !== 'undefined' ? objectdata.position : [200,200];
 	this.size = typeof objectdata.size !== 'undefined' ? objectdata.size : [0,0];
 	this.idtype = typeof objectdata.idtype !== 'undefined' ? objectdata.idtype : "CBObject";
-
+	this.numbering = typeof objectdata.numbering !== 'undefined' ? objectdata.numbering : "1";
 }
 
 /**

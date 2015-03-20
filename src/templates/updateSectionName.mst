@@ -1,0 +1,4 @@
+<div id="updateSectionName">
+	<input type="text" id="sectionname" placeholder="{{gettext "Section name"}}">
+	<button type="button">{{gettext "Save"}}</button>
+</div>
