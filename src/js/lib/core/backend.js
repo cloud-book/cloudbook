@@ -319,7 +319,7 @@ Backend.prototype.createProject = function createProject(projectname) {
 
 /**
  * Check if project exists
- * @param  {[type]} projectname [description]
+ * @param  {String} projectname Project name
  * @return {Boolean}             True exists project, False not exists
  */
 Backend.prototype.checkProjectExists = function checkProjectExists(projectname) {
