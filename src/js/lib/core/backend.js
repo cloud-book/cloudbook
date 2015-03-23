@@ -177,43 +177,23 @@ Backend.prototype.initSections = function initSections() {
   var that = this,
       CBStorage = application.storagemanager.getInstance(),
       auxcbsection = new Cloudbook.Sections['basic']();
-
-  CBStorage.setRoot(auxcbsection);
-  CBStorage.setSectionById(auxcbsection,'1');
-
-  return this.appendNewSectionObject(Project.Data.Sections,'basic');
-};
-
-
-/**
- * Create new section and append into section indicate on method.
- * @param  {CBSection} cbsection   Object section where new section will be added
- * @param  {String} typesection Type of section to create
- * @return {String}             Identifier that section created
- */
-Backend.prototype.appendNewSectionObject = function appendNewSectionObject(cbsection,typesection) {
-  var cbsecid = CBUtil.uniqueId();
-  var auxcbsection = new Cloudbook.Sections[typesection]();
-  var CBStorage = application.storagemanager.getInstance();
-  CBStorage.setSectionById(auxcbsection,cbsecid)
-  cbsection.sections.push(auxcbsection);
-  return cbsecid;
+  return this.appendNewSectionObjectByUID(CBStorage.setRoot(auxcbsection),'basic');
 };
 
 
 /**
  * Create new section and append into section indicate. This section is identifier string instead of CBSection object. 
- * @param  {String} cbuid       Section identifier where new section will be added
+ * @param  {String} cbparentuid       Section identifier where new section will be added
  * @param  {String} typesection Type of section to create.
  * @return {String}             Identifier that section created
  */
-Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectByUID(cbuid,typesection) {
-  var cbsecid = CBUtil.uniqueId();
+Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectByUID(cbparentuid,typesection) {
+  var cbsonuid = CBUtil.uniqueId();
   var auxcbsection = new Cloudbook.Sections[typesection]();
   var CBStorage = application.storagemanager.getInstance();
-  CBStorage.setSectionById(auxcbsection,cbsecid)
-  CBStorage.getSectionById(cbuid).sections.push(auxcbsection);
-  return cbsecid;
+  CBStorage.setSectionById(auxcbsection,cbsonuid)
+  CBStorage.setSectionById(CBStorage.getSectionById(cbparentuid).sections.push(cbsonuid),cbparentuid);
+  return cbsonuid;
 };
 
 /**
@@ -288,11 +268,8 @@ Backend.prototype.loadContent = function loadContent(id){
 Backend.prototype.regenerateSubsection = function regenerateSubsection(sectionid,subsectionsids) {
   var CBStorage = application.storagemanager.getInstance();
   var section = CBStorage.getSectionById(sectionid);
-  var listsubsections = [];
-  subsectionsids.forEach(function(element){
-    listsubsections.push(CBStorage.getSectionById(element));
-  });
-  section.sections = listsubsections;
+  section.sections = subsectionsids;
+  CBStorage.setSectionById(section,sectionid);
 };
 
 /**
