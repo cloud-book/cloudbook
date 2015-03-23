@@ -2,7 +2,7 @@
 	<tbody>
 		{{#each projects}}
 		<tr>
-		<td class="name">{{this.name}}</td><td><button type="button" class="open">{{gettext "Open"}}</button></td>
+		<td class="name">{{this.name}}</td><td><button type="button" class="open" data-path="{{this.path}}">{{gettext "Open"}}</button></td>
 		</tr>
 		{{/each}}
 	</tbody>
