@@ -191,13 +191,14 @@ UI.prototype.reloadSortable = function reloadSortable(element){
 UI.prototype.createSectionProView = function createSectionProView(cbsecid) {
 
   var section = $(document.createElement('li')).addClass('cbsection');
+  var CBStorage = application.storagemanager.getInstance();
   section.attr('data-cbsectionid',cbsecid);
 
   var displaysection = $(document.createElement('div')).addClass('displaysection');
   var textsection = $(document.createElement('div')).addClass('divselector');
   var actions = $(document.createElement('button')).html('+').attr('data-toggle','dropdown').attr('id',cbsecid);
   var subsections = $(document.createElement('ul')).addClass('subsections').addClass("connectedSortable");
-  textsection.append($(document.createElement('div')).html("1.Seccion").addClass('caption'));
+  textsection.append($(document.createElement('div')).html(CBStorage.getSectionById(cbsecid).name).addClass('caption'));
   
   textsection.click({that:this},this.selectSection);
   actions.click({that:this},this.createMenu);

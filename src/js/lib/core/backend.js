@@ -191,8 +191,10 @@ Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectB
   var cbsonuid = CBUtil.uniqueId();
   var auxcbsection = new Cloudbook.Sections[typesection]();
   var CBStorage = application.storagemanager.getInstance();
-  CBStorage.setSectionById(auxcbsection,cbsonuid)
-  CBStorage.setSectionById(CBStorage.getSectionById(cbparentuid).sections.push(cbsonuid),cbparentuid);
+  CBStorage.setSectionById(auxcbsection,cbsonuid);
+  var parentsection = CBStorage.getSectionById(cbparentuid);
+  parentsection.sections.push(cbsonuid);
+  CBStorage.setSectionById(parentsection,cbparentuid);
   return cbsonuid;
 };
 
