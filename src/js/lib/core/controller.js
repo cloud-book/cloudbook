@@ -3,6 +3,7 @@
  * For example, updateSectionName function is a function to update section name. For this purpose must call
  * methods from backend and ui. With this method, on application only call this method and this will call
  *  all needed functions  
+ *  @class Controller
  */
 function Controller(){
 
@@ -52,7 +53,9 @@ Controller.prototype.createSimpleProject = function createSimpleProject(name) {
 Controller.prototype.loadProject = function loadProject(path) {
 	var backend = application.backend.getInstance();
 	var ui = application.ui.getInstance();
+	backend.loadSectionsObjects();
 	backend.loadProject(path);
+ 	ui.renderActionsButtons();
 	ui.loadProject(path);
 };
 

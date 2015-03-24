@@ -178,7 +178,7 @@ UI.prototype.initSectionsPro = function initSectionsPro() {
   var son = this.createSectionProView(cbsecid);
   var list = $(document.createElement('ul')).addClass("connectedSortable");
   list.append(son);
-  $(Cloudbook.UI.navsections).html(list).attr('data-cbsectionid','1');
+  $(Cloudbook.UI.navsections).html(list).attr('data-cbsectionid','root');
   $($(son.children('.displaysection')).children('.divselector')).click();
   this.reloadSortable();
 };
@@ -298,7 +298,7 @@ UI.prototype.appendBefore = function appendBefore(e){
   var backend = application.backend.getInstance();
   var parent = null;
   if (listparents.length <2){
-    parent = "1";
+    parent = "root";
   }
   else{
     parent = $(listparents[1]).attr('data-cbsectionid');
@@ -331,7 +331,7 @@ UI.prototype.appendAfter = function appendAfter(e){
   var listparents = $(e.currentTarget).parents('.cbsection');
   var parentObjectSection = null;
   if (listparents.length <2){
-    parentObjectSection = "1";
+    parentObjectSection = "root";
   }
   else{
     parentObjectSection = $(listparents[1]).attr('data-cbsectionid');
@@ -399,6 +399,7 @@ UI.prototype.launcherloadProject = function launcherloadProject(e) {
   var path = element.dataset.path;
   var controller = application.controller.getInstance();
   controller.loadProject(path + "/project.cloudbook");
+  $("#wizard").dialog('close');
 };
 
 UI.prototype.loadProject = function loadProject(path) {
@@ -406,7 +407,11 @@ UI.prototype.loadProject = function loadProject(path) {
 };
 
 
-
+/**
+ * This namespace has singleton instance of UI class
+ * @namespace ui
+ * @memberOf application
+ */
 
 CBUtil.createNameSpace('application.ui');
 application.ui = CBUtil.singleton(UI);

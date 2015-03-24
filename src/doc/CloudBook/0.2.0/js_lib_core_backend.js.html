@@ -193,43 +193,25 @@ Backend.prototype.initSections = function initSections() {
   var that = this,
       CBStorage = application.storagemanager.getInstance(),
       auxcbsection = new Cloudbook.Sections['basic']();
-
-  CBStorage.setRoot(auxcbsection);
-  CBStorage.setSectionById(auxcbsection,'1');
-
-  return this.appendNewSectionObject(Project.Data.Sections,'basic');
-};
-
-
-/**
- * Create new section and append into section indicate on method.
- * @param  {CBSection} cbsection   Object section where new section will be added
- * @param  {String} typesection Type of section to create
- * @return {String}             Identifier that section created
- */
-Backend.prototype.appendNewSectionObject = function appendNewSectionObject(cbsection,typesection) {
-  var cbsecid = CBUtil.uniqueId();
-  var auxcbsection = new Cloudbook.Sections[typesection]();
-  var CBStorage = application.storagemanager.getInstance();
-  CBStorage.setSectionById(auxcbsection,cbsecid)
-  cbsection.sections.push(auxcbsection);
-  return cbsecid;
+  return this.appendNewSectionObjectByUID(CBStorage.setRoot(auxcbsection),'basic');
 };
 
 
 /**
  * Create new section and append into section indicate. This section is identifier string instead of CBSection object. 
- * @param  {String} cbuid       Section identifier where new section will be added
+ * @param  {String} cbparentuid       Section identifier where new section will be added
  * @param  {String} typesection Type of section to create.
  * @return {String}             Identifier that section created
  */
-Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectByUID(cbuid,typesection) {
-  var cbsecid = CBUtil.uniqueId();
+Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectByUID(cbparentuid,typesection) {
+  var cbsonuid = CBUtil.uniqueId();
   var auxcbsection = new Cloudbook.Sections[typesection]();
   var CBStorage = application.storagemanager.getInstance();
-  CBStorage.setSectionById(auxcbsection,cbsecid)
-  CBStorage.getSectionById(cbuid).sections.push(auxcbsection);
-  return cbsecid;
+  CBStorage.setSectionById(auxcbsection,cbsonuid);
+  var parentsection = CBStorage.getSectionById(cbparentuid);
+  parentsection.sections.push(cbsonuid);
+  CBStorage.setSectionById(parentsection,cbparentuid);
+  return cbsonuid;
 };
 
 /**
@@ -238,6 +220,7 @@ Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectB
  */
 Backend.prototype.loadProject = function(projectPath) {
   var fs = require('fs');
+  var path = require('path');
   if (fs.existsSync(projectPath)){
     var contentproject = fs.readFileSync(projectPath);
     var projectdata = JSON.parse(contentproject);
@@ -259,16 +242,17 @@ Backend.prototype.loadProject = function(projectPath) {
  * into folder created for this purpose on workspace folder.  
  * @param  {String} projectPath Path where project will be stored
  */
-Backend.prototype.saveProject = function(projectPath) {
+Backend.prototype.saveProject = function(projectfolder) {
   var fs = require('fs');
   var objectProject = {};
   var CBStorage = application.storagemanager.getInstance();
+  var projectpath = projectfolder + "/project.cloudbook";
   objectProject['name'] = "Nombre temporal";
   objectProject['author'] = "Usuario 1 &lt;micorreo@midominio.com>";
   objectProject['data'] = {};
   objectProject['data']['sections'] = CBStorage.getRoot();
   var result_string = JSON.stringify(objectProject,null," ");
-  fs.writeFile(projectPath,result_string);
+  fs.writeFile(projectpath,result_string);
 
 
 
@@ -307,11 +291,8 @@ Backend.prototype.loadContent = function loadContent(id){
 Backend.prototype.regenerateSubsection = function regenerateSubsection(sectionid,subsectionsids) {
   var CBStorage = application.storagemanager.getInstance();
   var section = CBStorage.getSectionById(sectionid);
-  var listsubsections = [];
-  subsectionsids.forEach(function(element){
-    listsubsections.push(CBStorage.getSectionById(element));
-  });
-  section.sections = listsubsections;
+  section.sections = subsectionsids;
+  CBStorage.setSectionById(section,sectionid);
 };
 
 /**
@@ -378,13 +359,13 @@ application.backend = CBUtil.singleton(Backend);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Backend.html">Backend</a></li><li><a href="CBObject.html">CBObject</a></li><li><a href="CBSection.html">CBSection</a></li><li><a href="TextBox.html">TextBox</a></li><li><a href="UI.html">UI</a></li></ul><h3>Namespaces</h3><ul><li><a href="application.backend.html">backend</a></li><li><a href="application.controller.html">controller</a></li><li><a href="Cloudbook.html">Cloudbook</a></li><li><a href="Cloudbook.Actions.html">Actions</a></li><li><a href="Cloudbook.Sections.html">Sections</a></li><li><a href="Cloudbook.UI.html">UI</a></li><li><a href="Project.html">Project</a></li><li><a href="Project.Data.html">Data</a></li><li><a href="Project.Info.html">Info</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ConfigUserManager">ConfigUserManager</a></li><li><a href="global.html#Controller">Controller</a></li><li><a href="global.html#deepEqual">deepEqual</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#notDeepEqual">notDeepEqual</a></li><li><a href="global.html#notEqual">notEqual</a></li><li><a href="global.html#notPropEqual">notPropEqual</a></li><li><a href="global.html#notStrictEqual">notStrictEqual</a></li><li><a href="global.html#ok">ok</a></li><li><a href="global.html#propEqual">propEqual</a></li><li><a href="global.html#StorageManager">StorageManager</a></li><li><a href="global.html#strictEqual">strictEqual</a></li><li><a href="global.html#Translator">Translator</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Backend.html">Backend</a></li><li><a href="CBObject.html">CBObject</a></li><li><a href="CBSection.html">CBSection</a></li><li><a href="ConfigUserManager.html">ConfigUserManager</a></li><li><a href="Controller.html">Controller</a></li><li><a href="StorageManager.html">StorageManager</a></li><li><a href="TextBox.html">TextBox</a></li><li><a href="Translator.html">Translator</a></li><li><a href="UI.html">UI</a></li><li><a href="Util.html">Util</a></li></ul><h3>Namespaces</h3><ul><li><a href="application.html">application</a></li><li><a href="application.backend.html">backend</a></li><li><a href="application.controller.html">controller</a></li><li><a href="application.storagemanager.html">storagemanager</a></li><li><a href="application.ui.html">ui</a></li><li><a href="Cloudbook.html">Cloudbook</a></li><li><a href="Cloudbook.Actions.html">Actions</a></li><li><a href="Cloudbook.Sections.html">Sections</a></li><li><a href="Cloudbook.UI.html">UI</a></li><li><a href="Project.html">Project</a></li><li><a href="Project.Data.html">Data</a></li><li><a href="Project.Info.html">Info</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getInstance">getInstance</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Mon Mar 23 2015 16:48:45 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Tue Mar 24 2015 12:37:37 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -1,12 +1,15 @@
+/**
+ * Application namespace
+ * @namespace application
+ */
+
 /************************
  *        Main          *
  ************************/
-
 /*
  * Core is created in this moment by loadComponent function. This function is responsible load extra libs on components.
  * These libraries be load before 
  */
-
  function Main(){
 
  	$(document).ready(function(){

@@ -1,6 +1,10 @@
 {
 	"source": {
-		"exclude": [ "src/components/core/text/lib","src/node_modules/jquery/","src/js/lib_external/"]
+		"exclude": [ "src/components/core/text/lib",
+					"src/node_modules/jquery/",
+					"src/node_modules/bootstrap/",
+					"src/js/lib_external/"
+					]
 	},
 	"opts":{
 		"encoding" : "utf-8",

@@ -1,5 +1,6 @@
 /**
  * Manager user config file
+ * @class ConfigUserManager
  */
 function ConfigUserManager(){
 	/**

@@ -1,6 +1,7 @@
 /**
  * This class is created to separate storage to application logic. This function must ensure
  * that there is no buffer overflow.
+ * @class StorageManager
  */
 function StorageManager(){
 	Project.Data._rawsections = {};
@@ -11,7 +12,7 @@ function StorageManager(){
  * @return {CBSection} section with first level sections.
  */
 StorageManager.prototype.getRoot = function() {
-	return Project.Data._rawsections['1'];
+	return Project.Data._rawsections['root'];
 };
 
 /**
@@ -19,8 +20,8 @@ StorageManager.prototype.getRoot = function() {
  * @param {CBSection} section section with first level sections.
  */
 StorageManager.prototype.setRoot = function(section) {
-	Project.Data._rawsections['1'] = section;
-	return '1';
+	Project.Data._rawsections['root'] = section;
+	return 'root';
 };
 /**
  * Get cbsection from storage with cbsectionid. 
@@ -44,7 +45,7 @@ StorageManager.prototype.setSectionById = function(section,cbsecid) {
 
 /**
  * This namespace has singleton instance of StorageManager class
- * @namespace controller
+ * @namespace storagemanager
  * @memberOf application
  */
 CBUtil.createNameSpace('application.storagemanager');

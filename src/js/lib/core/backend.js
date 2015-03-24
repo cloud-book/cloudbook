@@ -195,15 +195,22 @@ Backend.prototype.loadProject = function(projectPath) {
   var path = require('path');
   if (fs.existsSync(projectPath)){
     var contentproject = fs.readFileSync(projectPath);
+    var CBStorage = application.storagemanager.getInstance();
     var projectdata = JSON.parse(contentproject);
+
     this.voidProject();
     Project.Info.projectname = projectPath;
+
     projectdata.data.sections.forEach(function(section){
-      var tempsection = [];
-      section.forEach(function(element){
-        tempsection.push(new Cloudbook.Actions[element['idtype']]['component'](element));
+      var cbsectionid = section[0];
+      var rawsection = section[1];
+      var tempsection = new Cloudbook.Sections[rawsection.idtype](rawsection);
+
+      rawsection.content.forEach(function(element){
+        var x = new Cloudbook.Actions[element['idtype']]['component'](element);
+        tempsection.content.push(x);
       });
-      Project.Data.Sections.push(tempsection);
+      CBStorage.setSectionById(tempsection,cbsectionid);
     });
   }
   
@@ -222,13 +229,27 @@ Backend.prototype.saveProject = function(projectfolder) {
   objectProject['name'] = "Nombre temporal";
   objectProject['author'] = "Usuario 1 <micorreo@midominio.com>";
   objectProject['data'] = {};
-  objectProject['data']['sections'] = CBStorage.getRoot();
+  objectProject['data']['sections'] = [];
+  function walk(uid){
+    var section = CBStorage.getSectionById(uid);
+    return {obj: section, list: section.sections};
+  }
+  var root = CBStorage.getRoot();
+  objectProject['data']['sections'].push(['root',root]);
+  var pool = [];
+  pool = pool.concat(root.sections);
+  var identifier = null;
+  var result = null;
+  while(identifier = pool.pop()){
+    result = walk(identifier);
+    objectProject['data']['sections'].push([identifier,result.obj]);
+    pool = pool.concat(result.list);
+  }
   var result_string = JSON.stringify(objectProject,null," ");
   fs.writeFile(projectpath,result_string);
-
-
-
 };
+
+
 
 
 /**
