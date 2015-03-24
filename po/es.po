@@ -3,12 +3,12 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Language-Team: Spanish\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2015-03-03 13:20+0100\n"
+"PO-Revision-Date: 2015-03-23 17:17+0100\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-03-03 12:20+0000\n"
+"POT-Creation-Date: 2015-03-23 16:16+0000\n"
 "Last-Translator: kbut <raurodse@gmail.com>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -31,3 +31,63 @@ msgstr "Salir"
 #: src/js/lib/gui/menu.js:70
 msgid "File"
 msgstr "Archivo"
+
+#: src/js/lib/gui/ui.js:231
+msgid "Insert before"
+msgstr "Insertar antes"
+
+#: src/js/lib/gui/ui.js:235
+msgid "Insert after"
+msgstr "Insertar despues"
+
+#: src/js/lib/gui/ui.js:239
+msgid "Insert subsection"
+msgstr "Insertar subseccion"
+
+#: src/js/lib/gui/ui.js:243
+msgid "Delete"
+msgstr "Borrar"
+
+#: src/js/lib/gui/ui.js:249
+msgid "Edit"
+msgstr "Editar"
+
+#: src/templates/initialwizard.step1.hbs:1
+msgid "Open"
+msgstr "Abrir"
+
+#: src/templates/initialwizard.step1.hbs:2
+msgid "New project"
+msgstr "Nuevo proyecto"
+
+#: src/templates/initialwizard.step1.hbs:3
+msgid "Open project"
+msgstr "Abrir proyecto"
+
+#: src/templates/initialwizard.step2.hbs:1
+msgid "Project name"
+msgstr "Nombre del proyecto"
+
+#: src/templates/initialwizard.step2.hbs:2
+msgid "Enter project name"
+msgstr "Introduce el nombre del proyecto"
+
+#: src/templates/initialwizard.step2.hbs:3
+msgid "Advanced Project"
+msgstr "Proyecto avanzado"
+
+#: src/templates/initialwizard.step2.hbs:4
+msgid "Simple Project"
+msgstr "Proyecto simple"
+
+#: src/templates/initialwizard.step2.hbs:5
+msgid "Go back"
+msgstr "Atras"
+
+#: src/templates/updateSectionName.hbs:1
+msgid "Section name"
+msgstr "Nombre de seccion"
+
+#: src/templates/updateSectionName.hbs:2
+msgid "Save"
+msgstr "Guardar"
