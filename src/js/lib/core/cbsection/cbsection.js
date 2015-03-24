@@ -14,7 +14,7 @@ function CBSection(dataobject){
 	this.sections = typeof dataobject.sections !== 'undefined' ? dataobject.sections : [];
 	this.content = typeof dataobject.content !== 'undefined' ? dataobject.content : [];
 	this.idtype = "section.base";
-	this.name = typeof dataobject.name !== 'undefined' ? dataobject.name : "";
+	this.name = typeof dataobject.name !== 'undefined' ? dataobject.name : CBI18n.gettext("Section");
 	this.numbering = typeof dataobject.numbering !== 'undefined' ? dataobject.numbering : "1";
 }
 

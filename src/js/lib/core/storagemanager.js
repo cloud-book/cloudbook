@@ -4,7 +4,6 @@
  */
 function StorageManager(){
 	Project.Data._rawsections = {};
-	Project.Data.Sections = null;
 }
 
 /**
@@ -12,7 +11,7 @@ function StorageManager(){
  * @return {CBSection} section with first level sections.
  */
 StorageManager.prototype.getRoot = function() {
-	return Project.Data.Sections;
+	return Project.Data._rawsections['1'];
 };
 
 /**
@@ -20,7 +19,8 @@ StorageManager.prototype.getRoot = function() {
  * @param {CBSection} section section with first level sections.
  */
 StorageManager.prototype.setRoot = function(section) {
-	Project.Data.Sections = section;
+	Project.Data._rawsections['1'] = section;
+	return '1';
 };
 /**
  * Get cbsection from storage with cbsectionid. 
@@ -38,6 +38,7 @@ StorageManager.prototype.getSectionById = function(cbsecid) {
  */
 StorageManager.prototype.setSectionById = function(section,cbsecid) {
 	Project.Data._rawsections[cbsecid] = section;
+	return cbsecid;
 };
 
 
