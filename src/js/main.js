@@ -31,7 +31,10 @@
  }
 
 
- Main.prototype.run = function() {
+/**
+ * Main function to load application
+ */
+ Main.prototype.run = function run() {
 
  	var backend = application.backend.getInstance();
  	var ui = application.ui.getInstance();
@@ -48,7 +51,7 @@
  		else{
  			throw "Path " + path + " not exists";
  		}
- 	}
+ 	};
  	application.util.template.registerHelper('gettext',function(str){return CBI18n.gettext(str);});
 
 

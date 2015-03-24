@@ -49,6 +49,19 @@ Controller.prototype.createSimpleProject = function createSimpleProject(name) {
 	throw "Method not implemented";
 };
 
+Controller.prototype.loadProject = function loadProject(path) {
+	var backend = application.backend.getInstance();
+	var ui = application.ui.getInstance();
+	backend.loadProject(path);
+	ui.loadProject(path);
+};
+
+Controller.prototype.saveProject = function(path) {
+	var backend = application.backend.getInstance();
+	var ui = application.ui.getInstance();
+	backend.saveProject(path);
+};
+
 /**
  * This namespace has singleton instance of Controller class
  * @namespace controller

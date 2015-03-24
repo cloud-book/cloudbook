@@ -6,17 +6,17 @@
     var menubar = new gui.Menu({
         type: 'menubar'
       });
-
+    var controller = application.controller.getInstance();
     /**
      * Actions for menu
      */
 
     function saveAs() {
-        var pathelement = $(document.createElement('input')).attr('type','file').attr('nwsaveas','');
+        var pathelement = $(document.createElement('input')).attr('type','file').attr('nwdirectory','');
         pathelement.change(function(evt) {
               CBUtil.createNameSpace('Project.Info');
               Project.Info.projectname = $(this).val();
-              core.saveProject($(this).val());
+              controller.saveProject($(this).val());
             });
         pathelement.trigger('click');
       }
@@ -25,8 +25,8 @@
     var save_project = {
       label: CBI18n.gettext('Save Project'),
       click: function saveProject() {
-        if ( Project.Info.hasOwnProperty('projectname')){
-          core.saveProject(Project.UI.Data.Info.projectname);
+        if ( Project.Info.hasOwnProperty('projectpath')){
+          controller.saveProject(Project.Info.projectpath);
         }
         else{
           saveAs();
@@ -45,7 +45,7 @@
       click: function load_project() {
         var pathelement = $(document.createElement('input')).attr('type','file');
         pathelement.change(function(evt) {
-              core.loadProject($(this).val());
+              controller.loadProject($(this).val());
             });
         pathelement.trigger('click');
       }
