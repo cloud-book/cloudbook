@@ -60,30 +60,18 @@ function Backend() {
    */
   Cloudbook.UI.navsections = '#navsections';
 
-  /**
-   * Path to workspace folder by default
-   * @type {String}
-   */
-  Cloudbook.workspace = process.env['HOME'] + "/Cloudbook/";
-  /**
-   * File where store all project project metadata
-   * @type {String}
-   */
-  Cloudbook.userconfigpath = Cloudbook.workspace + ".conf";
-
 }
 
 /**
  * Check exists workspace and userconfig. If any not exists, create it.
  */
 Backend.prototype.prepareWorkspace = function prepareWorkspace() {
-  var fs = require('fs');
+  var fs = require('fs'),
+      userConfig = application.config.user.getInstance();
   if ( ! fs.existsSync(Cloudbook.workspace)){
     fs.mkdirSync(Cloudbook.workspace);
   }
-  if ( ! fs.existsSync(Cloudbook.userconfigpath) ){
-    this.saveUserConfig({projects:[]});
-  }
+  userConfig.initialize();
 };
 
 /**
@@ -222,6 +210,7 @@ Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectB
  */
 Backend.prototype.loadProject = function(projectPath) {
   var fs = require('fs');
+  var path = require('path');
   if (fs.existsSync(projectPath)){
     var contentproject = fs.readFileSync(projectPath);
     var projectdata = JSON.parse(contentproject);
@@ -243,16 +232,20 @@ Backend.prototype.loadProject = function(projectPath) {
  * into folder created for this purpose on workspace folder.  
  * @param  {String} projectPath Path where project will be stored
  */
-Backend.prototype.saveProject = function(projectPath) {
+Backend.prototype.saveProject = function(projectfolder) {
   var fs = require('fs');
   var objectProject = {};
   var CBStorage = application.storagemanager.getInstance();
+  var projectpath = projectfolder + "/project.cloudbook";
   objectProject['name'] = "Nombre temporal";
   objectProject['author'] = "Usuario 1 <micorreo@midominio.com>";
   objectProject['data'] = {};
   objectProject['data']['sections'] = CBStorage.getRoot();
   var result_string = JSON.stringify(objectProject,null," ");
-  fs.writeFile(projectPath,result_string);
+  fs.writeFile(projectpath,result_string);
+
+
+
 };
 
 
@@ -300,21 +293,14 @@ Backend.prototype.regenerateSubsection = function regenerateSubsection(sectionid
  * @param  {String} projectname Project name
  */
 Backend.prototype.createProject = function createProject(projectname) {
-  var fs = require('fs');
+  var fs = require('fs'),
+      userconfig = application.config.user.getInstance();
 
   Project.Info.projectpath = Cloudbook.workspace + projectname;
   Project.Info.projectname = projectname;
   fs.mkdirSync(Project.Info.projectpath,0775);
   fs.mkdirSync(Project.Info.projectpath+"/rsrc",0775);
-  
-  // Save project into userconfig
-  var userconfig = this.getUserConfig();
-  var project = {}
-  project.date = new Date();
-  project.name = projectname;
-  project.path = Project.Info.projectpath;
-  userconfig.projects.push(project);
-  this.saveUserConfig(userconfig);
+  userconfig.newProject(projectname);
 };
 
 /**
@@ -328,26 +314,6 @@ Backend.prototype.checkProjectExists = function checkProjectExists(projectname) 
     return true;
   }
   return false;
-};
-
-/**
- * Return JSON object with user configuration and metadata from projects
- * @return {Object[]} JSON with user config
- */
-Backend.prototype.getUserConfig = function getUserConfig() {
-  var fs = require('fs');
-  return JSON.parse(fs.readFileSync(Cloudbook.userconfigpath));
-};
-
-/**
- * Save user config on file system
- * @param  {Object[]} jsoninfo JSON with user config and projects metadata
- * @return {Boolean}          Success
- */
-Backend.prototype.saveUserConfig = function saveUserConfig(jsoninfo) {
-  var fs = require('fs');
-  fs.writeFileSync(Cloudbook.userconfigpath,JSON.stringify(jsoninfo),{encoding:"utf-8"});
-  return true;
 };
 
 /**

@@ -1,42 +1,57 @@
+/**
+ * Responsible class to manage all things related with GUI
+ * @constructor
+ */
 function UI(){
 }
 
+/**
+ * Initialize wizard that show open or create new project
+ */
 UI.prototype.showIntro = function showIntro() {
 	var container = $(document.createElement('div')).attr('id','wizard');
 	container.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
-	var e = {data:{that:this}};
-	this.showSelectOption(e);
+	this.showNewOpenProject({data:{that:this}});
 };
 
-UI.prototype.showSelectOption = function showSelectOption(e) {
-	var that = e.data.that;
-	var backend = application.backend.getInstance();
-  var fs = require('fs');
-	$("#wizard").empty();
+/**
+ * Show wizard with recent projects to open, create new project or open other project
+ * @param {event} e to send this object reference
+ */
+UI.prototype.showNewOpenProject = function showNewOpenProject(e) {
+    var that = e.data.that;
+    var userconfig = application.config.user.getInstance();
+    var backend = application.backend.getInstance();
+    var fs = require('fs');
+    var wizarddiv = $("#wizard") ;
+    wizarddiv.empty();
 
-	var datainfo = backend.getUserConfig();
-  var template = fs.readFileSync('./templates/initialwizard.step1.mst',{encoding:'utf8'});
-  var templatecompiled = application.util.template.compile(template);
-
-  var data = {
-    projects : datainfo.projects
-  }
-
-	$("#wizard").append(templatecompiled(data));
-  $('#newproject').click({that:that},that.showTypeProject);
+    var datainfo = userconfig.getLastProjects();
+    var template = fs.readFileSync('./templates/initialwizard.step1.hbs',{encoding:'utf8'});
+    var templatecompiled = application.util.template.compile(template);
+    var data = {
+        projects : datainfo.slice(-5)
+    };
+    wizarddiv.append(templatecompiled(data));
+    $('#newproject').click({that:that},that.showTypeProject);
+    $('#listProjects button').click({that:that},that.launcherloadProject);
 };
 
+/**
+ * Load dialog on #wizard div to create new project.
+ * @param  {event} e to send this object reference
+ */
 UI.prototype.showTypeProject = function(e) {
 	var that = e.data.that;
 	var fs = require('fs');
 	$("#wizard").empty();
-	var template = fs.readFileSync('./templates/initialwizard.step2.mst',{encoding:'utf8'});
+	var template = fs.readFileSync('./templates/initialwizard.step2.hbs',{encoding:'utf8'});
 	var templatecompiled = application.util.template.compile(template);
 	$("#wizard").append(templatecompiled());
 
 	$("#advprojbtn").click(function(){
 		var controller = application.controller.getInstance();
-		controller.createProProject($("#projectname").val()); 
+		controller.createProProject($("#projectname").val());
 		$('#wizard').dialog('close');
 		$('#wizard').remove();
 	});
@@ -46,7 +61,7 @@ UI.prototype.showTypeProject = function(e) {
 		$('#wizard').dialog('close');
 		$('#wizard').remove();
 	});
-	$("#wzrdgoback").click({that:that},that.showSelectOption);
+	$("#wzrdgoback").click({that:that},that.showNewOpenProject);
 
 	$("#projectname").keyup(function(e){
 		var backend = application.backend.getInstance();
@@ -69,6 +84,9 @@ UI.prototype.showTypeProject = function(e) {
 };
 
 
+/**
+ * Load theme to apply all aplication. This function look for css/js folders and load all find.
+ */
 UI.prototype.loadTheme = function loadTheme(){
   var fs = require('fs');
   var path = require('path');
@@ -93,9 +111,9 @@ UI.prototype.loadTheme = function loadTheme(){
 
 /**
  * Create components buttons to append elements into selected section.
- * Here method call editorView and add_callback methods of CBObjects. 
- * See 
- * {@link CBObject#editorView} and 
+ * Here method call editorView and add_callback methods of CBObjects.
+ * See
+ * {@link CBObject#editorView} and
  * {@link CBObject.add_callback}
  */
  UI.prototype.renderActionsButtons = function renderActionsButtons(){
@@ -114,7 +132,7 @@ UI.prototype.loadTheme = function loadTheme(){
 }
 
 /**
- * Create element from component. This include cbobject and rendered view on targetcontent. 
+ * Create element from component. This include cbobject and rendered view on targetcontent.
  * When append rendered view on targetcontent then trigger add_callback function related with component
  * @param  {String} component Component idtype indicated on metadata file.
  */
@@ -129,11 +147,11 @@ UI.prototype.loadTheme = function loadTheme(){
 };
 
 /**
- * On component metadata file may be field "icon" and "label". This fields are used to create action component button. 
+ * On component metadata file may be field "icon" and "label". This fields are used to create action component button.
  * When user click this button, on targetcontent to been added an element.
  * @param  {String} pluginpath relative path to root component
  * @param  {Object} infobutton JSON created from metadata file.
- * @param  {String} infobutton.icon relative icon path 
+ * @param  {String} infobutton.icon relative icon path
  * @param  {String} infobutton.label Label button.
  * @result {String} Html code to be included on button tag
  */
@@ -152,7 +170,6 @@ UI.prototype.loadTheme = function loadTheme(){
   }
   return result;
 };
-
 
 UI.prototype.initSectionsPro = function initSectionsPro() {
   var backend = application.backend.getInstance();
@@ -198,7 +215,7 @@ UI.prototype.createSectionProView = function createSectionProView(cbsecid) {
   var actions = $(document.createElement('button')).html('+').attr('data-toggle','dropdown').attr('id',cbsecid);
   var subsections = $(document.createElement('ul')).addClass('subsections').addClass("connectedSortable");
   textsection.append($(document.createElement('div')).html("1.Seccion").addClass('caption'));
-  
+
   textsection.click({that:this},this.selectSection);
   actions.click({that:this},this.createMenu);
   displaysection.append([textsection,actions]);
@@ -256,7 +273,7 @@ UI.prototype.createSectionPageView = function createSectionPageView(cbsecid) {
   appendsubsection.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/subsection.png"));
   appendafter.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/add.png"));
   sectionimage.append($(document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath+"/img/white.png"));
-  
+
 
   appendbefore.click({that:this},this.appendBefore);
   appendsubsection.click({that:this},this.appendSubsection);
@@ -280,7 +297,7 @@ UI.prototype.appendBefore = function appendBefore(e){
   var parent = null;
   if (listparents.length <2){
     parent = "1";
-  } 
+  }
   else{
     parent = $(listparents[1]).attr('data-cbsectionid');
   }
@@ -313,7 +330,7 @@ UI.prototype.appendAfter = function appendAfter(e){
   var parentObjectSection = null;
   if (listparents.length <2){
     parentObjectSection = "1";
-  } 
+  }
   else{
     parentObjectSection = $(listparents[1]).attr('data-cbsectionid');
   }
@@ -328,7 +345,7 @@ UI.prototype.selectSection = function selectSection(e){
   var that = e.data.that;
   if (Cloudbook.UI.selected !== undefined){
     $(Cloudbook.UI.selected.children('.displaysection')).removeClass('sectionselected');
-  } 
+  }
   Cloudbook.UI.selected = $($(this).parents('.cbsection')[0]);
   Cloudbook.UI.selected.children('.displaysection').addClass('sectionselected');
   that.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
@@ -353,7 +370,7 @@ UI.prototype.updateSectionName = function(name,cbsectionid) {
 
 UI.prototype.dialogUpdateSectionName = function dialogUpdateSectionName(cbsectionid) {
   var controller = application.controller.getInstance();
-  var template = application.util.template.getTemplate('templates/updateSectionName.mst');
+  var template = application.util.template.getTemplate('templates/updateSectionName.hbs');
   var dialog = $(template());
   dialog.find('button').click(function(){
   	var name = $('#sectionname').val();
@@ -372,6 +389,18 @@ UI.prototype.deleteSection = function deleteSection(cbsectionid) {
 UI.prototype.dialogDeleteSection = function dialogDeleteSection(cbsectionid) {
 	var controller = application.controller.getInstance();
 	controller.deleteSection(cbsectionid);
+};
+
+UI.prototype.launcherloadProject = function launcherloadProject(e) {
+  var that = e.data.that;
+  var element = e.currentTarget;
+  var path = element.dataset.path;
+  var controller = application.controller.getInstance();
+  controller.loadProject(path + "/project.cloudbook");
+};
+
+UI.prototype.loadProject = function loadProject(path) {
+  console.log(path);
 };
 
 
