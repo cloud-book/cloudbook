@@ -31,8 +31,12 @@ Controller.prototype.createProProject = function createProProject(name) {
  	var ui = application.ui.getInstance()
  	backend.createProject(name);
  	backend.loadSectionsObjects();
+ 	backend.initSections();
  	ui.renderActionsButtons();
+ 	ui.emptyTargetContent();
  	ui.initSectionsPro();
+ 	ui.createFirstSection();
+ 	this.saveProject(Project.Info.projectpath);
 };
 
 /**
@@ -51,11 +55,13 @@ Controller.prototype.createSimpleProject = function createSimpleProject(name) {
 };
 
 Controller.prototype.loadProject = function loadProject(path) {
+	CBUtil.include("js/lib/gui/menu.js");
 	var backend = application.backend.getInstance();
 	var ui = application.ui.getInstance();
 	backend.loadSectionsObjects();
+	ui.renderActionsButtons();
+	ui.emptyTargetContent();
 	backend.loadProject(path);
- 	ui.renderActionsButtons();
 	ui.loadProject(path);
 };
 

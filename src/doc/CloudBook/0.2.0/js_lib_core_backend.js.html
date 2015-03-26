@@ -223,15 +223,25 @@ Backend.prototype.loadProject = function(projectPath) {
   var path = require('path');
   if (fs.existsSync(projectPath)){
     var contentproject = fs.readFileSync(projectPath);
+    var CBStorage = application.storagemanager.getInstance();
     var projectdata = JSON.parse(contentproject);
+
+    Project.Info.projectpath = path.dirname(projectPath);
+    Project.Info.projectname = projectdata.name;
+
     this.voidProject();
     Project.Info.projectname = projectPath;
+
     projectdata.data.sections.forEach(function(section){
-      var tempsection = [];
-      section.forEach(function(element){
-        tempsection.push(new Cloudbook.Actions[element['idtype']]['component'](element));
+      var cbsectionid = section[0];
+      var rawsection = section[1];
+      var tempsection = new Cloudbook.Sections[rawsection.idtype](rawsection);
+
+      rawsection.content.forEach(function(element){
+        var x = new Cloudbook.Actions[element['idtype']]['component'](element);
+        tempsection.content.push(x);
       });
-      Project.Data.Sections.push(tempsection);
+      CBStorage.setSectionById(tempsection,cbsectionid);
     });
   }
   
@@ -247,16 +257,30 @@ Backend.prototype.saveProject = function(projectfolder) {
   var objectProject = {};
   var CBStorage = application.storagemanager.getInstance();
   var projectpath = projectfolder + "/project.cloudbook";
-  objectProject['name'] = "Nombre temporal";
+  objectProject['name'] = Project.Info.projectname;
   objectProject['author'] = "Usuario 1 &lt;micorreo@midominio.com>";
   objectProject['data'] = {};
-  objectProject['data']['sections'] = CBStorage.getRoot();
+  objectProject['data']['sections'] = [];
+  function walk(uid){
+    var section = CBStorage.getSectionById(uid);
+    return {obj: section, list: section.sections};
+  }
+  var root = CBStorage.getRoot();
+  objectProject['data']['sections'].push(['root',root]);
+  var pool = [];
+  pool = pool.concat(root.sections);
+  var identifier = null;
+  var result = null;
+  while(identifier = pool.pop()){
+    result = walk(identifier);
+    objectProject['data']['sections'].push([identifier,result.obj]);
+    pool = pool.concat(result.list);
+  }
   var result_string = JSON.stringify(objectProject,null," ");
   fs.writeFile(projectpath,result_string);
-
-
-
 };
+
+
 
 
 /**
@@ -302,8 +326,15 @@ Backend.prototype.regenerateSubsection = function regenerateSubsection(sectionid
 Backend.prototype.createProject = function createProject(projectname) {
   var fs = require('fs'),
       userconfig = application.config.user.getInstance();
-
+  /**
+   * Path project save all files
+   * @type {String}
+   */
   Project.Info.projectpath = Cloudbook.workspace + projectname;
+  /**
+   * Project name
+   * @type {String}
+   */
   Project.Info.projectname = projectname;
   fs.mkdirSync(Project.Info.projectpath,0775);
   fs.mkdirSync(Project.Info.projectpath+"/rsrc",0775);
@@ -359,13 +390,13 @@ application.backend = CBUtil.singleton(Backend);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Backend.html">Backend</a></li><li><a href="CBObject.html">CBObject</a></li><li><a href="CBSection.html">CBSection</a></li><li><a href="ConfigUserManager.html">ConfigUserManager</a></li><li><a href="Controller.html">Controller</a></li><li><a href="StorageManager.html">StorageManager</a></li><li><a href="TextBox.html">TextBox</a></li><li><a href="Translator.html">Translator</a></li><li><a href="UI.html">UI</a></li><li><a href="Util.html">Util</a></li></ul><h3>Namespaces</h3><ul><li><a href="application.html">application</a></li><li><a href="application.backend.html">backend</a></li><li><a href="application.controller.html">controller</a></li><li><a href="application.storagemanager.html">storagemanager</a></li><li><a href="application.ui.html">ui</a></li><li><a href="Cloudbook.html">Cloudbook</a></li><li><a href="Cloudbook.Actions.html">Actions</a></li><li><a href="Cloudbook.Sections.html">Sections</a></li><li><a href="Cloudbook.UI.html">UI</a></li><li><a href="Project.html">Project</a></li><li><a href="Project.Data.html">Data</a></li><li><a href="Project.Info.html">Info</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getInstance">getInstance</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Backend.html">Backend</a></li><li><a href="CBObject.html">CBObject</a></li><li><a href="CBSection.html">CBSection</a></li><li><a href="ConfigUserManager.html">ConfigUserManager</a></li><li><a href="Controller.html">Controller</a></li><li><a href="StorageManager.html">StorageManager</a></li><li><a href="TextBox.html">TextBox</a></li><li><a href="Translator.html">Translator</a></li><li><a href="UI.html">UI</a></li><li><a href="Util.html">Util</a></li></ul><h3>Namespaces</h3><ul><li><a href="application.html">application</a></li><li><a href="application.backend.html">backend</a></li><li><a href="application.controller.html">controller</a></li><li><a href="application.storagemanager.html">storagemanager</a></li><li><a href="application.ui.html">ui</a></li><li><a href="Cloudbook.html">Cloudbook</a></li><li><a href="Cloudbook.Actions.html">Actions</a></li><li><a href="Cloudbook.Sections.html">Sections</a></li><li><a href="Cloudbook.UI.html">UI</a></li><li><a href="Project.html">Project</a></li><li><a href="Project.Data.html">Data</a></li><li><a href="Project.Info.html">Info</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Tue Mar 24 2015 12:37:37 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Wed Mar 25 2015 16:26:56 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

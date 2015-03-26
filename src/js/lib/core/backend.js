@@ -114,7 +114,7 @@ Backend.prototype.loadComponentsRecursive = function loadComponentsRecursive(com
  */
 Backend.prototype.loadSectionsObjects = function() {
   Cloudbook.Sections = {};
-  Cloudbook.Sections['basic'] = CBUtil.req('js/lib/core/cbsection/cbsection.js');
+  Cloudbook.Sections['basic'] = CBUtil.req('js/lib/core/components/cbsection.js');
 };
 
 
@@ -165,9 +165,13 @@ Backend.prototype.initSections = function initSections() {
   var that = this,
       CBStorage = application.storagemanager.getInstance(),
       auxcbsection = new Cloudbook.Sections['basic']();
-  return this.appendNewSectionObjectByUID(CBStorage.setRoot(auxcbsection),'basic');
+      CBStorage.setRoot(auxcbsection);
+  
 };
 
+Backend.prototype.createFirstSection = function createFirstSection() {
+  return this.appendNewSectionObjectByUID('root','basic');
+};
 
 /**
  * Create new section and append into section indicate. This section is identifier string instead of CBSection object. 
@@ -198,6 +202,9 @@ Backend.prototype.loadProject = function(projectPath) {
     var CBStorage = application.storagemanager.getInstance();
     var projectdata = JSON.parse(contentproject);
 
+    Project.Info.projectpath = path.dirname(projectPath);
+    Project.Info.projectname = projectdata.name;
+
     this.voidProject();
     Project.Info.projectname = projectPath;
 
@@ -226,7 +233,7 @@ Backend.prototype.saveProject = function(projectfolder) {
   var objectProject = {};
   var CBStorage = application.storagemanager.getInstance();
   var projectpath = projectfolder + "/project.cloudbook";
-  objectProject['name'] = "Nombre temporal";
+  objectProject['name'] = Project.Info.projectname;
   objectProject['author'] = "Usuario 1 <micorreo@midominio.com>";
   objectProject['data'] = {};
   objectProject['data']['sections'] = [];
@@ -295,8 +302,15 @@ Backend.prototype.regenerateSubsection = function regenerateSubsection(sectionid
 Backend.prototype.createProject = function createProject(projectname) {
   var fs = require('fs'),
       userconfig = application.config.user.getInstance();
-
+  /**
+   * Path project save all files
+   * @type {String}
+   */
   Project.Info.projectpath = Cloudbook.workspace + projectname;
+  /**
+   * Project name
+   * @type {String}
+   */
   Project.Info.projectname = projectname;
   fs.mkdirSync(Project.Info.projectpath,0775);
   fs.mkdirSync(Project.Info.projectpath+"/rsrc",0775);
@@ -328,11 +342,23 @@ Backend.prototype.updateSectionName = function(name,cbsectionid) {
   CBStorage.setSectionById(x,cbsectionid);
 };
 
+/**
+ * Delete files all 
+ * @param  {[type]} cbsectionid [description]
+ * @return {[type]}             [description]
+ */
 Backend.prototype.deleteSection = function(cbsectionid) {
   /**
    * @todo This method must delete binary files related with section and subsections
    */
-  throw "Method not implemented";
+  var CBStorage = application.storagemanager.
+  var pool = [cbsectionid];
+  while(tempcbsectionid = pool.shift()){
+    section = CBStorage.getSectionById(tempcbsectionid);
+    pool = pool.concat(section.sections);
+    CBStorage.deleteSectionById(tempcbsectionid);
+  }
+
 };
 
 /**

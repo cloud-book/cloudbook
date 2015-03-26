@@ -7,9 +7,17 @@
         type: 'menubar'
       });
     var controller = application.controller.getInstance();
+    var ui = application.ui.getInstance();
     /**
      * Actions for menu
      */
+
+    function newProject(){
+      ui.initializeWizardDiv();
+      ui.showTypeProject({data:{that:ui}});
+      $("#wzrdgoback").unbind('click');
+      $("#wzrdgoback").click(function(){$("#wizard").dialog('close');$("#wizard").remove()});
+    }
 
     function saveAs() {
         var pathelement = $(document.createElement('input')).attr('type','file').attr('nwdirectory','');
@@ -21,6 +29,10 @@
         pathelement.trigger('click');
       }
 
+    var new_project = {
+      label: CBI18n.gettext('New project'),
+      click: newProject
+    };
 
     var save_project = {
       label: CBI18n.gettext('Save Project'),
@@ -62,6 +74,7 @@
      * Generate menubar
      */
     var file = new gui.Menu();
+    file.append(new gui.MenuItem(new_project));
     file.append(new gui.MenuItem(load_project));
     file.append(new gui.MenuItem(save_as_project));
     file.append(new gui.MenuItem(save_project));

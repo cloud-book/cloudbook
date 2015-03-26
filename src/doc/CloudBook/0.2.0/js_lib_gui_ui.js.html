@@ -37,9 +37,13 @@ function UI(){
  * Initialize wizard that show open or create new project
  */
 UI.prototype.showIntro = function showIntro() {
-	var container = $(document.createElement('div')).attr('id','wizard');
-	container.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
+	this.initializeWizardDiv();
 	this.showNewOpenProject({data:{that:this}});
+};
+
+UI.prototype.initializeWizardDiv = function() {
+  var container = $(document.createElement('div')).attr('id','wizard');
+  container.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
 };
 
 /**
@@ -145,6 +149,8 @@ UI.prototype.loadTheme = function loadTheme(){
  * {@link CBObject.add_callback}
  */
  UI.prototype.renderActionsButtons = function renderActionsButtons(){
+  if(!Cloudbook.UI.renderedActionsButtons){
+
   var that = this;
   var backend = application.backend.getInstance();
   var path = require('path');
@@ -157,6 +163,12 @@ UI.prototype.loadTheme = function loadTheme(){
       .addClass('btn').addClass('btn-default')
       .html(that.calculeButtonContent(componentpath, description)));
   });
+  /**
+   * Flag to detect if actions were rendered
+   * @type {boolean}
+   */
+  Cloudbook.UI.renderedActionsButtons = true;
+  }
 }
 
 /**
@@ -201,16 +213,19 @@ UI.prototype.loadTheme = function loadTheme(){
 
 
 UI.prototype.initSectionsPro = function initSectionsPro() {
+  var list = $(document.createElement('ul')).addClass("connectedSortable");
+  $(Cloudbook.UI.navsections).html(list).attr('data-cbsectionid','root');
+};
+
+UI.prototype.createFirstPage = function createFirstPage() {
   var backend = application.backend.getInstance();
   var cbsecid = backend.initSections();
   var son = this.createSectionProView(cbsecid);
-  var list = $(document.createElement('ul')).addClass("connectedSortable");
+  var list = $("[data-cbsectionid='root'] > ul");
   list.append(son);
-  $(Cloudbook.UI.navsections).html(list).attr('data-cbsectionid','1');
   $($(son.children('.displaysection')).children('.divselector')).click();
   this.reloadSortable();
 };
-
 
 
 UI.prototype.reloadSortable = function reloadSortable(element){
@@ -326,7 +341,7 @@ UI.prototype.appendBefore = function appendBefore(e){
   var backend = application.backend.getInstance();
   var parent = null;
   if (listparents.length &lt;2){
-    parent = "1";
+    parent = "root";
   }
   else{
     parent = $(listparents[1]).attr('data-cbsectionid');
@@ -359,7 +374,7 @@ UI.prototype.appendAfter = function appendAfter(e){
   var listparents = $(e.currentTarget).parents('.cbsection');
   var parentObjectSection = null;
   if (listparents.length &lt;2){
-    parentObjectSection = "1";
+    parentObjectSection = "root";
   }
   else{
     parentObjectSection = $(listparents[1]).attr('data-cbsectionid');
@@ -427,12 +442,28 @@ UI.prototype.launcherloadProject = function launcherloadProject(e) {
   var path = element.dataset.path;
   var controller = application.controller.getInstance();
   controller.loadProject(path + "/project.cloudbook");
+  $("#wizard").dialog('close');
+  $("#wizard").remove();
 };
 
 UI.prototype.loadProject = function loadProject(path) {
-  console.log(path);
+  var CBStorage = application.storagemanager.getInstance();
+  var root = CBStorage.getRoot();
+  var that = this;
+  this.initSectionsPro();
+  var pool = [];
+  pool = root.sections.map(function(el){return {parent:'root',identifier:el}});
+  while(node = pool.shift()){
+    var son = that.createSectionProView(node.identifier);
+    $('[data-cbsectionid="'+node.parent+'"] > ul').append(son);
+    var objraw = CBStorage.getSectionById(node.identifier);
+    pool = pool.concat(objraw.sections.map(function(el){return {parent:node.identifier,identifier:el}}));
+  }
 };
 
+UI.prototype.emptyTargetContent = function emptyTargetContent() {
+  $(Cloudbook.UI.targetcontent).empty();
+};
 
 /**
  * This namespace has singleton instance of UI class
@@ -452,13 +483,13 @@ application.ui = CBUtil.singleton(UI);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Backend.html">Backend</a></li><li><a href="CBObject.html">CBObject</a></li><li><a href="CBSection.html">CBSection</a></li><li><a href="ConfigUserManager.html">ConfigUserManager</a></li><li><a href="Controller.html">Controller</a></li><li><a href="StorageManager.html">StorageManager</a></li><li><a href="TextBox.html">TextBox</a></li><li><a href="Translator.html">Translator</a></li><li><a href="UI.html">UI</a></li><li><a href="Util.html">Util</a></li></ul><h3>Namespaces</h3><ul><li><a href="application.html">application</a></li><li><a href="application.backend.html">backend</a></li><li><a href="application.controller.html">controller</a></li><li><a href="application.storagemanager.html">storagemanager</a></li><li><a href="application.ui.html">ui</a></li><li><a href="Cloudbook.html">Cloudbook</a></li><li><a href="Cloudbook.Actions.html">Actions</a></li><li><a href="Cloudbook.Sections.html">Sections</a></li><li><a href="Cloudbook.UI.html">UI</a></li><li><a href="Project.html">Project</a></li><li><a href="Project.Data.html">Data</a></li><li><a href="Project.Info.html">Info</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getInstance">getInstance</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Backend.html">Backend</a></li><li><a href="CBObject.html">CBObject</a></li><li><a href="CBSection.html">CBSection</a></li><li><a href="ConfigUserManager.html">ConfigUserManager</a></li><li><a href="Controller.html">Controller</a></li><li><a href="StorageManager.html">StorageManager</a></li><li><a href="TextBox.html">TextBox</a></li><li><a href="Translator.html">Translator</a></li><li><a href="UI.html">UI</a></li><li><a href="Util.html">Util</a></li></ul><h3>Namespaces</h3><ul><li><a href="application.html">application</a></li><li><a href="application.backend.html">backend</a></li><li><a href="application.controller.html">controller</a></li><li><a href="application.storagemanager.html">storagemanager</a></li><li><a href="application.ui.html">ui</a></li><li><a href="Cloudbook.html">Cloudbook</a></li><li><a href="Cloudbook.Actions.html">Actions</a></li><li><a href="Cloudbook.Sections.html">Sections</a></li><li><a href="Cloudbook.UI.html">UI</a></li><li><a href="Project.html">Project</a></li><li><a href="Project.Data.html">Data</a></li><li><a href="Project.Info.html">Info</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Tue Mar 24 2015 12:37:37 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Wed Mar 25 2015 16:26:56 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

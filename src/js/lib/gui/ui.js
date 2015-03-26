@@ -9,9 +9,13 @@ function UI(){
  * Initialize wizard that show open or create new project
  */
 UI.prototype.showIntro = function showIntro() {
-	var container = $(document.createElement('div')).attr('id','wizard');
-	container.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
+	this.initializeWizardDiv();
 	this.showNewOpenProject({data:{that:this}});
+};
+
+UI.prototype.initializeWizardDiv = function() {
+  var container = $(document.createElement('div')).attr('id','wizard');
+  container.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
 };
 
 /**
@@ -117,18 +121,26 @@ UI.prototype.loadTheme = function loadTheme(){
  * {@link CBObject.add_callback}
  */
  UI.prototype.renderActionsButtons = function renderActionsButtons(){
-  var that = this;
-  var backend = application.backend.getInstance();
-  var path = require('path');
-  Object.keys(Cloudbook.Actions).forEach(function (component) {
-    var componentpath = Cloudbook.Actions[component]['path'];
-    var description = require("./" + path.join(componentpath,"metadata.json"));
-    backend.loadComponentExtraCss(componentpath,description);
-    $(Cloudbook.UI.navactions).append($(document.createElement('button'))
-      .bind('click', function () {that.getCBObjectFromButton(component)})
-      .addClass('btn').addClass('btn-default')
-      .html(that.calculeButtonContent(componentpath, description)));
-  });
+
+  if(!Cloudbook.UI.renderedActionsButtons){
+    var that = this;
+    var backend = application.backend.getInstance();
+    var path = require('path');
+    Object.keys(Cloudbook.Actions).forEach(function (component) {
+      var componentpath = Cloudbook.Actions[component]['path'];
+      var description = require("./" + path.join(componentpath,"metadata.json"));
+      backend.loadComponentExtraCss(componentpath,description);
+      $(Cloudbook.UI.navactions).append($(document.createElement('button'))
+        .bind('click', function () {that.getCBObjectFromButton(component)})
+        .addClass('btn').addClass('btn-default')
+        .html(that.calculeButtonContent(componentpath, description)));
+    });
+  /**
+   * Flag to detect if actions were rendered
+   * @type {boolean}
+   */
+   Cloudbook.UI.renderedActionsButtons = true;
+ }
 }
 
 /**
@@ -173,16 +185,19 @@ UI.prototype.loadTheme = function loadTheme(){
 
 
 UI.prototype.initSectionsPro = function initSectionsPro() {
-  var backend = application.backend.getInstance();
-  var cbsecid = backend.initSections();
-  var son = this.createSectionProView(cbsecid);
   var list = $(document.createElement('ul')).addClass("connectedSortable");
-  list.append(son);
   $(Cloudbook.UI.navsections).html(list).attr('data-cbsectionid','root');
+};
+
+UI.prototype.createFirstSection = function createFirstSection() {
+  var backend = application.backend.getInstance();
+  var cbsecid = backend.createFirstSection();
+  var son = this.createSectionProView(cbsecid);
+  var list = $("[data-cbsectionid='root'] > ul");
+  list.append(son);
   $($(son.children('.displaysection')).children('.divselector')).click();
   this.reloadSortable();
 };
-
 
 
 UI.prototype.reloadSortable = function reloadSortable(element){
@@ -400,12 +415,28 @@ UI.prototype.launcherloadProject = function launcherloadProject(e) {
   var controller = application.controller.getInstance();
   controller.loadProject(path + "/project.cloudbook");
   $("#wizard").dialog('close');
+  $("#wizard").remove();
 };
 
 UI.prototype.loadProject = function loadProject(path) {
-  console.log(path);
+  var CBStorage = application.storagemanager.getInstance();
+  var root = CBStorage.getRoot();
+  var that = this;
+  this.initSectionsPro();
+  var pool = [];
+  pool = root.sections.map(function(el){return {parent:'root',identifier:el}});
+  while(node = pool.shift()){
+    var son = that.createSectionProView(node.identifier);
+    $('[data-cbsectionid="'+node.parent+'"] > ul').append(son);
+    var objraw = CBStorage.getSectionById(node.identifier);
+    pool = pool.concat(objraw.sections.map(function(el){return {parent:node.identifier,identifier:el}}));
+  }
+  $("#navsections > ul > li:first-child > .displaysection .divselector").click();
 };
 
+UI.prototype.emptyTargetContent = function emptyTargetContent() {
+  $(Cloudbook.UI.targetcontent).empty();
+};
 
 /**
  * This namespace has singleton instance of UI class

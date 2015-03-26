@@ -12,7 +12,7 @@ function StorageManager(){
  * @return {CBSection} section with first level sections.
  */
 StorageManager.prototype.getRoot = function() {
-	return Project.Data._rawsections['root'];
+	return $.extend(true,{},Project.Data._rawsections['root']);
 };
 
 /**
@@ -29,7 +29,7 @@ StorageManager.prototype.setRoot = function(section) {
  * @return {CBSection}         CloudBook section
  */
 StorageManager.prototype.getSectionById = function(cbsecid) {
-	return Project.Data._rawsections[cbsecid];
+	return $.extend(true,{},Project.Data._rawsections[cbsecid]);
 };
 
 /**
@@ -40,6 +40,10 @@ StorageManager.prototype.getSectionById = function(cbsecid) {
 StorageManager.prototype.setSectionById = function(section,cbsecid) {
 	Project.Data._rawsections[cbsecid] = section;
 	return cbsecid;
+};
+
+StorageManager.prototype.deleteSectionById = function deleteSectionById(cbsectionid) {
+	delete Project.Data._rawsections[cbsectionid];
 };
 
 
