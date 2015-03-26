@@ -7,7 +7,7 @@ function Dialog(){
   $.getJSON('js/lib/gui/languages.json', function(data){
       data.forEach(function(languageelement){
        languages.push(languageelement.name);
-     });
+      });
     });
 }
 /**
@@ -195,9 +195,10 @@ Dialog.prototype.createSelectLanguages = function createSelectLanguages(id, styl
     .addClass(style)
     .addClass("ui-corner-all");
 
-      languages.forEach(function(element){
+    languages.forEach(function(element){
+      if(!$.isArray(element))
         selectLanguageElement.append(new Option(element));
-      })
+    });
     return selectLanguageElement;
 }
 /**
@@ -209,13 +210,15 @@ Dialog.prototype.createSelectLanguages = function createSelectLanguages(id, styl
  */
 Dialog.prototype.createSelect = function createSelect(id, values, style)
 {
+  var dictionary = CBUtil.req("js/lib/gui/dialogMetadataValues.js");
+
   var selectElement = $(window.document.createElement('select'))
     .attr("name", id)
     .attr("id", id)
     .addClass("ui-corner-all")
     .addClass(style);
 
-    values.forEach(function(element){
+    dictionary[values].forEach(function(element){
       selectElement.append(new Option(element));
     })
     return selectElement;
@@ -230,6 +233,7 @@ Dialog.prototype.createSelect = function createSelect(id, values, style)
  */
 Dialog.prototype.createSelectWithDependency = function createSelectWithDependency(id, values, style, onclickFunction)
 {
+  var dictionary = CBUtil.req("js/lib/gui/dialogMetadataValues.js");
   var selectElement = $(window.document.createElement('select'))
     .attr("name", id)
     .attr("id", id)
@@ -237,7 +241,7 @@ Dialog.prototype.createSelectWithDependency = function createSelectWithDependenc
     .addClass(style)
     .attr("onclick", onclickFunction);
 
-    values.forEach(function(element){
+    dictionary[values].forEach(function(element){
       selectElement.append(new Option(element));
     })
     return selectElement;

@@ -35,6 +35,15 @@ input{
 	height:24px;
 	font-size:0.8em;
 }
+
+/*Ocupa la mitad sin botones en fila*/
+.metadata-box-half-special{
+	width:280;
+	margin-bottom:1px;
+	height:24px;
+	font-size:0.8em;
+}
+
 /*Ocupa la mitad del espacio + botones*/
 .metadata-box-half{
 	width:30%;
@@ -47,6 +56,7 @@ input{
 /*Ocupa la mitad del espacio SIN botones*/
 .metadata-box-half-wbuttons{
     width:33%;
+	height:24px;
     display: block;
 	float: left;
 	margin-bottom:2px;
@@ -56,6 +66,7 @@ input{
 /*Ocupa la mitad del espacio sin texto*/
 .metadata-box-half-plus{
     width:348px;
+	height:24px;
     display: block;
 	float: left;
 	margin-bottom:2px;

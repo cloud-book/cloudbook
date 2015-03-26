@@ -9,6 +9,7 @@
 
 CBUtil = new Util();
 CBDialog = new Dialog();
+CBImport = new Import();
 var core = new Core();
 CBStorage = new StorageManager();
 core.loadComponents();
