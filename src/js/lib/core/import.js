@@ -474,9 +474,6 @@ function loadMetadata(xml)
   		});
 		i++;
    	});
-
-	CBDialogMetadata = new DialogMetadata();
-    CBDialogMetadata.showDialog();
 }
 
 /**
