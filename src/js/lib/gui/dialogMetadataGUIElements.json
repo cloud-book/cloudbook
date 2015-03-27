@@ -218,13 +218,14 @@
     [
     	["Span", "Purpose", "spanPurpose_1", "metadata-text"],
         ["Select", "typePurposeClassification_1","Purposes",  "metadata-box"], ["AddButton", "addPurposeClassification_1", "ui-icon-locked", "classificationsClassification_1"],
-        ["DeleteButtonWithBr", "deletePurposeClassification_1", "ui-icon-locked", "classificationsClassification_1"], ["Span", "Description", "spanDescriptionTaxon_1_1", "metadata-text"],
-        ["Input", "DescriptionTaxonClassification_1","metadata-box-half"], ["Span", "Language", "spanLanguageTaxon_1", "metadata-text-right"],
-        ["SelectLanguageWithBr", "tituloLangTaxonClassification_1", "metadata-box-half"] , ["Span", "Keyword", "spanKeywordTaxon_1", "metadata-text"],
-        ["Input", "KeywordTaxonClassification_1", "metadata-box-half"], ["Span", "Language", "spanLanguageKeywordTaxon_1", "metadata-text-right"],
-        ["SelectLanguageWithBr", "titleLangKeywordTaxonClassification_1", "metadata-box-half"],["Div", "DIVpathClassification_1_1", [["Span", "Source", "spanSource_1_1", "metadata-text"],
+        ["DeleteButtonWithBr", "deletePurposeClassification_1", "ui-icon-locked", "classificationsClassification_1"], ["Span", "Description", "spanDescriptionTaxon_1_1", "metadata-text"], 
+        ["Input", "DescriptionTaxonClassification_1","metadata-box-half"],["Span", "Language", "spanLanguageTaxon_1", "metadata-text-right"],["SelectLanguageWithBr", "tituloLangTaxonClassification_1", "metadata-box-half"] ,
+        ["Div", "DIVkeyClassification_1_1", [["Span", "Keyword", "spanKeywordTaxon_1_1", "metadata-text"],
+        ["Input", "KeywordTaxonClassification_1_1", "metadata-box-half"], ["Span", "Language", "spanLanguageKeywordTaxon_1_1", "metadata-text-right"],
+        ["SelectLanguage", "titleLangKeywordTaxonClassification_1_1", "metadata-box-half"], ["AddButtonDiv", "adddescClassification_1_1", "ui-icon-locked", "DIVkeyClassification_1_1"],
+        ["DeleteButton", "deletedescClassification_1_1", "ui-icon-locked", "DIVkeyClassification_1_1"]]],["Div", "DIVpathClassification_1_1", [["Span", "Source", "spanSource_1_1", "metadata-text"],
         ["Input", "sourceNameClassification_1_1", "metadata-box-half"], ["Span", "Language", "spanLanguage_1_1", "metadata-text-right"],
-        ["SelectLanguage", "langClassification_1_1","metadata-box-half"], ["AddButtonDiv", "addpathClassification_1_1", "ui-icon-locked", "DIVpathClassification_1_1"],
+        ["SelectLanguageWithBr", "langClassification_1_1","metadata-box-half"], ["AddButtonDiv", "addpathClassification_1_1", "ui-icon-locked", "DIVpathClassification_1_1"],
         ["DeleteButton", "deletepathClassification_1_1", "ui-icon-locked", "DIVpathClassification_1_1"], ["Span", "Entry", "spanTaxon_1_1", "metadata-text"],
         ["Input", "nameTaxonClassification_1_1", "metadata-box-half"],["Span", "Id", "spanIdTaxon_1_1", "metadata-text-right"],["Input", "idTaxonClassification_1_1", "metadata-box-half"], 
         ["Span", "Language", "spanLanguageTaxon_1_1", "metadata-text"], ["SelectLanguage", "langClassificationTaxon_1_1","metadata-box"]]]
@@ -253,9 +254,8 @@
         ["costRightsValue_1"], ["copyrightRightsValue_1"], ["descRights_", ["descRightsValue_", "descRightsLang_"], "addDescRights_"], ["accessTypeRights_1"],["DescriptionAccessRights_1"],
         ["langAccessRights_1"], ["relationRelations_", ["relationRelationsValue_", "catalogRelations_", "entryRelations_", "DescriptionRelationRelations_", "relationRelationsLang_"], "addRelationRelations_"],
         ["annotationAnnotations_", ["nameAnnotations_", "organAnnotations_", "emailAnnotations_" , "dateAnnotations_", "DescriptionDateAnnotations_", "langDateAnnotations_","DescriptionAnnotations_", 
-         "LangAnnotations_"], "addAnnotationAnnotations_"], ["classificationsClassification_", ["typePurposeClassification_", "DescriptionTaxonClassification_","tituloLangTaxonClassification_",
-         "KeywordTaxonClassification_","titleLangKeywordTaxonClassification_",["DIVpathClassification_1_", ["sourceNameClassification_1_", "langClassification_1_","nameTaxonClassification_1_",
+         "LangAnnotations_"], "addAnnotationAnnotations_"], ["classificationsClassification_", ["typePurposeClassification_", "DescriptionTaxonClassification_","tituloLangTaxonClassification_", ["DIVkeyClassification_1_",
+         ["KeywordTaxonClassification_1_","titleLangKeywordTaxonClassification_1_"], "adddescClassification_1_"],["DIVpathClassification_1_", ["sourceNameClassification_1_", "langClassification_1_","nameTaxonClassification_1_",
           "idTaxonClassification_1_", "langClassificationTaxon_1_"], "addpathClassification_1_"]], "addPurposeClassification_"]
     ]
-
 ]

@@ -105,6 +105,13 @@ function saveDataText(element, childrenName, arrayName, elementName)
   	});
 }
 
+/**
+ * This method is responsible for saving data information into array namespace
+ * @param  {String[]} main element
+ * @param  {String} name of the childElement
+ * @param  {String} name of the array
+ * @param  {String} name of the element
+ */
 function saveDataArrayText(element, childrenName, arrayName, elementName)
 {
 	var i = 1;
@@ -158,7 +165,7 @@ function saveDataLanguage(element, childrenName, arrayName, elementName1, elemen
  * @param  {String} name of the array index
  * @param  {String} name of the element of the dictionary with values
  */
-function saveData(element, childrenName, arrayName, dictionaryName)
+function saveDataValue(element, childrenName, arrayName, dictionaryName)
 {
 	var dictionary = CBUtil.req("js/lib/gui/dialogMetadataValues.js");
 	var i = 1;
@@ -225,11 +232,6 @@ function saveDataArrayValues(arrayName, elements, clear, subArrayName)
 			Project.Info.LOM[arrayName][element[0]] =  element[1];
 		});
 	}
-
-/*	if(clear != null) Project.Info.LOM[arrayName] = {};
-	elements.forEach(function(element){
-		Project.Info.LOM[arrayName][element[0]] =  element[1];
-	});*/
 }
 
 /**
@@ -351,8 +353,8 @@ function loadMetadata(xml)
 		saveDataLanguage($(this), 'description','descGeneral_','Description_','descGeneralLang_');
 		saveDataLanguage($(this), 'keyword','keywordGeneral_','keywordGeneral1_','keywordGeneralLang_');
 		saveDataLanguage($(this), 'coverage','coverage_','coverage1_','coverageLang_');
-		saveData($(this), 'structure', 'structuresGeneral_1');
-		saveData($(this), 'aggregationLevel', 'aggregationLevels_1', 'Agregations');
+		saveDataValue($(this), 'structure', 'structuresGeneral_1');
+		saveDataValue($(this), 'aggregationLevel', 'aggregationLevels_1', 'Agregations');
   	});
 	$(xml).find("lifecycle").each(function(){
   		i = 1;
@@ -365,7 +367,7 @@ function loadMetadata(xml)
   				}
   			});
   		});
-  		saveData($(this), 'status', 'statusLifeCycle_1_1');
+  		saveDataValue($(this), 'status', 'statusLifeCycle_1_1');
  		saveContribution($(this), "contribute", 'contrLyfeCycle_', 'DIVdescContribLifeCycle_', ['rolesLifeCycle_','nameContribLifeCycle_', 'emailContribLifeCycle_',
  			'organContribLifeCycle_', 'dateContribLifeCycle_', 'DescriptionContribLifeCycle_', 'ContribLifeCycleLang_']);
 	});
@@ -418,14 +420,14 @@ function loadMetadata(xml)
 		 'durationminutesDurTech_1', 'durationsecondsDurTech_1', 'DescriptionDurTech_', 'languageDescDurTech_']);
 	});
 	$(xml).find("educational").each(function(){
-		saveData($(this), 'interactivityType', 'intTypeEducationalValue_1');
+		saveDataValue($(this), 'interactivityType', 'intTypeEducationalValue_1');
 		saveDataArray($(this), "learningResourceType", 'resourceTypeEducational_', 'resourceTypeEducationalValue_')
-  		saveData($(this), 'interactivityLevel', 'levelIntEducationalValue_1');
-  		saveData($(this), 'semanticDensity', 'levelDensEducationalValue_1');
+  		saveDataValue($(this), 'interactivityLevel', 'levelIntEducationalValue_1');
+  		saveDataValue($(this), 'semanticDensity', 'levelDensEducationalValue_1');
 		saveDataArray($(this), "intendedEndUserRole", 'endUserEducational_', 'endUserEducationalValue_')
 		saveDataArray($(this), "context", 'contextEducational_', 'contextEducationalValue_')
 		saveDataLanguage($(this), 'typicalAgeRange','rangeAgeEducational_','rangeAgeEducationalValue_','languageRangeEducational_');
-		saveData($(this), 'difficulty', 'difficultyEducationalValue_1');
+		saveDataValue($(this), 'difficulty', 'difficultyEducationalValue_1');
 		saveDuration($(this), "typicalLearningTime", 'descLearningTimeEducational_', ['durationYearsEducational_1', 'durationMonthsEducational_1', 'durationDaysEducational_1','durationHoursEducational_1',
 		 'durationminutesEducational_1', 'durationsecondsEducational_1', 'DescriptionLearningEducational_', 'langDurationEducational_']);
 		saveDataLanguage($(this), 'description','descEducationUse_','descEducationUseValue_','langDescrEducational_');
@@ -433,9 +435,9 @@ function loadMetadata(xml)
 		saveDataArray($(this), "cognitiveProcess", 'processcogEducational_', 'processcogEducationalValue_')
    	});
 	$(xml).find("rights").each(function(){
-  		saveData($(this), 'cost', 'costRightsValue_1');
-  		saveData($(this), 'copyrightAndOtherRestrictions', 'copyrightRightsValue_1');
-		saveData($(this).children("access"), 'accessType', 'accessTypeRights_1');
+  		saveDataValue($(this), 'cost', 'costRightsValue_1');
+  		saveDataValue($(this), 'copyrightAndOtherRestrictions', 'copyrightRightsValue_1');
+		saveDataValue($(this).children("access"), 'accessType', 'accessTypeRights_1');
 		saveDataLanguage($(this).children("access"), "description", null, 'DescriptionAccessRights_', 'langAccessRights_')
   		saveDataLanguage($(this), 'description','descRights_','descRightsValue_','descRightsLang_');
 	});
@@ -455,8 +457,13 @@ function loadMetadata(xml)
 	  	Project.Info.LOM['classificationsClassification_'+i] = {};
 		saveDataArray($(this), "purpose", 'classificationsClassification_'+i, 'typePurposeClassification_'+i, 1);
 		saveDataLanguage($(this), "description", "classificationsClassification_"+i, "DescriptionTaxonClassification_"+i, "tituloLangTaxonClassification_"+i, 1);
-		saveDataLanguage($(this), "keyword", "classificationsClassification_"+i, "KeywordTaxonClassification_"+i, "titleLangKeywordTaxonClassification_"+i, 1);
 		var j = 1;
+		$(this).children("keyword").each(function(){
+			saveDataArrayValues('classificationsClassification_'+i, [['KeywordTaxonClassification_'+i+"_"+j, $(this).html().split('"')[2].replace('</string>', '').replace(">","")], 
+  						['titleLangKeywordTaxonClassification_'+i+"_"+j, searchLanguage($(this).html().split('"')[1])]], 1, 'DIVkeyClassification_'+i + "_" + j);
+		        	j++;
+		});
+		j = 1;
   		$(this).children("taxonPath").each(function(){
   			var arrayElements = $(this).html().split("source");
   			arrayElements[2].split("taxon").forEach(function(element){
