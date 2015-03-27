@@ -405,7 +405,8 @@ Dialog.prototype.createDivWithElements = function createDivWithElements(divTitle
       case "Text": elem = that.createText(element[1], element[2]); break;
       case "Input": elem = that.createInput(element[1], element[2]); break;
       case "Date": elem = that.createDate(element[1], element[2]); break;
-      case "SelectLanguage": elem = that.createSelectLanguages(element[1], element[2]); break;
+      case "SelectLanguage": 
+      case "SelectLanguageWithBr":elem = that.createSelectLanguages(element[1], element[2]); break;
       case "Span": elem = that.createSpan(element[1], element[2], element[3]); break;
       case "AddButton": elem = that.createAddButton(element[1], element[2], element[3]); break;
       case "DeleteButton": 
