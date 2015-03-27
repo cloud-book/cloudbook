@@ -2,5 +2,6 @@
 	"idtype" : "aa0e3021-2315-4950-a3b2-ccf4cc51af5",
 	"description":"Append textbox to content",
 	"label": "Imagen",
-	"icon" : "icon.png"
+	"icon" : "icon.png",
+	"category": "core"
 }

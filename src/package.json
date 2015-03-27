@@ -2,8 +2,13 @@
   "main": "index.html",
   "name": "CloudBook",
   "description": "Graphical editor book",
-  "version": "0.1.0",
-  "keywords": [ "editor", "book","resources" ],
+  "version": "0.2.0",
+  "keywords": [
+    "editor",
+    "book",
+    "resources"
+  ],
+  "single-instance":false,
   "window": {
     "title": "CloudBook",
     "icon": "logo.png",
@@ -15,5 +20,8 @@
   },
   "webkit": {
     "plugin": true
+  },
+  "dependencies": {
+    "jed": "~1.1.0"
   }
 }

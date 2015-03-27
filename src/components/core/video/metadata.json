@@ -1,0 +1,7 @@
+{
+	"idtype" : "9c0063d1-cf14-45b5-b4c3-0264263359ad",
+	"description":"Append Video to content",
+	"label": "Video",
+	"icon" : "icon.png",
+	"category": "core"
+}

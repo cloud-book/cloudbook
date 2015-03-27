@@ -1,113 +1,39 @@
-#navactions{
-    padding: 5px 10px;
-    height: 5%;
-    background: linear-gradient(#707070,#4c4c4c);
-}
-#navactions button{
-    border-radius: 0px;
-}
-
-#navactions button img{
-    display: inline-block;
-    vertical-align: middle;
-    height: 25px;
-    width: auto;
-}
-
-
-#navsections{
-    width: 200px;
-    padding: 10px;
-    height: 91%;
-    overflow: scroll;
-    float: left;
-    background: #4c4c4c;
-}
-#navsections .thumbnail{
-    position: relative;
-    width: 95%;
-    margin: 15px auto;
-}
-#navsections .thumbnail .appendbefore{
-    position: absolute;
-    left: 45%;
-    top: -8%;
-}
-
-#navsections .thumbnail .appendsubsection{
-    position: absolute;
-    left: 91%;
-    top: 35%;
-}
-
-#navsections .thumbnail .appendafter{
-    position: absolute;
-    left: 45%;
-    top: 80%;
-}
-
-#navsections .thumbnail .appendbefore , #navsections .thumbnail .appendsubsection, #navsections .thumbnail .appendafter{
-
-    opacity: 0;
-    transition: opacity 0.2s, background-color 0.2s, box-shadow 0.2s linear;
-    /*-webkit-transition: opacity 0.2s linear;*/
-}
-
-#navsections .thumbnail:hover .appendbefore , #navsections .thumbnail:hover .appendsubsection, #navsections .thumbnail:hover .appendafter{
-
-    opacity: 1;
-    background-color: rgba(255,255,255,0.8);
-    box-shadow: 0 0 10px black;
-}
-
-
-
-#navsections .sectionimage img{
-    width: 100%;
-    height: auto;
-    border: 1px solid black;
-}
-
-#navsections .sectionselected{
-    box-shadow: 0 0 25px 2px #88d;
-}
-#targetcontent{
-    float: left;
-    width: 77%;
-}
-#targetcontent img{
-    height: 100%;
-    width: 100%;
-}
 body{
+    background-color: #4c4c4c;
     margin: 0;
     padding: 0;
 }
 
-#navsections ul{
-    list-style-type: none;
-    margin:0;
-    padding: 0;
-    margin-left: 10px;
-}
-#navsections ul li{
-    margin: 0;
-    padding: 0;
+.ui-layout-west{
+    padding: 0 !important;
+    background: #4c4c4c url('../img/back.png') repeat !important;
+    border: none !important;
+    border-top: 1px solid black !important;
+
 }
 
-#navsections > ul{
-    margin: 0;
-    padding: 0;
+.ui-layout-north{
+    padding: 0 !important;
+    border:none !important;
+    background:  linear-gradient(#707070,#4c4c4c) !important;
 }
 
-#navsections > ul > li{
-    margin: 0;
-    padding: 0;
+.ui-layout-resizer-north{
+    display:none !important;
+}
+.ui-layout-south{
+
+    border:none !important;
+    background:  linear-gradient(#4c4c4c,#707070) !important;
 }
 
+.ui-layout-resizer-west, .ui-layout-resizer-south {
+    background: #4c4c4c !important;
+}
 
 ::-webkit-scrollbar {
     width: 12px;
+    background-color: #4c4c4c;
 }
  
 ::-webkit-scrollbar-track {
@@ -119,3 +45,84 @@ body{
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.7); 
 }
+
+::-webkit-scrollbar-corner{
+    background-color: #4c4c4c;
+}
+
+#navsections > div > ul{
+    padding: 0;
+}
+
+
+#navsections ul{
+    list-style-type: none;
+    padding-left: 15px;
+}
+
+.displaysection{
+    box-shadow: 0 0 4px 2px #acacac;
+    margin: 10px;
+    background-color: white;
+    border-radius: 3px;
+    padding: 5px;
+    border: 1px solid #000000;
+    display: block;
+    position: relative;
+}
+
+.displaysection button{
+    position:absolute;
+    top:0;
+    right: 0;
+    height: 100%;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s linear;
+}
+.displaysection:hover button{
+    opacity: 1;
+    }
+
+.displaysection div.caption{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.sectionselected{
+    box-shadow: 0 0 4px 3px #77d;
+}
+
+/*
+ * Initial wizard 
+ */
+.ui-widget-overlay{
+    background: #000;
+    opacity: 0.6;
+}
+
+
+.no-close .ui-dialog-titlebar-close{
+    display: none;
+}
+
+.ui-state-highlight{
+    height: 30px;
+}
+
+#navactions button{
+    max-height: 40;
+    position: relative;
+}
+
+#navactions button img{
+    height: 100%;
+    display: inline-block;
+}
+
+#navactions button div{
+    display: inline-block;
+}
+
+
+
