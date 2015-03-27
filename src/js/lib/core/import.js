@@ -27,7 +27,7 @@ Import.prototype.loadFile = function loadFile(filePath, fileType) {
 
     switch(fileType)
     {
-    	case "HTML": processHTMLFile(content); break;
+    	case "HTML": processHTMLFile(filePath); break;
     	case "ODT_DOC_DOCX": processODTFile(content, filetype); break;
     	case "SCORM": processSCORMFile(filePath); break;
     }
@@ -554,10 +554,11 @@ function searchLanguage(language)
  * This method is responsible for reading HTML5 content
  * @param  {String} path of the file
  */
-function processHTMLFile(content)
+function processHTMLFile(filePath)
 {
 	var err;
 	var fs = require('fs');
+	var content = "";
 
  	fs.readFile(filePath, 'utf8', function(err, data){
 		content = data;
