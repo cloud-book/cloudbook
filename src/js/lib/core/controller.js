@@ -15,8 +15,8 @@ function Controller(){
  * @param  {String} cbsectionid Section id to rename
  */
 Controller.prototype.updateSectionName = function(name,cbsectionid) {
-	var backend = application.backend.getInstance();
-	var ui = application.ui.getInstance();
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
 	backend.updateSectionName(name,cbsectionid);
 	ui.updateSectionName(name,cbsectionid);
 };
@@ -27,8 +27,8 @@ Controller.prototype.updateSectionName = function(name,cbsectionid) {
  */
 Controller.prototype.createProProject = function createProProject(name) {
 	CBUtil.include("js/lib/gui/menu.js");
- 	var backend = application.backend.getInstance()
- 	var ui = application.ui.getInstance()
+ 	var backend = application.backend.core.getInstance()
+ 	var ui = application.ui.core.getInstance()
  	backend.createProject(name);
  	backend.loadSectionsObjects();
  	backend.initSections();
@@ -44,8 +44,8 @@ Controller.prototype.createProProject = function createProProject(name) {
  * @param  {String} cbsectionid Section id to delete
  */
 Controller.prototype.deleteSection = function(cbsectionid) {
-	var backend = application.backend.getInstance();
-	var ui = application.ui.getInstance();
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
 	backend.deleteSection(cbsectionid);
 	ui.deleteSection(cbsectionid);
 };
@@ -56,8 +56,8 @@ Controller.prototype.createSimpleProject = function createSimpleProject(name) {
 
 Controller.prototype.loadProject = function loadProject(path) {
 	CBUtil.include("js/lib/gui/menu.js");
-	var backend = application.backend.getInstance();
-	var ui = application.ui.getInstance();
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
 	backend.loadSectionsObjects();
 	ui.renderActionsButtons();
 	ui.emptyTargetContent();
@@ -66,8 +66,8 @@ Controller.prototype.loadProject = function loadProject(path) {
 };
 
 Controller.prototype.saveProject = function(path) {
-	var backend = application.backend.getInstance();
-	var ui = application.ui.getInstance();
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
 	backend.saveProject(path);
 };
 

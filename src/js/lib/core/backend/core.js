@@ -165,6 +165,7 @@ Backend.prototype.initSections = function initSections() {
   var that = this,
       CBStorage = application.storagemanager.getInstance(),
       auxcbsection = new Cloudbook.Sections['basic']();
+      auxcbsection.name = "root";
       CBStorage.setRoot(auxcbsection);
   
 };
@@ -351,7 +352,7 @@ Backend.prototype.deleteSection = function(cbsectionid) {
   /**
    * @todo This method must delete binary files related with section and subsections
    */
-  var CBStorage = application.storagemanager.
+  var CBStorage = application.storagemanager.getInstance();
   var pool = [cbsectionid];
   while(tempcbsectionid = pool.shift()){
     section = CBStorage.getSectionById(tempcbsectionid);
@@ -366,5 +367,5 @@ Backend.prototype.deleteSection = function(cbsectionid) {
  * @namespace backend
  * @memberOf application
  */
-CBUtil.createNameSpace('application.backend');
-application.backend = CBUtil.singleton(Backend);
+CBUtil.createNameSpace('application.backend.core');
+application.backend.core = CBUtil.singleton(Backend);

@@ -7,14 +7,14 @@
         type: 'menubar'
       });
     var controller = application.controller.getInstance();
-    var ui = application.ui.getInstance();
     /**
      * Actions for menu
      */
 
     function newProject(){
-      ui.initializeWizardDiv();
-      ui.showTypeProject({data:{that:ui}});
+      var initialwizard = application.ui.initialwizard.core.getInstance();
+      initialwizard.initializeWizardDiv();
+      initialwizard.showTypeProject({data:{that:initialwizard}});
       $("#wzrdgoback").unbind('click');
       $("#wzrdgoback").click(function(){$("#wizard").dialog('close');$("#wizard").remove()});
     }

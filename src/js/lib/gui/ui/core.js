@@ -5,88 +5,6 @@
 function UI(){
 }
 
-/**
- * Initialize wizard that show open or create new project
- */
-UI.prototype.showIntro = function showIntro() {
-	this.initializeWizardDiv();
-	this.showNewOpenProject({data:{that:this}});
-};
-
-UI.prototype.initializeWizardDiv = function() {
-  var container = $(document.createElement('div')).attr('id','wizard');
-  container.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
-};
-
-/**
- * Show wizard with recent projects to open, create new project or open other project
- * @param {event} e to send this object reference
- */
-UI.prototype.showNewOpenProject = function showNewOpenProject(e) {
-    var that = e.data.that;
-    var userconfig = application.config.user.getInstance();
-    var backend = application.backend.getInstance();
-    var fs = require('fs');
-    var wizarddiv = $("#wizard") ;
-    wizarddiv.empty();
-
-    var datainfo = userconfig.getLastProjects();
-    var template = fs.readFileSync('./templates/initialwizard.step1.hbs',{encoding:'utf8'});
-    var templatecompiled = application.util.template.compile(template);
-    var data = {
-        projects : datainfo.slice(-5)
-    };
-    wizarddiv.append(templatecompiled(data));
-    $('#newproject').click({that:that},that.showTypeProject);
-    $('#listProjects button').click({that:that},that.launcherloadProject);
-};
-
-/**
- * Load dialog on #wizard div to create new project.
- * @param  {event} e to send this object reference
- */
-UI.prototype.showTypeProject = function(e) {
-	var that = e.data.that;
-	var fs = require('fs');
-	$("#wizard").empty();
-	var template = fs.readFileSync('./templates/initialwizard.step2.hbs',{encoding:'utf8'});
-	var templatecompiled = application.util.template.compile(template);
-	$("#wizard").append(templatecompiled());
-
-	$("#advprojbtn").click(function(){
-		var controller = application.controller.getInstance();
-		controller.createProProject($("#projectname").val());
-		$('#wizard').dialog('close');
-		$('#wizard').remove();
-	});
-	$("#smplprojbtn").click(function(){
-		var controller = application.controller.getInstance();
-		controller.createSimpleProject($("#projectname").val());
-		$('#wizard').dialog('close');
-		$('#wizard').remove();
-	});
-	$("#wzrdgoback").click({that:that},that.showNewOpenProject);
-
-	$("#projectname").keyup(function(e){
-		var backend = application.backend.getInstance();
-		if(backend.checkProjectExists(this.value)){
-			$("#projectnamecontainer").removeClass("has-success").addClass("has-error");
-			$("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-			$("#advprojbtn").attr("disabled","disabled");
-			$("#smplprojbtn").attr("disabled","disabled");
-
-		}
-		else{
-			$("#projectnamecontainer").addClass("has-success").removeClass("has-error");
-			$("#validateindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
-			$("#advprojbtn").removeAttr("disabled");
-			$("#smplprojbtn").removeAttr("disabled");
-		}
-	})
-	.focus();
-
-};
-
 
 /**
  * Load theme to apply all aplication. This function look for css/js folders and load all find.
@@ -124,7 +42,7 @@ UI.prototype.loadTheme = function loadTheme(){
 
   if(!Cloudbook.UI.renderedActionsButtons){
     var that = this;
-    var backend = application.backend.getInstance();
+    var backend = application.backend.core.getInstance();
     var path = require('path');
     Object.keys(Cloudbook.Actions).forEach(function (component) {
       var componentpath = Cloudbook.Actions[component]['path'];
@@ -184,13 +102,17 @@ UI.prototype.loadTheme = function loadTheme(){
 };
 
 
+
+
+
+
 UI.prototype.initSectionsPro = function initSectionsPro() {
   var list = $(document.createElement('ul')).addClass("connectedSortable");
   $(Cloudbook.UI.navsections).html(list).attr('data-cbsectionid','root');
 };
 
 UI.prototype.createFirstSection = function createFirstSection() {
-  var backend = application.backend.getInstance();
+  var backend = application.backend.core.getInstance();
   var cbsecid = backend.createFirstSection();
   var son = this.createSectionProView(cbsecid);
   var list = $("[data-cbsectionid='root'] > ul");
@@ -202,7 +124,7 @@ UI.prototype.createFirstSection = function createFirstSection() {
 
 UI.prototype.reloadSortable = function reloadSortable(element){
   var that = this;
-  var backend = application.backend.getInstance();
+  var backend = application.backend.core.getInstance();
   $(".connectedSortable").sortable({
     placeholder: "ui-state-highlight",
     opacity:0.5,
@@ -310,7 +232,7 @@ UI.prototype.appendBefore = function appendBefore(e){
   var CBStorage = application.storagemanager.getInstance();
   var that = e.data.that;
   var listparents = $(e.currentTarget).parents('.cbsection');
-  var backend = application.backend.getInstance();
+  var backend = application.backend.core.getInstance();
   var parent = null;
   if (listparents.length <2){
     parent = "root";
@@ -330,7 +252,7 @@ UI.prototype.appendSubsection = function appendSubsection(e){
   var that = e.data.that;
   var CBStorage = application.storagemanager.getInstance();
   var parent = $(e.currentTarget).parents('.cbsection');
-  var backend = application.backend.getInstance();
+  var backend = application.backend.core.getInstance();
   var parentObjectSection = $(parent[0]).attr('data-cbsectionid');
   var cbsecid = backend.appendNewSectionObjectByUID(parentObjectSection,'basic');
   var newsection = that.createSectionProView(cbsecid);
@@ -342,7 +264,7 @@ UI.prototype.appendSubsection = function appendSubsection(e){
 UI.prototype.appendAfter = function appendAfter(e){
   var that = e.data.that;
   var CBStorage = application.storagemanager.getInstance();
-  var backend = application.backend.getInstance();
+  var backend = application.backend.core.getInstance();
   var listparents = $(e.currentTarget).parents('.cbsection');
   var parentObjectSection = null;
   if (listparents.length <2){
@@ -408,16 +330,6 @@ UI.prototype.dialogDeleteSection = function dialogDeleteSection(cbsectionid) {
 	controller.deleteSection(cbsectionid);
 };
 
-UI.prototype.launcherloadProject = function launcherloadProject(e) {
-  var that = e.data.that;
-  var element = e.currentTarget;
-  var path = element.dataset.path;
-  var controller = application.controller.getInstance();
-  controller.loadProject(path + "/project.cloudbook");
-  $("#wizard").dialog('close');
-  $("#wizard").remove();
-};
-
 UI.prototype.loadProject = function loadProject(path) {
   var CBStorage = application.storagemanager.getInstance();
   var root = CBStorage.getRoot();
@@ -444,5 +356,5 @@ UI.prototype.emptyTargetContent = function emptyTargetContent() {
  * @memberOf application
  */
 
-CBUtil.createNameSpace('application.ui');
-application.ui = CBUtil.singleton(UI);
+CBUtil.createNameSpace('application.ui.core');
+application.ui.core = CBUtil.singleton(UI);

@@ -39,8 +39,8 @@
  */
  Main.prototype.run = function run() {
 
- 	var backend = application.backend.getInstance();
- 	var ui = application.ui.getInstance();
+ 	var backend = application.backend.core.getInstance();
+ 	var ui = application.ui.core.getInstance();
 
 
  	CBUtil.createNameSpace('application.util.template');
@@ -71,7 +71,8 @@
  	}
  	else{
  		var fs = require('fs');
- 		ui.showIntro();
+ 		var initialwizard = application.ui.initialwizard.core.getInstance();
+ 		initialwizard.showIntro();
  	}	
  };
 

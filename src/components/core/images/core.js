@@ -34,4 +34,13 @@ exports.restore = function restore(objectdata) {
   return new ImageBox(objectdata);
 };
 */
+ImageBox.prototype.listHTMLCONVERT = function() {
+  return ['h1','h2','span','p'];
+};
+
+
+ImageBox.prototype.exportHTML = function(first_argument) {
+  // body...
+};
+
 module.exports = ImageBox;
