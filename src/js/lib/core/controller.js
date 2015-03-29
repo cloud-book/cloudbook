@@ -18,7 +18,7 @@ Controller.prototype.updateSectionName = function(name,cbsectionid) {
 	var backend = application.backend.core.getInstance();
 	var ui = application.ui.core.getInstance();
 	backend.updateSectionName(name,cbsectionid);
-	ui.updateSectionName(name,cbsectionid);
+	ui.sectionmanager.updateSectionName(name,cbsectionid);
 };
 
 /**
@@ -32,10 +32,11 @@ Controller.prototype.createProProject = function createProProject(name) {
  	backend.createProject(name);
  	backend.loadSectionsObjects();
  	backend.initSections();
+ 	ui.setSectionManager('Pro');
  	ui.renderActionsButtons();
  	ui.emptyTargetContent();
- 	ui.initSectionsPro();
- 	ui.createFirstSection();
+ 	ui.sectionmanager.initSections();
+ 	ui.sectionmanager.createFirstSection();
  	this.saveProject(Project.Info.projectpath);
 };
 
@@ -47,7 +48,7 @@ Controller.prototype.deleteSection = function(cbsectionid) {
 	var backend = application.backend.core.getInstance();
 	var ui = application.ui.core.getInstance();
 	backend.deleteSection(cbsectionid);
-	ui.deleteSection(cbsectionid);
+	ui.sectionmanager.deleteSection(cbsectionid);
 };
 
 Controller.prototype.createSimpleProject = function createSimpleProject(name) {
@@ -71,6 +72,12 @@ Controller.prototype.saveProject = function(path) {
 	backend.saveProject(path);
 };
 
+
+
+Controller.prototype.popSubsection = function popSubsection(cbsectionid,sonid) {
+	var backend = application.backend.core.getInstance();
+	backend.popSubsection(cbsectionid,sonid);
+};
 /**
  * This namespace has singleton instance of Controller class
  * @namespace controller

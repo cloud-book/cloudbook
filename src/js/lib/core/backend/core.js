@@ -362,6 +362,16 @@ Backend.prototype.deleteSection = function(cbsectionid) {
 
 };
 
+Backend.prototype.popSubsection = function popSubsection(cbsectionid,cbsonid) {
+  var CBStorage = application.storagemanager.getInstance();
+  var section = CBStorage.getSectionById(cbsectionid);
+  if (section !== undefined){
+    section.sections.splice(section.sections.indexOf(cbsonid),1);
+    CBStorage.setSectionById(section,cbsectionid);
+  }
+  
+};
+
 /**
  * This namespace has singleton instance of Backend class
  * @namespace backend
