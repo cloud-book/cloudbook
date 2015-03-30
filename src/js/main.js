@@ -71,10 +71,6 @@
 
  CBUtil.createNameSpace('application.main');
  application.main = CBUtil.singleton(Main);
-CBDialog = new Dialog();
-CBImport = new Import();
-
-
 
  var main = application.main.getInstance();
  main.run();

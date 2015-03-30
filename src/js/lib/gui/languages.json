@@ -101,7 +101,7 @@
   },
   {
     "code": "ca",
-    "name": "Catalan; Valencian"
+    "name": "Catalan"
   },
   {
     "code": "ch",
@@ -413,11 +413,11 @@
   },
   {
     "code": "mi",
-    "name": "MÄori"
+    "name": "Māori"
   },
   {
     "code": "mr",
-    "name": "Marathi (MarÄá¹­hÄ«)"
+    "name": "Marathi (Marāṭhī)"
   },
   {
     "code": "mh",
@@ -437,7 +437,7 @@
   },
   {
     "code": "nb",
-    "name": "Norwegian BokmÃ¥l"
+    "name": "Norwegian Bokmål"
   },
   {
     "code": "nd",
@@ -529,7 +529,7 @@
   },
   {
     "code": "ro",
-    "name": "Romanian, [])"
+    "name": "Romanian"
   },
   {
     "code": "ru",
@@ -537,7 +537,7 @@
   },
   {
     "code": "sa",
-    "name": "Sanskrit (Saá¹ská¹›ta)"
+    "name": "Sanskrit"
   },
   {
     "code": "sc",

@@ -4,11 +4,11 @@ var languages = [];
  * @classdesc This class is responsible for creating elements of a Dialog and loads languages from JSON. 
  */
 function Dialog(){
-  $.getJSON('js/lib/gui/languages.json', function(data){
-      data.forEach(function(languageelement){
+  var fs = require('fs');
+  var data = JSON.parse(fs.readFileSync('js/lib/gui/languages.json', 'utf8'));
+  data.forEach(function(languageelement){
        languages.push(languageelement.name);
-      });
-    });
+  });
 }
 /**
  * This method is responsible for creating an Input element
@@ -35,7 +35,7 @@ Dialog.prototype.createInput = function createInput(name, style){
  */
 Dialog.prototype.createText = function createText(text, style){
   var spanElement = $(window.document.createElement('span'))
-      .text(text)
+      .text(CBI18n.gettext(text))
       .addClass(style);
 
   return spanElement;
@@ -50,7 +50,7 @@ Dialog.prototype.createText = function createText(text, style){
  */
 Dialog.prototype.createSpan = function createSpan(text, name, style){
   var spanElement = $(window.document.createElement('span'))
-      .text(text)
+      .text(CBI18n.gettext(text))
       .attr("id", name)
       .attr("name", name)
       .addClass(style);
@@ -64,7 +64,7 @@ Dialog.prototype.createSpan = function createSpan(text, name, style){
  */
 Dialog.prototype.createLegend = function createLegend(text){
    var legendElement = $(window.document.createElement('legend'))
-    .text(text);
+    .text(CBI18n.gettext(text));
     return legendElement;
 
 }
@@ -453,3 +453,5 @@ Dialog.prototype.createList = function createList(elements){
 
   return ul;
 }
+CBUtil.createNameSpace('application.dialog');
+application.dialog = CBUtil.singleton(Dialog);

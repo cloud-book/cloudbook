@@ -58,7 +58,7 @@
     }};
 
     var load_metadata = {
-      label: 'Metadata',
+      label: CBI18n.gettext('Metadata'),
       click: function load_metadata(){
         CBDialogMetadata = new DialogMetadata();
         CBDialogMetadata.showDialog();
@@ -66,40 +66,43 @@
     };
 
     var import_html5 = {
-      label: 'HTML5',
+      label: CBI18n.gettext('HTML5'),
       click: function import_html5(){
       var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'text/html');
               pathelement.change(function(evt) {
-                    CBImport.loadFile($(this).val(), 'HTML');
+                  var importation = application.importation.getInstance();
+                  importation.loadFile($(this).val(), 'HTML');
               });
       pathelement.trigger('click');      
       }
     };
 
     var import_odt_doc_docx = {
-      label: 'ODT/DOC/DOCX',
+      label: CBI18n.gettext('ODT/DOC/DOCX'),
       click: function import_odt_doc_docx(){
       var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.doc,.docx,.odt');
               pathelement.change(function(evt) {
-                    CBImport.loadFile($(this).val(), 'ODT_DOC_DOCX');
+                  var importation = application.importation.getInstance();
+                  importation.loadFile($(this).val(), 'ODT_DOC_DOCX');
               });
       pathelement.trigger('click');      
       }
     };
 
     var import_scorm = {
-      label: 'SCORM',
+      label: CBI18n.gettext('SCORM'),
       click: function import_scorm(){
       var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.zip');
               pathelement.change(function(evt) {
-                    CBImport.loadFile($(this).val(), 'SCORM');
+                   var importation = application.importation.getInstance();
+                    importation.loadFile($(this).val(), 'SCORM');
               });
       pathelement.trigger('click');      
       }
     };
 
     var import_project = {
-      label: 'Import'
+      label: CBI18n.gettext('Import')
     };
 
     /**
@@ -123,7 +126,7 @@
 
 
     menubar.append(new gui.MenuItem({ label: CBI18n.gettext('File'), submenu: file}));
-    menubar.append(new gui.MenuItem({ label: 'Project', submenu: project}));
+    menubar.append(new gui.MenuItem({ label: CBI18n.gettext('Project'), submenu: project}));
 
 
 

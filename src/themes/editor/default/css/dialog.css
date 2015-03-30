@@ -3,69 +3,68 @@ input{
 }
 
 .metadata-box{
-	width:77%;
+	width:76%;
 	margin-bottom:1px;
 	height:24px;
 	font-size:0.8em;
 	margin-right: 1px;
 }
 
-/*Ocupa todo el ancho + texto*/
+/*All width + text*/
 .metadata-box-long-wtext{
-	width:83%;
+	width:82%;
 	margin-bottom:1px;
 	height:24px;
 	font-size:0.8em;
-	margin-left:5px;
+	margin-left:2px;
 }
 
-/*Ocupa todo el ancho + botones*/
+/*All width + buttons*/
 .metadata-box-long{
-	width:93%;
+	width:91.5%;
 	margin-bottom:1px;
 	height:24px;
 	font-size:0.8em;
 	margin-right:1px;
 }
 
-/*Ocupa todo el ancho*/
+/*All width*/
 .metadata-box-all{
-	width:100%;
+	width:98%;
 	margin-bottom:1px;
 	height:24px;
 	font-size:0.8em;
 }
 
-/*Ocupa la mitad sin botones en fila*/
+/*Half width without buttons inline*/
 .metadata-box-half-special{
-	width:280;
+	width:287px;
 	margin-bottom:1px;
 	height:24px;
 	font-size:0.8em;
 }
 
-/*Ocupa la mitad del espacio + botones*/
+/*Half width with buttons inline*/
 .metadata-box-half{
 	width:30%;
 	margin-bottom:1px;
-	margin-right: 2px;
 	height:24px;
     font-size:0.8em;
 	float: left;
 }
-/*Ocupa la mitad del espacio SIN botones*/
+/*Half width without buttons*/
 .metadata-box-half-wbuttons{
     width:33%;
 	height:24px;
     display: block;
 	float: left;
 	margin-bottom:2px;
-	margin-left:4px;
+	margin-left:2px;
     font-size:0.8em;
 }
-/*Ocupa la mitad del espacio sin texto*/
+/*Half width without text*/
 .metadata-box-half-plus{
-    width:348px;
+    width:358px;
 	height:24px;
     display: block;
 	float: left;
@@ -111,6 +110,7 @@ legend{
   -moz-border-radius:5px;  
   border-radius: 5px;  
   -webkit-border-radius: 5px;
+  margin-bottom: 5px;
 }
 #dialog fieldset div{
 	padding-top:3px;
@@ -124,4 +124,10 @@ legend{
 #dialog fieldset div div{
 	margin-left:-15px;
 	margin-right:-15px;
+}
+.ui-accordion-header{
+	font-size: 20px;
+}
+#dialog>ul>li{
+	font-size: 18px;	
 }
