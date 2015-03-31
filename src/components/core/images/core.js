@@ -1,10 +1,9 @@
-var Project = window.Project;
 var util = require('util');
 var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function ImageBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"imgpath":"./img/1.png", "position" : [200,200]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"imgpath":"./img/1.png"};
   objectdata.idtype = metadata['idtype'];
   ImageBox.super_.call(this,objectdata);
   this.imgpath = objectdata.imgpath;
@@ -18,6 +17,7 @@ ImageBox.prototype.editorView = function editorView() {
   imgelement.css('height','100px');
   imgelement.css('width','auto');
   aux.append(imgelement);
+  pajarito();
   return aux;
 };
 
@@ -42,5 +42,7 @@ ImageBox.prototype.listHTMLCONVERT = function() {
 ImageBox.prototype.exportHTML = function(first_argument) {
   // body...
 };
-
+function pajarito(){
+  console.log("hola pajarito");
+}
 module.exports = ImageBox;

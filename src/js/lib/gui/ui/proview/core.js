@@ -100,6 +100,7 @@ ProView.prototype.createMenu = function createMenu(e) {
 ProView.prototype.appendBefore = function appendBefore(e){
   var CBStorage = application.storagemanager.getInstance();
   var that = e.data.that;
+  var actualcbsectionid = $(e.currentTarget).closest('[data-cbsectionid]').attr('data-cbsectionid');
   var listparents = $(e.currentTarget).parents('.cbsection');
   var backend = application.backend.core.getInstance();
   var parent = null;
@@ -109,7 +110,7 @@ ProView.prototype.appendBefore = function appendBefore(e){
   else{
     parent = $(listparents[1]).attr('data-cbsectionid');
   }
-  var cbsecid = backend.appendNewSectionObjectByUID(parent,'basic');
+  var cbsecid = backend.appendNewSectionObjectByUID(parent,'basic',actualcbsectionid);
   var son = that.createSectionView(cbsecid);
   $(listparents[0]).before(son);
   that.reloadSortable();
@@ -132,6 +133,7 @@ ProView.prototype.appendSubsection = function appendSubsection(e){
 
 ProView.prototype.appendAfter = function appendAfter(e){
   var that = e.data.that;
+  var actualcbsectionid = $(e.currentTarget).closest('[data-cbsectionid]').attr('data-cbsectionid');
   var CBStorage = application.storagemanager.getInstance();
   var backend = application.backend.core.getInstance();
   var listparents = $(e.currentTarget).parents('.cbsection');
@@ -142,7 +144,7 @@ ProView.prototype.appendAfter = function appendAfter(e){
   else{
     parentObjectSection = $(listparents[1]).attr('data-cbsectionid');
   }
-  var cbsecid = backend.appendNewSectionObjectByUID(parentObjectSection,'basic');
+  var cbsecid = backend.appendNewSectionObjectByUID(parentObjectSection,'basic',actualcbsectionid,1);
   var son = that.createSectionView(cbsecid);
   $(listparents[0]).after(son);
   that.reloadSortable();

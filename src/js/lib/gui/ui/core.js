@@ -97,9 +97,7 @@ UI.prototype.loadTheme = function loadTheme(){
       result = '<img src="' + iconpath + '" />';
     }
   }
-  if (infobutton.hasOwnProperty('label')) {
-    result += "<div>"+infobutton.label+"</div>";
-  }
+
   return result;
 };
 
@@ -178,6 +176,11 @@ UI.prototype.setSectionManager = function(type) {
     this.sectionmanager = new simplemanager();
   }
 };
+
+UI.prototype.setTitleName = function(text) {
+  document.title = text + " - CloudBook" ;
+};
+
 
 /**
  * This namespace has singleton instance of UI class

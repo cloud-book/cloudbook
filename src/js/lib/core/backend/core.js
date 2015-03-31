@@ -180,13 +180,27 @@ Backend.prototype.createFirstSection = function createFirstSection() {
  * @param  {String} typesection Type of section to create.
  * @return {String}             Identifier that section created
  */
-Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectByUID(cbparentuid,typesection) {
+Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectByUID(cbparentuid,typesection,needle,movement) {
   var cbsonuid = CBUtil.uniqueId();
   var auxcbsection = new Cloudbook.Sections[typesection]();
   var CBStorage = application.storagemanager.getInstance();
   CBStorage.setSectionById(auxcbsection,cbsonuid);
   var parentsection = CBStorage.getSectionById(cbparentuid);
-  parentsection.sections.push(cbsonuid);
+  if (needle !== undefined){
+    var indexposition = parentsection.sections.indexOf(needle);
+    if (movement !== undefined){
+      indexposition += movement;
+    }
+    if(indexposition >= 0 ){
+      parentsection.sections.splice(indexposition,0,cbsonuid);
+    }
+    else{
+     parentsection.sections.splice(parentsection.sections.length,0,cbsonuid); 
+    }
+  }
+  else{
+    parentsection.sections.push(cbsonuid);
+  }
   CBStorage.setSectionById(parentsection,cbparentuid);
   return cbsonuid;
 };
