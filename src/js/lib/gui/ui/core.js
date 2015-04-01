@@ -162,7 +162,14 @@ UI.prototype.loadProject = function loadProject(path) {
 };
 
 UI.prototype.emptyTargetContent = function emptyTargetContent() {
-  $(Cloudbook.UI.targetcontent).empty();
+  var targetcontent = $(Cloudbook.UI.targetcontent);
+  targetcontent.get()[0].removeEventListener('click',this.removeSelectElement);
+  targetcontent.get()[0].addEventListener('click',this.removeSelectElement);
+  targetcontent.empty();
+};
+
+UI.prototype.removeSelectElement = function removeSelectElement(event) {
+  Cloudbook.UI.cbobjectselected.removeClass('selected');
 };
 
 

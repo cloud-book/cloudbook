@@ -17,7 +17,6 @@ ImageBox.prototype.editorView = function editorView() {
   imgelement.css('height','100px');
   imgelement.css('width','auto');
   aux.append(imgelement);
-  pajarito();
   return aux;
 };
 
@@ -34,15 +33,4 @@ exports.restore = function restore(objectdata) {
   return new ImageBox(objectdata);
 };
 */
-ImageBox.prototype.listHTMLCONVERT = function() {
-  return ['h1','h2','span','p'];
-};
-
-
-ImageBox.prototype.exportHTML = function(first_argument) {
-  // body...
-};
-function pajarito(){
-  console.log("hola pajarito");
-}
 module.exports = ImageBox;
