@@ -1,12 +1,15 @@
+/**
+ * Application namespace
+ * @namespace application
+ */
+
 /************************
  *        Main          *
  ************************/
-
 /*
  * Core is created in this moment by loadComponent function. This function is responsible load extra libs on components.
  * These libraries be load before 
  */
-
  function Main(){
 
  	$(document).ready(function(){
@@ -31,10 +34,13 @@
  }
 
 
- Main.prototype.run = function() {
+/**
+ * Main function to load application
+ */
+ Main.prototype.run = function run() {
 
- 	var backend = application.backend.getInstance();
- 	var ui = application.ui.getInstance();
+ 	var backend = application.backend.core.getInstance();
+ 	var ui = application.ui.core.getInstance();
 
 
  	CBUtil.createNameSpace('application.util.template');
@@ -48,7 +54,7 @@
  		else{
  			throw "Path " + path + " not exists";
  		}
- 	}
+ 	};
  	application.util.template.registerHelper('gettext',function(str){return CBI18n.gettext(str);});
 
 
@@ -65,7 +71,8 @@
  	}
  	else{
  		var fs = require('fs');
- 		ui.showIntro();
+ 		var initialwizard = application.ui.initialwizard.core.getInstance();
+ 		initialwizard.showIntro();
  	}	
  };
 

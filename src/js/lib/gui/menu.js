@@ -6,27 +6,39 @@
     var menubar = new gui.Menu({
         type: 'menubar'
       });
-
+    var controller = application.controller.getInstance();
     /**
      * Actions for menu
      */
 
+    function newProject(){
+      var initialwizard = application.ui.initialwizard.core.getInstance();
+      initialwizard.initializeWizardDiv();
+      initialwizard.showTypeProject({data:{that:initialwizard}});
+      $("#wzrdgoback").unbind('click');
+      $("#wzrdgoback").click(function(){$("#wizard").dialog('close');$("#wizard").remove()});
+    }
+
     function saveAs() {
-        var pathelement = $(document.createElement('input')).attr('type','file').attr('nwsaveas','');
+        var pathelement = $(document.createElement('input')).attr('type','file').attr('nwdirectory','');
         pathelement.change(function(evt) {
               CBUtil.createNameSpace('Project.Info');
               Project.Info.projectname = $(this).val();
-              core.saveProject($(this).val());
+              controller.saveProject($(this).val());
             });
         pathelement.trigger('click');
       }
 
+    var new_project = {
+      label: CBI18n.gettext('New project'),
+      click: newProject
+    };
 
     var save_project = {
       label: CBI18n.gettext('Save Project'),
       click: function saveProject() {
-        if ( Project.Info.hasOwnProperty('projectname')){
-          core.saveProject(Project.UI.Data.Info.projectname);
+        if ( Project.Info.hasOwnProperty('projectpath')){
+          controller.saveProject(Project.Info.projectpath);
         }
         else{
           saveAs();
@@ -45,7 +57,7 @@
       click: function load_project() {
         var pathelement = $(document.createElement('input')).attr('type','file');
         pathelement.change(function(evt) {
-              core.loadProject($(this).val());
+              controller.loadProject($(this).val());
             });
         pathelement.trigger('click');
       }
@@ -62,6 +74,7 @@
      * Generate menubar
      */
     var file = new gui.Menu();
+    file.append(new gui.MenuItem(new_project));
     file.append(new gui.MenuItem(load_project));
     file.append(new gui.MenuItem(save_as_project));
     file.append(new gui.MenuItem(save_project));

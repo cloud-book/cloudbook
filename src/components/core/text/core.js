@@ -1,6 +1,6 @@
 var Project = window.Project;  
 var util = require('util');
-var CBobject = CBUtil.req("js/lib/core/cbobject/cbobject.js");
+var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 /**

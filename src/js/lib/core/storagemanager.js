@@ -1,10 +1,10 @@
 /**
  * This class is created to separate storage to application logic. This function must ensure
  * that there is no buffer overflow.
+ * @class StorageManager
  */
 function StorageManager(){
 	Project.Data._rawsections = {};
-	Project.Data.Sections = null;
 }
 
 /**
@@ -12,7 +12,7 @@ function StorageManager(){
  * @return {CBSection} section with first level sections.
  */
 StorageManager.prototype.getRoot = function() {
-	return Project.Data.Sections;
+	return Project.Data._rawsections['root'];
 };
 
 /**
@@ -20,7 +20,8 @@ StorageManager.prototype.getRoot = function() {
  * @param {CBSection} section section with first level sections.
  */
 StorageManager.prototype.setRoot = function(section) {
-	Project.Data.Sections = section;
+	Project.Data._rawsections['root'] = section;
+	return 'root';
 };
 /**
  * Get cbsection from storage with cbsectionid. 
@@ -28,6 +29,9 @@ StorageManager.prototype.setRoot = function(section) {
  * @return {CBSection}         CloudBook section
  */
 StorageManager.prototype.getSectionById = function(cbsecid) {
+	if (Project.Data._rawsections[cbsecid] === undefined){
+		return undefined;
+	}
 	return Project.Data._rawsections[cbsecid];
 };
 
@@ -38,12 +42,17 @@ StorageManager.prototype.getSectionById = function(cbsecid) {
  */
 StorageManager.prototype.setSectionById = function(section,cbsecid) {
 	Project.Data._rawsections[cbsecid] = section;
+	return cbsecid;
+};
+
+StorageManager.prototype.deleteSectionById = function deleteSectionById(cbsectionid) {
+	delete Project.Data._rawsections[cbsectionid];
 };
 
 
 /**
  * This namespace has singleton instance of StorageManager class
- * @namespace controller
+ * @namespace storagemanager
  * @memberOf application
  */
 CBUtil.createNameSpace('application.storagemanager');
