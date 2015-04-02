@@ -1,4 +1,3 @@
-
 /**
  * @class Import
  * @classdesc This class is responsible to make all import operations and loads languages into array
@@ -51,59 +50,23 @@ function processSCORMFile(filePath)
 
 };
 
-function processHTML(data)
-{
-	var includeHTML = $(data);
-	console.log(includeHTML.html());
-	var includeDiv = $("#include");
-	includeDiv.text(data);
-	console.log(includeDiv.html());
-}
-/**
- * This method is responsible for reading HTML5 content
- * @param  {String} path of the file
- */
 function processHTMLFile(filePath)
 {
-	var includeDiv = "";
 	var fs = require('fs');
-	var content = "";
-
-    Project.Info.projectname = filePath;
-
+	var projectName = filePath.split("/")[filePath.split("/").length-1].split(".")[0];
+	var importationHTML = application.importhtml.getInstance();
+    
     var backend = application.backend.getInstance();		
- 	backend.voidProject();
+    if(!backend.checkProjectExists(projectName)){
+    	backend.createProject(projectName);
+    	backend.voidProject();
+	}
+
+	backend.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 
 	$.get(filePath, function(html) {
-		processHTML(html);
+		importationHTML.processHTML(html, filePath);
     });  
-
-
-/*		$page = $(content);
-		//console.log(fileType);
-		//console.log(content);
-		//$page.children().each(function(index, element){
-			$.each($page, function(index, element){
-				var tempSection = [];
-				switch(element.tagName)
-				{
-					case "DIV": 
-						$.each($(element).children(), function(index1, element1){
-							console.log(index1 + " " + element1.tagName + " " + $(element1).text());
-						});
-					break;
-					case "P":
-					case "H1":
-					case "H2":
-					case "A":
-						console.log(index + " " + element.tagName + " " + $(element).text());
-					break;
-					default:
-						console.log(index + " " + element.tagName + " " + $(element).text());
-					break;
-				}
-			});
-	//}*/
 };
 
 /**

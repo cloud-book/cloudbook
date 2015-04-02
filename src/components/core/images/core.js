@@ -21,6 +21,10 @@ ImageBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+ImageBox.prototype.importHTML = function importHTML(){
+  return ['IMG'];
+}
+
 ImageBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
   ImageBox.super_.prototype.add_callback.call(this,jquerycbo,objectcbo);
 };
