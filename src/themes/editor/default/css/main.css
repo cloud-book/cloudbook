@@ -124,5 +124,25 @@ body{
     display: inline-block;
 }
 
+.cbobject{
+    display: inline-block;
+}
+
+.cbobject-bar{
+    height:30px;
+    width:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s linear;
+}
 
 
+.cbobject.selected .cbobject-bar{
+    opacity: 1;
+}
+
+.cbobject.selected{
+    border: 1px solid black;
+}

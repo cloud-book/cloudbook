@@ -55,8 +55,10 @@ function processHTMLFile(filePath)
 	var fs = require('fs');
 	var projectName = filePath.split("/")[filePath.split("/").length-1].split(".")[0];
 	var importationHTML = application.importhtml.getInstance();
-    
-    var backend = application.backend.getInstance();		
+    console.log("pasa");
+
+    var backend = application.backend.core.getInstance();		
+    console.log("pasa");
     if(!backend.checkProjectExists(projectName)){
     	backend.createProject(projectName);
     	backend.voidProject();

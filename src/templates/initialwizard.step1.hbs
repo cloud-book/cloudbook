@@ -1,0 +1,12 @@
+<table id="listProjects" class="table table-striped">
+	<tbody>
+		{{#each projects}}
+		<tr>
+		<td class="name">{{this.name}}</td><td><button type="button" class="open" data-path="{{this.path}}">{{gettext "Open"}}</button></td>
+		</tr>
+		{{/each}}
+	</tbody>
+</table>
+
+<button id="newproject" type="button" style="display:inline-block">{{gettext "New project"}}</button>
+<button id="openproject" type="button" style="display:inline-block">{{gettext "Open project"}}</button>
