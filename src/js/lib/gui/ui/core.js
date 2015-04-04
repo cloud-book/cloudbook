@@ -70,12 +70,8 @@ UI.prototype.loadTheme = function loadTheme(){
  UI.prototype.getCBObjectFromButton = function getCBObjectFromButton(component) {
   var CBStorage = application.storagemanager.getInstance();
   var fullobject = new Cloudbook.Actions[component]['component']();
-  var viewobject = $(fullobject.editorView());
-  $(Cloudbook.UI.targetcontent).append(viewobject);
-  fullobject.add_callback(viewobject,fullobject);
-  var sectionWhereAppend = CBStorage.getSectionById(Cloudbook.UI.selected.attr('data-cbsectionid'));
-  sectionWhereAppend.content.push(fullobject);
-  CBStorage.setSectionById(sectionWhereAppend,Cloudbook.UI.selected.attr('data-cbsectionid'));
+  var controller = application.controller.getInstance();
+  fullobject.clickButton(controller);
 };
 
 /**

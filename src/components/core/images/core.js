@@ -23,6 +23,14 @@ ImageBox.prototype.editorView = function editorView() {
 ImageBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
   ImageBox.super_.prototype.add_callback.call(this,jquerycbo,objectcbo);
 };
+
+ImageBox.prototype.clickButton = function clickButton(controllerClass) {
+  var that = this;
+  var dialog = $("<div id='imagedialog'><button>Insertar</button></div>");
+  dialog.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
+  $("#imagedialog button").on('click',function(){controllerClass.addCBIbjectIntoSection(that.editorView(),that);dialog.dialog('close')});
+};
+
 //ImageBox.add_callback =  CBobject.add_callback;
 /*
 exports.add = function add() {

@@ -78,6 +78,16 @@ Controller.prototype.popSubsection = function popSubsection(cbsectionid,sonid) {
 	var backend = application.backend.core.getInstance();
 	backend.popSubsection(cbsectionid,sonid);
 };
+
+
+Controller.prototype.addCBIbjectIntoSection = function addCBIbjectIntoSection(jquerycbo,objectcbo) {
+  var CBStorage = application.storagemanager.getInstance();	
+  $(Cloudbook.UI.targetcontent).append(jquerycbo);
+  objectcbo.add_callback(jquerycbo,objectcbo);
+  var sectionWhereAppend = CBStorage.getSectionById(Cloudbook.UI.selected.attr('data-cbsectionid'));
+  sectionWhereAppend.content.push(objectcbo);
+  CBStorage.setSectionById(sectionWhereAppend,Cloudbook.UI.selected.attr('data-cbsectionid'));
+};
 /**
  * This namespace has singleton instance of Controller class
  * @namespace controller

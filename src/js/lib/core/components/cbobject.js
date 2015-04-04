@@ -43,6 +43,12 @@ CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
 	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }, scroll:true});
 };
 
+
+CBObject.prototype.clickButton = function clickButton(controllerClass) {
+	controllerClass.addCBIbjectIntoSection(this.editorView(),this);
+};
+
+
 function enableEditable(e){
 	var x = $(e.currentTarget);
 	console.log("Pasando por enableEditable");
