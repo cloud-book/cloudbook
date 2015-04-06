@@ -22,11 +22,16 @@ CBObject.prototype.editorView = function editorView() {
 	   .css('top', this.position[1])
 	   .addClass('cbobject')
 	   .addClass('cbobject-editable')
+	   .attr('tabindex','-1')
 	   .css('position','relative');
 	var bar = $(window.document.createElement('div'));
 	bar.css('background-color','#4c4c4c')
 		.addClass('draggable')
 		.addClass('cbobject-bar');
+	var edit = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/edit.png');
+	var del = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/delete.png');
+	edit.click(function(){console.log('hola')});
+	bar.append([edit,del]);
 	aux.append(bar);
 	return aux;
 };
@@ -39,8 +44,8 @@ CBObject.prototype.editorView = function editorView() {
  */
 CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
 	var x = jquerycbo.get()[0];
-	x.addEventListener('click',enableEditable);
-	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }, scroll:true});
+	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }, scroll:true,handle:".draggable"}).click(function(){this.focus()});
+	console.log('Pasando por aqui')
 };
 
 

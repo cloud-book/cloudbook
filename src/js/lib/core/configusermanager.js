@@ -7,7 +7,7 @@ function ConfigUserManager(){
    * Path to workspace folder by default
    * @type {String}
    */
-   Cloudbook.workspace = process.env['HOME'] + "/Cloudbook/";
+   Cloudbook.workspace = process.env['HOME'] + "/cloudbook-workspace/";
   /**
    * File where store all project project metadata
    * @type {String}

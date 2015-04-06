@@ -52,7 +52,13 @@ Controller.prototype.deleteSection = function(cbsectionid) {
 };
 
 Controller.prototype.createSimpleProject = function createSimpleProject(name) {
-	throw "Method not implemented";
+	var dialog = $("<div>Este tipo de proyecto aun no esta implementado</div>");
+	dialog.dialog({modal:true,close:function(event,ui)
+		{
+			$(this).remove();
+		}})
+
+
 };
 
 Controller.prototype.loadProject = function loadProject(path) {
