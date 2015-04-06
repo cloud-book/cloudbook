@@ -43,9 +43,9 @@ CBObject.prototype.editorView = function editorView() {
  * @return {String} Function string.
  */
 CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
-	var x = jquerycbo.get()[0];
+	//var x = jquerycbo.get()[0];
+	//x.addEventListener('click',enableEditable);
 	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }, scroll:true,handle:".draggable"}).click(function(){this.focus()});
-	console.log('Pasando por aqui')
 };
 
 
@@ -56,9 +56,7 @@ CBObject.prototype.clickButton = function clickButton(controllerClass) {
 
 function enableEditable(e){
 	var x = $(e.currentTarget);
-	console.log("Pasando por enableEditable");
 	if(x !== Cloudbook.UI.cbobjectselected){
-		console.log("Son distintos");
 		x.addClass("selected");
 		if(Cloudbook.UI.cbobjectselected !== undefined){
 			Cloudbook.UI.cbobjectselected.removeClass('selected');
