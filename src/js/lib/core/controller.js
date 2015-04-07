@@ -52,7 +52,13 @@ Controller.prototype.deleteSection = function(cbsectionid) {
 };
 
 Controller.prototype.createSimpleProject = function createSimpleProject(name) {
-	throw "Method not implemented";
+	var dialog = $("<div>Este tipo de proyecto aun no esta implementado</div>");
+	dialog.dialog({modal:true,close:function(event,ui)
+		{
+			$(this).remove();
+		}})
+
+
 };
 
 Controller.prototype.loadProject = function loadProject(path) {
@@ -77,6 +83,16 @@ Controller.prototype.saveProject = function(path) {
 Controller.prototype.popSubsection = function popSubsection(cbsectionid,sonid) {
 	var backend = application.backend.core.getInstance();
 	backend.popSubsection(cbsectionid,sonid);
+};
+
+
+Controller.prototype.addCBIbjectIntoSection = function addCBIbjectIntoSection(jquerycbo,objectcbo) {
+  var CBStorage = application.storagemanager.getInstance();	
+  $(Cloudbook.UI.targetcontent).append(jquerycbo);
+  objectcbo.add_callback(jquerycbo,objectcbo);
+  var sectionWhereAppend = CBStorage.getSectionById(Cloudbook.UI.selected.attr('data-cbsectionid'));
+  sectionWhereAppend.content.push(objectcbo);
+  CBStorage.setSectionById(sectionWhereAppend,Cloudbook.UI.selected.attr('data-cbsectionid'));
 };
 /**
  * This namespace has singleton instance of Controller class

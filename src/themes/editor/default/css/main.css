@@ -135,14 +135,16 @@ body{
     top:0;
     left:0;
     opacity: 0;
-    -webkit-transition: opacity 0.3s linear;
+    display: none;
+    -webkit-transition: display 0.3s opacity 0.3s linear;
 }
 
 
-.cbobject.selected .cbobject-bar{
+.cbobject:focus .cbobject-bar{
+    display: inherit;
     opacity: 1;
 }
 
-.cbobject.selected{
+.cbobject:focus{
     border: 1px solid black;
 }
