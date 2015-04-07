@@ -12,42 +12,42 @@ function DialogMetadata(){
 
     var dialog = CBDialog.createDiv("dialog");
     dialog.append(CBDialog.createList([["#dublincore", CBI18n.gettext("Dublin Core")],["#accordion", CBI18n.gettext("LOM-ES")]]));
-    var dialogDublin = CBDialog.createDiv("dublincore").append(CBDialog.createFieldsetWithElements(CBI18n.gettext("Content"), data[0])).append(CBDialog.createFieldsetWithElements("Intellectual property", data[1]))
-    .append(CBDialog.createFieldsetWithElements("Instantiation", data[2]));
+    var dialogDublin = CBDialog.createDiv("dublincore").append(CBDialog.createFieldsetWithElements(CBI18n.gettext("Content"), data[0])).append(CBDialog.createFieldsetWithElements(CBI18n.gettext("Intellectual property"), data[1]))
+    .append(CBDialog.createFieldsetWithElements(CBI18n.gettext("Instantiation"), data[2]));
 
     var dialogLOM = CBDialog.createDiv("accordion").append(CBDialog.createHeader(CBI18n.gettext("General"))).append(CBDialog.createDiv("general")
-      .append(CBDialog.createFieldsetWithDivElements("Identifier", "cat_1", data[3])).append(CBDialog.createFieldsetWithDivElements("Title", "tit_1", data[4]))
-      .append(CBDialog.createFieldsetWithDivElements("Language", "idiom_1", data[5])).append(CBDialog.createFieldsetWithDivElements("Description", "descGeneral_1", data[6]))
-      .append(CBDialog.createFieldsetWithDivElements("Keyword", "keywordGeneral_1", data[7])).append(CBDialog.createFieldsetWithDivElements("Coverage", "coverage_1", data[8]))
-      .append(CBDialog.createFieldsetWithDivElements("Structure", "structureGeneral_1", data[9])).append(CBDialog.createFieldsetWithDivElements("Aggregation Level", "aggregationLevel_1", data[10])))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Identifier"), "cat_1", data[3])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Title"), "tit_1", data[4]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Language"), "idiom_1", data[5])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Description"), "descGeneral_1", data[6]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Keyword"), "keywordGeneral_1", data[7])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Coverage"), "coverage_1", data[8]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Structure"), "structureGeneral_1", data[9])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Aggregation Level"), "aggregationLevel_1", data[10])))
 
-    .append(CBDialog.createHeader(CBI18n.gettext("Life cycle"))).append(CBDialog.createDiv("lifecycle").append(CBDialog.createFieldsetWithDivElements("Version", "versionlifecycle_1", data[11]))
-      .append(CBDialog.createFieldsetWithDivElements("Status", "statusLifeCycle_1", data[12])).append(CBDialog.createFieldsetWithDivElements("Contribution", "contrLyfeCycle_1", data[13])))
+    .append(CBDialog.createHeader(CBI18n.gettext("Life cycle"))).append(CBDialog.createDiv("lifecycle").append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Version"), "versionlifecycle_1", data[11]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Status"), "statusLifeCycle_1", data[12])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Contribution"), "contrLyfeCycle_1", data[13])))
 
-    .append(CBDialog.createHeader(CBI18n.gettext("Meta-Metadata"))).append(CBDialog.createDiv("metametadata").append(CBDialog.createFieldsetWithDivElements("Identifier", "catMetadata_1", data[14]))
-      .append(CBDialog.createFieldsetWithDivElements("Metadata Schema", "schemaMetametadata_1", data[15])).append(CBDialog.createFieldsetWithDivElements("Language", "langMetametadata_1", data[16]))
-      .append(CBDialog.createFieldsetWithDivElements("Contribution", "contrMetametadata_1", data[17])))
+    .append(CBDialog.createHeader(CBI18n.gettext("Meta-Metadata"))).append(CBDialog.createDiv("metametadata").append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Identifier"), "catMetadata_1", data[14]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Metadata Schema"), "schemaMetametadata_1", data[15])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Language"), "langMetametadata_1", data[16]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Contribution"), "contrMetametadata_1", data[17])))
 
-    .append(CBDialog.createHeader(CBI18n.gettext("Technical"))).append(CBDialog.createDiv("technical").append(CBDialog.createFieldsetWithDivElements("Format", "formatTechnical_1", data[18]))
-      .append(CBDialog.createFieldsetWithDivElements("Size", "sizeTechnical_1", data[19])).append(CBDialog.createFieldsetWithDivElements("Location", "locationTechnical_1", data[20]))
-      .append(CBDialog.createFieldsetWithDivElements("Requirements", "requirementsTechnical_1", data[21])).append(CBDialog.createFieldsetWithDivElements("Installation Remarks", "installRemTech_1", data[22]))
-      .append(CBDialog.createFieldsetWithDivElements("Other Platform Requirements", "requirementsRemTech_1", data[23])).append(CBDialog.createFieldsetWithDivElements("Duration", "durationDurTech_1", data[24])))
+    .append(CBDialog.createHeader(CBI18n.gettext("Technical"))).append(CBDialog.createDiv("technical").append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Format"), "formatTechnical_1", data[18]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Size"), "sizeTechnical_1", data[19])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Location"), "locationTechnical_1", data[20]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Requirements"), "requirementsTechnical_1", data[21])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Installation Remarks"), "installRemTech_1", data[22]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Other Platform Requirements"), "requirementsRemTech_1", data[23])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Duration"), "durationDurTech_1", data[24])))
 
-    .append(CBDialog.createHeader(CBI18n.gettext("Educational"))).append(CBDialog.createDiv("educationaluse").append(CBDialog.createFieldsetWithDivElements("Interactivity type", "intTypeEducational_1", data[25]))
-      .append(CBDialog.createFieldsetWithDivElements("Learning Resource Type", "resourceTypeEducational_1", data[26])).append(CBDialog.createFieldsetWithDivElements("Interactivity level", "levelInterEducational_1", data[27]))
-      .append(CBDialog.createFieldsetWithDivElements("Semantic density", "levelDensEducational_1", data[28])).append(CBDialog.createFieldsetWithDivElements("Intended end user role", "endUserEducational_1", data[29]))
-      .append(CBDialog.createFieldsetWithDivElements("Context", "contextEducational_1", data[30])).append(CBDialog.createFieldsetWithDivElements("Typical age range", "rangeAgeEducational_1", data[31]))
-      .append(CBDialog.createFieldsetWithDivElements("Difficulty", "difficultyEducational_1", data[32])).append(CBDialog.createFieldsetWithDivElements("Typical learning time", "learningTimeEducational_1",data[33]))
-      .append(CBDialog.createFieldsetWithDivElements("Description", "descEducationUse_1", data[34])).append(CBDialog.createFieldsetWithDivElements("Language", "languageEducationalUse_1", data[35]))
-      .append(CBDialog.createFieldsetWithDivElements("Cognitive process", "processcogEducational_1", data[36])))
+    .append(CBDialog.createHeader(CBI18n.gettext("Educational"))).append(CBDialog.createDiv("educationaluse").append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Interactivity type"), "intTypeEducational_1", data[25]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Learning Resource Type"), "resourceTypeEducational_1", data[26])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Interactivity level"), "levelInterEducational_1", data[27]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Semantic density"), "levelDensEducational_1", data[28])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Intended end user role"), "endUserEducational_1", data[29]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Context"), "contextEducational_1", data[30])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Typical age range"), "rangeAgeEducational_1", data[31]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Difficulty"), "difficultyEducational_1", data[32])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Typical learning time"), "learningTimeEducational_1",data[33]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Description"), "descEducationUse_1", data[34])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Language"), "languageEducationalUse_1", data[35]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Cognitive process"), "processcogEducational_1", data[36])))
 
-     .append(CBDialog.createHeader(CBI18n.gettext("Rights"))).append(CBDialog.createDiv("rights").append(CBDialog.createFieldsetWithDivElements("Cost", "costRights_1", data[37]))
-      .append(CBDialog.createFieldsetWithDivElements("Copyright and other restrictions", "copyrightRights_1", data[38])).append(CBDialog.createFieldsetWithDivElements("Description", "descRights_1", data[39]))
-      .append(CBDialog.createFieldsetWithDivElements("Access", "accessRights_1", data[40])))
+     .append(CBDialog.createHeader(CBI18n.gettext("Rights"))).append(CBDialog.createDiv("rights").append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Cost"), "costRights_1", data[37]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Copyright and other restrictions"), "copyrightRights_1", data[38])).append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Description"), "descRights_1", data[39]))
+      .append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Access"), "accessRights_1", data[40])))
 
-     .append(CBDialog.createHeader(CBI18n.gettext("Relation"))).append(CBDialog.createDiv("relation").append(CBDialog.createFieldsetWithDivElements("Relations", "relationRelations_1", data[41])))
-     .append(CBDialog.createHeader(CBI18n.gettext("Annotation"))).append(CBDialog.createDiv("annotation").append(CBDialog.createFieldsetWithDivElements("Annotations", "annotationAnnotations_1", data[42])))
-    .append(CBDialog.createHeader(CBI18n.gettext("Classification"))).append(CBDialog.createDiv("classification").append(CBDialog.createFieldsetWithDivElements("Classifications", "classificationsClassification_1", data[43])));
+     .append(CBDialog.createHeader(CBI18n.gettext("Relation"))).append(CBDialog.createDiv("relation").append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Relations"), "relationRelations_1", data[41])))
+     .append(CBDialog.createHeader(CBI18n.gettext("Annotation"))).append(CBDialog.createDiv("annotation").append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Annotations"), "annotationAnnotations_1", data[42])))
+    .append(CBDialog.createHeader(CBI18n.gettext("Classification"))).append(CBDialog.createDiv("classification").append(CBDialog.createFieldsetWithDivElements(CBI18n.gettext("Classifications"), "classificationsClassification_1", data[43])));
 
     dialogLOM.accordion({
       heightStyle: "content",

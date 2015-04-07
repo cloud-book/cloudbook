@@ -113,6 +113,18 @@
       }
     };
 
+    var import_metadata = {
+      label: CBI18n.gettext('Metadata LOM-ES'),
+      click: function import_metadata(){
+      var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.xml');
+              pathelement.change(function(evt) {
+                  var importation = application.importation.getInstance();
+                  importation.loadFile($(this).val(), 'METADATA');
+              });
+      pathelement.trigger('click');      
+      }
+    };
+
     var import_project = {
       label: CBI18n.gettext('Import')
     };
@@ -124,8 +136,9 @@
     var project = new gui.Menu();
     var import_project_menu = new gui.Menu();
     import_project_menu.append(new gui.MenuItem(import_html5));
-    import_project_menu.append(new gui.MenuItem(import_odt_doc_docx));
+    //import_project_menu.append(new gui.MenuItem(import_odt_doc_docx));
     import_project_menu.append(new gui.MenuItem(import_scorm));
+    import_project_menu.append(new gui.MenuItem(import_metadata));
     import_project.submenu = import_project_menu;
     file.append(new gui.MenuItem(new_project));
     file.append(new gui.MenuItem(load_project));

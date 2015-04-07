@@ -12,8 +12,7 @@ function ImportHTML(){}
 function processText(node)
 {
 	var textBox = CBUtil.req("../src/components/core/text/core.js");
-	var text = new textBox();
-	var textTags = text.importHTML();
+	var textTags = new textBox().importHTML();
 
 	if($.inArray(node.tagName, textTags) != -1)
 	{
@@ -27,7 +26,6 @@ function processText(node)
 		var x = text.editorView();
 		$(Cloudbook.UI.targetcontent).append(x);
 		text.add_callback(x,text);
-		//console.log("TEXT " + node.innerHTML + " " + node.tagName + " " + text + " " + width + " " + height + " " + top + " " + left );
 		return true;
 	}
 	else
@@ -50,8 +48,7 @@ function processText(node)
 function processImage(node, filePath){
 
 	var imageBox = CBUtil.req("../src/components/core/images/core.js");
-	var image = new imageBox();
-	var imageTags = image.importHTML();
+	var imageTags = new imageBox().importHTML();
 
 	if($.inArray(node.tagName, imageTags) != -1)
 	{	
@@ -66,9 +63,6 @@ function processImage(node, filePath){
 		var x = image.editorView();
 		$(Cloudbook.UI.targetcontent).append(x);
 		image.add_callback(x,image);
-
-//		console.log("IMAGE " + node.tagName + " " + node.innerHTML + " " + imgpath + " " + text + " " + width + " " + height + " " + 
-//		top + " " + left + node.style.width + " " + filePath.substring(0,filePath.lastIndexOf("/")));
 		return true;
 	}
 	else
@@ -83,8 +77,7 @@ function processImage(node, filePath){
 function processVideo(node, filePath){
 
 	var videoBox = CBUtil.req("../src/components/core/video/core.js");
-	var video = new videoBox();
-	var videoTags = video.importHTML();
+	var videoTags = new videoBox().importHTML();
 
 	if($.inArray(node.tagName, videoTags) != -1)
 	{	
@@ -96,14 +89,10 @@ function processVideo(node, filePath){
 		var left = node.offsetLeft;
 		var top = node.offsetTop;
 
-		video = new videoBox({"position" : [top,left], "imgpath":filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath});
+		video = new videoBox({"position" : [top,left], "videopath":filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath});
 		var x = video.editorView();
 		$(Cloudbook.UI.targetcontent).append(x);
 		video.add_callback(x,video);
-
-//		console.log("VIDEO " + node.tagName + " " + node.innerHTML + " " + imgpath + " " +  width + " " + height + " " + 
-//		top + " " + left + node.style.width + " " + filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath);
-
 		return true;
 	}
 	else
@@ -120,47 +109,48 @@ function processBlock(element, filePath, blockName)
 {
 	var blockText = "";
 	var textBox = CBUtil.req("../src/components/core/text/core.js");
-	var text = new textBox();
-	var textTags = text.importHTML();
+	var textTags = new textBox().importHTML();
+	var imageBox = CBUtil.req("../src/components/core/images/core.js");
+	var imageTags = new imageBox().importHTML();
+	var videoBox = CBUtil.req("../src/components/core/video/core.js");
+	var videoTags = new videoBox().importHTML();
 
 	for(var node = element.firstChild; node; node = node.nextSibling){
-		console.log(node.tagName + " " + blockName + " " + blockText + node.nodeName);
+		//console.log(node.tagName + " " + blockName + " " + blockText + node.nodeName);
 		if(node.tagName != undefined)
 		{
 			switch(node.tagName)
 			{
-				case "P":case "H1":case "H2":case "H3":case "H4":case "H5":case "H6":
-				case "A":case "SPAN":case "UL":case "OL":case "LABEL":case "BUTTON":
-				case "INPUT":case "ABBR":case "ADDRESS":case "BLOCKQUOTE":case "CANVAS":case "TABLE":
-					if(blockName != null){
-						blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + "><br>";
-					}else{
-						if(!processText(node)) processImage(node, filePath);
-					}
-				break;
-				case "IMG":
-					if(!processImage(node, filePath)) processText(node);
-				break;
-				break;
 				case "SECTION":case "ARTICLE":case "NAV":case "DIV": case "FOOTER":case "ASIDE":
+					//console.log(node.tagName + " " + blockName + " " + blockText + node.nodeName);
 					var text = processBlock(node, filePath, node.tagName);
+					//console.log(text);
 					processText(text);
 					text = "";
 				break;
-				case "VIDEO":
-					if(!processVideo(node,filePath)) processImage(node, filePath);
-				break;
+				
 				default:
-					if(blockName != null){
-						blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + "><br>";
-					}else{
-						if(!processText(node)) processImage(node, filePath);
+					if($.inArray(node.tagName, textTags) != -1)
+					{
+						if(blockName != null)
+								blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + "><br>";
+						else
+								processText(node);
+					}else
+					{
+						if($.inArray(node.tagName, imageTags) != -1){
+							processImage(node, filePath)
+						}
+						else{
+							if($.inArray(node.tagName, videoTags) != -1){
+								processVideo(node,filePath);
+							}
+						}
 					}
 				break;
 			}
 		}
 	}
-
 	if(blockName != null)
 		return blockText;
 }
@@ -178,9 +168,6 @@ ImportHTML.prototype.processHTML = function processHTML(data, filePath)
 		{
 			case "HEADER":case "DIV":case "SECTION":case "ARTICLE":case "FOOTER":
 				processBlock(element, filePath, null);
-			break;
-			case "P":case "H1":case "H2":case "A":
-				//console.log(index + " " + element.tagName + " " + $(element).text() + " " );
 			break;
 		}
 	});

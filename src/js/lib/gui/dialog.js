@@ -64,7 +64,7 @@ Dialog.prototype.createSpan = function createSpan(text, name, style){
  */
 Dialog.prototype.createLegend = function createLegend(text){
    var legendElement = $(window.document.createElement('legend'))
-    .text(CBI18n.gettext(text));
+    .text(text);
     return legendElement;
 
 }

@@ -20,14 +20,31 @@ Import.prototype.loadFile = function loadFile(filePath, fileType) {
     	case "HTML": processHTMLFile(filePath); break;
     	case "ODT_DOC_DOCX": processODTFile(content, filetype); break;
     	case "SCORM": processSCORMFile(filePath); break;
+    	case "METADATA": processMetadata(filePath);break;
     }
   };
 };
 
 /**
+ * This method is responsible for reading xml Metadata LOM-ES file
+ * @param  {String} path of the file
+ */
+
+function processMetadata(filePath)
+{
+	var fs = require('fs');	
+
+	fs.readFile(filePath, function(err, data) {
+		if (err) throw err;
+	  	var importMetadata = application.importmetadata.getInstance();
+		importMetadata.loadMetadata(data.toString());
+	});
+}
+
+/**
  * This method is responsible for reading SCORM file content
  * First look into the file to check the content and then loads content and metadata information
- * @param  {String} content of the file
+ * @param  {String} path of the file
  */
 function processSCORMFile(filePath)
 {
@@ -55,10 +72,8 @@ function processHTMLFile(filePath)
 	var fs = require('fs');
 	var projectName = filePath.split("/")[filePath.split("/").length-1].split(".")[0];
 	var importationHTML = application.importhtml.getInstance();
-    console.log("pasa");
 
     var backend = application.backend.core.getInstance();		
-    console.log("pasa");
     if(!backend.checkProjectExists(projectName)){
     	backend.createProject(projectName);
     	backend.voidProject();
