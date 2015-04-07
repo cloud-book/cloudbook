@@ -162,7 +162,7 @@ Backend.prototype.loadComponentExtraCss = function loadComponentExtraCss(pluginp
       infobutton['external_css'].forEach(function(csspath){
         var css = document.createElement('link');
         css.rel = 'stylesheet';
-        css.href = pluginpath + csspath;
+        css.href = pluginpath + "/" + csspath;
         head.appendChild(css);
       }); 
   }
