@@ -30,7 +30,6 @@ TextBox.prototype.editorView = function editorView() {
 
 TextBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
 	TextBox.super_.prototype.add_callback.call(this,jquerycbo,objectcbo);
-	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }});
 	$(".raptor").raptor({
 		plugins:{
 			insertFile: false, 

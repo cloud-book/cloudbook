@@ -68,7 +68,6 @@ UI.prototype.loadTheme = function loadTheme(){
  * @param  {String} component Component idtype indicated on metadata file.
  */
  UI.prototype.getCBObjectFromButton = function getCBObjectFromButton(component) {
-  var CBStorage = application.storagemanager.getInstance();
   var fullobject = new Cloudbook.Actions[component]['component']();
   var controller = application.controller.getInstance();
   fullobject.clickButton(controller);

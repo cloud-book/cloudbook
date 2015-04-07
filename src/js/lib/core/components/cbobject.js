@@ -10,6 +10,7 @@ function CBObject(objectdata){
 	this.position = typeof objectdata.position !== 'undefined' ? objectdata.position : [200,200];
 	this.size = typeof objectdata.size !== 'undefined' ? objectdata.size : [0,0];
 	this.idtype = typeof objectdata.idtype !== 'undefined' ? objectdata.idtype : "CBObject";
+	this.uniqueid = CBUtil.uniqueId();
 }
 
 /**
@@ -18,11 +19,13 @@ function CBObject(objectdata){
  */
 CBObject.prototype.editorView = function editorView() {
 	var aux = $(window.document.createElement('div'));
+	var that = this;
 	aux.css('left', this.position[0])
 	   .css('top', this.position[1])
 	   .addClass('cbobject')
 	   .addClass('cbobject-editable')
 	   .attr('tabindex','-1')
+	   .attr('data-cbobjectid',this.uniqueid)
 	   .css('position','relative');
 	var bar = $(window.document.createElement('div'));
 	bar.css('background-color','#4c4c4c')
@@ -30,7 +33,10 @@ CBObject.prototype.editorView = function editorView() {
 		.addClass('cbobject-bar');
 	var edit = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/edit.png');
 	var del = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/delete.png');
-	edit.click(function(){console.log('hola')});
+	edit.click(that.editButton);
+	del.click(function(){
+		that.editButton();
+	})
 	bar.append([edit,del]);
 	aux.append(bar);
 	return aux;
@@ -50,7 +56,32 @@ CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
 
 
 CBObject.prototype.clickButton = function clickButton(controllerClass) {
-	controllerClass.addCBIbjectIntoSection(this.editorView(),this);
+	controllerClass.addCBObjectIntoSection(this.editorView(),this);
+};
+
+CBObject.prototype.editButton = function editButton() {
+	var uniqueid = 1;
+	var dialog = $("<div id='"+uniqueid+"'></div>");
+	dialog.dialog({
+		modal:true,
+		close:function(){
+			
+			var savedialog = $("<div id='savedialog'><button id='save'>Save</button><button id='cancel'>Cancel</button></div>");
+			savedialog.children('#save').click(function(){
+				console.log("Salvando");
+				dialog.remove() ;
+				$('#savedialog').dialog('destroy'); });
+			savedialog.children('#cancel').click(function(){console.log("Cancelando"); dialog.remove() ; $('#savedialog').dialog('destroy');});
+			savedialog.dialog({
+				modal:true,
+				close:function(){
+					$(this).remove();
+					dialog.dialog('open')}
+			});
+			
+		}
+	});
+	return uniqueid;
 };
 
 

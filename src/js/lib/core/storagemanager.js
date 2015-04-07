@@ -5,6 +5,7 @@
  */
 function StorageManager(){
 	Project.Data._rawsections = {};
+	Project.Data._rawobjects = {};
 }
 
 /**
@@ -49,7 +50,30 @@ StorageManager.prototype.deleteSectionById = function deleteSectionById(cbsectio
 	delete Project.Data._rawsections[cbsectionid];
 };
 
+StorageManager.prototype.getCBObjectById = function getCBObjectById(cbobjectid) {
+	if (Project.Data._rawobjects[cbobjectid] === undefined){
+		return undefined;
+	}
+	return Project.Data._rawobjects[cbobjectid];
+};
 
+StorageManager.prototype.setCBObjectById = function setCBObjectById(cbocject,cbobjectid) {
+	Project.Data._rawobjects[cbobjectid] = cbocject;
+	return cbobjectid;
+};
+
+StorageManager.prototype.deleteCBObjectById = function deleteCBObjectById(cbobjectid) {
+	if (Project.Data._rawobjects[cbobjectid] === undefined){
+		return undefined;
+	}
+	delete Project.Data._rawobjects[cbobjectid];
+	return cbobjectid;
+};
+
+
+StorageManager.prototype.getRootObject = function getRootObject() {
+	return Project.Data._rawobjects;
+};
 /**
  * This namespace has singleton instance of StorageManager class
  * @namespace storagemanager

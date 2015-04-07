@@ -267,6 +267,19 @@ Backend.prototype.saveProject = function(projectfolder) {
     objectProject['data']['sections'].push([identifier,result.obj]);
     pool = pool.concat(result.list);
   }
+
+
+
+
+  /**
+   * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+   * @todo save cbstorage objects list
+   * !!!!!!!!!!!!!!!!!!!!!!!!!!!
+   */
+  throw "Actualmente la funcion de guardado no guarda el listado de objectos";
+  
+
+
   var result_string = JSON.stringify(objectProject,null," ");
   fs.writeFile(projectpath,result_string);
 };

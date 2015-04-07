@@ -28,10 +28,16 @@ ImageBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
 ImageBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   var dialog = $("<div id='imagedialog'><button>Insertar</button></div>");
-  dialog.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
-  $("#imagedialog button").on('click',function(){controllerClass.addCBIbjectIntoSection(that.editorView(),that);dialog.dialog('close')});
+  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  $("#imagedialog button").on('click',function(){controllerClass.addCBObjectIntoSection(that.editorView(),that);dialog.dialog('close')});
 };
 
+
+ImageBox.prototype.editButton = function editButton() {
+  var id = ImageBox.super_.prototype.editButton.call(this);
+  var dialog = $("#"+ id);
+  dialog.append("<input type='file' />");
+};
 //ImageBox.add_callback =  CBobject.add_callback;
 /*
 exports.add = function add() {
