@@ -1,9 +1,10 @@
+var Project = window.Project;
 var util = require('util');
 var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function ImageBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"imgpath":"./img/1.png"};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"imgpath":"./themes/editor/default/img/1.png", "position" : [200,200]};
   objectdata.idtype = metadata['idtype'];
   ImageBox.super_.call(this,objectdata);
   this.imgpath = objectdata.imgpath;
