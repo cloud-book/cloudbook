@@ -66,6 +66,7 @@ StorageManager.prototype.deleteCBObjectById = function deleteCBObjectById(cbobje
 	if (Project.Data._rawobjects[cbobjectid] === undefined){
 		return undefined;
 	}
+	Project.Data._rawobjects[cbobjectid] = null;
 	delete Project.Data._rawobjects[cbobjectid];
 	return cbobjectid;
 };

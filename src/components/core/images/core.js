@@ -14,9 +14,10 @@ util.inherits(ImageBox,CBobject);
 
 ImageBox.prototype.editorView = function editorView() {
   var aux = ImageBox.super_.prototype.editorView.call(this);
-  var imgelement = $(window.document.createElement('img')).attr('src', this.imgpath);
-  imgelement.css('height','100px');
-  imgelement.css('width','auto');
+  var imgelement = $(window.document.createElement('img')).attr('src', Project.Info.projectpath + "/rsrc/"+ this.imgpath);
+  imgelement.css('position','relative');
+  imgelement.css('height','100%');
+  imgelement.css('width','100%');
   aux.append(imgelement);
   return aux;
 };
@@ -33,11 +34,49 @@ ImageBox.prototype.clickButton = function clickButton(controllerClass) {
 };
 
 
-ImageBox.prototype.editButton = function editButton() {
-  var id = ImageBox.super_.prototype.editButton.call(this);
-  var dialog = $("#"+ id);
-  dialog.append("<input type='file' />");
+ImageBox.prototype.editButton = function editButton(e) {
+  var dialog = ImageBox.super_.prototype.editButton.call(this,e);
+  var that = e.data.that;
+  var fs = window.require('fs');
+  var fsextra = window.require('fs-extra');
+  var path = window.require('path');
+
+  dialog.append("<input id='imgpath' type='file'/>");
+  dialog.callbacks.push(function callbackEditButtonReplaceImageBox(){
+    /*
+     * get new file path
+     */
+    var dialogHTMLRaw = dialog.get()[0];
+    var result = dialogHTMLRaw.querySelectorAll('#imgpath');
+    var originalpath = result[0].value;
+
+    /*
+     * Copy file to workspace
+     */
+
+    var originalbasename = path.basename(originalpath);
+    var finalpath = Project.Info.projectpath +"/rsrc/"+originalbasename;
+    while(true){
+      try{
+        fs.accessSync(finalpath);
+        originalbasename = "0"+originalbasename;
+        finalpath = Project.Info.projectpath + "/rsrc/"+ originalbasename;
+      }
+      catch(e){
+        break;
+      }
+    }
+    fsextra.copySync(originalpath,finalpath);
+
+    /*
+     * update component file
+     */
+    that.imgpath = originalbasename;
+  })
 };
+
+
+
 //ImageBox.add_callback =  CBobject.add_callback;
 /*
 exports.add = function add() {

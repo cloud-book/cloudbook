@@ -227,15 +227,17 @@ Backend.prototype.loadProject = function(projectPath) {
       var cbsectionid = section[0];
       var rawsection = section[1];
       var tempsection = new Cloudbook.Sections[rawsection.idtype](rawsection);
-
-      rawsection.content.forEach(function(element){
-        var x = new Cloudbook.Actions[element['idtype']]['component'](element);
-        tempsection.content.push(x);
-      });
       CBStorage.setSectionById(tempsection,cbsectionid);
     });
+
+    projectdata.data.objects.forEach(function(cbobject){
+      var cbobjectid = cbobject[0];
+      var rawobject = cbobject[1];
+      var x = new Cloudbook.Actions[rawobject.idtype]['component'](rawobject);
+      CBStorage.setCBObjectById(x,cbobjectid);
+
+    });
   }
-  
 };
 
 /**
@@ -252,6 +254,7 @@ Backend.prototype.saveProject = function(projectfolder) {
   objectProject['author'] = "Usuario 1 <micorreo@midominio.com>";
   objectProject['data'] = {};
   objectProject['data']['sections'] = [];
+  objectProject['data']['objects'] = [];
   function walk(uid){
     var section = CBStorage.getSectionById(uid);
     return {obj: section, list: section.sections};
@@ -267,24 +270,14 @@ Backend.prototype.saveProject = function(projectfolder) {
     objectProject['data']['sections'].push([identifier,result.obj]);
     pool = pool.concat(result.list);
   }
-
-
-
-
-  /**
-   * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-   * @todo save cbstorage objects list
-   * !!!!!!!!!!!!!!!!!!!!!!!!!!!
-   */
-  throw "Actualmente la funcion de guardado no guarda el listado de objectos";
-  
-
-
+  var rootobjects = CBStorage.getRootObject();
+  var listkeys = Object.keys(rootobjects);
+  listkeys.forEach(function(id){
+    objectProject['data']['objects'].push([id,rootobjects[id]]);
+  });
   var result_string = JSON.stringify(objectProject,null," ");
   fs.writeFile(projectpath,result_string);
 };
-
-
 
 
 /**
@@ -397,6 +390,16 @@ Backend.prototype.popSubsection = function popSubsection(cbsectionid,cbsonid) {
     CBStorage.setSectionById(section,cbsectionid);
   }
   
+};
+
+Backend.prototype.removeCBObjectById = function removeCBObjectById(cbsectionid,cbobjectid) {
+  var CBStorage = application.storagemanager.getInstance();
+  var section = CBStorage.getSectionById(cbsectionid);
+  section.content.splice(section.content.indexOf(cbobjectid),1);
+  CBStorage.setSectionById(section,cbsectionid);
+  CBStorage.deleteCBObjectById(cbobjectid);
+
+
 };
 
 /**

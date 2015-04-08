@@ -14,7 +14,7 @@ function CBSection(dataobject){
 	var CBObject = CBUtil.req("js/lib/core/components/cbobject.js");
 	dataobject = typeof dataobject !== 'undefined' ? dataobject : {};
 	this.sections = typeof dataobject.sections !== 'undefined' ? dataobject.sections : [];
-	this.content = typeof dataobject.content !== 'undefined' ? dataobject.content.filter(function(el){ if (el instanceof CBObject) return el}) : [];
+	this.content = typeof dataobject.content !== 'undefined' ? dataobject.content : [];
 	this.idtype = "basic";
 	this.name = typeof dataobject.name !== 'undefined' ? dataobject.name : CBI18n.gettext("Section");
 	this.numbering = typeof dataobject.numbering !== 'undefined' ? dataobject.numbering : "1";

@@ -95,6 +95,13 @@ Controller.prototype.addCBObjectIntoSection = function addCBObjectIntoSection(jq
   CBStorage.setCBObjectById(objectcbo,objectcbo.uniqueid);
   CBStorage.setSectionById(sectionWhereAppend,Cloudbook.UI.selected.attr('data-cbsectionid'));
 };
+
+Controller.prototype.deleteCBObjectById = function deleteCBObjectById(cbsectionid,cbobjectid) {
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+	backend.removeCBObjectById(cbsectionid,cbobjectid);
+	ui.removeCBObjectById(cbobjectid);
+};
 /**
  * This namespace has singleton instance of Controller class
  * @namespace controller

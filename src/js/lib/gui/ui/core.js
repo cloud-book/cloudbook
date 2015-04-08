@@ -131,7 +131,8 @@ UI.prototype.loadContent = function loadContent(id){
   $(Cloudbook.UI.targetcontent).html("");
   var section = CBStorage.getSectionById(id);
   if (section !== undefined ){
-    section.content.forEach(function (element){
+    section.content.forEach(function (cbobjectid){
+      var element = CBStorage.getCBObjectById(cbobjectid);
       var x = element.editorView();
       $(Cloudbook.UI.targetcontent).append(x);
       element.add_callback(x,element);
@@ -183,6 +184,12 @@ UI.prototype.setTitleName = function(text) {
   document.title = text + " - CloudBook" ;
 };
 
+
+UI.prototype.removeCBObjectById = function removeCBObjectById(cbobjectid) {
+  var targetcontent = $(Cloudbook.UI.targetcontent);
+  var x = targetcontent.find('[data-cbobjectid="'+cbobjectid+'"]');
+  $(x).remove();
+};
 
 /**
  * This namespace has singleton instance of UI class
