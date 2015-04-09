@@ -44,7 +44,7 @@ CBObject.prototype.editorView = function editorView() {
 	del.click({that:this},that.deleteButton);
 	forward.click({that:this},that.forwardButton);
 	backward.click({that:this},that.backwardButton);
-	bar.append([edit,del,forward,backward,rotate]);
+	bar.append([edit,del,forward,backward]);
 	aux.append(bar);
 	return aux;
 };
