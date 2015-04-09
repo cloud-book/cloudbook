@@ -8,10 +8,12 @@
  */
 function CBObject(objectdata){
 	this.position = typeof objectdata.position !== 'undefined' ? objectdata.position : [200,200];
-	this.size = typeof objectdata.size !== 'undefined' ? objectdata.size : [0,0];
+	this.size = typeof objectdata.size !== 'undefined' ? objectdata.size : [200,50];
 	this.idtype = typeof objectdata.idtype !== 'undefined' ? objectdata.idtype : "CBObject";
 	this.uniqueid = typeof objectdata.uniqueid !== 'undefined' ? objectdata.uniqueid : CBUtil.uniqueId();
+	this.levellayer = typeof objectdata.levellayer !== 'undefined' ? objectdata.levellayer : 0;
 }
+
 
 /**
  * Render object to jQuery object to be included on page
@@ -26,16 +28,23 @@ CBObject.prototype.editorView = function editorView() {
 	   .addClass('cbobject-editable')
 	   .attr('tabindex','-1')
 	   .attr('data-cbobjectid',this.uniqueid)
-	   .css('position','relative');
+	   .css('position','absolute')
+	   .css('z-index',this.levellayer)
+	   .css('width',this.size[0].toString() + "px")
+	   .css('height',this.size[1].toString() + "px" );
 	var bar = $(window.document.createElement('div'));
 	bar.css('background-color','#4c4c4c')
 		.addClass('draggable')
 		.addClass('cbobject-bar');
 	var edit = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/edit.png');
 	var del = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/delete.png');
+	var forward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/forward.png');
+	var backward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/backward.png');
 	edit.click({that:this},that.editButton);
 	del.click({that:this},that.deleteButton);
-	bar.append([edit,del]);
+	forward.click({that:this},that.forwardButton);
+	backward.click({that:this},that.backwardButton);
+	bar.append([edit,del,forward,backward,rotate]);
 	aux.append(bar);
 	return aux;
 };
@@ -50,7 +59,7 @@ CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
 	//var x = jquerycbo.get()[0];
 	//x.addEventListener('click',enableEditable);
 	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }, scroll:true,handle:".draggable"}).click(function(){this.focus()});
-	jquerycbo.resizable();
+	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]} });
 };
 
 
@@ -87,6 +96,19 @@ CBObject.prototype.editButton = function editButton(e) {
 		}
 	});
 	return dialog;
+};
+
+
+CBObject.prototype.forwardButton = function forwardButton(e) {
+	var that = e.data.that;
+	var controller = application.controller.getInstance();
+	controller.modifyObjectLevelLayer(that.uniqueid,that.levellayer + 1);
+};
+
+CBObject.prototype.backwardButton = function backwardButton(e) {
+	var that = e.data.that;
+	var controller = application.controller.getInstance();
+	controller.modifyObjectLevelLayer(that.uniqueid,that.levellayer - 1);
 };
 
 
