@@ -191,6 +191,12 @@ UI.prototype.removeCBObjectById = function removeCBObjectById(cbobjectid) {
   $(x).remove();
 };
 
+UI.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cbobjectid,level) {
+  var targetcontent = $(Cloudbook.UI.targetcontent);
+  var x = targetcontent.find('[data-cbobjectid="'+cbobjectid+'"]');
+  $(x).css('z-index',level);
+};
+
 /**
  * This namespace has singleton instance of UI class
  * @namespace ui
