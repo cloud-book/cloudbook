@@ -12,7 +12,7 @@ var metadata = require( "./"+__module_path__ + 'metadata.json');
  */
 
 function TextBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"text":"Lorem ipsum", "position" : [200,200]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"text":"Lorem ipsum", "position" : [200,200],'size':[100,50]};
   objectdata.idtype = metadata['idtype'];
   TextBox.super_.call(this,objectdata);
   this.text = objectdata.text;
@@ -22,8 +22,12 @@ util.inherits(TextBox,CBobject);
 
 TextBox.prototype.editorView = function editorView() {
   var aux = TextBox.super_.prototype.editorView.call(this);
-  aux.html(this.text);
-  aux.addClass('raptor');
+  var textarea = $(window.document.createElement('div'))
+  					.val(this.text)
+  					.addClass('cbtextbox')
+  					.css('height','100%')
+  					.css('width','100%');
+  aux.children('.cbcontainer').append(textarea);
   return aux;
 };
 

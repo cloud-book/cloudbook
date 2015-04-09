@@ -125,14 +125,13 @@ body{
 }
 
 .cbobject{
-    display: flex;
     position: relative;
 }
 
 .cbobject-bar{
     height:30px;
     width:100%;
-    position:absolute;
+    position:relative;
     left:0;
     opacity: 0;
     display: none;
@@ -149,5 +148,4 @@ body{
 
 .cbobject:focus{
     border: 1px solid black;
-    outline: none;
 }

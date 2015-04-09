@@ -21,6 +21,7 @@ function CBObject(objectdata){
  */
 CBObject.prototype.editorView = function editorView() {
 	var aux = $(window.document.createElement('div'));
+	var cbcontainer = $(window.document.createElement('div')).addClass('cbcontainer');
 	var that = this;
 	aux.css('left', this.position[0])
 	   .css('top', this.position[1])
@@ -45,7 +46,7 @@ CBObject.prototype.editorView = function editorView() {
 	forward.click({that:this},that.forwardButton);
 	backward.click({that:this},that.backwardButton);
 	bar.append([edit,del,forward,backward]);
-	aux.append(bar);
+	aux.append([bar,cbcontainer]);
 	return aux;
 };
 
