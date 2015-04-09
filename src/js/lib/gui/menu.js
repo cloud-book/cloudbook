@@ -151,8 +151,33 @@
     project.append(new gui.MenuItem(load_metadata));
 
 
+    /**
+     *  Generate Insert menu 
+     */
+    
+    var actions = new gui.Menu();
+
+    Object.keys(Cloudbook.Actions).forEach(function (component) {
+      var path = require('path');
+      var componentpath = Cloudbook.Actions[component]['path'];
+      var description = require("./" + path.join(componentpath,"metadata.json"));
+      var backend = application.backend.core.getInstance();
+      backend.loadComponentExtraCss(componentpath,description);
+      var aux = {
+        label : CBI18n.gettext(description.label),
+        click : function generateElement(){
+          var fullobject = new Cloudbook.Actions[component]['component']();
+          var controller = application.controller.getInstance();
+          fullobject.clickButton(controller);
+        }
+      }
+      actions.append(new gui.MenuItem(aux));
+    });
+
     menubar.append(new gui.MenuItem({ label: CBI18n.gettext('File'), submenu: file}));
     menubar.append(new gui.MenuItem({ label: CBI18n.gettext('Project'), submenu: project}));
+    menubar.append(new gui.MenuItem({ label: CBI18n.gettext('Insert'), submenu: actions}));
+
 
 
 
