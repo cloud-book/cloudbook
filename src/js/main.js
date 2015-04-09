@@ -79,8 +79,5 @@
  CBUtil.createNameSpace('application.main');
  application.main = CBUtil.singleton(Main);
 
-
-
-
  var main = application.main.getInstance();
  main.run();

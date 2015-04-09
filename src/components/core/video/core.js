@@ -21,6 +21,10 @@ VideoBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+VideoBox.prototype.importHTML = function importHTML(){
+  return ['VIDEO'];
+}
+
 VideoBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
   VideoBox.super_.prototype.add_callback.call(this,jquerycbo,objectcbo);
 };

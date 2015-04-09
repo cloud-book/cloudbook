@@ -45,6 +45,19 @@ function Backend() {
   CBUtil.createNameSpace('Project.Data');
 
   /**
+   * Information of metadata Dublin Core
+   * @namespace Info
+   * @memberOf Project
+   */
+  CBUtil.createNameSpace('Project.Info.DublinCore');
+  /**
+   * Information of metadata LOM-ES
+   * @namespace Info
+   * @memberOf Project
+   */
+  CBUtil.createNameSpace('Project.Info.LOM');
+
+  /**
    * Define jquery selector where render CBObjects
    * @type {String}
    */

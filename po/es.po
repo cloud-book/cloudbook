@@ -1,64 +1,1338 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Language-Team: Spanish\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-07 09:19+0000\n"
 "PO-Revision-Date: 2015-03-23 17:17+0100\n"
+"Last-Translator: kbut <raurodse@gmail.com>\n"
+"Language-Team: Spanish\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-03-23 16:16+0000\n"
-"Last-Translator: kbut <raurodse@gmail.com>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/js/lib/gui/menu.js:26
+#: src/js/lib/core/components/cbsection.js:19
+#, fuzzy
+msgid "Section"
+msgstr "Nombre de seccion"
+
+#: src/js/lib/gui/dialogMetadata.js:14
+msgid "Dublin Core"
+msgstr "Dublin Core"
+
+#: src/js/lib/gui/dialogMetadata.js:14
+msgid "LOM-ES"
+msgstr "LOM-ES"
+
+#: src/js/lib/gui/dialogMetadata.js:15
+msgid "Content"
+msgstr "Contenido"
+
+#: src/js/lib/gui/dialogMetadata.js:15
+msgid "Intellectual property"
+msgstr "Propiedad Intelectual"
+
+#: src/js/lib/gui/dialogMetadata.js:16
+msgid "Instantiation"
+msgstr "Instanciación"
+
+#: src/js/lib/gui/dialogMetadata.js:18
+msgid "General"
+msgstr "General"
+
+#: src/js/lib/gui/dialogMetadata.js:19 src/js/lib/gui/dialogMetadata.js:27
+#: src/js/lib/gui/dialogMetadataGUIElements.js:14
+msgid "Identifier"
+msgstr "Identificador"
+
+#: src/js/lib/gui/dialogMetadata.js:19
+#: src/js/lib/gui/dialogMetadataGUIElements.js:3
+msgid "Title"
+msgstr "Título"
+
+#: src/js/lib/gui/dialogMetadata.js:20 src/js/lib/gui/dialogMetadata.js:28
+#: src/js/lib/gui/dialogMetadata.js:41
+#: src/js/lib/gui/dialogMetadataGUIElements.js:15
+#: src/js/lib/gui/dialogMetadataGUIElements.js:22
+#: src/js/lib/gui/dialogMetadataGUIElements.js:29
+#: src/js/lib/gui/dialogMetadataGUIElements.js:34
+#: src/js/lib/gui/dialogMetadataGUIElements.js:39
+#: src/js/lib/gui/dialogMetadataGUIElements.js:50
+#: src/js/lib/gui/dialogMetadataGUIElements.js:63
+#: src/js/lib/gui/dialogMetadataGUIElements.js:86
+#: src/js/lib/gui/dialogMetadataGUIElements.js:109
+#: src/js/lib/gui/dialogMetadataGUIElements.js:114
+#: src/js/lib/gui/dialogMetadataGUIElements.js:127
+#: src/js/lib/gui/dialogMetadataGUIElements.js:153
+#: src/js/lib/gui/dialogMetadataGUIElements.js:168
+#: src/js/lib/gui/dialogMetadataGUIElements.js:173
+#: src/js/lib/gui/dialogMetadataGUIElements.js:192
+#: src/js/lib/gui/dialogMetadataGUIElements.js:197
+#: src/js/lib/gui/dialogMetadataGUIElements.js:205
+#: src/js/lib/gui/dialogMetadataGUIElements.js:216
+#: src/js/lib/gui/dialogMetadataGUIElements.js:222
+#: src/js/lib/gui/dialogMetadataGUIElements.js:224
+#: src/js/lib/gui/dialogMetadataGUIElements.js:227
+#: src/js/lib/gui/dialogMetadataGUIElements.js:231
+msgid "Language"
+msgstr "Idioma"
+
+#: src/js/lib/gui/dialogMetadata.js:20 src/js/lib/gui/dialogMetadata.js:41
+#: src/js/lib/gui/dialogMetadata.js:45
+#: src/js/lib/gui/dialogMetadataGUIElements.js:4
+#: src/js/lib/gui/dialogMetadataGUIElements.js:62
+#: src/js/lib/gui/dialogMetadataGUIElements.js:85
+#: src/js/lib/gui/dialogMetadataGUIElements.js:126
+#: src/js/lib/gui/dialogMetadataGUIElements.js:167
+#: src/js/lib/gui/dialogMetadataGUIElements.js:196
+#: src/js/lib/gui/dialogMetadataGUIElements.js:204
+#: src/js/lib/gui/dialogMetadataGUIElements.js:215
+#: src/js/lib/gui/dialogMetadataGUIElements.js:221
+msgid "Description"
+msgstr "Descripción"
+
+#: src/js/lib/gui/dialogMetadata.js:21
+#: src/js/lib/gui/dialogMetadataGUIElements.js:223
+msgid "Keyword"
+msgstr "Palabra clave"
+
+#: src/js/lib/gui/dialogMetadata.js:21
+#: src/js/lib/gui/dialogMetadataGUIElements.js:6
+msgid "Coverage"
+msgstr "Cobertura"
+
+#: src/js/lib/gui/dialogMetadata.js:22
+msgid "Structure"
+msgstr "Estructura"
+
+#: src/js/lib/gui/dialogMetadata.js:22
+msgid "Aggregation Level"
+msgstr "Nivel de agregación"
+
+#: src/js/lib/gui/dialogMetadata.js:24
+msgid "Life cycle"
+msgstr "Ciclo de vida"
+
+#: src/js/lib/gui/dialogMetadata.js:24
+msgid "Version"
+msgstr "Versión"
+
+#: src/js/lib/gui/dialogMetadata.js:25
+msgid "Status"
+msgstr "Estatus"
+
+#: src/js/lib/gui/dialogMetadata.js:25 src/js/lib/gui/dialogMetadata.js:29
+msgid "Contribution"
+msgstr "Contribución"
+
+#: src/js/lib/gui/dialogMetadata.js:27
+msgid "Meta-Metadata"
+msgstr "Meta-Metadatos"
+
+#: src/js/lib/gui/dialogMetadata.js:28
+msgid "Metadata Schema"
+msgstr "Esquema de metadatos"
+
+#: src/js/lib/gui/dialogMetadata.js:31
+msgid "Technical"
+msgstr "Técnica"
+
+#: src/js/lib/gui/dialogMetadata.js:31
+#: src/js/lib/gui/dialogMetadataGUIElements.js:14
+msgid "Format"
+msgstr "Formato"
+
+#: src/js/lib/gui/dialogMetadata.js:32
+msgid "Size"
+msgstr "Tamaño"
+
+#: src/js/lib/gui/dialogMetadata.js:32
+msgid "Location"
+msgstr "Localización"
+
+#: src/js/lib/gui/dialogMetadata.js:33
+msgid "Requirements"
+msgstr "Requisitos"
+
+#: src/js/lib/gui/dialogMetadata.js:33
+msgid "Installation Remarks"
+msgstr "Pautas de instalación"
+
+#: src/js/lib/gui/dialogMetadata.js:34
+msgid "Other Platform Requirements"
+msgstr "Otros requisitos de plataforma"
+
+#: src/js/lib/gui/dialogMetadata.js:34
+msgid "Duration"
+msgstr "Duración"
+
+#: src/js/lib/gui/dialogMetadata.js:36
+msgid "Educational"
+msgstr "Uso educativo"
+
+#: src/js/lib/gui/dialogMetadata.js:36
+msgid "Interactivity type"
+msgstr "Tipo de interactividad"
+
+#: src/js/lib/gui/dialogMetadata.js:37
+msgid "Learning Resource Type"
+msgstr "Tipo de recurso educativo"
+
+#: src/js/lib/gui/dialogMetadata.js:37
+msgid "Interactivity level"
+msgstr "Nivel de interactividad"
+
+#: src/js/lib/gui/dialogMetadata.js:38
+msgid "Semantic density"
+msgstr "Nivel de densidad semántica"
+
+#: src/js/lib/gui/dialogMetadata.js:38
+msgid "Intended end user role"
+msgstr "Destinatario"
+
+#: src/js/lib/gui/dialogMetadata.js:39
+msgid "Context"
+msgstr "Lugar de utilización"
+
+#: src/js/lib/gui/dialogMetadata.js:39
+msgid "Typical age range"
+msgstr "Rango típico de edad"
+
+#: src/js/lib/gui/dialogMetadata.js:40
+msgid "Difficulty"
+msgstr "Dificultad"
+
+#: src/js/lib/gui/dialogMetadata.js:40
+msgid "Typical learning time"
+msgstr "Tiempo típico de aprendizaje"
+
+#: src/js/lib/gui/dialogMetadata.js:42
+msgid "Cognitive process"
+msgstr "Proceso cognitivo"
+
+#: src/js/lib/gui/dialogMetadata.js:44
+#: src/js/lib/gui/dialogMetadataGUIElements.js:10
+msgid "Rights"
+msgstr "Derechos"
+
+#: src/js/lib/gui/dialogMetadata.js:44
+msgid "Cost"
+msgstr "Coste"
+
+#: src/js/lib/gui/dialogMetadata.js:45
+msgid "Copyright and other restrictions"
+msgstr "Derechos de autor y otras restricciones"
+
+#: src/js/lib/gui/dialogMetadata.js:46
+msgid "Access"
+msgstr "Acceso"
+
+#: src/js/lib/gui/dialogMetadata.js:48
+#: src/js/lib/gui/dialogMetadataGUIElements.js:6
+msgid "Relation"
+msgstr "Relación"
+
+#: src/js/lib/gui/dialogMetadata.js:48
+msgid "Relations"
+msgstr "Relaciones"
+
+#: src/js/lib/gui/dialogMetadata.js:49
+msgid "Annotation"
+msgstr "Anotación"
+
+#: src/js/lib/gui/dialogMetadata.js:49
+msgid "Annotations"
+msgstr "Anotaciones"
+
+#: src/js/lib/gui/dialogMetadata.js:50
+msgid "Classification"
+msgstr "Clasificación"
+
+#: src/js/lib/gui/dialogMetadata.js:50
+msgid "Classifications"
+msgstr "Clasificaciones"
+
+#: src/js/lib/gui/dialogMetadata.js:85 src/templates/updateSectionName.hbs:2
+msgid "Save"
+msgstr "Guardar"
+
+#: src/js/lib/gui/dialogMetadata.js:90 src/templates/initialwizard.step2.hbs:5
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:4
+msgid "Subject"
+msgstr "Tema"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:5
+#: src/js/lib/gui/dialogMetadataGUIElements.js:103
+msgid "Type"
+msgstr "Tipo"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:5
+#: src/js/lib/gui/dialogMetadataGUIElements.js:226
+msgid "Source"
+msgstr "Fuente"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:9
+msgid "Creator"
+msgstr "Creador"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:9
+msgid "Publisher"
+msgstr "Editor"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:10
+msgid "Contributor"
+msgstr "Colaborador"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:13
+#: src/js/lib/gui/dialogMetadataGUIElements.js:61
+#: src/js/lib/gui/dialogMetadataGUIElements.js:84
+#: src/js/lib/gui/dialogMetadataGUIElements.js:212
+msgid "Date"
+msgstr "Fecha"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:18
+#: src/js/lib/gui/dialogMetadataGUIElements.js:68
+#: src/js/lib/gui/dialogMetadataGUIElements.js:202
+msgid "Catalog"
+msgstr "Catálogo"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:18
+#: src/js/lib/gui/dialogMetadataGUIElements.js:69
+#: src/js/lib/gui/dialogMetadataGUIElements.js:203
+#: src/js/lib/gui/dialogMetadataGUIElements.js:229
+msgid "Entry"
+msgstr "Entrada"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:57
+#: src/js/lib/gui/dialogMetadataGUIElements.js:80
+msgid "Role"
+msgstr "Rol"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:59
+#: src/js/lib/gui/dialogMetadataGUIElements.js:82
+#: src/js/lib/gui/dialogMetadataGUIElements.js:105
+#: src/js/lib/gui/dialogMetadataGUIElements.js:208
+msgid "Name"
+msgstr "Nombre"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:59
+#: src/js/lib/gui/dialogMetadataGUIElements.js:82
+#: src/js/lib/gui/dialogMetadataGUIElements.js:210
+msgid "Organization"
+msgstr "Organización"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:60
+#: src/js/lib/gui/dialogMetadataGUIElements.js:83
+#: src/js/lib/gui/dialogMetadataGUIElements.js:211
+msgid "Email"
+msgstr "Email"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:105
+msgid "Min. Version"
+msgstr "Versión mínima"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:106
+msgid "Max Version"
+msgstr "Versión máxima"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:119
+#: src/js/lib/gui/dialogMetadataGUIElements.js:161
+msgid "Years"
+msgstr "Años"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:120
+#: src/js/lib/gui/dialogMetadataGUIElements.js:162
+msgid "Months"
+msgstr "Meses"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:121
+#: src/js/lib/gui/dialogMetadataGUIElements.js:163
+msgid "Days"
+msgstr "Días"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:122
+#: src/js/lib/gui/dialogMetadataGUIElements.js:164
+msgid "Hours"
+msgstr "Horas"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:123
+#: src/js/lib/gui/dialogMetadataGUIElements.js:165
+msgid "Minutes"
+msgstr "Minutos"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:124
+#: src/js/lib/gui/dialogMetadataGUIElements.js:166
+msgid "Seconds"
+msgstr "Segundos"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:195
+msgid "Access Type"
+msgstr "Tipo de acceso"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:200
+msgid "Kind"
+msgstr "Tipo"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:213
+msgid "Date Descr."
+msgstr "Descr. Fecha"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:214
+msgid "Date Language"
+msgstr "Idioma Fecha"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:219
+msgid "Purpose"
+msgstr "Propósito"
+
+#: src/js/lib/gui/dialogMetadataGUIElements.js:230
+msgid "Id"
+msgstr "Id"
+
+#: src/js/lib/gui/dialogMetadataValues.js:3
+msgid "atomic"
+msgstr "atómica"
+
+#: src/js/lib/gui/dialogMetadataValues.js:3
+msgid "collection"
+msgstr "colección"
+
+#: src/js/lib/gui/dialogMetadataValues.js:3
+msgid "linear"
+msgstr "lineal"
+
+#: src/js/lib/gui/dialogMetadataValues.js:3
+msgid "hierarchical"
+msgstr "jerárquica"
+
+#: src/js/lib/gui/dialogMetadataValues.js:3
+msgid "networked"
+msgstr "en red"
+
+#: src/js/lib/gui/dialogMetadataValues.js:4
+msgid "resources and integrated resources"
+msgstr "medias y medias integradas"
+
+#: src/js/lib/gui/dialogMetadataValues.js:4
+msgid "learning objects"
+msgstr "objetos de aprendizaje"
+
+#: src/js/lib/gui/dialogMetadataValues.js:4
+msgid "teaching sequences"
+msgstr "secuencias didácticas"
+
+#: src/js/lib/gui/dialogMetadataValues.js:4
+msgid "training programmes, courses and plans"
+msgstr "cursos, planes y programas de formación"
+
+#: src/js/lib/gui/dialogMetadataValues.js:5
+msgid "draft"
+msgstr "borrador"
+
+#: src/js/lib/gui/dialogMetadataValues.js:5
+msgid "final"
+msgstr "final"
+
+#: src/js/lib/gui/dialogMetadataValues.js:5
+msgid "revised"
+msgstr "revisado"
+
+#: src/js/lib/gui/dialogMetadataValues.js:5
+msgid "unavailable"
+msgstr "no disponible"
+
+#: src/js/lib/gui/dialogMetadataValues.js:6
+msgid "author"
+msgstr "autor"
+
+#: src/js/lib/gui/dialogMetadataValues.js:6
+msgid "publisher"
+msgstr "editor de publicación"
+
+#: src/js/lib/gui/dialogMetadataValues.js:6
+msgid "initiator"
+msgstr "iniciador"
+
+#: src/js/lib/gui/dialogMetadataValues.js:6
+msgid "terminator"
+msgstr "terminador"
+
+#: src/js/lib/gui/dialogMetadataValues.js:6
+#: src/js/lib/gui/dialogMetadataValues.js:8
+msgid "validator"
+msgstr "revisor"
+
+#: src/js/lib/gui/dialogMetadataValues.js:6
+msgid "editor"
+msgstr "editor de contenido"
+
+#: src/js/lib/gui/dialogMetadataValues.js:6
+msgid "graphical designer"
+msgstr "diseñador gráfico"
+
+#: src/js/lib/gui/dialogMetadataValues.js:6
+msgid "technical implementer"
+msgstr "desarrollador técnico"
+
+#: src/js/lib/gui/dialogMetadataValues.js:6
+msgid "content provider"
+msgstr "proveedor de contenidos"
+
+#: src/js/lib/gui/dialogMetadataValues.js:7
+msgid "technical validator"
+msgstr "revisor técnico"
+
+#: src/js/lib/gui/dialogMetadataValues.js:7
+msgid "educational validator"
+msgstr "revisor educativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:7
+msgid "script writer"
+msgstr "guionista"
+
+#: src/js/lib/gui/dialogMetadataValues.js:7
+msgid "instructional designer"
+msgstr "diseñador educativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:7
+#: src/js/lib/gui/dialogMetadataValues.js:23
+msgid "subject matter expert"
+msgstr "experto en la materia"
+
+#: src/js/lib/gui/dialogMetadataValues.js:8
+msgid "creator"
+msgstr "creador"
+
+#: src/js/lib/gui/dialogMetadataValues.js:9
+msgid "operating system"
+msgstr "sistema operativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:9
+msgid "browser"
+msgstr "navegador"
+
+#: src/js/lib/gui/dialogMetadataValues.js:10
+msgid "pc-dos"
+msgstr "pc-dos"
+
+#: src/js/lib/gui/dialogMetadataValues.js:10
+msgid "ms-windows"
+msgstr "ms-windows"
+
+#: src/js/lib/gui/dialogMetadataValues.js:10
+msgid "linux"
+msgstr "linux"
+
+#: src/js/lib/gui/dialogMetadataValues.js:10
+msgid "macos"
+msgstr "macos"
+
+#: src/js/lib/gui/dialogMetadataValues.js:10
+msgid "unix"
+msgstr "unix"
+
+#: src/js/lib/gui/dialogMetadataValues.js:10
+msgid "multi-os"
+msgstr "multi-so"
+
+#: src/js/lib/gui/dialogMetadataValues.js:10
+msgid "none"
+msgstr "ninguno"
+
+#: src/js/lib/gui/dialogMetadataValues.js:11
+msgid "any"
+msgstr "cualquiera"
+
+#: src/js/lib/gui/dialogMetadataValues.js:11
+msgid "mozilla firefox"
+msgstr "mozilla firefox"
+
+#: src/js/lib/gui/dialogMetadataValues.js:11
+msgid "netscape communicator"
+msgstr "netscape communicator"
+
+#: src/js/lib/gui/dialogMetadataValues.js:11
+msgid "ms-internet explorer"
+msgstr "ms-internet explorer"
+
+#: src/js/lib/gui/dialogMetadataValues.js:11
+msgid "opera"
+msgstr "opera"
+
+#: src/js/lib/gui/dialogMetadataValues.js:11
+msgid "amaya"
+msgstr "amaya"
+
+#: src/js/lib/gui/dialogMetadataValues.js:12
+msgid "active"
+msgstr "activo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:12
+msgid "expositive"
+msgstr "expositivo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:12
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "mixed"
+msgstr "combinado"
+
+#: src/js/lib/gui/dialogMetadataValues.js:13
+msgid "photograph"
+msgstr "fotografía"
+
+#: src/js/lib/gui/dialogMetadataValues.js:13
+msgid "illustration"
+msgstr "ilustración"
+
+#: src/js/lib/gui/dialogMetadataValues.js:13
+msgid "video"
+msgstr "vídeo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:13
+msgid "animation"
+msgstr "animación"
+
+#: src/js/lib/gui/dialogMetadataValues.js:13
+msgid "music"
+msgstr "música"
+
+#: src/js/lib/gui/dialogMetadataValues.js:13
+msgid "sound effect"
+msgstr "efecto sonoro"
+
+#: src/js/lib/gui/dialogMetadataValues.js:13
+msgid "voice-over"
+msgstr "locución"
+
+#: src/js/lib/gui/dialogMetadataValues.js:13
+msgid "compound audio"
+msgstr "audio compuesto"
+
+#: src/js/lib/gui/dialogMetadataValues.js:13
+msgid "narrative text"
+msgstr "texto narrativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:13
+msgid "hipertext"
+msgstr "hipertexto"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "computer graphics"
+msgstr "grafismo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "integrated media"
+msgstr "media integrado"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "database"
+msgstr "base de datos"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "table"
+msgstr "tabla"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "graph"
+msgstr "gráfico"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "conceptual map"
+msgstr "mapa conceptual"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "navigation map"
+msgstr "mapa de navegación"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "multimedia presentation"
+msgstr "presentación multimedia"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "tutorial"
+msgstr "tutorial"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "digital dictionary"
+msgstr "diccionario digital"
+
+#: src/js/lib/gui/dialogMetadataValues.js:14
+msgid "digital encyclopaedia"
+msgstr "enciclopedia digital"
+
+#: src/js/lib/gui/dialogMetadataValues.js:15
+msgid "digital periodical publication"
+msgstr "publicación digital periódica"
+
+#: src/js/lib/gui/dialogMetadataValues.js:15
+msgid "thematic or corporate webs/web portals"
+msgstr "web/portal temático o corporativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:15
+msgid "wiki"
+msgstr "wiki"
+
+#: src/js/lib/gui/dialogMetadataValues.js:15
+msgid "weblog"
+msgstr "weblog"
+
+#: src/js/lib/gui/dialogMetadataValues.js:15
+msgid "multimedia creation/edition tool"
+msgstr "herramienta de creación/edición multimedia"
+
+#: src/js/lib/gui/dialogMetadataValues.js:15
+msgid "web design tool"
+msgstr "herramienta de creación/edición web"
+
+#: src/js/lib/gui/dialogMetadataValues.js:15
+msgid "office tool"
+msgstr "herramienta de ofimática"
+
+#: src/js/lib/gui/dialogMetadataValues.js:15
+msgid "programming tool"
+msgstr "herramienta de programación"
+
+#: src/js/lib/gui/dialogMetadataValues.js:16
+msgid "information/knowledge analysys/organization"
+msgstr "herramienta de análisis/organización de información/conocimiento"
+
+#: src/js/lib/gui/dialogMetadataValues.js:16
+msgid "process procedure supporting tools"
+msgstr "herramienta de apoyo a procesos/procedimientos"
+
+#: src/js/lib/gui/dialogMetadataValues.js:16
+msgid "individual/cooperative/collaborative learning/working management tool"
+msgstr "herramienta de gestión de aprendizaje/trabajo individual/cooperativo/colaborativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:17
+msgid "multimedia creation/edition service"
+msgstr "servicio de creación/edición multimedia"
+
+#: src/js/lib/gui/dialogMetadataValues.js:17
+msgid "web design service"
+msgstr "servicio de creación/edición web"
+
+#: src/js/lib/gui/dialogMetadataValues.js:17
+msgid "office service"
+msgstr "servicio de ofimática"
+
+#: src/js/lib/gui/dialogMetadataValues.js:17
+msgid "programming service"
+msgstr "servicio de programación"
+
+#: src/js/lib/gui/dialogMetadataValues.js:17
+msgid "information/knowledge analysis/organization service"
+msgstr "servicio de análisis/organización de información/conocimiento"
+
+#: src/js/lib/gui/dialogMetadataValues.js:17
+msgid "process/procedure supporting service"
+msgstr "herramienta de apoyo a procesos/procedimientos"
+
+#: src/js/lib/gui/dialogMetadataValues.js:18
+msgid "individual/cooperative/collaborative learning/working management service"
+msgstr "herramienta de gestión de aprendizaje/trabajo individual/cooperativo/colaborativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:18
+msgid "master class"
+msgstr "lección magistral"
+
+#: src/js/lib/gui/dialogMetadataValues.js:18
+msgid "textual-image analysis"
+msgstr "comentario de texto-imagen"
+
+#: src/js/lib/gui/dialogMetadataValues.js:18
+msgid "discussion activity"
+msgstr "actividad de discusión"
+
+#: src/js/lib/gui/dialogMetadataValues.js:18
+msgid "closed exercise or problem"
+msgstr "ejercicio o problema cerrado"
+
+#: src/js/lib/gui/dialogMetadataValues.js:19
+msgid "contextualized case problem"
+msgstr "caso contextualizado"
+
+#: src/js/lib/gui/dialogMetadataValues.js:19
+msgid "open problem"
+msgstr "problema abierto"
+
+#: src/js/lib/gui/dialogMetadataValues.js:19
+msgid "real or virtual learning environment"
+msgstr "escenario real o virtual de aprendizaje"
+
+#: src/js/lib/gui/dialogMetadataValues.js:19
+msgid "didactic game"
+msgstr "juego didáctico"
+
+#: src/js/lib/gui/dialogMetadataValues.js:19
+msgid "webquest"
+msgstr "webquest"
+
+#: src/js/lib/gui/dialogMetadataValues.js:19
+msgid "real project"
+msgstr "proyecto real"
+
+#: src/js/lib/gui/dialogMetadataValues.js:19
+msgid "simulation"
+msgstr "simulación"
+
+#: src/js/lib/gui/dialogMetadataValues.js:19
+msgid "questionnaire"
+msgstr "cuestionario"
+
+#: src/js/lib/gui/dialogMetadataValues.js:19
+msgid "exam"
+msgstr "examen"
+
+#: src/js/lib/gui/dialogMetadataValues.js:19
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "self assessment"
+msgstr "autoevaluación"
+
+#: src/js/lib/gui/dialogMetadataValues.js:20
+#: src/js/lib/gui/dialogMetadataValues.js:21
+msgid "very low"
+msgstr "muy bajo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:20
+#: src/js/lib/gui/dialogMetadataValues.js:21
+msgid "low"
+msgstr "bajo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:20
+#: src/js/lib/gui/dialogMetadataValues.js:21
+#: src/js/lib/gui/dialogMetadataValues.js:25
+msgid "medium"
+msgstr "medio"
+
+#: src/js/lib/gui/dialogMetadataValues.js:20
+#: src/js/lib/gui/dialogMetadataValues.js:21
+msgid "high"
+msgstr "difícil"
+
+#: src/js/lib/gui/dialogMetadataValues.js:20
+#: src/js/lib/gui/dialogMetadataValues.js:21
+msgid "very high"
+msgstr "muy difícil"
+
+#: src/js/lib/gui/dialogMetadataValues.js:22
+msgid "learner"
+msgstr "alumno"
+
+#: src/js/lib/gui/dialogMetadataValues.js:22
+msgid "special needs learner"
+msgstr "alumno con necesidades educativas especiales"
+
+#: src/js/lib/gui/dialogMetadataValues.js:22
+msgid "gifted learner"
+msgstr "alumno con altas capacidades intelectuales"
+
+#: src/js/lib/gui/dialogMetadataValues.js:22
+msgid "learners late integration into the education system"
+msgstr "alumno con integración tardía en sistema educativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:22
+msgid "learner with other specific educational support needs"
+msgstr "alumno con otras necesidades específicas de apoyo educativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:23
+msgid "general public"
+msgstr "público en general"
+
+#: src/js/lib/gui/dialogMetadataValues.js:23
+msgid "individual"
+msgstr "individual"
+
+#: src/js/lib/gui/dialogMetadataValues.js:23
+msgid "group"
+msgstr "grupal"
+
+#: src/js/lib/gui/dialogMetadataValues.js:23
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "teacher"
+msgstr "docente"
+
+#: src/js/lib/gui/dialogMetadataValues.js:23
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "tutor"
+msgstr "tutor"
+
+#: src/js/lib/gui/dialogMetadataValues.js:23
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "family"
+msgstr "familia"
+
+#: src/js/lib/gui/dialogMetadataValues.js:23
+msgid "information scientist"
+msgstr "documentalista"
+
+#: src/js/lib/gui/dialogMetadataValues.js:23
+msgid "computer scientist"
+msgstr "informático"
+
+#: src/js/lib/gui/dialogMetadataValues.js:23
+msgid "manager"
+msgstr "administrador"
+
+#: src/js/lib/gui/dialogMetadataValues.js:23
+msgid "education expert"
+msgstr "experto en educación"
+
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "classroom"
+msgstr "aula"
+
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "laboratory"
+msgstr "laboratorio"
+
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "real environment"
+msgstr "entorno real"
+
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "home"
+msgstr "domicilio"
+
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "schoolmate"
+msgstr "compañero"
+
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "independent"
+msgstr "independiente"
+
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "blended"
+msgstr "asistencia mixta"
+
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "presencial"
+msgstr "presencial"
+
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "face to face"
+msgstr "semipresencial"
+
+#: src/js/lib/gui/dialogMetadataValues.js:24
+msgid "distance"
+msgstr "distancia"
+
+#: src/js/lib/gui/dialogMetadataValues.js:25
+msgid "very easy"
+msgstr "muy fácil"
+
+#: src/js/lib/gui/dialogMetadataValues.js:25
+msgid "easy"
+msgstr "fácil"
+
+#: src/js/lib/gui/dialogMetadataValues.js:25
+msgid "difficult"
+msgstr "difícil"
+
+#: src/js/lib/gui/dialogMetadataValues.js:25
+msgid "very difficult"
+msgstr "muy difícil"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "analyse"
+msgstr "analizar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "implement"
+msgstr "aplicar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "collaborate"
+msgstr "colaborar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "compare"
+msgstr "comparar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "share"
+msgstr "compartir"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "compete"
+msgstr "competir"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "understand"
+msgstr "comprender"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "prove"
+msgstr "comprobar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "communicate"
+msgstr "comunicar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "contextualize"
+msgstr "contextualizar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "control"
+msgstr "controlar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "cooperate"
+msgstr "cooperar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:26
+msgid "create"
+msgstr "crear"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "decide"
+msgstr "decidir"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "define"
+msgstr "definir"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "describe"
+msgstr "describir"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "discuss"
+msgstr "discutir"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "desing"
+msgstr "diseñar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "explain"
+msgstr "explicar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "extrapolate"
+msgstr "extrapolar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "innovate"
+msgstr "innovar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "investigate"
+msgstr "investigar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "judge"
+msgstr "juzgar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "motivate"
+msgstr "motivar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:27
+msgid "observe"
+msgstr "observar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "organize"
+msgstr "organizar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "organize oneself"
+msgstr "organizarse"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "plan"
+msgstr "planificar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "practise"
+msgstr "practicar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "produce"
+msgstr "producir"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "recognize"
+msgstr "reconocer"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "remember"
+msgstr "recordar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "write up"
+msgstr "redactar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "consider"
+msgstr "reflexionar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "connect"
+msgstr "relacionar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "represent"
+msgstr "representar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "solve"
+msgstr "resolver"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "simulate"
+msgstr "simular"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "summarize"
+msgstr "sintetizar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:28
+msgid "value"
+msgstr "valorar"
+
+#: src/js/lib/gui/dialogMetadataValues.js:29
+msgid "yes"
+msgstr "sí"
+
+#: src/js/lib/gui/dialogMetadataValues.js:29
+msgid "no"
+msgstr "no"
+
+#: src/js/lib/gui/dialogMetadataValues.js:30
+msgid "propietary license"
+msgstr "licencia propietaria"
+
+#: src/js/lib/gui/dialogMetadataValues.js:30
+msgid "free software license EUPL"
+msgstr "licencia libre EUPL"
+
+#: src/js/lib/gui/dialogMetadataValues.js:30
+msgid "free software license GPL"
+msgstr "licencia libre GPL"
+
+#: src/js/lib/gui/dialogMetadataValues.js:30
+msgid "dual free content license GPL and EUPL"
+msgstr "licencia libre dual GPL y EUPL"
+
+#: src/js/lib/gui/dialogMetadataValues.js:31
+msgid "other free software licenses"
+msgstr "otras licencias libres"
+
+#: src/js/lib/gui/dialogMetadataValues.js:31
+msgid "public domain"
+msgstr "dominio público"
+
+#: src/js/lib/gui/dialogMetadataValues.js:31
+msgid "intellectual property license"
+msgstr "licencia propietaria intelectual"
+
+#: src/js/lib/gui/dialogMetadataValues.js:31
+msgid "not appropriate"
+msgstr "no corresponde"
+
+#: src/js/lib/gui/dialogMetadataValues.js:31
+msgid "creative commons: attribution"
+msgstr "creative commons: reconocimiento"
+
+#: src/js/lib/gui/dialogMetadataValues.js:32
+msgid "creative commons: attribution - non derived work"
+msgstr "creative commons: reconocimiento - sin obra derivada"
+
+#: src/js/lib/gui/dialogMetadataValues.js:32
+msgid "creative commons: attribution - non derived work - non commercial"
+msgstr "creative commons: reconocimiento - sin obra derivada - no comercial"
+
+#: src/js/lib/gui/dialogMetadataValues.js:32
+msgid "creative commons: attribution - non commercial"
+msgstr "creative commons: reconocimiento - no comercial"
+
+#: src/js/lib/gui/dialogMetadataValues.js:33
+msgid "creative commons: attribution - non commercial - share alike"
+msgstr "creative commons: reconocimiento - no comercial - compartir igual"
+
+#: src/js/lib/gui/dialogMetadataValues.js:33
+msgid "creative commons: attribution - share alike"
+msgstr "creative commons: reconocimiento - compartir igual"
+
+#: src/js/lib/gui/dialogMetadataValues.js:33
+msgid "license GFDL"
+msgstr "licencia GFDL"
+
+#: src/js/lib/gui/dialogMetadataValues.js:34
+msgid "universal"
+msgstr "universal"
+
+#: src/js/lib/gui/dialogMetadataValues.js:34
+msgid "non-universal"
+msgstr "no universal"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "ispartof"
+msgstr "es parte de"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "haspart"
+msgstr "tiene parte"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "isversionof"
+msgstr "es versión de"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "hasversion"
+msgstr "tiene versión"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "isformatof"
+msgstr "es formato de"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "hasformat"
+msgstr "tiene formato"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "references"
+msgstr "referencia"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "isreferencedby"
+msgstr "es referenciado por"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "isbasedon"
+msgstr "se basa en"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "isbasisfor"
+msgstr "es base para"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "requires"
+msgstr "requiere"
+
+#: src/js/lib/gui/dialogMetadataValues.js:35
+msgid "isrequiredby"
+msgstr "es requerido por"
+
+#: src/js/lib/gui/dialogMetadataValues.js:36
+msgid "discipline"
+msgstr "disciplina"
+
+#: src/js/lib/gui/dialogMetadataValues.js:36
+msgid "idea"
+msgstr "idea"
+
+#: src/js/lib/gui/dialogMetadataValues.js:36
+msgid "prerrequisite"
+msgstr "prerrequisito"
+
+#: src/js/lib/gui/dialogMetadataValues.js:36
+msgid "educational objective"
+msgstr "objetivo educativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:36
+msgid "accesibility restrictions"
+msgstr "restricciones de accesibilidad"
+
+#: src/js/lib/gui/dialogMetadataValues.js:36
+msgid "educational level"
+msgstr "nivel educativo"
+
+#: src/js/lib/gui/dialogMetadataValues.js:36
+msgid "skill level"
+msgstr "nivel de habilidad"
+
+#: src/js/lib/gui/dialogMetadataValues.js:36
+msgid "security level"
+msgstr "nivel de seguridad"
+
+#: src/js/lib/gui/dialogMetadataValues.js:36
+msgid "competency"
+msgstr "competencia"
+
+#: src/js/lib/gui/menu.js:33 src/templates/initialwizard.step1.hbs:2
+msgid "New project"
+msgstr "Nuevo proyecto"
+
+#: src/js/lib/gui/menu.js:38
 msgid "Save Project"
 msgstr "Salvar proyecto"
 
-#: src/js/lib/gui/menu.js:38
+#: src/js/lib/gui/menu.js:50
 msgid "Save Project as ..."
 msgstr "Salvar proyecto como ..."
 
-#: src/js/lib/gui/menu.js:44
+#: src/js/lib/gui/menu.js:56
 msgid "Load Project"
 msgstr "Cargar proyecto"
 
-#: src/js/lib/gui/menu.js:55
+#: src/js/lib/gui/menu.js:67
 msgid "Quit"
 msgstr "Salir"
 
-#: src/js/lib/gui/menu.js:70
+#: src/js/lib/gui/menu.js:73
+msgid "Metadata"
+msgstr "Metadatos"
+
+#: src/js/lib/gui/menu.js:81
+msgid "HTML5"
+msgstr "HTML5"
+
+#: src/js/lib/gui/menu.js:93
+msgid "ODT/DOC/DOCX"
+msgstr "ODT/DOC/DOCX"
+
+#: src/js/lib/gui/menu.js:105
+msgid "SCORM"
+msgstr "SCORM"
+
+#: src/js/lib/gui/menu.js:117
+msgid "Metadata LOM-ES"
+msgstr "Metadatos LOM-ES"
+
+#: src/js/lib/gui/menu.js:129
+msgid "Import"
+msgstr "Importar"
+
+#: src/js/lib/gui/menu.js:154
 msgid "File"
 msgstr "Archivo"
 
-#: src/js/lib/gui/ui.js:231
+#: src/js/lib/gui/menu.js:155
+msgid "Project"
+msgstr "Proyecto"
+
+#: src/js/lib/gui/ui/proview/core.js:66
 msgid "Insert before"
 msgstr "Insertar antes"
 
-#: src/js/lib/gui/ui.js:235
+#: src/js/lib/gui/ui/proview/core.js:70
 msgid "Insert after"
 msgstr "Insertar despues"
 
-#: src/js/lib/gui/ui.js:239
+#: src/js/lib/gui/ui/proview/core.js:74
 msgid "Insert subsection"
 msgstr "Insertar subseccion"
 
-#: src/js/lib/gui/ui.js:243
+#: src/js/lib/gui/ui/proview/core.js:78
 msgid "Delete"
 msgstr "Borrar"
 
-#: src/js/lib/gui/ui.js:249
+#: src/js/lib/gui/ui/proview/core.js:87
 msgid "Edit"
 msgstr "Editar"
 
 #: src/templates/initialwizard.step1.hbs:1
 msgid "Open"
 msgstr "Abrir"
-
-#: src/templates/initialwizard.step1.hbs:2
-msgid "New project"
-msgstr "Nuevo proyecto"
 
 #: src/templates/initialwizard.step1.hbs:3
 msgid "Open project"
@@ -80,14 +1354,9 @@ msgstr "Proyecto avanzado"
 msgid "Simple Project"
 msgstr "Proyecto simple"
 
-#: src/templates/initialwizard.step2.hbs:5
-msgid "Go back"
-msgstr "Atras"
-
 #: src/templates/updateSectionName.hbs:1
 msgid "Section name"
 msgstr "Nombre de seccion"
 
-#: src/templates/updateSectionName.hbs:2
-msgid "Save"
-msgstr "Guardar"
+#~ msgid "Go back"
+#~ msgstr "Atras"
