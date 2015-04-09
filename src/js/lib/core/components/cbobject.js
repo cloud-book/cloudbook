@@ -8,10 +8,12 @@
  */
 function CBObject(objectdata){
 	this.position = typeof objectdata.position !== 'undefined' ? objectdata.position : [200,200];
-	this.size = typeof objectdata.size !== 'undefined' ? objectdata.size : [0,0];
+	this.size = typeof objectdata.size !== 'undefined' ? objectdata.size : [200,50];
 	this.idtype = typeof objectdata.idtype !== 'undefined' ? objectdata.idtype : "CBObject";
-	this.uniqueid = CBUtil.uniqueId();
+	this.uniqueid = typeof objectdata.uniqueid !== 'undefined' ? objectdata.uniqueid : CBUtil.uniqueId();
+	this.levellayer = typeof objectdata.levellayer !== 'undefined' ? objectdata.levellayer : 0;
 }
+
 
 /**
  * Render object to jQuery object to be included on page
@@ -26,18 +28,23 @@ CBObject.prototype.editorView = function editorView() {
 	   .addClass('cbobject-editable')
 	   .attr('tabindex','-1')
 	   .attr('data-cbobjectid',this.uniqueid)
-	   .css('position','relative');
+	   .css('position','absolute')
+	   .css('z-index',this.levellayer)
+	   .css('width',this.size[0].toString() + "px")
+	   .css('height',this.size[1].toString() + "px" );
 	var bar = $(window.document.createElement('div'));
 	bar.css('background-color','#4c4c4c')
 		.addClass('draggable')
 		.addClass('cbobject-bar');
 	var edit = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/edit.png');
 	var del = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/delete.png');
-	edit.click(that.editButton);
-	del.click(function(){
-		that.editButton();
-	})
-	bar.append([edit,del]);
+	var forward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/forward.png');
+	var backward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/backward.png');
+	edit.click({that:this},that.editButton);
+	del.click({that:this},that.deleteButton);
+	forward.click({that:this},that.forwardButton);
+	backward.click({that:this},that.backwardButton);
+	bar.append([edit,del,forward,backward,rotate]);
 	aux.append(bar);
 	return aux;
 };
@@ -52,6 +59,7 @@ CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
 	//var x = jquerycbo.get()[0];
 	//x.addEventListener('click',enableEditable);
 	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }, scroll:true,handle:".draggable"}).click(function(){this.focus()});
+	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]} });
 };
 
 
@@ -59,19 +67,25 @@ CBObject.prototype.clickButton = function clickButton(controllerClass) {
 	controllerClass.addCBObjectIntoSection(this.editorView(),this);
 };
 
-CBObject.prototype.editButton = function editButton() {
-	var uniqueid = 1;
-	var dialog = $("<div id='"+uniqueid+"'></div>");
+CBObject.prototype.editButton = function editButton(e) {
+	var that = e.data.that;
+	var dialog = $("<div></div>");
+	dialog.callbacks = [];
 	dialog.dialog({
 		modal:true,
 		close:function(){
 			
 			var savedialog = $("<div id='savedialog'><button id='save'>Save</button><button id='cancel'>Cancel</button></div>");
 			savedialog.children('#save').click(function(){
-				console.log("Salvando");
+				dialog.callbacks.forEach(function lanzador(e){e()});
+				var viewobject = $("[data-cbobjectid='"+that.uniqueid+"']");
+				viewobject.replaceWith(that.editorView());
+				that.add_callback($("[data-cbobjectid='"+that.uniqueid+"']"),that);
+				var CBStorage = application.storagemanager.getInstance();
+    			CBStorage.setCBObjectById(that,that.uniqueid);
 				dialog.remove() ;
 				$('#savedialog').dialog('destroy'); });
-			savedialog.children('#cancel').click(function(){console.log("Cancelando"); dialog.remove() ; $('#savedialog').dialog('destroy');});
+			savedialog.children('#cancel').click(function(){dialog.remove() ; $('#savedialog').dialog('destroy');});
 			savedialog.dialog({
 				modal:true,
 				close:function(){
@@ -81,20 +95,47 @@ CBObject.prototype.editButton = function editButton() {
 			
 		}
 	});
-	return uniqueid;
+	return dialog;
 };
 
 
-function enableEditable(e){
-	var x = $(e.currentTarget);
-	if(x !== Cloudbook.UI.cbobjectselected){
-		x.addClass("selected");
-		if(Cloudbook.UI.cbobjectselected !== undefined){
-			Cloudbook.UI.cbobjectselected.removeClass('selected');
-		}
-		Cloudbook.UI.cbobjectselected = x;
-	}
-	e.stopPropagation();
-}
+CBObject.prototype.forwardButton = function forwardButton(e) {
+	var that = e.data.that;
+	var controller = application.controller.getInstance();
+	controller.modifyObjectLevelLayer(that.uniqueid,that.levellayer + 1);
+};
+
+CBObject.prototype.backwardButton = function backwardButton(e) {
+	var that = e.data.that;
+	var controller = application.controller.getInstance();
+	controller.modifyObjectLevelLayer(that.uniqueid,that.levellayer - 1);
+};
+
+
+CBObject.prototype.deleteButton = function deleteButton(e) {
+	var that = e.data.that;
+	var dialog = $('<div><button id="delete">Delete</button><button id="cancel">Cancel</button></div>');
+	dialog.children('#delete').click(function(){
+		var controller = application.controller.getInstance();
+		controller.deleteCBObjectById(Cloudbook.UI.selected.attr('data-cbsectionid'),that.uniqueid);
+		dialog.dialog('close');
+	});
+	dialog.children('#cancel').click(function(){dialog.dialog('close');});
+	dialog.dialog({modal:true,close:function(){$(this).remove()}});
+};
+
+
+
+// function enableEditable(e){
+// 	var x = $(e.currentTarget);
+// 	if(x !== Cloudbook.UI.cbobjectselected){
+// 		x.addClass("selected");
+// 		if(Cloudbook.UI.cbobjectselected !== undefined){
+// 			Cloudbook.UI.cbobjectselected.removeClass('selected');
+// 		}
+// 		Cloudbook.UI.cbobjectselected = x;
+// 	}
+// 	e.stopPropagation();
+// }
 
 module.exports = CBObject;
