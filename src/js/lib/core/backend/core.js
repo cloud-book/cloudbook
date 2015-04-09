@@ -398,9 +398,15 @@ Backend.prototype.removeCBObjectById = function removeCBObjectById(cbsectionid,c
   section.content.splice(section.content.indexOf(cbobjectid),1);
   CBStorage.setSectionById(section,cbsectionid);
   CBStorage.deleteCBObjectById(cbobjectid);
-
-
 };
+
+Backend.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cbobjectid,level) {
+  var CBStorage = application.storagemanager.getInstance();
+  var cbobject = CBStorage.getCBObjectById(cbobjectid);
+  cbobject.levellayer = level;
+  CBStorage.setCBObjectById(cbobject);
+};
+
 
 /**
  * This namespace has singleton instance of Backend class
