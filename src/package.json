@@ -8,7 +8,7 @@
     "book",
     "resources"
   ],
-  "single-instance":false,
+  "single-instance": false,
   "window": {
     "title": "CloudBook",
     "icon": "logo.png",
@@ -22,6 +22,7 @@
     "plugin": true
   },
   "dependencies": {
-    "jed": "~1.1.0"
+    "jed": "~1.1.0",
+    "fs-extra": "~0.18.0"
   }
 }
