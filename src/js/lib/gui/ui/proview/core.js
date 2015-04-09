@@ -52,10 +52,19 @@ ProView.prototype.createSectionView = function createSectionView(cbsecid) {
   textsection.append($(document.createElement('div')).html(CBStorage.getSectionById(cbsecid).name).addClass('caption'));
   
   textsection.click({that:this},this.selectSection);
+  textsection.dblclick({that:this},this.doubleClick);
   actions.click({that:this},this.createMenu);
   displaysection.append([textsection,actions]);
   section.append([displaysection,subsections]);
   return section ;
+};
+
+ProView.prototype.doubleClick=function doubleClick(e){
+        
+        var that = e.data.that;
+	var actualcbsectionid = $(e.currentTarget).closest('[data-cbsectionid]').attr('data-cbsectionid');
+	that.dialogUpdateSectionName(actualcbsectionid);
+      
 };
 
 ProView.prototype.createMenu = function createMenu(e) {
@@ -91,9 +100,6 @@ ProView.prototype.createMenu = function createMenu(e) {
 	}]);
 	element.trigger('click.contextMenu',[e]);
 };
-
-
-
 
 
 
@@ -160,6 +166,8 @@ ProView.prototype.selectSection = function selectSection(e){
   Cloudbook.UI.selected.children('.displaysection').addClass('sectionselected');
   var ui = application.ui.core.getInstance();
   ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
+
+     
 }
 
 ProView.prototype.updateSectionName = function(name,cbsectionid) {
@@ -168,16 +176,46 @@ ProView.prototype.updateSectionName = function(name,cbsectionid) {
 
 
 ProView.prototype.dialogUpdateSectionName = function dialogUpdateSectionName(cbsectionid) {
+  var CBStorage = application.storagemanager.getInstance();
+
   var controller = application.controller.getInstance();
   var template = application.util.template.getTemplate('templates/updateSectionName.hbs');
-  var dialog = $(template());
+  var valor = {sectionname:CBStorage.getSectionById(cbsectionid).name};
+  var dialog = $(template(valor));
+
   dialog.find('button').click(function(){
   	var name = $('#sectionname').val();
   	controller.updateSectionName(name,cbsectionid);
   	dialog.dialog('close');
   	dialog.remove();
   });
-  dialog.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
+
+  dialog.find('#sectionname').keyup(function(e){
+      var seccion = $('#sectionname').val();
+      if(seccion==""){
+      	 
+	$("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+       	dialog.find('button').attr("disabled","disabled");		
+		
+      }else {
+	$("#validateindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+       	dialog.find('button').removeAttr("disabled");
+   		
+      }	
+   }).focus();
+
+  $(document).keypress(function(e)
+  {
+	if (e.which==13)
+	{
+	    var seccion = $('#sectionname').val();
+      	    if(seccion!=""){ 
+         	dialog.find('button').click();
+            }
+        }
+ });
+    dialog.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
+
 }
 
 ProView.prototype.deleteSection = function deleteSection(cbsectionid) {
