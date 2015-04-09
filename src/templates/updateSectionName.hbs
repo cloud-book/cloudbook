@@ -1,4 +1,10 @@
 <div id="updateSectionName">
-	<input type="text" id="sectionname" placeholder="{{gettext "Section name"}}">
-	<button type="button">{{gettext "Save"}}</button>
+	<input type="text" id="sectionname" placeholder="{{gettext "Section name"}}" value="{{sectionname}}" aria-describedby="inputSuccess2Status">
+        <span id="validateindicator" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+	<span id="inputSuccess2Status" class="sr-only">(success)</span>
+
+    <p>
+   	<button type="button">{{gettext "Save"}}</button>
+    </p>
 </div>
+
