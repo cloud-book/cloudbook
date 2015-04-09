@@ -44,29 +44,36 @@ function processMetadata(filePath)
 /**
  * This method is responsible for reading SCORM file content
  * First look into the file to check the content and then loads content and metadata information
+ * and reads ims metadata to take the order of elements
  * @param  {String} path of the file
  */
 function processSCORMFile(filePath)
 {
 	var fs = require('fs');
-	var exists = false;
+	var projectName = filePath.split("/")[filePath.split("/").length-1].split(".")[0];
+
+    var backend = application.backend.core.getInstance();		
+    if(!backend.checkProjectExists(projectName)){
+    	backend.createProject(projectName);
+    	backend.voidProject();
+	}
+
+	backend.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 
 	fs.readFile(filePath, function(err, data) {
-	  if (err) throw err;
-	  var zip = new JSZip(data);
-	  $.each(zip.files, function (index, zipEntry) {     
-	       if(zipEntry.name === "imslrm.xml") exists = true;        
-	  });
-	  if(exists)
-	  {
-	  	var xml = zip.file("imslrm.xml").asText();
-	  	var importMetadata = application.importmetadata.getInstance();
-		importMetadata.loadMetadata(xml);
-	  }
+		if (err) throw err;
+		var importSCORM = application.importscorm.getInstance();
+		importSCORM.processSCORM(data, filePath);
 	});
 
 };
 
+/**
+ * This method is responsible for reading HTML file content
+ * First look into the file to check the content and then loads content and metadata information
+ * and reads ims metadata to take the order of elements
+ * @param  {String} path of the file
+ */
 function processHTMLFile(filePath)
 {
 	var fs = require('fs');

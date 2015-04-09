@@ -28,7 +28,8 @@ TextBox.prototype.editorView = function editorView() {
 };
 
 TextBox.prototype.importHTML = function importHTML(){
-	return ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', "ADDRESS", "BLOCKQUOTE"];
+	return ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
+	'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA'];
 }
 
 TextBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {

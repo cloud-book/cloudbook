@@ -30,7 +30,6 @@ function processText(node)
 	}
 	else
 	{
-
 		text = new textBox({"text":node, "position" : [0,0]});
 		var x = text.editorView();
 		$(Cloudbook.UI.targetcontent).append(x);
@@ -51,18 +50,25 @@ function processImage(node, filePath){
 	var imageTags = new imageBox().importHTML();
 
 	if($.inArray(node.tagName, imageTags) != -1)
-	{	
-		var imgpath = node.attributes.getNamedItem("src").value;
-		var text = node.attributes.getNamedItem("alt").value;
-		var width = node.width;
-		var height = node.height;
-		var left = node.offsetLeft;
-		var top = node.offsetTop;
-
-		image = new imageBox({"text":text, "position" : [top,left], "imgpath":filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath});
-		var x = image.editorView();
-		$(Cloudbook.UI.targetcontent).append(x);
-		image.add_callback(x,image);
+	{
+		if(node.tagName == "FIGURE")
+			node = node.firstElementChild;
+		try{
+			var imgpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+			console.log(imgpath);
+			var text = node.attributes.getNamedItem("alt") != null? node.attributes.getNamedItem("alt").value:"";
+			var width = node.width;
+			var height = node.height;
+			var left = node.offsetLeft;
+			var top = node.offsetTop;
+			image = new imageBox({"text":text, "position" : [top,left], "imgpath":filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath});
+			var x = image.editorView();
+			$(Cloudbook.UI.targetcontent).append(x);
+			image.add_callback(x,image);
+		}
+		catch (err) {
+		    console.log('Errors in Image');
+		}
 		return true;
 	}
 	else
@@ -82,17 +88,22 @@ function processVideo(node, filePath){
 	if($.inArray(node.tagName, videoTags) != -1)
 	{	
 		var imgpath = "";
-		if (node.innerHTML.indexOf("src=")!=-1) 
-			imgpath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
-		var width = node.width;
-		var height = node.height;
-		var left = node.offsetLeft;
-		var top = node.offsetTop;
+		try{
+			if (node.innerHTML.indexOf("src=")!=-1) 
+				imgpath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
+			var width = node.width;
+			var height = node.height;
+			var left = node.offsetLeft;
+			var top = node.offsetTop;
 
-		video = new videoBox({"position" : [top,left], "videopath":filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath});
-		var x = video.editorView();
-		$(Cloudbook.UI.targetcontent).append(x);
-		video.add_callback(x,video);
+			video = new videoBox({"position" : [top,left], "videopath":filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath});
+			var x = video.editorView();
+			$(Cloudbook.UI.targetcontent).append(x);
+			video.add_callback(x,video);
+		}
+		catch (err) {
+		    console.log('Errors in Video');
+		}
 		return true;
 	}
 	else
@@ -116,19 +127,15 @@ function processBlock(element, filePath, blockName)
 	var videoTags = new videoBox().importHTML();
 
 	for(var node = element.firstChild; node; node = node.nextSibling){
-		//console.log(node.tagName + " " + blockName + " " + blockText + node.nodeName);
 		if(node.tagName != undefined)
 		{
 			switch(node.tagName)
 			{
 				case "SECTION":case "ARTICLE":case "NAV":case "DIV": case "FOOTER":case "ASIDE":
-					//console.log(node.tagName + " " + blockName + " " + blockText + node.nodeName);
 					var text = processBlock(node, filePath, node.tagName);
-					//console.log(text);
 					processText(text);
 					text = "";
 				break;
-				
 				default:
 					if($.inArray(node.tagName, textTags) != -1)
 					{
@@ -155,20 +162,20 @@ function processBlock(element, filePath, blockName)
 		return blockText;
 }
 /**
- * This method is responsible for reading HTML content
+ * This method is responsible for reading HTML main block contents
  * @param  {String} content of the HTML file
  * @param  {String} path of the html element
  */
 ImportHTML.prototype.processHTML = function processHTML(data, filePath)
 {
 	var includeHTML = $(data);
-
 	$.each(includeHTML, function(index, element){
 		switch(element.tagName)
 		{
-			case "HEADER":case "DIV":case "SECTION":case "ARTICLE":case "FOOTER":
+			case "HEADER":case "DIV":case "SECTION":case "ARTICLE":case "FOOTER":case "ASIDE":
 				processBlock(element, filePath, null);
 			break;
+			
 		}
 	});
 }
