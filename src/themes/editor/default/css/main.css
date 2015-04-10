@@ -148,4 +148,5 @@ body{
 
 .cbobject:focus{
     border: 1px solid black;
+    outline: none;
 }
