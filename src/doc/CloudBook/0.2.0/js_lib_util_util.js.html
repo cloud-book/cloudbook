@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: js/lib/util/util.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: js/lib/util/util.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Common utilities to develop classes
+ * @class Util
+ */
+function Util(){}
+
+/**
+ * Create global namespace. This namespace is available how goblal variable on window object.
+ * If parents of base namespace not exists, it's created.
+ * @param  {String} nameSpaceString full namespace
+ */
+Util.prototype.createNameSpace = function createNameSpace(nameSpaceString) {
+	var names = nameSpaceString.split("."),
+	parent = window,
+	imax = names.length,
+	i;
+	//if any nameSpace level doesn't exist, create it
+	for (i = 0; i &lt; imax; i++) {
+		if (!parent[names[i]]) {
+			parent[names[i]] = {};
+		}
+		parent = parent[names[i]];
+	}
+};
+
+/**
+ * Return only folders from path. This can be relative or absolute path.
+ * @param  {String} directorypath folder string
+ * @return {String[]}               Names of folders
+ */
+Util.prototype.readOnlyDirectories = function readOnlyDirectories(directorypath) {
+	var fs = require('fs');
+	var path = require('path');
+	var listfiles = fs.readdirSync(directorypath);
+	var listfolders = [];
+	listfiles.forEach(function (filename){
+		var relativepath = path.join(directorypath,filename);
+		if(fs.statSync(relativepath).isDirectory()){
+			listfolders.push(filename);
+		}
+	});
+	return listfolders;
+};
+
+/**
+ * Get object from namespace by string
+ * @param  {String} namespace String namespace 
+ * @return {Object}           object 
+ */
+Util.prototype.getObjectFromString = function(namespace) {
+        var x = namespace.split('.');
+        var auxobj = window;
+        for(i=0;i&lt;x.length;i++){
+                auxobj = auxobj[x[i]];
+        }
+        return auxobj;
+};
+
+/**
+ * Simulate inheritance how other languages
+ * @param  {Object} ctor      class 
+ * @param  {Object} superCtor Class to extend
+ */
+Util.prototype.inherits = function inherits(ctor, superCtor) {
+	  ctor.super_ = superCtor;
+	  ctor.prototype = Object.create(superCtor.prototype, {
+	    constructor: {
+	      value: ctor,
+	      enumerable: false,
+	      writable: true,
+	      configurable: true
+	    }
+	  });
+};
+
+/**
+ * Work how require nodejs function. Get file and create object with content, but only that exported by module.exports or exports variable
+ * @example &lt;caption>mymodule.js&lt;/caption>
+ * function foo(a,b){ return a + b}
+ * function bar(a,b){ return a - b}
+ * module.exports = { publicfunction : foo }
+ * @example &lt;caption>main.js&lt;/caption>
+ * var util = new Util();
+ * var mymodule = util.req('mymodule.js');
+ * mymodule.publicfunction(1,2);
+ * // return 3
+ * @param  {String} filepath file module path 
+ * @return {Object}          module export object
+ */
+Util.prototype.req = function req(filepath){
+	var fs = require('fs');
+	var path = require('path');
+	var _mod = {};
+	var __module_path__ = path.dirname(filepath) + "/";
+	_mod.exports = {};
+	miclase = fs.readFileSync(filepath,'utf-8');
+	var _function_require = new Function('module','exports','__module_path__',miclase);
+	_function_require(_mod,_mod.exports,__module_path__);
+	return _mod.exports;
+}
+/**
+ * Generate unique id with numbers and letters.
+ * @return {String} UID
+ */
+Util.prototype.uniqueId = function() {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0, v = c == 'x' ? r : (r&amp;0x3|0x8);return v.toString(16);});
+};
+
+/**
+ * Is similar to req function, but this create node script and append into head document
+ * @param  {'String'} path path script
+ */
+Util.prototype.include = function include(path) {
+	var script = document.createElement('script');
+	script.src = path;
+	script.type = "text/javascript";
+	document.head.appendChild(script);
+};
+
+
+/**
+ * With this function apply singleton pattern. Get library by argument and return object that 
+ * only has a function (getInstance). This function return instance class and if not exists create it.
+ * @param  {Object} Library Module class
+ * @return {Object}         Cbject class with getInstance function.
+ */
+Util.prototype.singleton = function singleton(Library) {
+	var instance;
+	function createInstance(){
+		var object = new Library();
+		return object;
+	}
+	return {getInstance: function(){
+		if(!instance){
+			instance = createInstance();
+		}
+		return instance;
+	}};
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Backend.html">Backend</a></li><li><a href="CBObject.html">CBObject</a></li><li><a href="CBSection.html">CBSection</a></li><li><a href="ConfigUserManager.html">ConfigUserManager</a></li><li><a href="Controller.html">Controller</a></li><li><a href="StorageManager.html">StorageManager</a></li><li><a href="TextBox.html">TextBox</a></li><li><a href="Translator.html">Translator</a></li><li><a href="UI.html">UI</a></li><li><a href="Util.html">Util</a></li></ul><h3>Namespaces</h3><ul><li><a href="application.html">application</a></li><li><a href="application.backend.html">backend</a></li><li><a href="application.controller.html">controller</a></li><li><a href="application.storagemanager.html">storagemanager</a></li><li><a href="application.ui.html">ui</a></li><li><a href="Cloudbook.html">Cloudbook</a></li><li><a href="Cloudbook.Actions.html">Actions</a></li><li><a href="Cloudbook.Sections.html">Sections</a></li><li><a href="Cloudbook.UI.html">UI</a></li><li><a href="Project.html">Project</a></li><li><a href="Project.Data.html">Data</a></li><li><a href="Project.Info.html">Info</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Wed Mar 25 2015 16:26:56 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

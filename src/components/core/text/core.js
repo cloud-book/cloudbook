@@ -1,6 +1,6 @@
 var Project = window.Project;  
 var util = require('util');
-var CBobject = CBUtil.req("js/lib/core/cbobject/cbobject.js");
+var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 /**
@@ -27,10 +27,13 @@ TextBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+TextBox.prototype.importHTML = function importHTML(){
+	return ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
+	'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA'];
+}
 
 TextBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
 	TextBox.super_.prototype.add_callback.call(this,jquerycbo,objectcbo);
-	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }});
 	$(".raptor").raptor({
 		plugins:{
 			insertFile: false, 

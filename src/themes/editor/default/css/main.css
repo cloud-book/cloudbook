@@ -124,5 +124,30 @@ body{
     display: inline-block;
 }
 
+.cbobject{
+    display: flex;
+    position: relative;
+}
+
+.cbobject-bar{
+    height:30px;
+    width:100%;
+    position:absolute;
+    left:0;
+    opacity: 0;
+    display: none;
+    border: 1px solid black;
+    z-index: 10;
+    -webkit-transition: display 0.3s opacity 0.3s linear;
+}
 
 
+.cbobject:focus .cbobject-bar{
+    display: inherit;
+    opacity: 1;
+}
+
+.cbobject:focus{
+    border: 1px solid black;
+    outline: none;
+}

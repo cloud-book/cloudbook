@@ -13,7 +13,7 @@ module.exports = function(grunt) {
       },
       jsxgettext:{
           test:{
-            files : [{src:["src/**/*.*js","!src/node_modules/**/*.js"],dest:'./po/cloudbook.pot'}]
+            files : [{src:["src/**/*.*js","src/templates/*.*hbs","!src/node_modules/**/*.js","!src/js/lib_external/**/*.js"],dest:'./po/cloudbook.pot'}]
           }
       },
       po2json:{
