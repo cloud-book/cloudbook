@@ -216,9 +216,7 @@ UI.prototype.modifyObjectRotation = function modifyObjectRotation(cbobjectid,cal
     if(that.stop<1){ 
       $(document).unbind('click',f);
       clearInterval(loop);
-      console.log('final');
-    }; 
-    console.log(that.stop); 
+    };
     if (that.stop == 1){ 
       that.initval=[e.offsetX,e.offsetY];
       loop=setInterval(function(){that.updateAngle(cbobjectid,that)},50) }

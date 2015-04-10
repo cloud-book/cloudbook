@@ -4,6 +4,13 @@ body{
     padding: 0;
 }
 
+
+/********************************
+ *
+ *   Layout definition
+ * 
+ *******************************/
+
 .ui-layout-west{
     padding: 0 !important;
     background: #4c4c4c url('../img/back.png') repeat !important;
@@ -30,6 +37,12 @@ body{
 .ui-layout-resizer-west, .ui-layout-resizer-south {
     background: #4c4c4c !important;
 }
+
+/*****************************
+ * 
+ *  End layout definition
+ *  
+ *****************************/
 
 ::-webkit-scrollbar {
     width: 12px;
@@ -149,4 +162,36 @@ body{
 .cbobject:focus{
     border: 1px solid black;
     outline: none;
+}
+
+
+
+/************************
+ *
+ * WizardNewOpenProject
+ * 
+ ***********************/
+ .wizardnewopenproject{
+    width: auto !important;
+    text-align: center;
+    top:30% !important;
+    left: 40% !important;
+ }
+
+.wizardnewopenproject .ui-dialog-titlebar{
+    background: url("../img/titlewizardnewopenproject.png") no-repeat center;
+    border: none;
+    margin-top: .5em;
+}
+
+ .wizardnewopenproject .ui-dialog-titlebar-close{
+    display:none;
+ }
+
+ .wizardnewopenproject .open{
+    text-align: right;
+ }
+
+#listProjects td{
+ vertical-align: middle !important;
 }

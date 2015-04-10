@@ -103,9 +103,6 @@ function processODTFile(content, fileType)
 
 
 	$page = $(content);
-	console.log(fileType);
-	console.log(content);
-
 /*		$.each($page, function(index, element){
 			var tempSection = [];
 			switch(element.tagName)
