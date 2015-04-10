@@ -1,0 +1,68 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', '.' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose node symlink /usr/bin/node
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ '/home/pablo/cloudbook',
+6 verbose install   [ 'grunt',
+6 verbose install     'grunt-cli',
+6 verbose install     'grunt-jsdoc',
+6 verbose install     'grunt-jsxgettext',
+6 verbose install     'grunt-node-webkit-builder',
+6 verbose install     'grunt-po2json',
+6 verbose install     'jsxgettext' ] ]
+7 info preinstall cloudbook@0.1.0
+8 verbose readDependencies using package.json deps
+9 verbose already installed skipping grunt@~0.4.5 /home/pablo/cloudbook
+10 verbose already installed skipping grunt-cli@^0.1.13 /home/pablo/cloudbook
+11 verbose already installed skipping grunt-jsdoc@~0.6.2 /home/pablo/cloudbook
+12 verbose already installed skipping grunt-jsxgettext@0.0.3 /home/pablo/cloudbook
+13 verbose already installed skipping grunt-node-webkit-builder@~1.0.0 /home/pablo/cloudbook
+14 verbose already installed skipping grunt-po2json@~0.3.0 /home/pablo/cloudbook
+15 verbose already installed skipping jsxgettext@~0.6.2 /home/pablo/cloudbook
+16 silly resolved []
+17 info build /home/pablo/cloudbook
+18 verbose linkStuff [ false, false, false, '/home/pablo' ]
+19 info linkStuff cloudbook@0.1.0
+20 verbose linkBins cloudbook@0.1.0
+21 verbose linkMans cloudbook@0.1.0
+22 verbose rebuildBundles cloudbook@0.1.0
+23 verbose rebuildBundles [ '.bin',
+23 verbose rebuildBundles   'grunt',
+23 verbose rebuildBundles   'grunt-cli',
+23 verbose rebuildBundles   'grunt-jsdoc',
+23 verbose rebuildBundles   'grunt-jsxgettext',
+23 verbose rebuildBundles   'grunt-node-webkit-builder',
+23 verbose rebuildBundles   'grunt-po2json',
+23 verbose rebuildBundles   'jsxgettext',
+23 verbose rebuildBundles   'node-expat',
+23 verbose rebuildBundles   'xml2json' ]
+24 verbose rebuild bundle /home/pablo/cloudbook/node_modules/node-expat
+25 info build /home/pablo/cloudbook/node_modules/node-expat
+26 info preinstall node-expat@2.3.7
+27 verbose linkStuff [ false, false, false, '/home/pablo/cloudbook/node_modules' ]
+28 info linkStuff node-expat@2.3.7
+29 verbose linkBins node-expat@2.3.7
+30 verbose linkMans node-expat@2.3.7
+31 verbose rebuildBundles node-expat@2.3.7
+32 info install node-expat@2.3.7
+33 verbose unsafe-perm in lifecycle true
+34 info node-expat@2.3.7 Failed to exec install script
+35 error node-expat@2.3.7 install: `node-gyp rebuild`
+35 error Exit status 1
+36 error Failed at the node-expat@2.3.7 install script.
+36 error This is most likely a problem with the node-expat package,
+36 error not with npm itself.
+36 error Tell the author that this fails on your system:
+36 error     node-gyp rebuild
+36 error You can get their info via:
+36 error     npm owner ls node-expat
+36 error There is likely additional logging output above.
+37 error System Linux 3.2.0-69-generic
+38 error command "/usr/bin/node" "/usr/bin/npm" "install" "."
+39 error cwd /home/pablo/cloudbook
+40 error node -v v0.10.33
+41 error npm -v 1.4.28
+42 error code ELIFECYCLE
+43 verbose exit [ 1, true ]
