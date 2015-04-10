@@ -12,6 +12,7 @@ function CBObject(objectdata){
 	this.idtype = typeof objectdata.idtype !== 'undefined' ? objectdata.idtype : "CBObject";
 	this.uniqueid = typeof objectdata.uniqueid !== 'undefined' ? objectdata.uniqueid : CBUtil.uniqueId();
 	this.levellayer = typeof objectdata.levellayer !== 'undefined' ? objectdata.levellayer : 0;
+	this.degree = typeof objectdata.degree !== 'undefined' ? objectdata.degree : 0;
 }
 
 
@@ -30,6 +31,7 @@ CBObject.prototype.editorView = function editorView() {
 	   .attr('data-cbobjectid',this.uniqueid)
 	   .css('position','absolute')
 	   .css('z-index',this.levellayer)
+	   .css('transform',"rotate("+this.degree+"deg)")
 	   .css('width',this.size[0].toString() + "px")
 	   .css('height',this.size[1].toString() + "px" );
 	var bar = $(window.document.createElement('div'));
@@ -40,10 +42,12 @@ CBObject.prototype.editorView = function editorView() {
 	var del = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/delete.png');
 	var forward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/forward.png');
 	var backward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/backward.png');
+	var rotate = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/rotate.png');
 	edit.click({that:this},that.editButton);
 	del.click({that:this},that.deleteButton);
 	forward.click({that:this},that.forwardButton);
 	backward.click({that:this},that.backwardButton);
+	rotate.on('mousedown',{that:this},that.rotateButton);
 	bar.append([edit,del,forward,backward,rotate]);
 	aux.append(bar);
 	return aux;
@@ -109,6 +113,12 @@ CBObject.prototype.backwardButton = function backwardButton(e) {
 	var that = e.data.that;
 	var controller = application.controller.getInstance();
 	controller.modifyObjectLevelLayer(that.uniqueid,that.levellayer - 1);
+};
+
+CBObject.prototype.rotateButton = function rotateButton(e) {
+	var that = e.data.that;
+	var controller = application.controller.getInstance();
+	controller.modifyObjectRotation(that.uniqueid,e);
 };
 
 
