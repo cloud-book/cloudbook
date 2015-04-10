@@ -86,13 +86,29 @@ Controller.prototype.popSubsection = function popSubsection(cbsectionid,sonid) {
 };
 
 
-Controller.prototype.addCBIbjectIntoSection = function addCBIbjectIntoSection(jquerycbo,objectcbo) {
+Controller.prototype.addCBObjectIntoSection = function addCBObjectIntoSection(jquerycbo,objectcbo) {
   var CBStorage = application.storagemanager.getInstance();	
   $(Cloudbook.UI.targetcontent).append(jquerycbo);
   objectcbo.add_callback(jquerycbo,objectcbo);
   var sectionWhereAppend = CBStorage.getSectionById(Cloudbook.UI.selected.attr('data-cbsectionid'));
-  sectionWhereAppend.content.push(objectcbo);
+  sectionWhereAppend.content.push(objectcbo.uniqueid);
+  CBStorage.setCBObjectById(objectcbo,objectcbo.uniqueid);
   CBStorage.setSectionById(sectionWhereAppend,Cloudbook.UI.selected.attr('data-cbsectionid'));
+};
+
+Controller.prototype.deleteCBObjectById = function deleteCBObjectById(cbsectionid,cbobjectid) {
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+	backend.removeCBObjectById(cbsectionid,cbobjectid);
+	ui.removeCBObjectById(cbobjectid);
+};
+
+
+Controller.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cbobjectid,level) {
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+	backend.modifyObjectLevelLayer(cbobjectid,level);
+	ui.modifyObjectLevelLayer(cbobjectid,level);
 };
 /**
  * This namespace has singleton instance of Controller class

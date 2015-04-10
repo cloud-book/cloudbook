@@ -68,7 +68,6 @@ UI.prototype.loadTheme = function loadTheme(){
  * @param  {String} component Component idtype indicated on metadata file.
  */
  UI.prototype.getCBObjectFromButton = function getCBObjectFromButton(component) {
-  var CBStorage = application.storagemanager.getInstance();
   var fullobject = new Cloudbook.Actions[component]['component']();
   var controller = application.controller.getInstance();
   fullobject.clickButton(controller);
@@ -132,7 +131,8 @@ UI.prototype.loadContent = function loadContent(id){
   $(Cloudbook.UI.targetcontent).html("");
   var section = CBStorage.getSectionById(id);
   if (section !== undefined ){
-    section.content.forEach(function (element){
+    section.content.forEach(function (cbobjectid){
+      var element = CBStorage.getCBObjectById(cbobjectid);
       var x = element.editorView();
       $(Cloudbook.UI.targetcontent).append(x);
       element.add_callback(x,element);
@@ -184,6 +184,18 @@ UI.prototype.setTitleName = function(text) {
   document.title = text + " - CloudBook" ;
 };
 
+
+UI.prototype.removeCBObjectById = function removeCBObjectById(cbobjectid) {
+  var targetcontent = $(Cloudbook.UI.targetcontent);
+  var x = targetcontent.find('[data-cbobjectid="'+cbobjectid+'"]');
+  $(x).remove();
+};
+
+UI.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cbobjectid,level) {
+  var targetcontent = $(Cloudbook.UI.targetcontent);
+  var x = targetcontent.find('[data-cbobjectid="'+cbobjectid+'"]');
+  $(x).css('z-index',level);
+};
 
 /**
  * This namespace has singleton instance of UI class
