@@ -144,8 +144,9 @@ body{
 .cbobject-bar{
     height:30px;
     width:100%;
-    position:relative;
+    position:absolute;
     left:0;
+    top: -30px;
     opacity: 0;
     display: none;
     border: 1px solid black;
@@ -199,4 +200,12 @@ body{
 
 #listProjects td{
  vertical-align: middle !important;
+}
+
+.cbtextbox-toolbar{
+    background: #ddd;
+
+}
+.cbtextbox{
+    overflow: hidden;
 }

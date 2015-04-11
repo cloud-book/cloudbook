@@ -63,7 +63,7 @@ CBObject.prototype.editorView = function editorView() {
 CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
 	//var x = jquerycbo.get()[0];
 	//x.addEventListener('click',enableEditable);
-	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; }, scroll:true,handle:".draggable"}).click(function(){this.focus()});
+	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; ui.helper.focus(); }, scroll:true,handle:".draggable"});
 	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]} });
 };
 
