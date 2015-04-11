@@ -22,14 +22,24 @@ util.inherits(TextBox,CBobject);
 
 TextBox.prototype.editorView = function editorView() {
   var aux = TextBox.super_.prototype.editorView.call(this);
-  var textarea = $(window.document.createElement('div'))
-  					.val(this.text)
+  var textboxcontent = $(window.document.createElement('div'))
+  					.html(this.text)
+  					.attr('data-textbox-id',this.uniqueid)
   					.addClass('cbtextbox')
   					.css('height','100%')
   					.css('width','100%');
-  aux.children('.cbcontainer').append(textarea);
+  aux.children('.cbcontainer').append(textboxcontent);
   return aux;
 };
+
+TextBox.prototype.editButton = function editButton(e) {
+  var that = e.data.that;
+  var x = $('<div class="btn-toolbar" data-role="editor-toolbar" data-target="[data-textbox-id=\''+that.uniqueid+'\']"><div class="btn-group"><a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)">negrita</a><a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)">italic</a><a class="btn" data-edit="strikethrough" title="Strikethrough">otra cosa</a><a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)">mas</a></div></div>');
+  x.dialog();
+  $('[data-textbox-id="'+that.uniqueid+'"]').wysiwyg();
+};
+
+
 
 TextBox.prototype.importHTML = function importHTML(){
 	return ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
