@@ -34,8 +34,11 @@ TextBox.prototype.editorView = function editorView() {
 
 TextBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;
-  var x = $('<div class="btn-toolbar" data-role="editor-toolbar" data-target="[data-textbox-id=\''+that.uniqueid+'\']"><div class="btn-group"><a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)">negrita</a><a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)">italic</a><a class="btn" data-edit="strikethrough" title="Strikethrough">otra cosa</a><a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)">mas</a></div></div>');
-  x.dialog();
+  var template = application.util.template.getTemplate('components/core/text/toolbar.hbs');
+  var x = $(template({identifier:"[data-textbox-id='"+that.uniqueid+"']"}));
+  var textbox = $('[data-textbox-id="'+that.uniqueid+'"]');
+  x.css('position','fixed').css('top',textbox.offset().top - 60).css('left',textbox.offset().left);
+  $('body').append(x);
   $('[data-textbox-id="'+that.uniqueid+'"]').wysiwyg();
 };
 
