@@ -1,3 +1,4 @@
+var topValue = 0;
 /**
  * @class ImportHTML
  * @classdesc This class is responsible to make import operations of HTML Files
@@ -20,27 +21,29 @@ function processText(node)
 		var width = node.width;
 		var height = node.height;
 		var left = node.offsetLeft;
-		var top = node.offsetTop;
-
-		text = new textBox({"text":text, "position" : [top,left]});
+		//var top = node.offsetTop;
+		text = new textBox({"text":text, "position" : [left, topValue]});
 		var x = text.editorView();
 		$(Cloudbook.UI.targetcontent).append(x);
 		text.add_callback(x,text);
+		topValue = topValue + parseInt(x.css('height').replace("px",""));
 		return true;
 	}
 	else
 	{
-		text = new textBox({"text":node, "position" : [0,0]});
+		text = new textBox({"text":node, "position" : [0,topValue]});
 		var x = text.editorView();
 		$(Cloudbook.UI.targetcontent).append(x);
 		text.add_callback(x,text);
+
+		topValue = topValue + parseInt(x.css('height').replace("px",""));
 		return false;
 	}
 }
 
 /**
  * This method is responsible for processing Image elements
- * It creates a section and includes inside all elements
+ * It creates a section, includes inside all elements and copies images into project folder
  * @param  {String} content of the HTML node
  * @param  {String} path of the html element
  */
@@ -48,23 +51,29 @@ function processImage(node, filePath){
 
 	var imageBox = CBUtil.req("../src/components/core/images/core.js");
 	var imageTags = new imageBox().importHTML();
+	var Project = window.Project;
+	var fs = require('fs');
 
 	if($.inArray(node.tagName, imageTags) != -1)
 	{
 		if(node.tagName == "FIGURE")
 			node = node.firstElementChild;
 		try{
+			
 			var imgpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
-			console.log(imgpath);
+
+			fs.createReadStream(filePath.substring(0,filePath.lastIndexOf("/")+1) + imgpath).pipe(fs.createWriteStream(Project.Info.projectpath + "/rsrc/"
+				+ imgpath.substring(imgpath.lastIndexOf("/")+1, imgpath.length))); 
 			var text = node.attributes.getNamedItem("alt") != null? node.attributes.getNamedItem("alt").value:"";
 			var width = node.width;
 			var height = node.height;
 			var left = node.offsetLeft;
-			var top = node.offsetTop;
-			image = new imageBox({"text":text, "position" : [top,left], "imgpath":filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath});
+//			var top = node.offsetTop;
+			image = new imageBox({"text":text, "position" : [left, topValue], "imgpath":imgpath.substring(imgpath.lastIndexOf("/")+1, imgpath.length)});
 			var x = image.editorView();
 			$(Cloudbook.UI.targetcontent).append(x);
 			image.add_callback(x,image);
+			topValue = topValue + parseInt(x.css('height').replace("px",""));
 		}
 		catch (err) {
 		    console.log('Errors in Image');
@@ -76,7 +85,7 @@ function processImage(node, filePath){
 }
 /**
  * This method is responsible for processing video elements
- * It creates a section and includes inside all elements
+ * It creates a section,  includes inside all elements and copies video into folder
  * @param  {String} content of the HTML node
  * @param  {String} path of the html element
  */
@@ -84,22 +93,27 @@ function processVideo(node, filePath){
 
 	var videoBox = CBUtil.req("../src/components/core/video/core.js");
 	var videoTags = new videoBox().importHTML();
+	var fs = require('fs');
 
 	if($.inArray(node.tagName, videoTags) != -1)
 	{	
-		var imgpath = "";
+		var videopath = "";
 		try{
-			if (node.innerHTML.indexOf("src=")!=-1) 
-				imgpath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
+			if (node.innerHTML.indexOf("src=")!=-1){
+				videopath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
+				fs.createReadStream(filePath.substring(0,filePath.lastIndexOf("/")+1) + videopath).pipe(fs.createWriteStream(Project.Info.projectpath + "/rsrc/"
+				+ videopath.substring(videopath.lastIndexOf("/")+1, videopath.length))); 
+			}
 			var width = node.width;
 			var height = node.height;
 			var left = node.offsetLeft;
-			var top = node.offsetTop;
+//			var top = node.offsetTop;
 
-			video = new videoBox({"position" : [top,left], "videopath":filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath});
+			video = new videoBox({"position" : [left, topValue], "videopath":videopath.substring(videopath.lastIndexOf("/")+1, videopath.length)});
 			var x = video.editorView();
 			$(Cloudbook.UI.targetcontent).append(x);
 			video.add_callback(x,video);
+			topValue = topValue + parseInt(x.css('height').replace("px",""));
 		}
 		catch (err) {
 		    console.log('Errors in Video');
@@ -168,16 +182,25 @@ function processBlock(element, filePath, blockName)
  */
 ImportHTML.prototype.processHTML = function processHTML(data, filePath)
 {
-	var includeHTML = $(data);
-	$.each(includeHTML, function(index, element){
-		switch(element.tagName)
-		{
-			case "HEADER":case "DIV":case "SECTION":case "ARTICLE":case "FOOTER":case "ASIDE":
-				processBlock(element, filePath, null);
-			break;
-			
-		}
-	});
+	//var juice = require('juice');
+	//var cheerio = require('cheerio');
+
+	//var result = juice.juiceFile(filePath, "", function(err, html){
+	//var cheerioData = cheerio.load(html);
+		//console.log(cheerioData.html());
+		//var includeHTML = $(cheerioData.html());
+		var includeHTML = $(data);
+		$.each(includeHTML, function(index, element){
+			switch(element.tagName)
+			{
+				case "HEADER":case "DIV":case "SECTION":case "ARTICLE":case "FOOTER":case "ASIDE":
+					processBlock(element, filePath, null);
+				break;
+				
+			}
+		});
+
+	//});
 }
 CBUtil.createNameSpace('application.importhtml');
 application.importhtml = CBUtil.singleton(ImportHTML);
