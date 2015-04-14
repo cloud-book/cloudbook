@@ -118,6 +118,13 @@ Controller.prototype.modifyObjectRotation = function modifyObjectRotation(cbobje
 	ui.modifyObjectRotation(cbobjectid,backend.modifyObjectRotation,e);
 	
 }
+
+Controller.prototype.appendSection = function(cbsection,parentsection) {
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+	var auxparentSection = typeof parentsection !== 'undefined' ? parentsection : "root";
+	
+};
 /**
  * This namespace has singleton instance of Controller class
  * @namespace controller
