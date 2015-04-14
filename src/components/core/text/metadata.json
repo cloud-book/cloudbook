@@ -3,7 +3,7 @@
   "description":"Append textbox to content",
   "label": "Textbox",
   "icon" : "icon.png",
-  "external_scripts" : ["lib_external/raptor/raptor.js"],
-  "external_css" : ["lib_external/raptor/raptor-front-end.min.css"],
+  "external_scripts" : ["lib_external/bootstrap-wysiwyg/bootstrap-wysiwyg.js"],
+  "external_css" : [],
   "category":"core"
 }

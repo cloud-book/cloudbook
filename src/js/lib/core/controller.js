@@ -110,6 +110,14 @@ Controller.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cb
 	backend.modifyObjectLevelLayer(cbobjectid,level);
 	ui.modifyObjectLevelLayer(cbobjectid,level);
 };
+
+Controller.prototype.modifyObjectRotation = function modifyObjectRotation(cbobjectid,e){
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+	var rotatedang = 0;
+	ui.modifyObjectRotation(cbobjectid,backend.modifyObjectRotation,e);
+	
+}
 /**
  * This namespace has singleton instance of Controller class
  * @namespace controller

@@ -9,8 +9,14 @@ InitialWizard.prototype.showIntro = function showIntro() {
 };
 
 InitialWizard.prototype.initializeWizardDiv = function() {
-  var container = $(document.createElement('div')).attr('id','wizard');
-  container.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
+  var container = $(document.createElement('div')).attr('id','wizardnewopenproject');
+  container.dialog({
+  	modal:true,
+  	dialogClass: "wizardnewopenproject",
+  	closeOnEscape: false,
+  	resizable:false,
+  	width:350
+  });
 };
 
 /**
@@ -22,7 +28,7 @@ InitialWizard.prototype.showNewOpenProject = function showNewOpenProject(e) {
     var userconfig = application.config.user.getInstance();
     var backend = application.backend.core.getInstance();
     var fs = require('fs');
-    var wizarddiv = $("#wizard") ;
+    var wizarddiv = $("#wizardnewopenproject") ;
     wizarddiv.empty();
 
     var datainfo = userconfig.getLastProjects();
@@ -43,22 +49,22 @@ InitialWizard.prototype.showNewOpenProject = function showNewOpenProject(e) {
 InitialWizard.prototype.showTypeProject = function(e) {
 	var that = e.data.that;
 	var fs = require('fs');
-	$("#wizard").empty();
+	$("#wizardnewopenproject").empty();
 	var template = fs.readFileSync('./templates/initialwizard.step2.hbs',{encoding:'utf8'});
 	var templatecompiled = application.util.template.compile(template);
-	$("#wizard").append(templatecompiled());
+	$("#wizardnewopenproject").append(templatecompiled());
 
 	$("#advprojbtn").click(function(){
 		var controller = application.controller.getInstance();
 		controller.createProProject($("#projectname").val());
-		$('#wizard').dialog('close');
-		$('#wizard').remove();
+		$('#wizardnewopenproject').dialog('close');
+		$('#wizardnewopenproject').remove();
 	});
 	$("#smplprojbtn").click(function(){
 		var controller = application.controller.getInstance();
 		controller.createSimpleProject($("#projectname").val());
-		$('#wizard').dialog('close');
-		$('#wizard').remove();
+		$('#wizardnewopenproject').dialog('close');
+		$('#wizardnewopenproject').remove();
 	});
 	$("#wzrdgoback").click({that:that},that.showNewOpenProject);
 
@@ -88,8 +94,8 @@ InitialWizard.prototype.launcherloadProject = function launcherloadProject(e) {
   var path = element.dataset.path;
   var controller = application.controller.getInstance();
   controller.loadProject(path + "/project.cloudbook");
-  $("#wizard").dialog('close');
-  $("#wizard").remove();
+  $("#wizardnewopenproject").dialog('close');
+  $("#wizardnewopenproject").remove();
 };
 
 

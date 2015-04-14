@@ -19,7 +19,7 @@ VideoBox.prototype.editorView = function editorView() {
   videoelement.css('height','100%');
   videoelement.css('width','100%');
   videoelement.append(source);
-  aux.append(videoelement);
+  aux.children('.cbcontainer').append(videoelement);
   return aux;
 };
 

@@ -197,6 +197,58 @@ UI.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cbobjectid
   $(x).css('z-index',level);
 };
 
+UI.prototype.modifyObjectRotation = function modifyObjectRotation(cbobjectid,callback,e) {
+
+  var that = this;
+  that.stop=3;
+  var initval,endval= [];
+  var currentMousePosx,currentMousePosy;
+  var registerPosition = function registerPosition(event) {
+        that.currentMousePosx = event.pageX;
+        that.currentMousePosy = event.pageY;
+    }
+  $(document).mousemove(registerPosition);
+
+  var loop; 
+  var f = function(e){ 
+    
+    that.stop--;
+    if(that.stop<1){ 
+      $(document).unbind('click',f);
+      $(document).unbind('mousemove',registerPosition);
+      clearInterval(loop);
+      var CBStorage = application.storagemanager.getInstance();
+      var aux = CBStorage.getCBObjectById(cbobjectid);
+      aux.degree = that.calcRotation(that.initval,[that.currentMousePosx,that.currentMousePosy]);
+      CBStorage.setCBObjectById(aux,cbobjectid);
+
+    };
+    if (that.stop == 1){
+      var objetctorotate = $('[data-cbobjectid='+cbobjectid+']');
+      var offset = objetctorotate.offset();
+      var width = objetctorotate.width();
+      var height = objetctorotate.height();
+      that.initval=[offset.left + width / 2 , offset.top + height /2 ];
+      loop=setInterval(function(){that.updateAngle(cbobjectid,that)},50) }
+    };
+
+  $(document).on('click',f);
+};
+UI.prototype.calcRotation = function calcRotation(iniCoord,endCoord) {
+    var dx,dy,ang;
+    dx=endCoord[0]-iniCoord[0];
+    dy=endCoord[1]-iniCoord[1];
+    ang= - Math.atan2(dx,dy)*180/3.1415;
+    return ang;
+}
+UI.prototype.updateAngle = function updateAngle(cbobjectid,ini) {
+  //prueba de repeticion bucle
+  var ang = this.calcRotation(ini.initval,[ini.currentMousePosx,ini.currentMousePosy]);
+    $('[data-cbobjectid='+cbobjectid+']').css('transform','rotate('+ang+'deg)');
+    //infinite loop waiting for definitive angle
+    return ang;
+}
+
 /**
  * This namespace has singleton instance of UI class
  * @namespace ui

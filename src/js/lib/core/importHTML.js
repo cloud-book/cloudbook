@@ -55,7 +55,6 @@ function processImage(node, filePath){
 			node = node.firstElementChild;
 		try{
 			var imgpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
-			console.log(imgpath);
 			var text = node.attributes.getNamedItem("alt") != null? node.attributes.getNamedItem("alt").value:"";
 			var width = node.width;
 			var height = node.height;
