@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+<body>
+	<aside class="bordered">
+		<ol>
+			<li><a href='#' alt="data1">Sect 1</a></li>
+			<li><a href='#' alt="data2">Sect 2</a></li>
+		</ol>
+	</aside>
+	<article id="data1" class="bordered">
+		<section id='title' class="centered"> Title </section>
+		<section id='data1'> 
+			<img src="test.jpg" /> 
+		</section>
+		<footer class="bordered">
+			<section class="centered"> Footer section </section>
+		</footer>
+	</article>
+	<article id="data2" class="bordered hide">
+		<section id='title' class="centered"> Titulo </section>
+		<section id='data1'> 
+			<img src="test.jpg" /> 
+		</section>
+		<footer class="bordered">
+			<section class="centered"> Footer section </section>
+		</footer>
+	</article>
+
+	<script type="text/javascript">
+		$('aside>ol>li>a').click(
+			function(){
+				$('article').css('display','none');
+				$('#'+$(this).attr('alt')).css('display','initial');
+			});
+	</script>
+</body>
+</html>
