@@ -4,6 +4,13 @@ body{
     padding: 0;
 }
 
+
+/********************************
+ *
+ *   Layout definition
+ * 
+ *******************************/
+
 .ui-layout-west{
     padding: 0 !important;
     background: #4c4c4c url('../img/back.png') repeat !important;
@@ -30,6 +37,12 @@ body{
 .ui-layout-resizer-west, .ui-layout-resizer-south {
     background: #4c4c4c !important;
 }
+
+/*****************************
+ * 
+ *  End layout definition
+ *  
+ *****************************/
 
 ::-webkit-scrollbar {
     width: 12px;
@@ -125,7 +138,6 @@ body{
 }
 
 .cbobject{
-    display: flex;
     position: relative;
 }
 
@@ -134,6 +146,7 @@ body{
     width:100%;
     position:absolute;
     left:0;
+    top: -30px;
     opacity: 0;
     display: none;
     border: 1px solid black;
@@ -150,4 +163,49 @@ body{
 .cbobject:focus{
     border: 1px solid black;
     outline: none;
+}
+
+
+
+/************************
+ *
+ * WizardNewOpenProject
+ * 
+ ***********************/
+ .wizardnewopenproject{
+    text-align: center;
+ }
+
+.wizardnewopenproject .ui-dialog-titlebar{
+    background: url("../img/titlewizardnewopenproject.png") no-repeat center;
+    border: none;
+    margin-top: .5em;
+}
+
+ .wizardnewopenproject .ui-dialog-titlebar-close{
+    display:none;
+ }
+
+.wizardnewopenproject .btn-group{
+    width: 100%;
+}
+
+.wizardnewopenproject .btn-group button{
+    width: 50%;
+}
+
+ .wizardnewopenproject .open{
+    text-align: right;
+ }
+
+#listProjects td{
+ vertical-align: middle !important;
+}
+
+.cbtextbox-toolbar{
+    background: #ddd;
+
+}
+.cbtextbox{
+    overflow: hidden;
 }

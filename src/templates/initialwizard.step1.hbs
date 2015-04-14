@@ -2,11 +2,15 @@
 	<tbody>
 		{{#each projects}}
 		<tr>
-		<td class="name">{{this.name}}</td><td><button type="button" class="open" data-path="{{this.path}}">{{gettext "Open"}}</button></td>
+		<td class="name">{{this.name}}</td><td class="open"><button type="button" class="btn btn-primary" data-path="{{this.path}}">{{gettext "Open"}}</button></td>
 		</tr>
 		{{/each}}
 	</tbody>
 </table>
 
-<button id="newproject" type="button" style="display:inline-block">{{gettext "New project"}}</button>
-<button id="openproject" type="button" style="display:inline-block">{{gettext "Open project"}}</button>
+<div class="btn-toolbar" role="toolbar">
+	<div class="btn-group" role="group">
+		<button id="newproject" class="btn btn-default" type="button" style="display:inline-block">{{gettext "New project"}}</button>
+		<button id="openproject" class="btn btn-primary" type="button" style="display:inline-block">{{gettext "Open project"}}</button>
+	</div>
+</div>

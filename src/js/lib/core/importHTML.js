@@ -64,6 +64,7 @@ function processImage(node, filePath){
 
 			fs.createReadStream(filePath.substring(0,filePath.lastIndexOf("/")+1) + imgpath).pipe(fs.createWriteStream(Project.Info.projectpath + "/rsrc/"
 				+ imgpath.substring(imgpath.lastIndexOf("/")+1, imgpath.length))); 
+
 			var text = node.attributes.getNamedItem("alt") != null? node.attributes.getNamedItem("alt").value:"";
 			var width = node.width;
 			var height = node.height;

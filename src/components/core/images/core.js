@@ -18,7 +18,7 @@ ImageBox.prototype.editorView = function editorView() {
   var imgelement = $(window.document.createElement('img')).attr('src', imagepath);
   imgelement.css('height','100%');
   imgelement.css('width','100%');
-  aux.append(imgelement);
+  aux.children('.cbcontainer').append(imgelement);
   return aux;
 };
 
