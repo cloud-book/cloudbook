@@ -69,8 +69,8 @@ TextBox.prototype.importHTML = function importHTML(){
 	'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA'];
 }
 
-TextBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
-	TextBox.super_.prototype.add_callback.call(this,jquerycbo,objectcbo);
+TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
+	TextBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 	jquerycbo.on('drag',function(event,ui){toolbarposition(ui.offset)});
 };
 
