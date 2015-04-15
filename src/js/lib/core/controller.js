@@ -86,14 +86,11 @@ Controller.prototype.popSubsection = function popSubsection(cbsectionid,sonid) {
 };
 
 
-Controller.prototype.addCBObjectIntoSection = function addCBObjectIntoSection(jquerycbo,objectcbo) {
-  var CBStorage = application.storagemanager.getInstance();	
-  $(Cloudbook.UI.targetcontent).append(jquerycbo);
-  objectcbo.add_callback(jquerycbo,objectcbo);
-  var sectionWhereAppend = CBStorage.getSectionById(Cloudbook.UI.selected.attr('data-cbsectionid'));
-  sectionWhereAppend.content.push(objectcbo.uniqueid);
-  CBStorage.setCBObjectById(objectcbo,objectcbo.uniqueid);
-  CBStorage.setSectionById(sectionWhereAppend,Cloudbook.UI.selected.attr('data-cbsectionid'));
+Controller.prototype.addCBObjectIntoSelectedSection = function addCBObjectIntoSelectedSection(jquerycbo,objectcbo) {
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+  	ui.addCBObject(jquerycbo,objectcbo);
+  	backend.appendCBObjectIntoSection(objectcbo,Cloudbook.UI.selected.attr('data-cbsectionid'));
 };
 
 Controller.prototype.deleteCBObjectById = function deleteCBObjectById(cbsectionid,cbobjectid) {

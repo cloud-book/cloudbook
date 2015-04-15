@@ -34,10 +34,10 @@ UI.prototype.loadTheme = function loadTheme(){
 
 /**
  * Create components buttons to append elements into selected section.
- * Here method call editorView and add_callback methods of CBObjects.
+ * Here method call editorView and triggerAddEditorView methods of CBObjects.
  * See
  * {@link CBObject#editorView} and
- * {@link CBObject.add_callback}
+ * {@link CBObject.triggerAddEditorView}
  */
  UI.prototype.renderActionsButtons = function renderActionsButtons(){
 
@@ -64,7 +64,7 @@ UI.prototype.loadTheme = function loadTheme(){
 
 /**
  * Create element from component. This include cbobject and rendered view on targetcontent.
- * When append rendered view on targetcontent then trigger add_callback function related with component
+ * When append rendered view on targetcontent then trigger triggerAddEditorView function related with component
  * @param  {String} component Component idtype indicated on metadata file.
  */
  UI.prototype.getCBObjectFromButton = function getCBObjectFromButton(component) {
@@ -127,15 +127,15 @@ UI.prototype.createSectionPageView = function createSectionPageView(cbsecid) {
 };
 
 UI.prototype.loadContent = function loadContent(id){
+  var that = this;
   var CBStorage = application.storagemanager.getInstance();
   $(Cloudbook.UI.targetcontent).html("");
   var section = CBStorage.getSectionById(id);
   if (section !== undefined ){
     section.content.forEach(function (cbobjectid){
-      var element = CBStorage.getCBObjectById(cbobjectid);
-      var x = element.editorView();
-      $(Cloudbook.UI.targetcontent).append(x);
-      element.add_callback(x,element);
+      var objectcbo = CBStorage.getCBObjectById(cbobjectid);
+      var jquerycbo = objectcbo.editorView();
+      that.addCBObject(jquerycbo,objectcbo);
     });
   }
 }
@@ -185,11 +185,19 @@ UI.prototype.setTitleName = function(text) {
 };
 
 
+UI.prototype.addCBObject = function addCBObject(jquerycbo,cbobject) {
+  $(Cloudbook.UI.targetcontent).append(jquerycbo);
+  cbobject.triggerAddEditorView(jquerycbo,cbobject);
+};
+
 UI.prototype.removeCBObjectById = function removeCBObjectById(cbobjectid) {
   var targetcontent = $(Cloudbook.UI.targetcontent);
   var x = targetcontent.find('[data-cbobjectid="'+cbobjectid+'"]');
   $(x).remove();
 };
+
+
+
 
 UI.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cbobjectid,level) {
   var targetcontent = $(Cloudbook.UI.targetcontent);

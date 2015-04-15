@@ -16,7 +16,15 @@
       initialwizard.initializeWizardDiv();
       initialwizard.showTypeProject({data:{that:initialwizard}});
       $("#wzrdgoback").unbind('click');
-      $("#wzrdgoback").click(function(){$("#wizard").dialog('close');$("#wizard").remove()});
+      $("#wzrdgoback").click(function(){$("#wizardnewopenproject").dialog('close');$("#wizardnewopenproject").remove()});
+    }
+
+    function importProject(){
+      var initialwizard = application.ui.initialwizard.core.getInstance();
+      initialwizard.initializeWizardDiv();
+      initialwizard.showImportProject({data:{that:initialwizard}});
+      $("#wzrdgoback").unbind('click');
+      $("#wzrdgoback").click(function(){$("#wizardnewopenproject").dialog('close');$("#wizardnewopenproject").remove()});
     }
 
     function saveAs() {
@@ -126,7 +134,8 @@
     };
 
     var import_project = {
-      label: CBI18n.gettext('Import')
+      label: CBI18n.gettext('Import...'),
+      click: importProject
     };
 
     /**
@@ -134,12 +143,13 @@
      */
     var file = new gui.Menu();
     var project = new gui.Menu();
-    var import_project_menu = new gui.Menu();
-    import_project_menu.append(new gui.MenuItem(import_html5));
-    //import_project_menu.append(new gui.MenuItem(import_odt_doc_docx));
-    import_project_menu.append(new gui.MenuItem(import_scorm));
-    import_project_menu.append(new gui.MenuItem(import_metadata));
-    import_project.submenu = import_project_menu;
+    //var import_project_menu = new gui.Menu();
+    // import_project_menu.append(new gui.MenuItem(import_html5));
+    // //import_project_menu.append(new gui.MenuItem(import_odt_doc_docx));
+    // import_project_menu.append(new gui.MenuItem(import_scorm));
+    // import_project_menu.append(new gui.MenuItem(import_metadata));
+    // import_project.submenu = import_project_menu;
+    
     file.append(new gui.MenuItem(new_project));
     file.append(new gui.MenuItem(load_project));
     file.append(new gui.MenuItem(save_as_project));

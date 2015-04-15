@@ -30,15 +30,15 @@ VideoBox.prototype.clickButton = function clickButton(controllerClass) {
     updateVideoPath(dialog,that);
   });
   dialog.dialog({modal:true,close:function(){$(this).remove()}});
-  $("#videodialog button").on('click',function(){controllerClass.addCBObjectIntoSection(that.editorView(),that);dialog.dialog('close')});
+  $("#videodialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
 VideoBox.prototype.importHTML = function importHTML(){
   return ['VIDEO'];
 }
 
-VideoBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
-  VideoBox.super_.prototype.add_callback.call(this,jquerycbo,objectcbo);
+VideoBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
+  VideoBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 };
 
 
@@ -79,7 +79,7 @@ function updateVideoPath(dialog,that){
 
 
 
-//VideoBox.add_callback =  CBobject.add_callback;
+//VideoBox.triggerAddEditorView =  CBobject.triggerAddEditorView;
 /*
 exports.add = function add() {
   return new VideoBox();
