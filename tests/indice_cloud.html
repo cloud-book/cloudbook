@@ -1,41 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="estilo.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="jquery.layout.js"></script>
+	<script type="text/javascript" src="jquery-ui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="estilo.css" />
 </head>
-<body>
-	<aside class="bordered">
-		<ol>
-			<li><a href='#' alt="data1">Sect 1</a></li>
-			<li><a href='#' alt="data2">Sect 2</a></li>
-		</ol>
-	</aside>
-	<article id="data1" class="bordered">
-		<section id='title' class="centered"> Title </section>
-		<section id='data1'> 
-			<img src="test.jpg" /> 
-		</section>
-		<footer class="bordered">
-			<section class="centered"> Footer section </section>
-		</footer>
-	</article>
-	<article id="data2" class="bordered hide">
-		<section id='title' class="centered"> Titulo </section>
-		<section id='data1'> 
-			<img src="test.jpg" /> 
-		</section>
-		<footer class="bordered">
-			<section class="centered"> Footer section </section>
-		</footer>
-	</article>
+<body>	
+		<aside class="ui-layout-west">
+			<ol>
+				<li><a href='#data1'>Sect 1</a></li>
+				<li><a href='#data2'>Sect 2</a></li>
+			</ol>
+		</aside>	
+	<div class="ui-layout-center">
+			<ol>
+				<li><a href='#data1'>Sect 1</a></li>
+				<li><a href='#data2'>Sect 2</a></li>
+			</ol>
+	
+		<div  class="ui-layout-content">	
+			<article id="data1">
+				<section id='title' class="centered"> Title </section>
+				<section> 
+					<img src="test.jpg" /> 
+				</section>
+			</article>
+
+			<article id="data2">
+				<section id='title' class="centered"> Titulo </section>
+				<section> 
+					<img src="test.jpg" /> 
+				</section>
+			</article>
+		</div>
+	</div>
+	<footer class="ui-layout-south">
+			<section><span class="left"><button> Prev </button></span>Footer section<span class="right"><button> Next </button></span></section>
+	</footer>
 
 	<script type="text/javascript">
-		$('aside>ol>li>a').click(
-			function(){
-				$('article').css('display','none');
-				$('#'+$(this).attr('alt')).css('display','initial');
+		$(document).ready(
+			// Initialize layout
+			function () {
+				$(".ui-layout-center").tabs();
+
+				$('body').layout({ applyDemoStyles: true , south: { minSize: 60}});
 			});
+			// Simulate tab click when click on the sidebar
+			$('aside>ol>li>a').click(function(){
+				var clicked=$(this).attr('href');
+				$('.ui-layout-center ol li a[href='+clicked+']').click();
+			});
+			// Initialize buttons
+			  $(function() {
+    				$("aside>ol>li>a,button")
+      				.button()
+      				.click(function( event ) {
+        				event.preventDefault();
+      				});
+  			});
 	</script>
 </body>
 </html>
