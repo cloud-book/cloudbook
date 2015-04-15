@@ -163,6 +163,7 @@ body{
 .cbobject:focus{
     border: 1px solid black;
     outline: none;
+    z-index: 9999999 !important;
 }
 
 
