@@ -1,4 +1,5 @@
 var topValue = 0;
+var blockText = "";
 /**
  * @class ImportHTML
  * @classdesc This class is responsible to make import operations of HTML Files
@@ -22,7 +23,7 @@ function processText(node)
 		var height = node.height;
 		var left = node.offsetLeft;
 		//var top = node.offsetTop;
-		text = new textBox({"text":text, "position" : [left, topValue]});
+		text = new textBox({"text":text, "position" : [left, topValue], "size" : [800, 100]});
 		var x = text.editorView();
 		$(Cloudbook.UI.targetcontent).append(x);
 		text.add_callback(x,text);
@@ -31,7 +32,7 @@ function processText(node)
 	}
 	else
 	{
-		text = new textBox({"text":node, "position" : [0,topValue]});
+		text = new textBox({"text":node, "position" : [0,topValue], "size" : [800, 100]});
 		var x = text.editorView();
 		$(Cloudbook.UI.targetcontent).append(x);
 		text.add_callback(x,text);
@@ -52,7 +53,8 @@ function processImage(node, filePath){
 	var imageBox = CBUtil.req("../src/components/core/images/core.js");
 	var imageTags = new imageBox().importHTML();
 	var Project = window.Project;
-	var fs = require('fs');
+	var fs = require('fs.extra');
+	var path = require('path');
 
 	if($.inArray(node.tagName, imageTags) != -1)
 	{
@@ -61,9 +63,15 @@ function processImage(node, filePath){
 		try{
 			
 			var imgpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+			var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath));
+			if(fs.existsSync(sourcePath))
+				fs.renameSync(sourcePath, path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath).replace(".", Date.now().toString() + ".")));
 
-			fs.createReadStream(filePath.substring(0,filePath.lastIndexOf("/")+1) + imgpath).pipe(fs.createWriteStream(Project.Info.projectpath + "/rsrc/"
-				+ imgpath.substring(imgpath.lastIndexOf("/")+1, imgpath.length))); 
+			fs.copy(path.join(path.dirname(filePath), imgpath), path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath)), function (err){
+				if(err){
+						console.log("Error copying image");
+				}
+			});
 
 			var text = node.attributes.getNamedItem("alt") != null? node.attributes.getNamedItem("alt").value:"";
 			var width = node.width;
@@ -94,16 +102,26 @@ function processVideo(node, filePath){
 
 	var videoBox = CBUtil.req("../src/components/core/video/core.js");
 	var videoTags = new videoBox().importHTML();
-	var fs = require('fs');
+	var fs = require('fs.extra');
+	var path = require('path');
 
 	if($.inArray(node.tagName, videoTags) != -1)
 	{	
 		var videopath = "";
 		try{
 			if (node.innerHTML.indexOf("src=")!=-1){
-				videopath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
-				fs.createReadStream(filePath.substring(0,filePath.lastIndexOf("/")+1) + videopath).pipe(fs.createWriteStream(Project.Info.projectpath + "/rsrc/"
-				+ videopath.substring(videopath.lastIndexOf("/")+1, videopath.length))); 
+				var videopath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
+				var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", path.basename(videopath));
+
+				if(fs.existsSync(sourcePath))
+					fs.renameSync(path.join(Project.Info.projectpath, "/rsrc/", path.basename(videopath)), path.join(Project.Info.projectpath, "/rsrc/", 
+						path.basename(videopath).replace(".", Date.now().toString() + ".")));
+
+						fs.copy(path.join(path.dirname(filePath), videopath), path.join(Project.Info.projectpath, "/rsrc/", path.basename(videopath)), function (err){
+							if(err){
+									console.log("Error copying video");
+							}
+					});
 			}
 			var width = node.width;
 			var height = node.height;
@@ -117,13 +135,14 @@ function processVideo(node, filePath){
 			topValue = topValue + parseInt(x.css('height').replace("px",""));
 		}
 		catch (err) {
-		    console.log('Errors in Video');
+		    console.log(err + 'Errors in Video');
 		}
 		return true;
 	}
 	else
 		return false;
 }
+
 /**
  * This method is responsible for reading block elements
  * It creates a section and includes inside all elements
@@ -133,7 +152,6 @@ function processVideo(node, filePath){
  */
 function processBlock(element, filePath, blockName)
 {
-	var blockText = "";
 	var textBox = CBUtil.req("../src/components/core/text/core.js");
 	var textTags = new textBox().importHTML();
 	var imageBox = CBUtil.req("../src/components/core/images/core.js");
@@ -149,7 +167,7 @@ function processBlock(element, filePath, blockName)
 				case "SECTION":case "ARTICLE":case "NAV":case "DIV": case "FOOTER":case "ASIDE":
 					var text = processBlock(node, filePath, node.tagName);
 					processText(text);
-					text = "";
+					blockText = "";
 				break;
 				default:
 					if($.inArray(node.tagName, textTags) != -1)

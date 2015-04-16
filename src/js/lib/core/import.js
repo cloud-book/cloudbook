@@ -22,6 +22,7 @@ Import.prototype.loadFile = function loadFile(filePath, fileType) {
     	case "METADATA": processMetadata(filePath);break;
     }
   };
+  
 };
 
 /**
@@ -81,7 +82,7 @@ function processHTMLFile(filePath)
 
     var backend = application.backend.core.getInstance();		
     if(!backend.checkProjectExists(projectName)){
-    	backend.createProject(projectName);
+    	//backend.createProject(projectName);
     	backend.voidProject();
 	}
 
