@@ -136,6 +136,18 @@ CBObject.prototype.deleteButton = function deleteButton(e) {
 };
 
 
+CBObject.prototype.exportHTML = function exportHTML() {
+	var aux = $("<div></div>");
+	aux.css('top', this.position[1])
+	   .attr('tabindex','-1')
+	   .css('position','absolute')
+	   .css('z-index',this.levellayer)
+	   .css('transform',"rotate("+this.degree+"deg)")
+	   .css('width',this.size[0].toString() + "px")
+	   .css('height',this.size[1].toString() + "px" );
+	   return aux;
+};
+
 
 // function enableEditable(e){
 // 	var x = $(e.currentTarget);

@@ -104,7 +104,8 @@ InitialWizard.prototype.showImportProject = function showImportProject(e) {
 		var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'text/html');
 	              pathelement.change(function(evt) {
 	                  var importation = application.importation.getInstance();
-	                  importation.loadFile($(this).val(), 'HTML');
+	                  var projectname = $('#projectname').val();
+	                  importation.loadFile(projectname,$(this).val(), 'HTML');
 	                  $('#wizardnewopenproject').dialog('close');
 					  $('#wizardnewopenproject').remove();
 	              });
@@ -115,24 +116,28 @@ InitialWizard.prototype.showImportProject = function showImportProject(e) {
 		var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'zip');
 	              pathelement.change(function(evt) {
 	                  var importation = application.importation.getInstance();
-	                  importation.loadFile($(this).val(), 'SCORM');
+	                  var projectname = $('#projectname').val();
+	                  importation.loadFile(projectname,$(this).val(), 'SCORM');
 	                  $('#wizardnewopenproject').dialog('close');
 					  $('#wizardnewopenproject').remove();
 	              });
 	    pathelement.trigger('click');
 	});
+	$("#projectname").keyup(function(e){
+		var backend = application.backend.core.getInstance();
+		if(backend.checkProjectExists(this.value)){
+			$("#projectnamecontainer").removeClass("has-success").addClass("has-error");
+			$("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+			$("#importbuttonactions button").attr("disabled","disabled");
 
-	$("#importmetadatalomes").click(function(){
-		var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'xml');
-	              pathelement.change(function(evt) {
-	                  var importation = application.importation.getInstance();
-	                  importation.loadFile($(this).val(), 'METADATA');
-	                  $('#wizardnewopenproject').dialog('close');
-					  $('#wizardnewopenproject').remove();
-	              });
-	    pathelement.trigger('click');
-	});
-
+		}
+		else{
+			$("#projectnamecontainer").addClass("has-success").removeClass("has-error");
+			$("#validateindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+			$("#importbuttonactions button").removeAttr("disabled");
+		}
+	})
+	.focus();
 };
 
 
