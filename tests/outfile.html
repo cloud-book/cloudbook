@@ -16,14 +16,6 @@
     </ol>
   </aside>
   <div class="ui-layout-center">
-    <ol>
-      <li>
-        <a href="#data0">Section 1</a>
-      </li>
-      <li>
-        <a href="#data1">Section 2</a>
-      </li>
-    </ol>
     <div class="ui-layout-content">
       <article id="data0">
         <section id="title" class="centered">Section 1</section>
@@ -63,6 +55,6 @@
       </span>
     </section>
   </footer>
-  <script type="text/javascript">		$(document).ready(			/* Initialize layout */ 			function () {				$(".ui-layout-center").tabs();				$("body").layout({ applyDemoStyles: true , south: { minSize: 60}});			});			/* Simulate tab click when click on the sidebar */ 			$("aside>ol>li>a").click(function(){				var clicked=$(this).attr("href");				$(".ui-layout-center ol li a[href="+clicked+"]").click();			});			/* Initialize buttons */			  $(function() {    				$("aside>ol>li>a,button")      				.button()      				.click(function( event ) {        				event.preventDefault();      				});  			});	</script>
+  <script type="text/javascript">		$(document).ready(			function () {				$("article").css("visibility","hidden");				$("article:first").css("visibility","initial");				$("body").layout({ applyDemoStyles: true , south: { minSize: 60}});			});			$("aside>ol>li>a").click(function(){				var clicked=$(this).attr("href");				$("article").css("visibility","hidden");				$("article[id="+clicked.substr(1)+"]").css("visibility","initial");			});			$(function() {    				$("aside>ol>li>a,button")      				.button()      				.click(function( event ) {        				event.preventDefault();      				});  			});	</script>
 </body>
 </html>
