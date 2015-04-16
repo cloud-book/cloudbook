@@ -1,0 +1,57 @@
+﻿   /*
+    *  Estilos css para la biblioteca jsGeork para IE7-
+    *  version 0.0.5 (Abril 2014)
+	*/
+.CSSActivity label {
+    display: block;
+}
+.CSSTestBtnSubmit, .CSSTrainCtrlNext, .CSSTrainCtrlLast, .CSSSlideCtrlPrev, .CSSSlideCtrlNext, .CSSActivityButton, .CSSActGapFillBtnHint, .CSSActInputBtnHint {
+    border: 1px solid black;
+    /*padding: 0.5em;*/
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+    color: black;
+    margin: 2px;
+    font-size: 10pt;
+    vertical-align: auto;
+    background-color: silver;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EEEEEE), color-stop(100%, #D2D2D2));
+    background-image: -webkit-linear-gradient(#EEEEEE, #D2D2D2); 
+    background-image: -moz-linear-gradient(#EEEEEE, #D2D2D2); 
+    background-image: -o-linear-gradient(#EEEEEE, #D2D2D2); 
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEEE', endColorstr='#D2D2D2');  
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEEE', endColorstr='#D2D2D2')"; 
+    background-image: linear-gradient(#EEEEEE, #D2D2D2); 
+}
+.CSSTestBtnSubmit:hover:enabled, .CSSTrainCtrlNext:hover:enabled, .CSSTrainCtrlLast:hover:enabled, .CSSSlideCtrlPrev:hover:enabled, .CSSSlideCtrlNext:hover:enabled, .CSSActivityButton:hover:enabled {
+    border: 1px solid black;
+    background-color: silver; 
+    box-shadow: 2px 2px 5px #888888;
+}
+.CSSTestBtnSubmit:disabled, .CSSTrainCtrlNext:disabled, .CSSTrainCtrlLast:disabled, .CSSSlideCtrlPrev:disabled, .CSSSlideCtrlNext:disabled, .CSSActivityButton:disabled, .CSSActGapFillBtnHint:disabled, .CSSActInputBtnHint:disabled {
+    border: 1px solid silver;
+    background: silver;
+    color: black;
+    cursor: none;
+}
+.CSSActivityOptKo {
+    background-color: #FF9999;
+    border: thin solid #FF0000;
+}
+.CSSSlideControls {
+    background-color: #CCFF99;
+    border: 1px solid #808080;
+    text-align: center;
+    /*display: block;*/
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border-radius: 20px;
+    padding: 1px;
+    box-shadow: 4px 4px 5px #888888;
+}
+.CSSSlideCtrlInfo {
+    display: none;
+}
