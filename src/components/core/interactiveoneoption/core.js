@@ -16,22 +16,18 @@ PEMBox.prototype.editorView = function editorView() {
   var template = '<div id="myprefix_pem_identifier"> \
    <div id="myprefix_pem_identifier_info_aria" class="CSSInfoTextPemPms">Seleccione la respuesta correcta</div> \
    <div style="display: none;" aria-hidden="true"> \
-       <div data-info-bottom="myprefix_pem_identifier"> \
-       <!-- El interior de este bloque se moverá al final de la actividad --> \
-       <p>¡Suerte!</p> \
-       </div> \
        <div data-info-ok="myprefix_pem_identifier"> \
            <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad --> \
-           <span class="CSSMsgSuccess">¡CORRECTO!</span> \
+           <span class="CSSMsgSuccess"></span> \
        </div> \
        <div data-info-ko="myprefix_pem_identifier"> \
            <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad --> \
-           <span class="CSSMsgFail">¡ERROR!</span> \
+           <span class="CSSMsgFail"></span> \
        </div> \
-       <div data-opt="opta">Answer A</div> \
-       <div data-opt="optb">Answer B</div> \
-       <div data-opt="optc">Answer C</div> \
-       <div data-opt="optd">Answer D</div> \
+       <div data-opt="opta"></div> \
+       <div data-opt="optb"></div> \
+       <div data-opt="optc"></div> \
+       <div data-opt="optd"></div> \
    </div> \
 </div>';
   aux.children('.cbcontainer').append($(template));
@@ -77,7 +73,7 @@ PEMBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,
        }
         ],
    "fieldset": true,
-   "legend": "Pregunta con respuestas de elección múltiple",
+   "legend": "",
    "random": true,
    "optsuccess": true,
    "weighting": 100,
@@ -85,9 +81,9 @@ PEMBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,
    "icons": "csshexent",
    "storage": "local",
    "storagekey": "jsgeork",
-   "showstorage": true,
-   "fillfromstorage": true,
-   "delstorage": true
+   "showstorage": false,
+   "fillfromstorage": false,
+   "delstorage": false
   };
   jsGeork.Questions.Question(obj_myprefix_pem_identifier);
 };
