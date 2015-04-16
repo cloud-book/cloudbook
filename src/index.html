@@ -19,7 +19,12 @@
 		<script type="text/javascript" src="js/lib/gui/i18n.js"></script>
 		<script type="text/javascript" charset="utf-8" async defer>
 			CBUtil = new Util();
-			CBI18n = new Translator(require('./i18n/es.js'));
+			var translationspaht = './i18n/' + process.env.LANG + '.js';
+			var fs = require('fs');
+			if( ! fs.existsSync(translationspaht)){
+				translationspaht = './i18n/en.js';
+			}
+			CBI18n = new Translator(require(translationspaht));
 
 		</script>
 

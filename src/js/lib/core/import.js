@@ -9,28 +9,28 @@ function Import(){}
  * @param  {String} path of the file
  * @param  {String} type of the file
  */
-Import.prototype.loadFile = function loadFile(filePath, fileType) {
+Import.prototype.loadFile = function loadFile(projectname,filePath, fileType) {
   var content = "";
   var fs = require('fs');
-
   if (fs.existsSync(filePath)){
-
+  	var controller = application.controller.getInstance();
+  	controller.createProProject(projectname);
     switch(fileType)
     {
     	case "HTML": processHTMLFile(filePath); break;
     	case "ODT_DOC_DOCX": processODTFile(content, filetype); break;
     	case "SCORM": processSCORMFile(filePath); break;
-    	case "METADATA": processMetadata(filePath);break;
     }
   };
 };
+
 
 /**
  * This method is responsible for reading xml Metadata LOM-ES file
  * @param  {String} path of the file
  */
 
-function processMetadata(filePath)
+Import.prototype.importMetadata = function importMetadata(filePath)
 {
 	var fs = require('fs');	
 
@@ -50,16 +50,6 @@ function processMetadata(filePath)
 function processSCORMFile(filePath)
 {
 	var fs = require('fs');
-	var projectName = filePath.split("/")[filePath.split("/").length-1].split(".")[0];
-
-    var backend = application.backend.core.getInstance();		
-    if(!backend.checkProjectExists(projectName)){
-    	backend.createProject(projectName);
-    	backend.voidProject();
-	}
-
-	backend.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
-
 	fs.readFile(filePath, function(err, data) {
 		if (err) throw err;
 		var importSCORM = application.importscorm.getInstance();
@@ -76,19 +66,8 @@ function processSCORMFile(filePath)
  */
 function processHTMLFile(filePath)
 {
-	var fs = require('fs');
-	var projectName = filePath.split("/")[filePath.split("/").length-1].split(".")[0];
-	var importationHTML = application.importhtml.getInstance();
-
-    var backend = application.backend.core.getInstance();		
-    if(!backend.checkProjectExists(projectName)){
-    	backend.createProject(projectName);
-    	backend.voidProject();
-	}
-
-	backend.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
-
 	$.get(filePath, function(html) {
+		var importationHTML = application.importhtml.getInstance();
 		importationHTML.processHTML(html, filePath);
     });  
 };

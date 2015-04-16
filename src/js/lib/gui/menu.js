@@ -27,6 +27,15 @@
       $("#wzrdgoback").click(function(){$("#wizardnewopenproject").dialog('close');$("#wizardnewopenproject").remove()});
     }
 
+    function importMetadata(){
+        var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.xml');
+        pathelement.change(function(evt) {
+                  var importation = application.importation.getInstance();
+                  importation.importMetadata($(this).val());
+        });
+        pathelement.trigger('click');
+    }
+
     function saveAs() {
         var pathelement = $(document.createElement('input')).attr('type','file').attr('nwdirectory','');
         pathelement.change(function(evt) {
@@ -85,70 +94,81 @@
       }
     };
 
-    var import_html5 = {
-      label: CBI18n.gettext('HTML5'),
-      click: function import_html5(){
-      var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'text/html');
-              pathelement.change(function(evt) {
-                  var importation = application.importation.getInstance();
-                  importation.loadFile($(this).val(), 'HTML');
-              });
-      pathelement.trigger('click');      
-      }
-    };
+    // var import_html5 = {
+    //   label: CBI18n.gettext('HTML5'),
+    //   click: function import_html5(){
+    //   var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'text/html');
+    //           pathelement.change(function(evt) {
+    //               var importation = application.importation.getInstance();
+    //               importation.loadFile($(this).val(), 'HTML');
+    //           });
+    //   pathelement.trigger('click');      
+    //   }
+    // };
 
-    var import_odt_doc_docx = {
-      label: CBI18n.gettext('ODT/DOC/DOCX'),
-      click: function import_odt_doc_docx(){
-      var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.doc,.docx,.odt');
-              pathelement.change(function(evt) {
-                  var importation = application.importation.getInstance();
-                  importation.loadFile($(this).val(), 'ODT_DOC_DOCX');
-              });
-      pathelement.trigger('click');      
-      }
-    };
+    // var import_odt_doc_docx = {
+    //   label: CBI18n.gettext('ODT/DOC/DOCX'),
+    //   click: function import_odt_doc_docx(){
+    //   var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.doc,.docx,.odt');
+    //           pathelement.change(function(evt) {
+    //               var importation = application.importation.getInstance();
+    //               importation.loadFile($(this).val(), 'ODT_DOC_DOCX');
+    //           });
+    //   pathelement.trigger('click');      
+    //   }
+    // };
 
-    var import_scorm = {
-      label: CBI18n.gettext('SCORM'),
-      click: function import_scorm(){
-      var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.zip');
-              pathelement.change(function(evt) {
-                   var importation = application.importation.getInstance();
-                    importation.loadFile($(this).val(), 'SCORM');
-              });
-      pathelement.trigger('click');      
-      }
-    };
+    // var import_scorm = {
+    //   label: CBI18n.gettext('SCORM'),
+    //   click: function import_scorm(){
+    //   var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.zip');
+    //           pathelement.change(function(evt) {
+    //                var importation = application.importation.getInstance();
+    //                 importation.loadFile($(this).val(), 'SCORM');
+    //           });
+    //   pathelement.trigger('click');      
+    //   }
+    // };
 
-    var import_metadata = {
-      label: CBI18n.gettext('Metadata LOM-ES'),
-      click: function import_metadata(){
-      var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.xml');
-              pathelement.change(function(evt) {
-                  var importation = application.importation.getInstance();
-                  importation.loadFile($(this).val(), 'METADATA');
-              });
-      pathelement.trigger('click');      
-      }
-    };
+    // var import_metadata = {
+    //   label: CBI18n.gettext('Metadata LOM-ES'),
+    //   click: function import_metadata(){
+    //   var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.xml');
+    //           pathelement.change(function(evt) {
+    //               var importation = application.importation.getInstance();
+    //               importation.loadFile($(this).val(), 'METADATA');
+    //           });
+    //   pathelement.trigger('click');      
+    //   }
+    // };
 
     var import_project = {
-      label: CBI18n.gettext('Import...'),
-      click: importProject
+      label: CBI18n.gettext('Import'),
+      
     };
+
+    var import_file = {
+      label: CBI18n.gettext('Import file ...'),
+      click: importProject
+    }
+
+    var import_metadata = {
+      label : CBI18n.gettext('Import metadata'),
+      click: importMetadata
+    }
+
 
     /**
      * Generate menubar
      */
     var file = new gui.Menu();
     var project = new gui.Menu();
-    //var import_project_menu = new gui.Menu();
-    // import_project_menu.append(new gui.MenuItem(import_html5));
-    // //import_project_menu.append(new gui.MenuItem(import_odt_doc_docx));
+    var import_project_menu = new gui.Menu();
+    import_project_menu.append(new gui.MenuItem(import_file));
+    import_project_menu.append(new gui.MenuItem(import_metadata));
     // import_project_menu.append(new gui.MenuItem(import_scorm));
     // import_project_menu.append(new gui.MenuItem(import_metadata));
-    // import_project.submenu = import_project_menu;
+    import_project.submenu = import_project_menu;
     
     file.append(new gui.MenuItem(new_project));
     file.append(new gui.MenuItem(load_project));
