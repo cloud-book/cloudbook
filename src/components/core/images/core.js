@@ -26,8 +26,8 @@ ImageBox.prototype.importHTML = function importHTML(){
   return ['IMG', 'FIGURE'];
 }
 
-ImageBox.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
-  ImageBox.super_.prototype.add_callback.call(this,jquerycbo,objectcbo);
+ImageBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
+  ImageBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 };
 
 ImageBox.prototype.clickButton = function clickButton(controllerClass) {
@@ -37,7 +37,7 @@ ImageBox.prototype.clickButton = function clickButton(controllerClass) {
     updateImagePath(dialog,that);
   });
   dialog.dialog({modal:true,close:function(){$(this).remove()}});
-  $("#imagedialog button").on('click',function(){controllerClass.addCBObjectIntoSection(that.editorView(),that);dialog.dialog('close')});
+  $("#imagedialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
 
@@ -91,7 +91,7 @@ function updateImagePath(dialog,that){
 }
 
 
-//ImageBox.add_callback =  CBobject.add_callback;
+//ImageBox.triggerAddEditorView =  CBobject.triggerAddEditorView;
 /*
 exports.add = function add() {
   return new ImageBox();

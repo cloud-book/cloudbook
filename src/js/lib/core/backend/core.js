@@ -301,23 +301,6 @@ Backend.prototype.voidProject = function() {
 };
 
 /**
- * Empty targetcontent and render objects from section id indicate into targetcontent.
- * @param  {String} id Section id.
- */
-Backend.prototype.loadContent = function loadContent(id){
-  var CBStorage = application.storagemanager.getInstance();
-  $(Cloudbook.UI.targetcontent).html("");
-  var section = CBStorage.getSectionById(id);
-  if (section !== undefined ){
-    section.content.forEach(function (element){
-      var x = element.editorView();
-      $(Cloudbook.UI.targetcontent).append(x);
-      element.add_callback(x,element);
-    });
-  }
-}
-
-/**
  * Replace subsections of a section by subsections indicate into argument. 
  * @param  {String} sectionid      Id of section
  * @param  {String[]} subsectionsids Id's subsections
@@ -404,6 +387,15 @@ Backend.prototype.popSubsection = function popSubsection(cbsectionid,cbsonid) {
   }
   
 };
+
+Backend.prototype.appendCBObjectIntoSection = function appendCBObjectIntoSection(cbobject,cbsectionid) {
+  var CBStorage = application.storagemanager.getInstance();
+  CBStorage.setCBObjectById(cbobject,cbobject.uniqueid);
+  var section = CBStorage.getSectionById(cbsectionid);
+  section.content.push(cbobject.uniqueid);
+  CBStorage.setSectionById(section,cbsectionid);
+};
+
 
 Backend.prototype.removeCBObjectById = function removeCBObjectById(cbsectionid,cbobjectid) {
   var CBStorage = application.storagemanager.getInstance();
