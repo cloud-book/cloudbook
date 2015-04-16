@@ -16,8 +16,8 @@ function processText(node)
 	var textBox = CBUtil.req("../src/components/core/text/core.js");
 	var textTags = new textBox().importHTML();
 
-	if($.inArray(node.tagName, textTags) != -1)
-	{
+//	if($.inArray(node.tagName, textTags) != -1)
+//	{
 		var text = "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
 		var width = node.width;
 		var height = node.height;
@@ -29,7 +29,7 @@ function processText(node)
 		text.add_callback(x,text);
 		topValue = topValue + parseInt(x.css('height').replace("px",""));
 		return true;
-	}
+/*	}
 	else
 	{
 		text = new textBox({"text":node, "position" : [0,topValue], "size" : [800, 100]});
@@ -39,7 +39,7 @@ function processText(node)
 
 		topValue = topValue + parseInt(x.css('height').replace("px",""));
 		return false;
-	}
+	}*/
 }
 
 /**
@@ -56,8 +56,6 @@ function processImage(node, filePath){
 	var fs = require('fs.extra');
 	var path = require('path');
 
-	if($.inArray(node.tagName, imageTags) != -1)
-	{
 		if(node.tagName == "FIGURE")
 			node = node.firstElementChild;
 		try{
@@ -88,9 +86,6 @@ function processImage(node, filePath){
 		    console.log('Errors in Image');
 		}
 		return true;
-	}
-	else
-		return false;
 }
 /**
  * This method is responsible for processing video elements
@@ -105,8 +100,6 @@ function processVideo(node, filePath){
 	var fs = require('fs.extra');
 	var path = require('path');
 
-	if($.inArray(node.tagName, videoTags) != -1)
-	{	
 		var videopath = "";
 		try{
 			if (node.innerHTML.indexOf("src=")!=-1){
@@ -138,39 +131,78 @@ function processVideo(node, filePath){
 		    console.log(err + 'Errors in Video');
 		}
 		return true;
-	}
-	else
-		return false;
+}
+
+/**
+ * This method is responsible for getting tags for each component
+ * @param  {String} tag to be found
+ * @result  {Object[]} array of possible candidates
+ */
+function getHTMLTags(tag)
+{
+	var listactions = {};
+	var x = Cloudbook.Actions;
+	var keylist = Object.keys(x);
+	var candidates = [];
+
+	keylist.forEach(function(key){
+		var aux = new x[key]['component'](); 
+		listactions[key] = aux.HTMLtags();
+
+	});
+
+	keylist.forEach(function(key){
+		if(listactions[key].indexOf(tag)> -1){ candidates.push(key)} 
+	});
+
+	return candidates;
 }
 
 /**
  * This method is responsible for reading block elements
- * It creates a section and includes inside all elements
+ * It creates an element and insert it into a section
  * @param  {String} content of the HTML file
  * @param  {String} path of the html element
  * @param  {String} name of block element
  */
 function processBlock(element, filePath, blockName)
 {
-	var textBox = CBUtil.req("../src/components/core/text/core.js");
-	var textTags = new textBox().importHTML();
-	var imageBox = CBUtil.req("../src/components/core/images/core.js");
-	var imageTags = new imageBox().importHTML();
-	var videoBox = CBUtil.req("../src/components/core/video/core.js");
-	var videoTags = new videoBox().importHTML();
+//	var textBox = CBUtil.req("../src/components/core/text/core.js");
+//	var textTags = new textBox().HTMLtags();
+//	var imageBox = CBUtil.req("../src/components/core/images/core.js");
+//	var imageTags = new imageBox().HTMLtags();
+//	var videoBox = CBUtil.req("../src/components/core/video/core.js");
+//	var videoTags = new videoBox().HTMLtags();
+
+	var candidates;
+	var backend = application.backend.core.getInstance();
 
 	for(var node = element.firstChild; node; node = node.nextSibling){
+		candidates = [];
 		if(node.tagName != undefined)
 		{
+			console.log(node.tagName);
 			switch(node.tagName)
 			{
 				case "SECTION":case "ARTICLE":case "NAV":case "DIV": case "FOOTER":case "ASIDE":
 					var text = processBlock(node, filePath, node.tagName);
-					processText(text);
+					var auxNode = $('<SPAN>' + text +'</SPAN>');
+					console.log(auxNode.innerHTML);
+					console.log(auxNode.tagName);
+					candidates = getHTMLTags(auxNode.tagName);
+					element = new Cloudbook.Actions[candidates[0]]['component']();
+					element.importHTML(auxNode, filePath);
+					backend.appendCBObjectIntoSection(element, Cloudbook.UI.selected.attr('data-cbsectionid'));
 					blockText = "";
 				break;
 				default:
-					if($.inArray(node.tagName, textTags) != -1)
+					candidates = getHTMLTags(node.tagName);
+					element = new Cloudbook.Actions[candidates[0]]['component']();
+					element.importHTML(node, filePath);
+					console.log(Cloudbook.UI.selected);
+					backend.appendCBObjectIntoSection(element, Cloudbook.UI.selected.attr('data-cbsectionid'));
+
+/*					if($.inArray(node.tagName, textTags) != -1)
 					{
 						if(blockName != null)
 								blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + "><br>";
@@ -186,7 +218,7 @@ function processBlock(element, filePath, blockName)
 								processVideo(node,filePath);
 							}
 						}
-					}
+					}*/
 				break;
 			}
 		}

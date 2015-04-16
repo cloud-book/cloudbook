@@ -22,8 +22,44 @@ ImageBox.prototype.editorView = function editorView() {
   return aux;
 };
 
-ImageBox.prototype.importHTML = function importHTML(){
+ImageBox.prototype.HTMLtags = function HTMLtags(){
   return ['IMG', 'FIGURE'];
+}
+
+ImageBox.prototype.importHTML = function importHTML(node, filePath){
+
+//  var Project = window.Project;
+  var fs = require('fs.extra');
+  var path = require('path');
+
+    if(node.tagName == "FIGURE")
+      node = node.firstElementChild;
+
+    try{
+      
+      var imgpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+      var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath));
+      if(fs.existsSync(sourcePath))
+        fs.renameSync(sourcePath, path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath).replace(".", Date.now().toString() + ".")));
+
+      fs.copy(path.join(path.dirname(filePath), imgpath), path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath)), function (err){
+        if(err){
+            console.log("Error copying image");
+        }
+      });
+
+      var text = node.attributes.getNamedItem("alt") != null? node.attributes.getNamedItem("alt").value:"";
+      var width = node.width;
+      var height = node.height;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.text = text;
+      this.position = [top, left];
+      this.imgpath = path.basename(imgpath);
+    }
+    catch (err) {
+        console.log('Errors in Image');
+    }
 }
 
 ImageBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

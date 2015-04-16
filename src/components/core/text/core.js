@@ -62,11 +62,21 @@ TextBox.prototype.disableEditMode = function(e) {
 	aux.text = $('[data-textbox-id="'+that.uniqueid+'"]').html();
 };
 
-
-
-TextBox.prototype.importHTML = function importHTML(){
+TextBox.prototype.HTMLtags = function HTMLtags(){
 	return ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
 	'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA'];
+};
+
+TextBox.prototype.importHTML = function importHTML(node, filePath){
+
+    var text = "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
+    var width = node.width;
+    var height = node.height;
+    var left = node.offsetLeft;
+    var top = node.offsetTop;
+    this.text = text;
+    this.position = [top, left];
+    this.size = [800, 100];
 }
 
 TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

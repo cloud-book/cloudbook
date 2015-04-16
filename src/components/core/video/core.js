@@ -33,10 +33,44 @@ VideoBox.prototype.clickButton = function clickButton(controllerClass) {
   $("#videodialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
-VideoBox.prototype.importHTML = function importHTML(){
+VideoBox.prototype.HTMLtags = function HTMLtags(){
   return ['VIDEO'];
 }
 
+VideoBox.prototype.importHTML = function importHTML(node, filePath){
+
+  var fs = require('fs.extra');
+  var path = require('path');
+  var videopath = "";
+
+    try{
+      if (node.innerHTML.indexOf("src=")!=-1){
+        videopath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
+        var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", path.basename(videopath));
+
+        if(fs.existsSync(sourcePath))
+          fs.renameSync(path.join(Project.Info.projectpath, "/rsrc/", path.basename(videopath)), path.join(Project.Info.projectpath, "/rsrc/", 
+            path.basename(videopath).replace(".", Date.now().toString() + ".")));
+
+            fs.copy(path.join(path.dirname(filePath), videopath), path.join(Project.Info.projectpath, "/rsrc/", path.basename(videopath)), function (err){
+              if(err){
+                  console.log("Error copying video");
+              }
+          });
+      }
+
+      var width = node.width;
+      var height = node.height;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.text = text;
+      this.position = [top, left];
+      this.videopath = path.basename(videopath);
+    }
+    catch (err) {
+        console.log(err + 'Errors in Video');
+    }
+};
 VideoBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
   VideoBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 };
