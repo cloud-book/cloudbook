@@ -81,6 +81,17 @@ ExportHTML.prototype.getSections = function getSections(){
 	return sections;
 }
 
+ExportHTML.prototype.getSections2 = function getSections2(){
+	var storage = application.storagemanager.getInstance();
+	var main_sect = storage.getRoot();
+	var sections = [];
+	for (var i=0; i<main_sect.sections.length; i++){
+		var section = storage.getSectionById(main_sect.sections[i]);
+		sections.push(section);
+	}
+	return sections;
+}
+
 ExportHTML.prototype.getContentFromSection = function getContentFromSection(sec_id){
 	var storage = application.storagemanager.getInstance();
 	var section = storage.getSectionById(sec_id);
@@ -115,25 +126,9 @@ ExportHTML.prototype.do_html = function do_html(path){
 	}
 	content=content+'</ol><div class="ui-layout-content">';
 	
-	// Main content
-	for (var i = 0; i<sections.length; i++){
-		content=content+'<article id="data'+i+'"><section id="title" class="centered">'+sections[i].name+'</section>';
-		content=content+'<section>';
-		var objects=this.getContentFromSection(sections[i].id);
-		for (var j=0; j<objects.length; j++){
-			switch (objects[j].type){
-				case 'ImageBox':
-					content = content+ '<img src="'+path+objects[j].imgpath+'" style="width:'+objects[j].size[0]+'px;height:'+objects[j].size[0]+'px;z-index:'+objects[j].levellayer+';transform:rotate('+objects[j].degree+'deg);position:absolute;top:'+objects[j].position[1]+'px;left:'+objects[j].position[0]+'px"></img>';
-					break;
-				case 'TextBox':
-					content = content+ '<span style="width:'+objects[j].size[0]+'px;height:'+objects[j].size[0]+'px;z-index:'+objects[j].levellayer+';transform:rotate('+objects[j].degree+'deg);position:absolute;top:'+objects[j].position[1]+'px;left:'+objects[j].position[0]+'px">'+objects[j].text+'</span>';
-					break;
-				case 'VideoBox':
-					break;
-			}
-		}
-		content=content+'</section></article>';	
-	}
+	var sections2=this.getSections2();
+	sections2.forEach(function(obj,idx){ console.log(obj);console.log(obj.htmlView()); var JQobj=obj.htmlView('data'+idx); content += JQobj[0].outerHTML })
+
 	content=content+'</div></div>';
 	var footer='<footer class="ui-layout-south"><section><span class="left"><button> Prev </button></span>Footer section<span class="right"><button> Next </button></span></section></footer>';
 	var script='<script type="text/javascript">\
@@ -158,7 +153,8 @@ ExportHTML.prototype.do_html = function do_html(path){
   			});\
 	</script>';
 
-	var total = '<!DOCTYPE html><html>'+myhead+'<body>'+aside+content+footer+script+'</body></html>';
+	var total = this.formatXml('<!DOCTYPE html><html>'+myhead+'<body>'+aside+content+footer+script+'</body></html>');
+
 	var fs = window.require('fs');
 	fs.writeFile(path+"outfile.html", total , function(err) {
     	if(err) {
@@ -169,6 +165,37 @@ ExportHTML.prototype.do_html = function do_html(path){
 	return total;
 }
 
+ExportHTML.prototype.formatXml = function formatXml(xml) {
+    var formatted = '';
+    var reg = /(>)(<)(\/*)/g;
+    xml = xml.replace(reg, '$1\r\n$2$3');
+    var pad = 0;
+    jQuery.each(xml.split('\r\n'), function(index, node) {
+        var indent = 0;
+        if (node.match( /.+<\/\w[^>]*>$/ )) {
+            indent = 0;
+        } else if (node.match( /^<\/\w/ )) {
+            if (pad != 0) {
+                pad -= 1;
+            }
+        } else if (node.match( /^<\w[^>]*[^\/]>.*$/ )) {
+            indent = 1;
+        } else {
+            indent = 0;
+        }
+ 
+        var padding = '';
+        for (var i = 0; i < pad; i++) {
+            padding += '  ';
+        }
+ 
+        formatted += padding + node + '\r\n';
+        pad += indent;
+    });
+ 
+    return formatted;
+}
+
 CBUtil.createNameSpace('applicsecation.exporthtml');
 application.exporthtml = CBUtil.singleton(ExportHTML);
 
@@ -176,56 +203,3 @@ var test = application.exporthtml.getInstance();
 var run = function(){
 	test.do_html('/home/miguel/WorkSpace/cloudbook/tests/');	
 }
-/*****************************************************************************************************/
-/* TEST CODE */
-ExportHTML.prototype.process = function process(key,value) {
-    console.log(key + " : "+value);
-}
-
-ExportHTML.prototype.traverse = function traverse(o,func,filter,level) {
-    var skip;
-    var classname;
-
-    for (var i in o) {
-    	classname=o[i].__proto__.constructor.name;
-//    	console.log(level+': checking type ' + classname );
-
-//        func.apply(this,[i,o[i]]);  
-        
-        if (o[i] !== null && typeof(o[i])=="object") {
-        	skip = true;
-        	for (var j=0;j<filter.length;j++){
-        		if (classname == filter[j]){
-        			skip = false;
-        			this.counters[filter[j]]++;
-        		}
-        	}
-        	if (!skip){
-            	//going on step down in the object tree!!
-            	console.log(level + ': Found '+classname);
-            	this.traverse(o[i],func,filter,level+1); 	
-            	console.log(level + ': Returning to '+classname);
-            }else{
-//           	console.log(level + ': Skipping '+classname );
-            }
-        }
-    }
-}
-
-//traverse(o,process);
-
-/**
- * This method is responsible for reading project data
- * @param  {String} content of the HTML file
- * @param  {String} path of the html element
- */
-ExportHTML.prototype.processData = function processData(data, filePath)
-{
-	console.log('Parsing Sections');
-	this.traverse(Project.Data._rawsections,this.process,["CBSection"],0);
-	console.log('Parsing Objects');
-	this.traverse(Project.Data._rawobjects,this.process,["TextBox","ImageBox","VideoBox"],0);
-	return this.counters;
-}
-
-/* END TEST CODE */

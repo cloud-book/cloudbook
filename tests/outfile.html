@@ -1,1 +1,68 @@
-<!DOCTYPE html><html><head>	<script type="text/javascript" src="/home/miguel/WorkSpace/cloudbook/tests/jquery.js"></script>	<script type="text/javascript" src="/home/miguel/WorkSpace/cloudbook/tests/jquery.layout.js"></script>	<script type="text/javascript" src="/home/miguel/WorkSpace/cloudbook/tests/jquery-ui.min.js"></script>	<link rel="stylesheet" type="text/css" href="/home/miguel/WorkSpace/cloudbook/tests/jquery-ui.min.css" />	<link rel="stylesheet" type="text/css" href="/home/miguel/WorkSpace/cloudbook/tests/estilo.css" />	</head><body><aside class="ui-layout-west"><ol><li><a href="#data0">Section 1</a></li><li><a href="#data1">Section 2</a></li></ol></aside><div class="ui-layout-center"><ol><li><a href="#data0">Section 1</a></li><li><a href="#data1">Section 2</a></li></ol><div class="ui-layout-content"><article id="data0"><section id="title" class="centered"><span style="z-index:999;">Section 1</span></section><section><img src="/home/miguel/WorkSpace/cloudbook/tests/test.jpg" style="width:191px;height:191px;z-index:0;transform:rotate(-19.819220309708243deg);position:absolute;top:173.88516235351562px;left:159.244873046875px"></img><span style="width:235px;height:235px;z-index:0;transform:rotate(0deg);position:absolute;top:262px;left:414px">Mi <b>texto</b></span></section></article><article id="data1"><section id="title" class="centered"><span style="z-index:999;">Section 2</span></section><section><span style="width:300px;height:300px;z-index:3;transform:rotate(-24.963526068938187deg);position:absolute;top:115.02940368652344px;left:182.46246337890625px">Otro texto</span><img src="/home/miguel/WorkSpace/cloudbook/tests/0test.jpg" style="width:506px;height:506px;z-index:0;transform:rotate(43.71396029479297deg);position:absolute;top:87.48324584960938px;left:142.245361328125px"></img></section></article></div></div><footer class="ui-layout-south"><section><span class="left"><button> Prev </button></span>Footer section<span class="right"><button> Next </button></span></section></footer><script type="text/javascript">		$(document).ready(			/* Initialize layout */ 			function () {				$(".ui-layout-center").tabs();				$("body").layout({ applyDemoStyles: true , south: { minSize: 60}});			});			/* Simulate tab click when click on the sidebar */ 			$("aside>ol>li>a").click(function(){				var clicked=$(this).attr("href");				$(".ui-layout-center ol li a[href="+clicked+"]").click();			});			/* Initialize buttons */			  $(function() {    				$("aside>ol>li>a,button")      				.button()      				.click(function( event ) {        				event.preventDefault();      				});  			});	</script></body></html>
+<!DOCTYPE html>
+<html>
+  <head>	<script type="text/javascript" src="/home/miguel/WorkSpace/cloudbook/tests/jquery.js">
+  </script>	<script type="text/javascript" src="/home/miguel/WorkSpace/cloudbook/tests/jquery.layout.js">
+</script>	<script type="text/javascript" src="/home/miguel/WorkSpace/cloudbook/tests/jquery-ui.min.js">
+</script>	<link rel="stylesheet" type="text/css" href="/home/miguel/WorkSpace/cloudbook/tests/jquery-ui.min.css" />	<link rel="stylesheet" type="text/css" href="/home/miguel/WorkSpace/cloudbook/tests/estilo.css" />	</head>
+<body>
+  <aside class="ui-layout-west">
+    <ol>
+      <li>
+        <a href="#data0">Section 1</a>
+      </li>
+      <li>
+        <a href="#data1">Section 2</a>
+      </li>
+    </ol>
+  </aside>
+  <div class="ui-layout-center">
+    <ol>
+      <li>
+        <a href="#data0">Section 1</a>
+      </li>
+      <li>
+        <a href="#data1">Section 2</a>
+      </li>
+    </ol>
+    <div class="ui-layout-content">
+      <article id="data0">
+        <section id="title" class="centered">Section 1</section>
+        <div class="cbobject cbobject-editable" tabindex="-1" data-cbobjectid="da93647c-8365-4bd9-9e54-b3165f60e23a" style="left: 159.244873046875px; top: 173.885162353516px; position: absolute; z-index: 0; transform: rotate(-19.8192203097082deg); width: 191px; height: 144px;">
+          <div class="cbcontainer">
+            <img src="/home/miguel/cloudbook-workspace/a/rsrc/test.jpg" style="height: 100%; width: 100%;">
+            </div>
+          </div>
+          <div class="cbobject cbobject-editable" tabindex="-1" data-cbobjectid="820360ae-3068-4a3b-8a0e-51d60f27ae75" style="left: 414px; top: 262px; position: absolute; z-index: 0; transform: rotate(0deg); width: 235px; height: 155px;">
+            <div class="cbcontainer">
+              <div data-textbox-id="820360ae-3068-4a3b-8a0e-51d60f27ae75" class="cbtextbox" style="height: 100%; width: 100%;">Mi <b>texto</b>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article id="data1">
+        <section id="title" class="centered">Section 2</section>
+        <div class="cbobject cbobject-editable" tabindex="-1" data-cbobjectid="079d1068-af5a-49e7-bb06-042203e18ddc" style="left: 182.462463378906px; top: 115.029403686523px; position: absolute; z-index: 3; transform: rotate(-24.9635260689382deg); width: 300px; height: 50px;">
+          <div class="cbcontainer">
+            <div data-textbox-id="079d1068-af5a-49e7-bb06-042203e18ddc" class="cbtextbox" style="height: 100%; width: 100%;">Otro texto</div>
+          </div>
+        </div>
+        <div class="cbobject cbobject-editable" tabindex="-1" data-cbobjectid="deb347a6-d106-4d0e-ab65-422c77f9f990" style="left: 142.245361328125px; top: 87.4832458496094px; position: absolute; z-index: 0; transform: rotate(43.713960294793deg); width: 506px; height: 428px;">
+          <div class="cbcontainer">
+            <img src="/home/miguel/cloudbook-workspace/a/rsrc/0test.jpg" style="height: 100%; width: 100%;">
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+    <footer class="ui-layout-south">
+      <section>
+        <span class="left">
+          <button> Prev </button>
+        </span>Footer section<span class="right">
+        <button> Next </button>
+      </span>
+    </section>
+  </footer>
+  <script type="text/javascript">		$(document).ready(			/* Initialize layout */ 			function () {				$(".ui-layout-center").tabs();				$("body").layout({ applyDemoStyles: true , south: { minSize: 60}});			});			/* Simulate tab click when click on the sidebar */ 			$("aside>ol>li>a").click(function(){				var clicked=$(this).attr("href");				$(".ui-layout-center ol li a[href="+clicked+"]").click();			});			/* Initialize buttons */			  $(function() {    				$("aside>ol>li>a,button")      				.button()      				.click(function( event ) {        				event.preventDefault();      				});  			});	</script>
+</body>
+</html>
