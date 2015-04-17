@@ -1,0 +1,16 @@
+<div id="{{identifier}}"> 
+   <div id="myprefix_pem_identifier_info_aria" class="CSSInfoTextPemPms">{{description}}</div> 
+   <div style="display: none;" aria-hidden="true"> 
+       <div data-info-ok="myprefix_pem_identifier"> 
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad --> 
+           <span class="CSSMsgSuccess"></span> 
+       </div> 
+       <div data-info-ko="myprefix_pem_identifier"> 
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad --> 
+           <span class="CSSMsgFail"></span> 
+       </div>
+       {{#each questions}}
+        <div data-opt="{{this.answer}}"></div> 
+       {{/each}}
+   </div> 
+</div
