@@ -181,7 +181,10 @@ CBUtil.createNameSpace('applicsecation.exporthtml');
 application.exporthtml = CBUtil.singleton(ExportHTML);
 
 var test = application.exporthtml.getInstance();
-var run = function(){
-//	test.copyFileToPath('test.file','/home/miguel/WorkSpace/cloudbook/tests/');
-	test.do_html('/home/miguel/WorkSpace/cloudbook/tests2/');	
+var export_html = function(){
+	var fs = window.require('fs');
+	if (! fs.existsSync(Project.Info.projectpath+"/exported",0775))
+		fs.mkdirSync(Project.Info.projectpath+"/exported",0775);
+	test.do_html(Project.Info.projectpath+"/exported/");	
 }
+console.log('Tip: to begin exportation to workspace, load project and run "export_html()" in console');
