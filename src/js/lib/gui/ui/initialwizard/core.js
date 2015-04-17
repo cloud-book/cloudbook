@@ -38,8 +38,10 @@ InitialWizard.prototype.showNewOpenProject = function showNewOpenProject(e) {
         projects : datainfo.slice(-5)
     };
     wizarddiv.append(templatecompiled(data));
-    $('#newproject').click({that:that},that.showTypeProject);
     $('#listProjects button').click({that:that},that.launcherloadProject);
+    $('#newproject').click({that:that},that.showTypeProject);
+    $('#importproject').click({that:that},that.showImportProject);
+    
 };
 
 /**
@@ -87,6 +89,57 @@ InitialWizard.prototype.showTypeProject = function(e) {
 	.focus();
 
 };
+
+InitialWizard.prototype.showImportProject = function showImportProject(e) {
+	var that = e.data.that;
+	var fs = require('fs');
+	$("#wizardnewopenproject").empty();
+	var template = fs.readFileSync('./templates/initialwizard.importprojects.hbs',{encoding:'utf8'});
+	var templatecompiled = application.util.template.compile(template);
+	$("#wizardnewopenproject").append(templatecompiled());
+
+	$("#wzrdgoback").click({that:that},that.showNewOpenProject);
+
+	$("#importhtml5").click(function(){
+		var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'text/html');
+	              pathelement.change(function(evt) {
+	                  var importation = application.importation.getInstance();
+	                  var projectname = $('#projectname').val();
+	                  importation.loadFile(projectname,$(this).val(), 'HTML');
+	                  $('#wizardnewopenproject').dialog('close');
+					  $('#wizardnewopenproject').remove();
+	              });
+	    pathelement.trigger('click');
+	});
+
+	$("#importscorm").click(function(){
+		var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'zip');
+	              pathelement.change(function(evt) {
+	                  var importation = application.importation.getInstance();
+	                  var projectname = $('#projectname').val();
+	                  importation.loadFile(projectname,$(this).val(), 'SCORM');
+	                  $('#wizardnewopenproject').dialog('close');
+					  $('#wizardnewopenproject').remove();
+	              });
+	    pathelement.trigger('click');
+	});
+	$("#projectname").keyup(function(e){
+		var backend = application.backend.core.getInstance();
+		if(backend.checkProjectExists(this.value)){
+			$("#projectnamecontainer").removeClass("has-success").addClass("has-error");
+			$("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+			$("#importbuttonactions button").attr("disabled","disabled");
+
+		}
+		else{
+			$("#projectnamecontainer").addClass("has-success").removeClass("has-error");
+			$("#validateindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+			$("#importbuttonactions button").removeAttr("disabled");
+		}
+	})
+	.focus();
+};
+
 
 InitialWizard.prototype.launcherloadProject = function launcherloadProject(e) {
   var that = e.data.that;

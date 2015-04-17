@@ -16,7 +16,24 @@
       initialwizard.initializeWizardDiv();
       initialwizard.showTypeProject({data:{that:initialwizard}});
       $("#wzrdgoback").unbind('click');
-      $("#wzrdgoback").click(function(){$("#wizard").dialog('close');$("#wizard").remove()});
+      $("#wzrdgoback").click(function(){$("#wizardnewopenproject").dialog('close');$("#wizardnewopenproject").remove()});
+    }
+
+    function importProject(){
+      var initialwizard = application.ui.initialwizard.core.getInstance();
+      initialwizard.initializeWizardDiv();
+      initialwizard.showImportProject({data:{that:initialwizard}});
+      $("#wzrdgoback").unbind('click');
+      $("#wzrdgoback").click(function(){$("#wizardnewopenproject").dialog('close');$("#wizardnewopenproject").remove()});
+    }
+
+    function importMetadata(){
+        var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.xml');
+        pathelement.change(function(evt) {
+                  var importation = application.importation.getInstance();
+                  importation.importMetadata($(this).val());
+        });
+        pathelement.trigger('click');
     }
 
     function saveAs() {
@@ -77,57 +94,69 @@
       }
     };
 
-    var import_html5 = {
-      label: CBI18n.gettext('HTML5'),
-      click: function import_html5(){
-      var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'text/html');
-              pathelement.change(function(evt) {
-                  var importation = application.importation.getInstance();
-                  importation.loadFile($(this).val(), 'HTML');
-              });
-      pathelement.trigger('click');      
-      }
-    };
+    // var import_html5 = {
+    //   label: CBI18n.gettext('HTML5'),
+    //   click: function import_html5(){
+    //   var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'text/html');
+    //           pathelement.change(function(evt) {
+    //               var importation = application.importation.getInstance();
+    //               importation.loadFile($(this).val(), 'HTML');
+    //           });
+    //   pathelement.trigger('click');      
+    //   }
+    // };
 
-    var import_odt_doc_docx = {
-      label: CBI18n.gettext('ODT/DOC/DOCX'),
-      click: function import_odt_doc_docx(){
-      var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.doc,.docx,.odt');
-              pathelement.change(function(evt) {
-                  var importation = application.importation.getInstance();
-                  importation.loadFile($(this).val(), 'ODT_DOC_DOCX');
-              });
-      pathelement.trigger('click');      
-      }
-    };
+    // var import_odt_doc_docx = {
+    //   label: CBI18n.gettext('ODT/DOC/DOCX'),
+    //   click: function import_odt_doc_docx(){
+    //   var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.doc,.docx,.odt');
+    //           pathelement.change(function(evt) {
+    //               var importation = application.importation.getInstance();
+    //               importation.loadFile($(this).val(), 'ODT_DOC_DOCX');
+    //           });
+    //   pathelement.trigger('click');      
+    //   }
+    // };
 
-    var import_scorm = {
-      label: CBI18n.gettext('SCORM'),
-      click: function import_scorm(){
-      var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.zip');
-              pathelement.change(function(evt) {
-                   var importation = application.importation.getInstance();
-                    importation.loadFile($(this).val(), 'SCORM');
-              });
-      pathelement.trigger('click');      
-      }
-    };
+    // var import_scorm = {
+    //   label: CBI18n.gettext('SCORM'),
+    //   click: function import_scorm(){
+    //   var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.zip');
+    //           pathelement.change(function(evt) {
+    //                var importation = application.importation.getInstance();
+    //                 importation.loadFile($(this).val(), 'SCORM');
+    //           });
+    //   pathelement.trigger('click');      
+    //   }
+    // };
 
-    var import_metadata = {
-      label: CBI18n.gettext('Metadata LOM-ES'),
-      click: function import_metadata(){
-      var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.xml');
-              pathelement.change(function(evt) {
-                  var importation = application.importation.getInstance();
-                  importation.loadFile($(this).val(), 'METADATA');
-              });
-      pathelement.trigger('click');      
-      }
-    };
+    // var import_metadata = {
+    //   label: CBI18n.gettext('Metadata LOM-ES'),
+    //   click: function import_metadata(){
+    //   var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.xml');
+    //           pathelement.change(function(evt) {
+    //               var importation = application.importation.getInstance();
+    //               importation.loadFile($(this).val(), 'METADATA');
+    //           });
+    //   pathelement.trigger('click');      
+    //   }
+    // };
 
     var import_project = {
-      label: CBI18n.gettext('Import')
+      label: CBI18n.gettext('Import'),
+      
     };
+
+    var import_file = {
+      label: CBI18n.gettext('Import file ...'),
+      click: importProject
+    }
+
+    var import_metadata = {
+      label : CBI18n.gettext('Import metadata'),
+      click: importMetadata
+    }
+
 
    
    /* Options for export */
@@ -159,14 +188,22 @@
 			}
 		}); 
         
-       /*  $("input[name='path']").change(function(e){
-         	var x= e.currentTarget.value
-      		alert(x);  
-          }); */
-     /*   $("#exportButton").click(function(){
-		var exportpdf = application.core.exports.exportspdf.core.getInstance();
-		exportpdf.
-	});*/
+        $("input[name='path']").change(function(e){
+         	
+      		if (e.currentTarget.value===''){
+		             $("[id='exportpdfbtn']").attr('disabled','disabled');
+		}
+		else{
+			      $("[id='exportpdfbtn']").removeAttr('disabled');
+                }
+                                 
+          }); 
+        $("[id='exportpdfbtn']").click(function(){
+	       alert("hola");	    
+               var exportpdf = application.core.exports.exportPdf.core.getInstance();
+	       var x='Liurex';	
+               exportpdf(x);
+	});
 
     };
 
@@ -198,10 +235,10 @@
     var project = new gui.Menu();
     var import_project_menu = new gui.Menu();
     var export_project_menu = new gui.Menu();
-    import_project_menu.append(new gui.MenuItem(import_html5));
-    //import_project_menu.append(new gui.MenuItem(import_odt_doc_docx));
-    import_project_menu.append(new gui.MenuItem(import_scorm));
+    import_project_menu.append(new gui.MenuItem(import_file));
     import_project_menu.append(new gui.MenuItem(import_metadata));
+    // import_project_menu.append(new gui.MenuItem(import_scorm));
+    // import_project_menu.append(new gui.MenuItem(import_metadata));
     import_project.submenu = import_project_menu;
 
     export_project_menu.append(new gui.MenuItem(export_html));

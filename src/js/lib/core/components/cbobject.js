@@ -60,7 +60,7 @@ CBObject.prototype.editorView = function editorView() {
  * @param {CBOjbect} objectcbo CBObject that is stored on the project to later load project or export to other format.
  * @return {String} Function string.
  */
-CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
+CBObject.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
 	//var x = jquerycbo.get()[0];
 	//x.addEventListener('click',enableEditable);
 	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; ui.helper.focus(); }, scroll:true,handle:".draggable"});
@@ -69,7 +69,7 @@ CBObject.prototype.add_callback = function add_callback(jquerycbo,objectcbo) {
 
 
 CBObject.prototype.clickButton = function clickButton(controllerClass) {
-	controllerClass.addCBObjectIntoSection(this.editorView(),this);
+	controllerClass.addCBObjectIntoSelectedSection(this.editorView(),this);
 };
 
 CBObject.prototype.editButton = function editButton(e) {
@@ -85,7 +85,7 @@ CBObject.prototype.editButton = function editButton(e) {
 				dialog.callbacks.forEach(function lanzador(e){e()});
 				var viewobject = $("[data-cbobjectid='"+that.uniqueid+"']");
 				viewobject.replaceWith(that.editorView());
-				that.add_callback($("[data-cbobjectid='"+that.uniqueid+"']"),that);
+				that.triggerAddEditorView($("[data-cbobjectid='"+that.uniqueid+"']"),that);
 				var CBStorage = application.storagemanager.getInstance();
     			CBStorage.setCBObjectById(that,that.uniqueid);
 				dialog.remove() ;
@@ -135,6 +135,18 @@ CBObject.prototype.deleteButton = function deleteButton(e) {
 	dialog.dialog({modal:true,close:function(){$(this).remove()}});
 };
 
+
+CBObject.prototype.exportHTML = function exportHTML() {
+	var aux = $("<div></div>");
+	aux.css('top', this.position[1])
+	   .attr('tabindex','-1')
+	   .css('position','absolute')
+	   .css('z-index',this.levellayer)
+	   .css('transform',"rotate("+this.degree+"deg)")
+	   .css('width',this.size[0].toString() + "px")
+	   .css('height',this.size[1].toString() + "px" );
+	   return aux;
+};
 
 
 // function enableEditable(e){
