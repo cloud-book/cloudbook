@@ -55,6 +55,15 @@ CBObject.prototype.editorView = function editorView() {
 };
 
 /**
+ * Render object to jQuery object to be exported to html
+ * @return {jQuery}
+ */
+CBObject.prototype.htmlView = function htmlView() {
+	var editView=this.editorView();
+	editView.children('.cbobject-bar').remove();
+	return editView;
+}
+/**
  * This string is return core to bind on button click event on editor view
  * @param {jQuery} jquerycbo jQuery representation object that is included on targetcontent
  * @param {CBOjbect} objectcbo CBObject that is stored on the project to later load project or export to other format.

@@ -11,7 +11,6 @@
 
 
 function CBSection(dataobject){
-	var CBObject = CBUtil.req("js/lib/core/components/cbobject.js");
 	dataobject = typeof dataobject !== 'undefined' ? dataobject : {};
 	this.sections = typeof dataobject.sections !== 'undefined' ? dataobject.sections : [];
 	this.content = typeof dataobject.content !== 'undefined' ? dataobject.content : [];
@@ -19,6 +18,24 @@ function CBSection(dataobject){
 	this.name = typeof dataobject.name !== 'undefined' ? dataobject.name : CBI18n.gettext("Section");
 	this.numbering = typeof dataobject.numbering !== 'undefined' ? dataobject.numbering : "1";
 
+}
+
+CBSection.prototype.htmlView = function htmlView(id) {
+	var html4render=$('<article></article>');
+	if (id) {
+		html4render.attr('id',id);
+	}
+	var tit=$('<section>'+this.name+'</section>');
+	tit.attr('id','title');
+	tit.addClass('centered');
+	var content = [];
+	var storage = application.storagemanager.getInstance();
+
+	this.content.forEach(function(objid,idx){ content.push( storage.getCBObjectById(objid).htmlView())});
+	html4render.append(tit);
+	content.forEach(function(a){ html4render.append(a) });
+
+	return html4render;
 }
 
 module.exports = CBSection;
