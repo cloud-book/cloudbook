@@ -1,0 +1,49 @@
+<div id="exportPdfProyect"class="form-group has-feedback ">
+        <div class="form-group">
+		<label for="pagesize">{{gettext "Page size:"}}</label>
+		<select class="form-group" id="pagesize"> 
+           		<option value="A4">A4</option>
+           		<option value="A3">A3</option>
+           		<option value="A2">A2</option>
+           		<option value="Letter">Letter</option>
+        	</select>
+         </div>
+      <div class="radio">
+      		<label for="orientationpage">{{gettext "Page Orientation:"}}</label>
+			<label class="radio-inline"><input type="radio" name="orientation" value="Postrait">{{gettext "Postrait"}}</label>
+			<label class="radio-inline"><input type="radio" name="orientation" value="Landscape">{{gettext "Landscape"}}</label>
+      </div>
+
+      <div class="radio">
+      		<label for="numerationpage">{{gettext "Include page numbers:"}}</label>
+			<label class="radio-inline"><input type="radio" name="numeracion" value="1">{{gettext "Yes"}}</label>
+			<label class="radio-inline"><input type="radio" name="numeracion" value="0">{{gettext "No"}}</label>
+                  
+                <label for="positionnumber"></label>
+			<label class="radio-inline"><input type="radio" name="posicion" value="R" disabled="disabled">{{gettext "Right"}}</label>
+			<label class="radio-inline"><input type="radio" name="posicion" value="C" disabled="disabled">{{gettext "Center"}}</label>
+                        <label class="radio-inline"><input type="radio" name="posicion" value="I" disabled="disabled">{{gettext "Left"}}</label>
+      </div>
+
+
+      <div class="radio">
+      		<label for="headerpage">{{gettext "Include page header:"}}</label>
+			<label class="radio-inline"><input type="radio" name="header" value="1">{{gettext "Yes"}}</label>
+			<label class="radio-inline"><input type="radio" name="header" value="0">{{gettext "No"}}</label>
+                  
+                <label for="positionheader"></label>
+			<label class="radio-inline"><input type="radio" name="posicion" value="R" disabled="disabled">{{gettext "Right"}}</label>
+			<label class="radio-inline"><input type="radio" name="posicion" value="C" disabled="disabled">{{gettext "Center"}}</label>
+                        <label class="radio-inline"><input type="radio" name="posicion" value="I" disabled="disabled">{{gettext "Left"}}</label>
+      </div>	
+
+     <div>
+	<label>{{gettext "Indica la ruta donde guardar el pdf:"}}</label><input name="path" type="file" nwsaveas="proyect.pdf" />
+
+     </div>
+  
+<button id="exportpdfbtn" disabled="disabled">{{gettext "Generate pdf"}}</button>
+<button id="exportpdfback">{{gettext "Cancel"}}</button>
+
+</div>
+

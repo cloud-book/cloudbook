@@ -129,23 +129,93 @@
       label: CBI18n.gettext('Import')
     };
 
+   
+   /* Options for export */
+
+    function export_pdf(){
+     	
+        var template = application.util.template.getTemplate('templates/exportPdfProyect.hbs');
+  	var dialog=$(template());
+        dialog.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false, minWidth:750});          
+        $("input[name='numeracion']").change(function(e){
+				
+			if(e.currentTarget.value === "0"){
+							
+				$("[name='posicion']").attr('disabled','disabled');
+			}
+			else{
+				$("[name='posicion']").removeAttr('disabled');
+			}
+		});    
+     
+	$("input[name='header']").change(function(e){
+			alert("hola");	
+			if(e.currentTarget.value === "0"){
+							
+				$("[name='posicion']").attr('disabled','disabled');
+			}
+			else{
+				$("[name='posicion']").removeAttr('disabled');
+			}
+		}); 
+        
+       /*  $("input[name='path']").change(function(e){
+         	var x= e.currentTarget.value
+      		alert(x);  
+          }); */
+     /*   $("#exportButton").click(function(){
+		var exportpdf = application.core.exports.exportspdf.core.getInstance();
+		exportpdf.
+	});*/
+
+    };
+
+      
+
+    var export_project={
+      label:CBI18n.gettext('Export')
+    };
+
+    var export_html = {
+	label: CBI18n.gettext('HTML5'),
+        click: function export_html(){}
+     
+    };
+
+    var export_pdf= {
+	label:CBI18n.gettext('pdf'),
+        click:export_pdf
+        
+    }; 		    
+ 
+    
+   
+
     /**
      * Generate menubar
      */
     var file = new gui.Menu();
     var project = new gui.Menu();
     var import_project_menu = new gui.Menu();
+    var export_project_menu = new gui.Menu();
     import_project_menu.append(new gui.MenuItem(import_html5));
     //import_project_menu.append(new gui.MenuItem(import_odt_doc_docx));
     import_project_menu.append(new gui.MenuItem(import_scorm));
     import_project_menu.append(new gui.MenuItem(import_metadata));
     import_project.submenu = import_project_menu;
+
+    export_project_menu.append(new gui.MenuItem(export_html));
+    export_project_menu.append(new gui.MenuItem(export_pdf));
+    export_project.submenu=export_project_menu;
+
     file.append(new gui.MenuItem(new_project));
     file.append(new gui.MenuItem(load_project));
     file.append(new gui.MenuItem(save_as_project));
     file.append(new gui.MenuItem(save_project));
     file.append(new gui.MenuItem({type:'separator'}));
     file.append(new gui.MenuItem(import_project));
+    file.append(new gui.MenuItem({type:'separator'}));
+    file.append(new gui.MenuItem(export_project));
     file.append(new gui.MenuItem({type:'separator'}));
     file.append(new gui.MenuItem(quit));
     project.append(new gui.MenuItem(load_metadata));
