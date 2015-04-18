@@ -1,0 +1,7 @@
+{
+	"idtype" : "f5bc49e8-eb52-455f-8c4b-8470dab081c0",
+	"description":"Append Flash to content",
+	"label": "Flash",
+	"icon" : "icon.png",
+	"category": "core"
+}
