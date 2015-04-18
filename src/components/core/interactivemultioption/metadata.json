@@ -7,5 +7,5 @@
 	"external_scripts" : ["lib_external/jsgeork/jquery.jsgeork.js"],
   	"external_css" : ["lib_external/jsgeork/jquery.jsgeork.css","lib/pms.css"],
   	"HTML_export_scripts" : ["lib_external/jsgeork/jquery.jsgeork.js"],
-  	"HTML_export_css" : ["lib_external/jsgeork/jquery.jsgeork.css"]
+  	"HTML_export_css" : ["lib_external/jsgeork/jquery.jsgeork.css","lib/pms.css"]
 }
