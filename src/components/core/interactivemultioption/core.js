@@ -21,6 +21,7 @@ PEMBox.prototype.editorView = function editorView() {
   var templatecompiled = application.util.template.compile(template);
   options={"identifier":this.pemidentifier,"description":this.description,questions:this.questions};
   aux.children('.cbcontainer').append($(templatecompiled(options)));
+  aux.addClass('pms');
   return aux;
 };
 
