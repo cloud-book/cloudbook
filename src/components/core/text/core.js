@@ -27,9 +27,10 @@ TextBox.prototype.editorView = function editorView() {
   					.html(this.text)
   					.attr('data-textbox-id',this.uniqueid)
   					.addClass('cbtextbox')
-  					.dblclick({that:this},this.editButton)
-  					.css('height','100%')
-  					.css('width','100%');
+            .css('padding','5px')
+  					// .css('height','100%')
+  					// .css('width','100%')
+            .dblclick({that:this},this.editButton);
   aux.children('.cbcontainer').append(textboxcontent);
   return aux;
 };
@@ -44,6 +45,7 @@ TextBox.prototype.editButton = function editButton(e) {
   textbox.wysiwyg();
   e.stopImmediatePropagation();
   textbox.click(that.stopPropagation);
+  document.execCommand('selectAll');
   toolbar.click(that.stopPropagation);
   $('body').click({that:that},that.disableEditMode);
 };
@@ -73,6 +75,9 @@ TextBox.prototype.importHTML = function importHTML(){
 TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
 	TextBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 	jquerycbo.on('drag',function(event,ui){toolbarposition(ui.offset)});
+  jquerycbo.on("resize",function(event,ui){
+    ui.size.height = jquerycbo.find('.cbtextbox').outerHeight(true);
+  });
 };
 
 function toolbarposition(position){
