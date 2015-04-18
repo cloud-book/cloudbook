@@ -1,0 +1,7 @@
+{
+	"idtype" : "f1ef211a-562a-4e00-bae2-ca5b471bec16",
+	"description":"Append external Iframe to content",
+	"label": "Url",
+	"icon" : "icon.png",
+	"category": "core"
+}
