@@ -170,7 +170,6 @@ UI.prototype.removeSelectElement = function removeSelectElement(event) {
     $("#cbobjecttoolbar").remove();
     Cloudbook.UI.cbobjectselected = null;
   }
-  console.log("Pasando por el targetcontent");
 };
 
 
@@ -289,8 +288,6 @@ UI.prototype.calcRotation = function calcRotation(iniCoord,endCoord) {
     if (ang < -85 && ang > -95){
       ang = -90;
     }
-    
-    console.log(ang);
     return ang;
 }
 UI.prototype.updateAngle = function updateAngle(cbobjectid,ini) {

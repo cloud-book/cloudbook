@@ -140,7 +140,6 @@ CBObject.prototype.exportHTML = function exportHTML() {
 
 CBObject.prototype.delaymove = function(e) {
 	var that = e.data.that;
-	console.log("delaymove");
 	that.settimeoutlist["delaymove"] = setTimeout(function(){
 		$("[data-cbobjectid='"+that.uniqueid+"']").addClass("draggable");
 	},2000);
