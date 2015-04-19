@@ -159,13 +159,18 @@ UI.prototype.loadProject = function loadProject(path) {
 
 UI.prototype.emptyTargetContent = function emptyTargetContent() {
   var targetcontent = $(Cloudbook.UI.targetcontent);
-  //targetcontent.get()[0].removeEventListener('click',this.removeSelectElement);
-  //targetcontent.get()[0].addEventListener('click',this.removeSelectElement);
+  targetcontent.get()[0].removeEventListener('click',this.removeSelectElement);
+  targetcontent.get()[0].addEventListener('click',this.removeSelectElement);
   targetcontent.empty();
 };
 
 UI.prototype.removeSelectElement = function removeSelectElement(event) {
-  Cloudbook.UI.cbobjectselected.removeClass('selected');
+  if (Cloudbook.UI.cbobjectselected !== null){
+    $("[data-cbobjectid='"+Cloudbook.UI.cbobjectselected+"']").removeClass('selected');
+    $("#cbobjecttoolbar").remove();
+    Cloudbook.UI.cbobjectselected = null;
+  }
+  console.log("Pasando por el targetcontent");
 };
 
 
@@ -208,45 +213,84 @@ UI.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cbobjectid
 UI.prototype.modifyObjectRotation = function modifyObjectRotation(cbobjectid,callback,e) {
 
   var that = this;
-  that.stop=3;
-  var initval,endval= [];
-  var currentMousePosx,currentMousePosy;
-  var registerPosition = function registerPosition(event) {
-        that.currentMousePosx = event.pageX;
-        that.currentMousePosy = event.pageY;
-    }
-  $(document).mousemove(registerPosition);
+  var degree = 0 ;
+  var objetctorotate = $('[data-cbobjectid='+cbobjectid+']');
+  var offset = objetctorotate.offset();
+  var objecttorotatewidth = objetctorotate.width();
+  var objecttorotateheight = objetctorotate.height();
+  var objecttorotateinitvalue = [offset.left + objecttorotatewidth / 2 , offset.top + objecttorotateheight /2 ];
 
-  var loop; 
-  var f = function(e){ 
-    
-    that.stop--;
-    if(that.stop<1){ 
-      $(document).unbind('click',f);
-      $(document).unbind('mousemove',registerPosition);
-      clearInterval(loop);
+  var rotate = function rotate(){
+    var actualmouse = [event.pageX, event.pageY];
+    degree = that.calcRotation(objecttorotateinitvalue,actualmouse);
+    objetctorotate.css('transform','rotate('+degree+'deg)');
+  }
+
+  var fixrotate = function fixrotate(){
+      $(document).unbind('mousemove',rotate);
+      $(document).unbind('mouseup',fixrotate);
       var CBStorage = application.storagemanager.getInstance();
       var aux = CBStorage.getCBObjectById(cbobjectid);
-      aux.degree = that.calcRotation(that.initval,[that.currentMousePosx,that.currentMousePosy]);
+      aux.degree = degree;
       CBStorage.setCBObjectById(aux,cbobjectid);
+  }
+  $(document).mousemove(rotate);
 
-    };
-    if (that.stop == 1){
-      var objetctorotate = $('[data-cbobjectid='+cbobjectid+']');
-      var offset = objetctorotate.offset();
-      var width = objetctorotate.width();
-      var height = objetctorotate.height();
-      that.initval=[offset.left + width / 2 , offset.top + height /2 ];
-      loop=setInterval(function(){that.updateAngle(cbobjectid,that)},50) }
-    };
+  $(document).mouseup(fixrotate);
 
-  $(document).on('click',f);
+  // that.stop=3;
+  // var initval,endval= [];
+  // var currentMousePosx,currentMousePosy;
+  // var registerPosition = function registerPosition(event) {
+  //       that.currentMousePosx = event.pageX;
+  //       that.currentMousePosy = event.pageY;
+  //   }
+  // $(document).mousemove(registerPosition);
+
+  // var loop; 
+  // var f = function(e){ 
+    
+  //   that.stop--;
+  //   if(that.stop<1){ 
+  //     $(document).unbind('click',f);
+  //     $(document).unbind('mousemove',registerPosition);
+  //     clearInterval(loop);
+  //     var CBStorage = application.storagemanager.getInstance();
+  //     var aux = CBStorage.getCBObjectById(cbobjectid);
+  //     aux.degree = that.calcRotation(that.initval,[that.currentMousePosx,that.currentMousePosy]);
+  //     CBStorage.setCBObjectById(aux,cbobjectid);
+
+  //   };
+  //   if (that.stop == 1){
+  //     var objetctorotate = $('[data-cbobjectid='+cbobjectid+']');
+  //     var offset = objetctorotate.offset();
+  //     var width = objetctorotate.width();
+  //     var height = objetctorotate.height();
+  //     that.initval=[offset.left + width / 2 , offset.top + height /2 ];
+  //     loop=setInterval(function(){that.updateAngle(cbobjectid,that)},50) }
+  //   };
+
+  // $(document).on('click',f);
 };
 UI.prototype.calcRotation = function calcRotation(iniCoord,endCoord) {
     var dx,dy,ang;
     dx=endCoord[0]-iniCoord[0];
     dy=endCoord[1]-iniCoord[1];
     ang= - Math.atan2(dx,dy)*180/3.1415;
+    if (ang < 5 && ang > -5){
+      ang = 0;
+    }
+    if (ang < 95 && ang > 85){
+      ang = 90;
+    }
+    if (ang > 175 || ang < -175){
+      ang = -180;
+    }
+    if (ang < -85 && ang > -95){
+      ang = -90;
+    }
+    
+    console.log(ang);
     return ang;
 }
 UI.prototype.updateAngle = function updateAngle(cbobjectid,ini) {
