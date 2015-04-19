@@ -1,0 +1,7 @@
+{
+	"idtype" : "ea54d8be-d607-4c50-a655-8d2787d08e2e",
+	"description":"Append audio to content",
+	"label": "Audio",
+	"icon" : "icon.png",
+	"category": "core"
+}

@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos TEA 4</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+    <p>Ejemplo tomando los datos del web storage. 
+        Como podemos ver las actividades no están en la misma página pero la tabla se crea ya que los datos se toman del storage y este
+        está vinculado a la dirección del sitio web (hosting). Sin embargo los enlaces no funcionan ya que no hemos definido en qué página
+        se encuentra cada actividad.
+    </p>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="test_ej_1">
+</div>
+
+
+<div id="test_ej_2">
+
+
+</div>
+
+<div id="test_ej_3">
+
+
+</div>
+
+<script>
+    jQuery(function ($) {
+        var obj_test_ej_1 = {
+            "id": "test_ej_1",
+            //"refresh": false,
+            "storage": "local",
+            "storagekey": "georkgenej",
+            "qbase": 20,
+            "refresh": false,
+            "timer": ""
+        };
+        //if (localStorage) { obj_test_ej_1.storage = "local"; }
+        //console.log(jsGeork);
+        jsGeork.Questions.Eval(obj_test_ej_1, "single_ej_1", "multi_ej_1");
+        var obj_test_ej_2 = {
+            "id": "test_ej_2",
+            "refresh": false,
+            "timer": 2000
+        };
+        //jsGeork.Questions.Eval(obj_test_ej_2, obj_multi_ej_1);
+        var obj_test_ej_3 = {
+            "id": "test_ej_3",
+            //"refresh": false,
+            "timer": 3000
+        };
+        //jsGeork.Questions.Eval(obj_test_ej_3, obj_single_ej_1, obj_multi_ej_1);
+    });
+</script>
+
+
+  
+
+</body>
+</html>
+
+

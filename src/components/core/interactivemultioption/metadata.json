@@ -1,0 +1,11 @@
+{
+	"idtype" : "87d7b00a-a296-4cd9-af13-f8d9685a6dec",
+	"description":"Append PMS to content",
+	"label": "PMS",
+	"icon" : "icon.png",
+	"category": "core",
+	"external_scripts" : ["lib_external/jsgeork/jquery.jsgeork.js"],
+  	"external_css" : ["lib_external/jsgeork/jquery.jsgeork.css","lib/pms.css"],
+  	"HTML_export_scripts" : ["lib_external/jsgeork/jquery.jsgeork.js"],
+  	"HTML_export_css" : ["lib_external/jsgeork/jquery.jsgeork.css","lib/pms.css"]
+}

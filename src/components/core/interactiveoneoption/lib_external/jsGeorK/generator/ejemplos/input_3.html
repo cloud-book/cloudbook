@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos PIB</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_txt_ej1">
+    <p>Cuadro de texto que solo admite una respuesta. Tras tres intentos se lanza el evento <em>oncomplete</em>.</p>
+<span data-makeqs="input_txt_ej1">
+   Traducción de 'country': <span data-input-make="box1">país</span>
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_txt_ej1"></span><span data-input-btnhint="input_txt_ej1"></span>
+<div data-info-hint="input_txt_ej1" style="display: none;" aria-hidden="true">
+   Nation
+</div>
+<div data-input-showinfo="input_txt_ej1">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_txt_ej1" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_txt_ej1" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<div data-stored-results="input_txt_ej1">
+   <!-- mostrará los resultados previos -->
+</div>
+</div> <!-- end div id=input_txt_ej1 -->
+
+
+<script>
+    var obj_input_txt_ej1 = {
+        "id": "input_txt_ej1",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "text",
+                "values": [],
+                "casesensitive": false,
+                "weight": 100,
+                "placeholder": "",
+                "autocomplete": "on",
+                "adjustgaps": "all"
+            }
+        },
+        "fieldset": true,
+        "legend": "Pregunta con respuestas en cuadros de texto - Ejemplo 1",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true,
+        "attempts": 3,
+        "oncomplete": function () { ((this.attempts===3)?(alert("oncomplete\n\nattempts: " + this.attempts + '\n\nLa respuesta es \'país\'.')):('')); }
+    };
+    jsGeork.Questions.Question(obj_input_txt_ej1);
+</script>
+
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_txt_ej2">
+    <p>Cuadro de texto que admite varias respuestas. Pulse en el botón de ayuda para ver las respuestas admitidas. Al estar la propiedad del box <code>"adjustgaps": "all"</code> 
+        el cuadro de texto se adapta a la respuesta más larga aceptada, 'habitantes'. Su tamaño y el número de caracteres que se pueden introducir es 10.
+    </p>
+<span data-makeqs="input_txt_ej2">
+   Traducción de 'country': <span data-input-make="box1">país</span>
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_txt_ej2"></span><span data-input-btnhint="input_txt_ej2"></span>
+<div data-info-hint="input_txt_ej2" style="display: none;" aria-hidden="true">
+   Respuestas aceptadas: 'país', 'pais', 'campo', 'patria', 'región', 'zona', 'población', 'habitantes'
+</div>
+<div data-input-showinfo="input_txt_ej2">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_txt_ej2" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_txt_ej2" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<div data-stored-results="input_txt_ej2">
+   <!-- mostrará los resultados previos -->
+</div>
+</div> <!-- end div id=input_txt_ej2 -->
+
+
+<script>
+    var obj_input_txt_ej2 = {
+        "id": "input_txt_ej2",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "text",
+                "values": ['pais', 'campo', 'patria', 'región', 'zona', 'población', 'habitantes'],
+                "casesensitive": false,
+                "weight": 100,
+                "placeholder": "",
+                "autocomplete": "on",
+                "adjustgaps": "all"
+            }
+        },
+        "fieldset": true,
+        "legend": "Pregunta con respuestas en cuadros de texto - Ejemplo 2",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true
+    };
+    jsGeork.Questions.Question(obj_input_txt_ej2);
+</script>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_txt_ej3">
+    
+<span data-makeqs="input_txt_ej3">
+   Nombre de pila de <strong>Einstein</strong>: <span data-input-make="box1">Albert</span>
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_txt_ej3"></span><span data-input-btnhint="input_txt_ej3"></span>
+<div data-info-hint="input_txt_ej3" style="display: none;" aria-hidden="true">
+   El científico.
+</div>
+<div data-input-showinfo="input_txt_ej3">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_txt_ej3" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_txt_ej3" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<div data-stored-results="input_txt_ej3">
+   <!-- mostrará los resultados previos -->
+</div>
+<div data-info-bottom="input_txt_ej3" style="display: none;" aria-hidden="true">
+   <p>Cuadro de entrada sensible a las mayúsculas (<code>"casesensitive": true,</code>).</p>
+</div>
+</div> <!-- end div id=input_txt_ej3 -->
+
+
+<script>
+    var obj_input_txt_ej3 = {
+        "id": "input_txt_ej3",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "text",
+                "values": ['Alberto'],
+                "casesensitive": true,
+                "weight": 100,
+                "placeholder": "",
+                "autocomplete": "on",
+                "adjustgaps": "none"
+            }
+        },
+        "fieldset": true,
+        "legend": "Pregunta con respuestas en cuadros de texto - Ejemplo 3",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true
+    };
+    jsGeork.Questions.Question(obj_input_txt_ej3);
+</script>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+    <hr />
+    <h3>Pregunta con respuestas en cuadros de texto - Ejemplo 4</h3>
+    <p>Ejemplo sin campo <em>fieldset</em>. El código html generado no tiene un bloque con el id igual al de la actividad. Al contrario que en otras actividades esta no necesita
+        un bloque con el id de la actividad, a no ser que querramos añadir la etiqueta <em>fieldset</em>. La falta del fieldset provoca que no se apliquen los estilos css, pero 
+        naturalmente podemos añadir nosotros manualmente la etiqueta fieldset (si añadimos la etiqueta legend debe ser justo después) con la clase <code>class="CSSActFieldset"</code>.
+    </p>
+    <p>El objeto de la actividad incluye la propiedad <code>name</code> que es utilizada para dar nombre a la tabla con los resultados previos.</p>
+
+<fieldset class="CSSActFieldset">
+   
+<span data-makeqs="input_txt_ej4">
+   Nombre de pila de <strong>Einstein</strong>: <span data-input-make="box1">Albert</span>
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_txt_ej4"></span><span data-input-btnhint="input_txt_ej4"></span>
+<div data-info-hint="input_txt_ej4" style="display: none;" aria-hidden="true">
+   Contenido a mostrar cuando se pulsa en el botón de ayuda
+</div>
+<div data-input-showinfo="input_txt_ej4">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_txt_ej4" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_txt_ej4" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<div data-stored-results="input_txt_ej4">
+   <!-- mostrará los resultados previos -->
+</div>
+<div data-info-bottom="input_txt_ej3" style="display: none;" aria-hidden="true">
+   <p>Cuadro de entrada sensible a las mayúsculas (<code>"casesensitive": true,</code>).</p>
+</div>
+    </fieldset>
+    <hr />
+
+<script>
+    var obj_input_txt_ej4 = {
+        "id": "input_txt_ej4",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "text",
+                "values": [],
+                //"casesensitive": true,
+                "weight": 100,
+                "placeholder": "",
+                "autocomplete": "on",
+                "adjustgaps": "none"
+            }
+        },
+        "fieldset": false,
+        "legend": "Pregunta con respuestas en cuadros de texto - Ejemplo 4",
+        "name": "Ejemplo 4",
+        "hint": false,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true
+    };
+    jsGeork.Questions.Question(obj_input_txt_ej4);
+</script>
+
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_txt_ej5">
+    <p>Ejemplo con dos cuadros de entrada. Al comprobar la respuesta se lanza el evento <code>oncheck</code> y este muestra la puntuación obtenida. Esta puntuación
+        no se usa en las actividades individuales, solamente cuando forman parte de un test, pero está disponible a través de la variable <code>jsGeork.Questions.Question.score</code>, o
+        <code>this.score</code> si se llama desde el evento. En la actividad presente el primer cuadro tiene un peso del 50% respecto a los demás, de aquí que acertarlo solamente a él 
+        signifique una puntuación de 33, la mitad que la que se obtiene con el otro cuadro cuyo peso es del 100%.
+    </p>
+<span data-makeqs="input_txt_ej5">
+   Primera letra del abecedario: <span data-input-make="box1">a</span><br />
+   Octava letra del abecedario: <span data-input-make="box2"></span><br />
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_txt_ej5"></span><span data-input-btnhint="input_txt_ej5"></span>
+<div data-info-hint="input_txt_ej5" style="display: none;" aria-hidden="true">
+<code>
+   abcdefg...<br />
+   1234567...
+</code>
+</div>
+<div data-input-showinfo="input_txt_ej5">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_txt_ej5" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_txt_ej5" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<p>La actividad muestra los resultados previos (si el navegador soporta el <em>web storage</em>) pero no incluye el botón para borrarlos. Tampoco
+    llena los cuadros con las respuestas correctas si cuando se carga la página ya se había resuelto bien antes la actividad.
+</p>
+<div data-stored-results="input_txt_ej5">
+   <!-- mostrará los resultados previos -->
+</div>
+</div> <!-- end div id=input_txt_ej5 -->
+
+
+<script>
+    var obj_input_txt_ej5 = {
+        "id": "input_txt_ej5",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "text",
+                "values": [],
+                "casesensitive": false,
+                "weight": 50,
+                "placeholder": "1",
+                "autocomplete": "",
+                "adjustgaps": "all"
+            },
+            "box2": {
+                "type": "text",
+                "values": ['h'],
+                "casesensitive": false,
+                "weight": 100,
+                "placeholder": "8",
+                "autocomplete": "",
+                "adjustgaps": "all"
+            }
+        },
+        "fieldset": true,
+        "legend": "Pregunta con respuestas en cuadros de texto - Ejemplo 5",
+        "name": "Ejemplo 5",
+        "button": "?",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": false,
+        "delstorage": false,
+        "oncheck": function () { alert("oncheck\n\nscore: " + jsGeork.Questions.Question.score); }
+    };
+    jsGeork.Questions.Question(obj_input_txt_ej5);
+</script>
+
+
+
+</body>
+</html>

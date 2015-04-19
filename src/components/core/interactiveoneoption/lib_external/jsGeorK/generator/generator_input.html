@@ -1,0 +1,645 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="author" content="Jordi cavallé" />
+	<meta name="abstract" content="Generador de ejercicios, actividades y test para la educación" />
+	<meta name="copyright" content="© 2014 Jordi Cavallé" />
+	<link rel="canonical" href="http://jsgeork.geork.com/" />
+    <title>PIB. Generador de preguntas con respuestas en cuadros de entrada (tipo input)</title>
+    <script src="../js/jquery.js"></script>
+    <script src="../jsgeork/jquery.jsgeork.js"></script>
+    <script src="generator_input.js"></script>
+    <link href="../styles/generator.css" rel="stylesheet" />
+    <link href="../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="goindex">
+    [ <a href="index.html">Índice</a> ]
+    </div>
+
+    <div class="gentitle">
+    <h1>PIB</h1>
+    </div>
+
+    <form id="frmopt">
+        <fieldset>
+            <legend>Generador de preguntas con respuestas en cuadros de entrada</legend>
+            <div id="infoact">
+            <p>Las <em>actividades de preguntas con respuestas  en cuadros de entrada</em> (PIB) permiten introducir una pregunta con un cuadro
+                de entrada en el que se debe introducir la respuesta. Una misma pregunta admite más de un cuadro (box) de entrada que debe rellenar el
+                usuario. Cada cuadro puede ser de tipo texto o numérico según el tipo de respuesta que se espera. Las respuestas serán comprobadas de 
+                forma distinta según como sea el tipo de cuadro. Según si se acierta o no la pregunta se mostrará un u otro contenido. Este contenido deberá ser creado
+                para ofrecer la información que se crea debe conocer el usuario.
+
+                Puede un ejemplo con el resultado de las opciones escogidas en <a href="#bloqueej">esta sección de la página</a>.
+            </p>
+            <p>También puede ver ejemplos de ejercicios <a href="#iframe_ejemplos">al final de la página</a>, algunos con más de un cuadro de entrada.</p>
+            <p>Este formulario ayuda a generar el código para crear este tipo de actividades educativas utilizando la biblioteca jsGeork. Después pulsar en el botón '<strong>Genera</strong>' 
+                se creará el código html+javascript que deberá copiar y pegar en su página. Una vez haya pegado el código podrá modificar fácilmente
+                la parte de código html con el contenido que verán los usuarios.
+            </p>
+            </div>
+        <div class="campoconfig">
+            <label for="idact">identificador: <input type="text" name="idact" id="idact" value="pib_identifier" /></label>
+            <label for="idprefix">prefijo: <input type="text" name="idprefix" id="idprefix" value="myprefix_" /></label><br />
+            <span id="finalid"></span>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Llenar campo <strong>id</strong> es obligatorio e indispensable para que la actividad funcione. Se utiliza como atributo <em>id</em> del bloque
+                HTML que contendrá la actividad, así como para generar otros identificadores y nombres de objetos para los scripts. Dado que los atributos <em>id</em>
+                dentro de los documentos HTML deben ser únicos debe introducir una cadena que no se repita dentro del mismo documento o página web. Para facilitar que
+                terceras personas puedan reutilizar el código, conviene que añadamos al principio del identificador un prefijo que nos identifique como autores. De esta
+                forma minimizamos la probabilidad de que coincidan dos identificadores iguales en el mismo documento. El identificador debe tener como mínimo un carácter,
+                no puede contener espacios y es sensible a las mayúsculas.
+                </span>
+            </div>
+        </div>
+        
+    <div class="campoconfig">
+            <div>Opciones de respuesta:</div>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Los siguientes campos sirven para especificar en una respuesta qué tipo de entrada (cadena o número) se espera del usuario y controlar el
+                    comportamiento del cuadro de entrada o <em>box</em>. Una misma pregunta puede tener más de un cuadro (box) de entrada. Cada cuadro
+                    tendrá sus valores y al pulsar en el botón para comprobar las respuestas se evaluarán no a uno. Editando el código puede introducir
+                    un número ilimitado de boxs que formarán parte de la misma pregunta.
+                </span>
+            </div>
+            <br /><br />
+    <fieldset>
+        <legend>Box 1:</legend>
+        Tipo de cuadro: <select name="tipoinp" id="tipoinp">
+            <option value="text">Texto</option>
+            <option value="number">Numérico</option>
+        </select>
+                <label for="solbox1">Solución: <input type="text" name="solbox1" id="solbox1" value="myvalue" /></label><br />
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <div class="spanhelp">
+                <div class="ctrltxtbox1">
+                    <p>El cuadro de entrada (inputbox) espera del usuario una entrada de texto o alphanumérica.</p>
+                    <p>En el campo '<em>Solución</em>' puede introducir
+                    la respuesta esperada por el usuario. El valor se colocará en el código html y será sustituido por el cuadro de entrada, pero
+                    puede dejarlo en blanco y colocar las respuestas aceptadas en los campos <em>values</em>.</p>
+                </div>
+                <div class="ctrlnumbox1" style="display: none;">
+                    <p>El cuadro de entrada (inputbox) espera del usuario una entrada numérica.</p>
+                    <p>Para comprobar que la respuesta introducida es correcta se harán varias comparaciones. Primero se mirará si el número introducido se corresponde
+                        con el campo '<em>Solución</em>'; después si se corresponde con alguno de los valores de los campos <em>values</em>. Si se han llenado los campos
+                        <em>min</em> y <em>max</em> se mirará si el número introducido se encuentra entre estos dos valores. Finalmente si está dentro del margen de error
+                        introducido en el campo <em>accuracy</em>.
+                    </p>
+                </div>
+                </div>
+            </div>
+                <hr />
+                <label for="namebox1">box: <input type="text" name="namebox1" id="namebox1" value="box1" /></label><br />
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Nombre del box o cuadro de entrada. Evite utilizar espacios en blanco.
+                </span>
+            </div>
+                <hr />
+        values: <input type="text" name="valbox1a" value="" size="15" /><input type="text" name="valbox1b" id="valbox1b" value="" size="15" /><input type="text" name="valbox1c" value="" size="15" /><input type="text" name="valbox1d" value="" size="15" /><br />
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Además del valor existente en el html puede añadir otros valores considerados como válidos para resolver el cuadro.
+                </span>
+            </div>
+                <hr />
+    <div class="ctrlnumbox1" style="display: none;">
+    <!--cuadros numericos-->
+                <label for="accuracybox1">accuracy: <input type="number" name="accuracybox1" id="accuracybox1" min="50" max="100" value="" step="5" /></label><br />
+                <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Margen de precisión (en porcentaje y mínimo del 50%) admitido para considerar la respuesta como correcta. Deje el cuadro en blanco para no utilizar esta opción.
+                </span>
+                </div>
+                <hr /> 
+                <label for="minbox1">min: <input type="text" name="minbox1" id="minbox1" value="" /></label><br /> 
+                <label for="maxbox1">max: <input type="text" name="maxbox1" id="maxbox1" value="" /></label><br />
+                <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Permite introducir un rango de valores numéricos entre los que se considerará la respuesta como válida. Deje los cuadros en blanco para no utilizar esta opción.
+                </span>
+                </div>
+                <hr /> 
+                <label for="decimalsbox1">decimals: <input type="number" name="decimalsbox1" id="decimalsbox1" min="0" max="5" value="" step="1" /></label><br />
+                <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Número de decimales con los que debe introducirse la respuesta numérica. Se le indicará al usuario añadiendo una cadena del tipo 
+                    "#.##" en el interior del cuadro. Los caracteres detrás del punto indican cuántos decimales debe introducir.  Deje el cuadro en blanco para no utilizar esta opción.
+                </span>
+                </div>
+                <hr /> 
+                <label for="tofixedbox1">tofixed: <input type="number" name="tofixedbox1" id="tofixedbox1" min="0" max="5" value="" step="1" /></label><br />
+                <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Redondea la respuesta introducida al número de decimales de este campo antes de compararla y comprobar si es correcta. Deje el cuadro en blanco para no utilizar esta opción.
+                </span>
+                </div>
+                <hr /> 
+                
+    </div>
+    <div class="ctrltxtbox1">
+    <!--cuadros de texto-->
+        <label for="casesensitivebox1">casesensitive: <input type="checkbox" name="casesensitivebox1" id="casesensitivebox1" /></label><br />
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Si la respuesta es sensible a las mayúsculas.
+                </span>
+            </div>
+            <hr />
+    </div>
+
+       <label for="placeholderbox1">placeholder: <input type="text" name="placeholderbox1" id="placeholderbox1" value="" /></label><br />
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Permite introducir el texto a modo de ayuda que aparecerá en gris dentro del cuadro, siempre que el navegador acepte este
+                    característica de html5.
+                </span>
+            </div>
+            <hr />
+       <label for="weightbox1">weight: <input type="number" name="weightbox1" id="weightbox1" min="0" max="100" value="100" step="10" /></label><br />
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                El peso del cuadro respecto a otros cuadros que pueda tener la pregunta.
+                </span>
+            </div>
+            <hr />
+        <label for="autocompletebox1">autocomplete:</label>
+        <select name="autocompletebox1" id="autocompletebox1">
+            <option value="">&nbsp;</option>
+            <option value="on">on</option>
+            <option value="off">off</option>
+        </select><br />
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Activa/desactiva en el cuadro el comportamiento de mostrar en una lista desplegable los valores que anteriormente se puedan haber introducido.
+                </span>
+            </div>
+            <hr />             
+        <label for="adjustgapsbox1">adjustgaps:</label>
+        <select name="adjustgapsbox1" id="adjustgapsbox1">
+            <option value="">&nbsp;</option>
+            <option value="none">none</option>
+            <option value="all">all</option>
+            <option value="size">size</option>
+            <option value="maxlength">maxlength</option>
+        </select><br />
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Ajusta el tamaño del cuadro a la longitud de la(s) respuesta(s) (size), limita el número de caracteres que se pueden entrar (maxlength), o ambas cosas (all). En todos los
+                    casos se limitará a la longitud de la respuesta menos restrictiva, es decir la más larga. En las preguntas numéricas no conviene restringir el número de caracteres que se
+                    pueden entrar.
+                </span>
+            </div>
+            <hr />
+       <label for="aria-labelbox1">aria-label: <input type="text" name="aria-labelbox1" id="aria-labelbox1" value="" /></label><br />
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Texto del atributo <code>aria-label=""</code> de la especificación WAI-ARIA. El atributo se colocará en el cuadro de texto y proporcionará información
+                    adicional a los usuarios que utilicen tecnologías de apoyo. Si deja el valor vacío no se incluirá la propiedad en el código y por tanto se utilizará
+                    el valor predeterminado, es decir, se colocará el atributo <code>aria-label="Introduzca un valor en el cuadro de entrada"</code>. Al tratarse del valor 
+                    de un atributo html evite introducir caracteres no válidos como &lt; y &gt;.
+                </span>
+            </div>
+            <hr />     
+
+       </fieldset>
+
+        <p>Este formulario permite crear un cuadro de entrada (o box) por pregunta, sin embargo <strong>no hay límite en el número de cuadros</strong> que
+            puede tener una pregunta. Puede añadir más cuadros manualmente. Solo debe saber que el script para una pregunta determinada 
+            buscará dentro de los bloques del documento que tengan el atributo <strong>data-makeqs=""</strong> con el valor igual al  id de la actividad y creará
+            cuadros en aquellos bloques del código html que tengan el atributo <strong>data-input-make=""</strong>. El valor de este atributo es el nombre del box,
+            es decir del nombre la propiedad del objeto boxs que contiene la configuración de ese cuadro. Puede añadir en el código JavaScript más objetos boxs para 
+            tener más cuadros en la misma pregunta. El procedimiento recomendado es:
+        </p>
+        <ol>
+            <li>Crea con el formulario una pregunta con un cuadro. Copia y pega el código en su página.</li>
+            <li>Utiliza el formulario para crear una nueva pregunta variando el nombre del campo <code>box</code>, p. ej. <em>box2</em> (y evidentemente los otros campos que necesite).</li>
+            <li>Copia solamente el código del objeto box (p. ej. "box2": { ... }) y lo pega en su documento detrás del objeto box existente. No olvide incluir la coma al final del primer objeto, detrás de }.</li>
+            <li>En el código html debe añadir el bloque con atributo <code>data-input-make=""</code> y valor igual al nombre del box para que se cree el cuadro  (p. ej. data-input-make="box2"). Deberá estar dentro de un bloque con atributo <code>data-makeqs=""</code> y valor igual al id de la pregunta.</li>
+        </ol>
+
+        </div>
+    <!-- end campoconfig opciones de respuesta -->
+
+        <div class="campoconfig">
+        <label for="fieldset">fieldset: <input type="checkbox" name="fieldset" id="fieldset" checked="checked" /></label><br />
+        <label for="legend">legend: <input type="text" name="legend" id="legend" value="Pregunta con respuestas en cuadros de entrada" size="80"/></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Si seleccionamos la opción <em>fieldset</em> se añadirá la etiqueta html del mismo nombre (grupo de campos). La etiqueta 
+                    <code>fieldset</code> puede incorporar una etiqueta <code>legend</code> con la leyenda o título del grupo.  
+                    La leyenda se utilizará también como título de las preguntas al listar los resultados de un <a href="generator_test.html" target="_blank">test</a>.
+                    La etiqueta fieldset se colocará dentro de un form envolviendo el div con el id de la actividad. Como en este tipo de actividad la existencia de
+                    este div es opcional, el conjunto form->fieldset solo se colocará si existe este div.
+                </span>
+            </div>
+        </div>
+        
+        <div class="campoconfig">
+        <label for="hint">hint: <input type="checkbox" name="hint" id="hint" checked="checked" /></label><br />
+        <label for="btnhint">btnhint: <input type="text" name="btnhint" id="btnhint" value="" placeholder="Indicio" size="80"/></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Si seleccionamos la opción <em>hint</em> se añadirá un botón que al pulsarlo mostrará ayuda en un bloque html. El contenido del
+                    bloque deberemos introducirlo editando el html. Aquí podemos modificar el texto del botón.
+                </span>
+            </div>
+        </div>
+        
+
+
+        <div class="campoconfig clshtml">
+        <label for="txtareahtml">código html (solo lectura): <textarea id="txtareahtml" readonly="readonly">
+
+
+                                             </textarea></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                El código para que una actividad funcione estará compuesto por una combinación de código HTML, CSS y JAVASCRIPT. El 
+                    campo anterior muestra el código HTML necesario. Podrá (<strong>deberá</strong>) modificarlo cuando copie y pegue
+                    el código completo en su documento HTML. Deberá modificar el contenido de los bloques con las explicaciones para cuando se
+                    acierta, cuando se falla y cuando se pulsa en el botón de ayuda. Puede limitarse a simplemente introducir "Correcto" y "Error" 
+                    explicaciones mucho más elaboradas. También debe decidir si elimina el bloque con la información de intentos y del número
+                    de cuadros de entrada acertados respecto al total (recuerde que puede haber más de un cuadro de entrada o box), o si elimina
+                     el bloque en el que se introducirá la tabla con resultados anteriores. Puede cambiar el diseño y distribución de los bloques siempre
+                    que conserven los atributos.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                 El código incluye las instrucciones (en forma de comentarios html) para que se añadan las bibliotecas jQuery y jsGeork, necesarias
+                    para que funcione la actividad.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                Al crear el código html los principales pasos y opciones son:
+                </span>
+                <ul>
+                    <li>Puede incluir un div con el id de la actividad de manera que si selecciona la propiedad <code>fieldset</code> se añadira
+                        la misma etiqueta html envolviendo el interior del div. Si utiliza esta opción también puede incluir un bloque de atributo <code>data-info-bottom=""</code> y valor el
+                        id de la actividad para que su contenido se coloque al final de la etiqueta <code>fieldset</code>.
+                    </li>
+                    <li>Debe añadir un bloque con el atributo <code>data-makeqs=""</code> de valor igual al id de la actividad.</li>
+                    <li>En el interior del bloque anterior debe añadir los bloques de los cuadros de entrada, es decir, bloques con atributos <code>data-input-make=""</code>
+                        de valor igual al nombre de su objeto en la colección de objetos "boxs".
+                    </li>
+                    <li>Debe añadir un bloque con el atributo <code>data-input-btnchek=""</code> con valor igual al id de la actividad. La biblioteca se encargará de situar en 
+                        su interior el botón de chequeo.
+                    </li>
+                    <li>Puede añadir un bloque con el atributo <code>data-input-btnhint=""</code> con valor igual al id de la actividad. La biblioteca se encargará de situar en 
+                        su interior el botón de ayuda. Si lo hace deberá incluir un bloque oculto (<code> style="display: none;" aria-hidden="true"</code>) con el atributo <code>data-info-hint=""</code> con valor igual al id de la actividad. En su interior
+                        debe colocar la ayuda que se mostrará cuando se pulse el botón.
+                    </li>
+                    <li>Puede añadir un bloque con el atributo <code>data-input-showinfo=""</code> con valor igual al id de la actividad. La biblioteca se encargará de situar en 
+                        su interior la información sobre aciertos y fallos cada vez que se pulse en el botón de chequeo.
+                    </li>
+                    <li>Puede añadir bloques ocultos con los atributos <code>data-info-ok=""</code> y  <code>data-info-ko=""</code> con valor igual al id de la actividad. La biblioteca se encargará 
+                        de mostrarlos cuando la actividad se resuelva bien o mal.
+                    </li>
+                    <li>Puede añadir un bloque con el atributo <code>data-stored-results=""</code> con valor igual al id de la actividad. La biblioteca se encargará de situar en 
+                        su interior la tabla con los resultados previos de la actividad, es decir, con la primera y última vez que la actividad se resolvió bien.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+            <p><span id="opcadv">Opciones avanzadas</span> <span id="advopt_toggle" style="cursor: pointer;">[ mostrar/ocultar ]</span></p>
+            <div id="advopt" style="display: none;">
+            <p>Además de los campos que incluye el formulario anterior existen otras opciones que puede utilizar. Naturalmente puede modificar las opciones 
+                editando directamente el código con las propiedades del objeto, pero entonces deberá tener cuidado de que el código javascript no contenga errores.
+            </p>
+        <div class="campoconfig">
+        <label for="nameact">name: <input type="text" name="nameact" id="nameact" placeholder="" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Nombre de la actividad. Se utilizará en el título de la tabla con los resultados previos.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="btntext">button: <input type="text" name="btntext" id="btntext" placeholder="Comprueba" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Permite introducir el texto del interior del botón para comprobar la respuesta. Si lo dejamos vacío se utilizará el
+                    valor predeterminado.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="weighting">weighting: <input type="number" name="weighting" id="weighting" min="0" max="100" value="100" step="10" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Solo se aplica cuando la actividad forma parte de un test. En este caso, su valor indica el peso de la actividad respecto
+                    a las otras actividades el test.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="lighting">lighting: <input type="number" name="lighting" id="lighting" min="0" max="100" value="0" step="5" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Solo se aplica cuando la actividad forma parte de un test. En este caso, su valor indica la puntuación relativa que 
+                    debe restarse si la actividad se responde incorrectamente.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="icons">icons:</label>
+        <select name="icons" id="icons">
+            <option value="">&nbsp;</option>
+            <option value="csshexent" selected="selected">csshexent</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Seleccionando 'csshexent' se utilizarán entidades css hexadecimales para añadir iconos.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="storage">storage:</label>
+        <select name="storage" id="storage">
+            <option value="">&nbsp;</option>
+            <option value="local" selected="selected">local</option>
+            <option value="session">session</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    Indica si debe utilizarse el HTML5 Web Storage para guardar si la actividad ha sido realizada. Si el navegador 
+                    soporta el Web Storage, se guardará en el storage la fecha de la primera y última ocasión en el que el usuario 
+                    responda la actividad. Cuando se recargue el documento se mostrará una tabla mostrando las fechas y puntuaciones.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="storagekey">storagekey: <input type="text" name="storagekey" id="storagekey" value="jsgeork" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    Permite introducir una clave en la que almacenar los datos en el storage. Si introducimos siempre la misma clave
+                    en todas nuestras actividades conseguiremos que se agrupen todos los datos en el storage en un mismo objeto. Si dejamos el campo vacío
+                    se utilizará el id de la actividad como clave para almacenar los datos. Es recomendable utilizar una clave para mantener ordenados los
+                    datos y saber que pertenecen a la biblioteca.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                    <button id="delstokey">delete storagekey</button>
+                    Para evitar acumular datos en el Web Storage, el botón anterior permite borrar la entrada <em>storagekey</em> del Web Storage en la que se habrán guardado los datos de las
+                    actividades. Se borrarán los datos de todas las actividades; para borrar los datos de una sola actividad utilice los botones que hay en las tablas con los resultados
+                    previos. La página del generador utiliza su propia entrada de nombre '<span id="stokeyname"></span>' para guardar la configuración.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="fillfromstorage">fillfromstorage: <input type="checkbox" name="fillfromstorage" id="fillfromstorage" checked="checked" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Si la opción <em>fillfromstorage</em> está activa, si la pregunta ha sido solucionada anteriormente y guardada en el storage, se llenará el cuadro de entrada con la respuesta correcta y se mostrará 
+                    <span class="CSSGapFillFromStorage"><input type="text" data-box="box1" class="CSSInputText" placeholder="" data-weight="100" value="con este estilo" /></span>.
+                    Esta opción permite, siempre que el navegador soporte el <em>storage</em>, que el alumno vea las
+                    respuestas correctas cuando repase el contenido si antes ya las ha respondido bien.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="showstorage">showstorage: <input type="checkbox" name="showstorage" id="showstorage" checked="checked" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Marcando esta opción se añadirá al documento la tabla con los resultados previos leídos del <em>storage</em>. Si no la marcamos
+                    no saldrá la tabla pero seguirán guardándose los resultados y podrán mostrarse en otros documentos utilizando la instrucción 
+                    <code><strong>jsGeork.Questions.getStorage(idOut, tipo_storage, storagekey, iden);</strong></code> en la que <em>idOut</em> es el atributo id 
+                    del bloque de la página en la que se colocará la tabla; <em>tipo_storage</em> es el tipo de web storage en el que están los
+                    datos (local o session); <code>storagekey</code> la clave para almacenar los datos; <code>iden</code> es el Id de la actividad 
+                    de la que se quieren los resultados.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="delstorage">delstorage: <input type="checkbox" name="delstorage" id="delstorage" checked="checked" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Marcando esta opción aparecerá el botón, en la tabla con los resultados previos, para borrar el <em>storage</em>.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="wai-aria">wai-aria: <input type="checkbox" name="wai-aria" id="wai-aria" checked="checked" disabled="disabled" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Marcando esta opción se generará internamente código html conforme a la especificación sobre accesibilidad <strong>WAI-ARIA</strong> (Web Accessibility Initiative - Accessible Rich Internet Applications)
+                    del <em>World Wide Web Consortium</em>. Si lo necesita puede deshabilitar la opción poniendo el valor de la propiedad a falso en el código del objeto (<code>"wai-aria": false,</code>), pero no se recomienda.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+            <label for="onready">onready:  <input type="checkbox" name="onready" id="onready" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <code>onready</code> permite introducir una función que se llamará cuando la actividad termine de crearse en la página (ej. <code>onready: function(){  },</code>). 
+                </span>
+            </div>
+        </div>
+
+        <div class="campoconfig">
+            <label for="oncheck">oncheck:  <input type="checkbox" name="oncheck" id="oncheck" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <code>oncheck</code> permite introducir una función que se llamará cuando el usuario pulse en el botón para
+                    comprobar el resultado. Puede utilizar esta función para mostrar elementos de la página ocultos hasta ese momento  (ej. <code>oncheck: function(){ $("#newq").show(); },</code>).<br /><br />
+                    También se guarda en la función <em>setQuestion</em> la puntuación de la actividad en la variable <code>score</code>. En esta actividad se guarda el porcentaje de acierto, es decir, si hay n
+                    cuadros a responder y se aciertan x se guarda (x/n)*100 redondeado sin decimales, teniendo en cuenta el peso de cada cuadro. Puede acceder a este después de chequearse la actividad, por ejemplo utilizando la propiedad oncheck (p. ej. <code>oncheck: function(){ alert(this.score); },</code>).
+                </span> 
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="attempts">attempts: <input type="number" name="attempts" id="attempts" min="1" max="30" value="" step="1" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Este campo permite introducir un número de intentos para resolver los huecos. Cuando se consuman de lanzará el evento <code>oncomplete</code> 
+                    cada vez que se pulse en el botón de chequeo.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+            <label for="oncomplete">oncomplete:  <input type="checkbox" name="oncomplete" id="oncomplete" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <code>oncomplete</code> permite introducir una función que se llamará cuando el usuario complete la actividad,
+                    es decir, agote todos los intentos sea resolviendo correctamente todos los huecos o no. 
+                    Puede utilizar esta función para mostrar elementos de la página ocultos hasta ese momento  (ej. <code>oncomplete: function(){ $("#newq").show(); },</code>).
+                </span> 
+            </div>
+        </div>
+
+        <div class="campoconfig">
+            <label for="onok">onok:  <input type="checkbox" name="onok" id="onok" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <code>onok</code> permite introducir una función que se llamará cuando el usuario pulse en el botón para
+                    comprobar el resultado y la actividad se considere como realizada correctamente. 
+                </span> 
+            </div>
+        </div>
+
+        <div class="campoconfig">
+            <label for="onko">onko:  <input type="checkbox" name="onko" id="onko" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <code>onko</code> permite introducir una función que se llamará cuando el usuario pulse en el botón para
+                    comprobar el resultado y la actividad se considere como NO realizada correctamente..
+                Desde los eventos puede acceder al número de intentos (this.attempts). Puede utilizarlos para realizar acciones si el usuario no consigue responder bien 
+                en varios intentos (p.ej. <code>if(this.attempts>5){ ... }</code>). El número de intentos se reiniciliza al acertar al 100% la actividad. 
+
+                </span> 
+            </div>
+        </div>
+        <div class="campoconfig">
+            NOTA DE ACLARACIÓN
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    <strong>Sobre las puntuaciones</strong>: Cada actividad es puntuada internamente de 0 a 100 aunque esta puntuación solo es utilizada cuando la actividad 
+                    forma parte de un Test. En principio se considera a una actividad como realizada correctamente cuando se obtiene una puntuación o <em>score</em> de 100. En este 
+                    caso se guarda en el storage la primera y última vez que se ha realizado correctamente la actividad y se lanza, si está definido, el evento <code>onok</code>. 
+                    En caso contrario se lanza el evento <code>onko</code>. Si lo necesita pude cambiar el umbral de considerar la actividad como correcta utilizando la propiedad 
+                    "<em>threshold</em>". Por ejemplo, añadiendo al objeto la línea <code>"threshold": 50,</code> hará que se considere como correcta la actividad obteniendo un score de 50 o más.
+                    En las <em>actividades de preguntas con respuestas en cuadros de entrada (PIB)</em> la puntuación obtenida es el porcentaje de cuadros de entrada respuestos correctamente sobre el total de cuadros de entrada pero teniendo en cuenta el peso (<em>weight</em>) de cada cuadro.
+                    <br /><br />
+                    <strong>Sobre las variables públicas</strong>: Las variables <code>this.score, this.attempts, etc.</code> son variables públicas de la función <code>jsGeork.Questions.Question()</code>. Por tanto, la palabra reservada
+                    <em>this</em> se refiere a esta función y podemos acceder a estas variables utilizando <code>jsGeork.Questions.Question.score, jsGeork.Questions.Question.attempts, etc</code>.
+                    Debe tener en cuenta que si la función es llamada por otras actividades el valor de estas variables será sobrescrito. Por tanto debe utilizarlas
+                    inmediatamente después de su llamada por la actividad. Desde los eventos <code>onready, oncheck, onok y onko</code> es segura su utilización ya que su llamada actualiza
+                    su valor al de la actividad; sin embargo, si leemos el valor de <code>jsGeork.Questions.Question.attempts</code> obtendremos el de la última actividad que los ha actualizado. 
+                    Puede saber el id de la última actividad que ha actualizado las variables utilizando <code>jsGeork.Questions.Question.update</code>. Si necesita acceder a estos datos desde fuera
+                    de los eventos utilice la propiedad de la función cuyo nombre es el del id de la actividad, por ejemplo <code>jsGeork.Questions.Question["id"]</code>. Esta propiedad, después de que la actividad sea chequeada,  
+                    contiene como valor un objeto con los datos de la actividad. Puede ver en la consola de su navegador qué datos guarda este objeto con el script <code>console.log(jsGeork.Questions.Question["id"]);</code>. 
+                </span> 
+            </div>
+        </div>
+
+                
+       </div> <!--advopt-->
+
+        <button type="button" id="btngenera">Genera</button>
+
+            <span id="delsto">[ Borrar valores almacenados y reajustar ]</span>
+
+
+        </fieldset>
+    </form>
+
+    <div id="bloqueej">
+
+
+    <span data-makeqs="input1">
+       <span data-input-make="box1">myvalue</span>
+    </span>
+    <!-- botones -->
+    <span data-input-btnchek="input1"></span><span data-input-btnhint="input1"></span>
+    <div data-info-hint="input1" style="display: none;">
+       Contenido a mostrar cuando se pulsa en el botón de ayuda
+    </div>
+    <div data-input-showinfo="input1">
+       <!-- muestra información sobre los intentos y aciertos -->
+    </div>
+    <div data-info-ok="input1" style="display: none;">
+       <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+       <span class="CSSMsgSuccess">¡CORRECTO!</span>
+    </div>
+    <div data-info-ko="input1" style="display: none;">
+       <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+       <span class="CSSMsgFail">¡ERROR!</span>
+    </div>
+    <div data-stored-results="input1">
+       <!-- mostrará los resultados previos -->
+    </div>
+
+
+    </div>
+
+    <div id="bloquecode">
+        <span>Código:</span> <span id="selcode" style="cursor: pointer;">[Selecciona el código]</span>
+        <textarea id="textcode">
+
+
+        </textarea>
+        <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                El cuadro anterior incluye el código de la actividad para que lo copie y pegue en su página. Para que funcione correctamente
+                    es necesario que la página cargue las bibliotecas jQuery y jsGeork. Para que la actividad se vea correctamente es necesario
+                    también que existan en la página las reglas CSS adecuadas. Si utiliza el software este se encarga de incluir los enlaces
+                    a los archivos .js y .css con las bibliotecas javascript y los estilos css. Si no utiliza el software deberá incluir 
+                    los enlaces de forma manual.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                Si tiene los mínimos conocimientos necesarios para escribir objetos javascript en notación literal puede editar el código 
+                    manualmente para modificar la actividad, por ejemplo añadir más opciones de respuesta. Para detectar errores puede probar
+                    el código del interior de la etiqueta <code>script</code> en páginas como <a href="http://www.jshint.com/" target="_blank">www.jshint.com</a>.
+                    Por ejemplo, es aconsejable que no incluya la coma (,) final en las últimas propiedades de un objeto ya que en algunos navegadores antiguos produce error.
+                </span>
+            </div>
+
+    </div>
+
+
+    <div id="iframe_ejemplos" class="iframe_ejemplos">
+
+    <h1>Ejemplos</h1>
+
+    <h2><a href="ejemplos/input_1.html" target="_blank">Ejemplo general</a></h2>
+
+
+    <h2><a href="ejemplos/input_2.html" target="_blank">Ejemplos con cuadros numéricos</a></h2>
+
+  
+
+    <h2><a href="ejemplos/input_3.html" target="_blank">Ejemplos con cuadros de texto</a></h2>
+
+    
+
+    </div>
+
+    <div class="goindex">
+    [ <a href="index.html">Índice</a> ]
+    </div>
+</body>
+</html>

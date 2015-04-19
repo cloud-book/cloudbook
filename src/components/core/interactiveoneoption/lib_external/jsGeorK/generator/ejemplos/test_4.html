@@ -1,0 +1,837 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos PTT 4</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+
+<hr />
+<h2>Ejemplo 1</h2>
+<h3>"inside": false,<br />
+</h3>
+<p>Situa los controles delante de las actividades simplemente colocando el bloque con la id del test delante de las actividades. Deja la propiedad
+    <code>"inside"</code> en false para que no se muevan las actividades al interior del bloque del test.
+</p>
+    
+
+    <div id="test_ej_1">
+        <p id="test_ej_1_info_aria"><em></em></p>
+        <div style="display: none;" aria-hidden="true">
+           <div data-info-ok="test_ej_1">
+               <!-- El interior de este bloque se mostrará cuando se supere la prueba -->
+               <span class="CSSMsgSuccess">¡PRUEBA SUPERADA!</span>
+           </div>
+           <div data-info-ko="test_ej_1">
+               <!-- El interior de este bloque se mostrará cuando no se supere la prueba -->
+               <span class="CSSMsgFail">¡Prueba NO superada!</span>
+           </div>
+           <div data-info-bottom="test_ej_1">
+               <!-- El interior de este bloque se moverá al final de los controles del test -->
+               Responda todas las preguntas antes de pulsar en el botón para comprobar las respuestas.
+           </div>
+       </div>
+
+    </div>
+    
+
+   
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="single_ej_1">
+   <p>Año de publicación de la primera parte de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="single_ej_1">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="single_ej_1">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">Publicado por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+   </div>
+</div>
+
+
+   
+
+
+<script>
+    var obj_single_ej_1 = {
+        "id": "single_ej_1",
+        "type": "single",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "weight": 100
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "weight": 0
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta 1",
+        "name": "Ejemplo 1",
+        "random": false,
+        "optsuccess": true,
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+    };
+    //jsGeork.Questions.Question(obj_single_ej_1);
+</script>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="multi_ej_1">
+   <p>Año de publicación de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="multi_ej_1">
+           <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+           <span class="CSSMsgSuccess">OK</span>
+       </div>
+       <div data-info-ko="multi_ej_1">
+           <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">La primera parte se publica en 1605 por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+       <div data-opt="optc">En 1602 todavía no se había publicado.</div>
+       <div data-opt="optd">En 1627 ya se había publicado.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_multi_ej_1 = {
+        "id": "multi_ej_1",
+        "type": "multi",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "select": true
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "select": true
+            },
+            {
+                "text": "1602",
+                "answer": "optc",
+                "select": false
+            },
+            {
+                "text": "1627",
+                "answer": "optd",
+                "select": false
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta 2",
+        "optsuccess": true,
+        "hint": true,
+        "random": true,
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+    };
+    //jsGeork.Questions.Question(obj_multi_ej_1);
+</script>
+
+
+
+    
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_ej3">
+<span data-makeqs="input_ej3">
+   12 + 11.5 = <span data-input-make="box1"></span>
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_ej3"></span><span data-input-btnhint="input_ej3"></span>
+<div data-info-hint="input_ej3" style="display: none;" aria-hidden="true">
+   23 y medio
+</div>
+<div data-input-showinfo="input_ej3">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_ej3" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_ej3" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<div data-stored-results="input_ej3">
+   <!-- mostrará los resultados previos -->
+</div>
+</div> <!-- end div id=input_ej3 -->
+
+
+<script>
+    var obj_input_ej3 = {
+        "id": "input_ej3",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "number",
+                "values": [23.5],
+                "min": 23,
+                "max": 24,
+                "weight": 100,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "size",
+                "aria-label": "once más doce y medio"
+            }
+        },
+        "fieldset": true,
+        "button": "Chequea",
+        "legend": "Pregunta 3",
+        "hint": true,
+        "btnhint": "Ayuda",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+    };
+    //jsGeork.Questions.Question(obj_input_ej3);
+</script>
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="gapfill_ej_4">
+   <p data-makeqs="gapfill_ej_4">El científico considerado como el más importante de la historia es <span data-gap-select="gap1">Newton</span>.</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="gapfill_ej_4">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="gapfill_ej_4">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+   </div>
+</div>
+
+<script>
+    var obj_gapfill_ej_4 = {
+        "id": "gapfill_ej_4",
+        "type": "gapfill",
+        "gaps": {
+            "gap1": {
+                "words": ['Arquímedes', 'Da Vinci', 'Copernico', 'Galileo', 'Darwin', 'Curie', 'Edison', 'Einstein', 'Pasteur', 'Fleming'],
+                "showwords": true,
+                "casesensitive": false,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "all",
+                "weight": 100
+            }
+        },
+        "attempts": 5,
+        "fieldset": true,
+        "legend": "Pregunta 4",
+        "name": "Pregunta 4",
+        "button": "",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+        //"oncomplete": function () { alert("oncomplete\n\nattempts: " + this.attempts + "\nscore: " + this.score); }
+    };
+    //jsGeork.Questions.Question(obj_gapfill_ej_4);
+
+
+</script>
+
+
+
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+
+<script>
+
+    jQuery(function ($) {
+
+        var obj_test_ej_1 = {
+            "id": "test_ej_1",
+            "name": "Test 1",
+            "form": true,
+            "fieldset": true,
+            "legend": "Prueba tipo test - Ejemplo 1",
+            "inside": false,
+            "flow": "slide",
+            "icons": "csshexent",
+            "qbase": 10,
+            "threshold": 70,
+            "random": false,
+            "storage": "local",
+            "storagekey": "georkgenej",
+            "showstorage": true,
+            "delstorage": true
+        };
+        jsGeork.Questions.Test(obj_test_ej_1, obj_single_ej_1, obj_multi_ej_1, obj_input_ej3, obj_gapfill_ej_4);
+
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div style="height: 100px;"></div>
+<hr />
+<h2>Ejemplo 2</h2>
+<h3>data-move-</h3>
+<p>Resitua los controles delante de las actividades con bloques de atributos <code>data-move-btncheck="", data-move-btnctrl="", data-move-prgbar=""
+   y data-move-results=""</code>. Esta última opción no se utiliza en este caso pero permite mover la tabla con las notas de la prueba.
+</p>
+
+    
+    
+    <div data-move-btnctrl="test_ej_3"></div>
+    <div data-move-prgbar="test_ej_3"></div>
+    
+    
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="single_ej_1c">
+   <p>Año de publicación de la primera parte de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="single_ej_1c">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="single_ej_1c">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">Publicado por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_single_ej_1c = {
+        "id": "single_ej_1c",
+        "type": "single",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "weight": 100
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "weight": 0
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta 1",
+        "name": "Ejemplo 1",
+        "random": false,
+        "optsuccess": true,
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+    };
+    //jsGeork.Questions.Question(obj_single_ej_1c);
+</script>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="multi_ej_1c">
+   <p>Año de publicación de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="multi_ej_1c">
+           <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+           <span class="CSSMsgSuccess">OK</span>
+       </div>
+       <div data-info-ko="multi_ej_1c">
+           <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">La primera parte se publica en 1605 por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+       <div data-opt="optc">En 1602 todavía no se había publicado.</div>
+       <div data-opt="optd">En 1627 ya se había publicado.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_multi_ej_1c = {
+        "id": "multi_ej_1c",
+        "type": "multi",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "select": true
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "select": true
+            },
+            {
+                "text": "1602",
+                "answer": "optc",
+                "select": false
+            },
+            {
+                "text": "1627",
+                "answer": "optd",
+                "select": false
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta 2",
+        "optsuccess": true,
+        "hint": true,
+        "random": true,
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+    };
+    //jsGeork.Questions.Question(obj_multi_ej_1c);
+</script>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_ej3c">
+<span data-makeqs="input_ej3c">
+   12 + 11.5 = <span data-input-make="box1"></span>
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_ej3c"></span><span data-input-btnhint="input_ej3c"></span>
+<div data-info-hint="input_ej3c" style="display: none;" aria-hidden="true">
+   23 y medio
+</div>
+<div data-input-showinfo="input_ej3c">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_ej3c" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_ej3c" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<div data-stored-results="input_ej3c">
+   <!-- mostrará los resultados previos -->
+</div>
+</div> <!-- end div id=input_ej3c -->
+
+
+<script>
+    var obj_input_ej3c = {
+        "id": "input_ej3c",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "number",
+                "values": [23.5],
+                "min": 23,
+                "max": 24,
+                "weight": 100,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "size",
+                "aria-label": "once más doce y medio"
+            }
+        },
+        "fieldset": true,
+        "button": "Chequea",
+        "legend": "Pregunta 3",
+        "hint": true,
+        "btnhint": "Ayuda",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+    };
+    //jsGeork.Questions.Question(obj_input_ej3c);
+</script>
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="gapfill_ej_4c">
+   <p data-makeqs="gapfill_ej_4c">El científico considerado como el más importante de la historia es <span data-gap-select="gap1">Newton</span>.</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="gapfill_ej_4c">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="gapfill_ej_4c">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+   </div>
+</div>
+
+<script>
+    var obj_gapfill_ej_4c = {
+        "id": "gapfill_ej_4c",
+        "type": "gapfill",
+        "gaps": {
+            "gap1": {
+                "words": ['Arquímedes', 'Da Vinci', 'Copernico', 'Galileo', 'Darwin', 'Curie', 'Edison', 'Einstein', 'Pasteur', 'Fleming'],
+                "showwords": true,
+                "casesensitive": false,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "all",
+                "weight": 100
+            }
+        },
+        "attempts": 5,
+        "fieldset": true,
+        "legend": "Pregunta 4",
+        "name": "Pregunta 4",
+        "button": "",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+        //"oncomplete": function () { alert("oncomplete\n\nattempts: " + this.attempts + "\nscore: " + this.score); }
+    };
+    //jsGeork.Questions.Question(obj_gapfill_ej_4c);
+</script>
+
+
+    <div data-move-btncheck="test_ej_3"></div>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+    <div id="test_ej_3">
+       <div style="display: none;" aria-hidden="true">
+           <div data-info-ok="test_ej_3">
+               <!-- El interior de este bloque se mostrará cuando se supere la prueba -->
+               <span class="CSSMsgSuccess">¡PRUEBA SUPERADA!</span>
+           </div>
+           <div data-info-ko="test_ej_3">
+               <!-- El interior de este bloque se mostrará cuando no se supere la prueba -->
+               <span class="CSSMsgFail">¡Prueba NO superada!</span>
+           </div>
+           <div data-info-bottom="test_ej_3">
+               <!-- El interior de este bloque se moverá al final de los controles del test -->
+               Responda todas las preguntas antes de pulsar en el botón para comprobar las respuestas.
+           </div>
+       </div>
+    </div>
+<script>
+
+    jQuery(function ($) { 
+
+    var obj_test_ej_3 = {
+        "id": "test_ej_3",
+        "name": "Test 3",
+        "form": true,
+        "fieldset": true,
+        "legend": "",
+        "inside": false,
+        "flow": "slide",
+        "slidercolor": "gradient",
+        "sliderinfo": "def%",
+        "button": "Entrega",
+        "caption": "Resultado del test",
+        "details": "El acierto es el porcentaje de puntos obtenidos sobre los puntos en juego. (0%) significa que no se ha contestado una pregunta de elección múltiple.",
+        "summary": "Información",
+        "qbase": 100,
+        "random": true,
+        "threshold": 40,
+        "random": false,
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "delstorage": true
+        //"oncheck": function () { alert("oncheck\n\nscore: " + this.score); },
+        //"onok": function () { alert("onok\n\ntotal: " + this.total + "\nthreshold: " + this.threshold + "\nscore: " + this.score); }
+    };
+    jsGeork.Questions.Test(obj_test_ej_3, obj_single_ej_1c, obj_multi_ej_1c, obj_input_ej3c, obj_gapfill_ej_4c);
+
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div style="height: 100px;"></div>
+<hr />
+<h2>Ejemplo 3</h2>
+<h3>"threshold": 50,<br />
+    "qbase": 20,
+</h3>
+<p>Test con una sola actividad de rellenar dos huecos. El segundo hueco tiene un peso la mitad que el primero (<code>"weight": 50</code>), por esto
+    contestando solo el primer hueco se supera el umbral del 50%.
+</p>
+
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="gapfill_ej_4b">
+   <p data-makeqs="gapfill_ej_4b">El científico considerado como el más importante de la historia es <span data-gap-select="gap1">Newton</span>.</p>
+   <p data-makeqs="gapfill_ej_4b">Uno de los científicos y <strong>artistas</strong> más importantes de la historia es <span data-gap-fill="gap2">Da Vinci</span>.</p>
+    <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="gapfill_ej_4b">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="gapfill_ej_4b">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+   </div>
+</div>
+
+<script>
+    var obj_gapfill_ej_4b = {
+        "id": "gapfill_ej_4b",
+        "type": "gapfill",
+        "gaps": {
+            "gap1": {
+                "words": ['Arquímedes', 'Da Vinci', 'Copernico', 'Galileo', 'Darwin', 'Curie', 'Edison', 'Einstein', 'Pasteur', 'Fleming'],
+                "showwords": true,
+                "casesensitive": false,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "all",
+                "weight": 100
+            },
+            "gap2": {
+                "words": ['Leonardo', 'DaVinci', 'Leonardo Da Vinci', 'Leonardo DaVinci'],
+                "showwords": true,
+                "casesensitive": false,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "all",
+                "weight": 50
+            }
+        },
+        "attempts": 5,
+        "fieldset": true,
+        "legend": "Pregunta 1",
+        "name": "Pregunta 1",
+        "button": "",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+        //"oncomplete": function () { alert("oncomplete\n\nattempts: " + this.attempts + "\nscore: " + this.score); }
+    };
+    //jsGeork.Questions.Question(obj_gapfill_ej_4b);
+</script>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="test_ej_2">
+   <p id="test_ej_2_info_aria">Realice el siguiente test...</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="test_ej_2">
+           <!-- El interior de este bloque se mostrará cuando se supere la prueba -->
+           <span class="CSSMsgSuccess">¡PRUEBA SUPERADA!</span>
+       </div>
+       <div data-info-ko="test_ej_2">
+           <!-- El interior de este bloque se mostrará cuando no se supere la prueba -->
+           <span class="CSSMsgFail">¡Prueba NO superada!</span>
+       </div>
+       <div data-info-bottom="test_ej_2">
+           <!-- El interior de este bloque se moverá al final de los controles del test -->
+           Responda todas las preguntas antes de pulsar en el botón para comprobar las respuestas.
+       </div>
+   </div>
+</div>
+
+
+<script>
+    var obj_test_ej_2 = {
+        "id": "test_ej_2",
+        "name": "Test 1 pregunta",
+        "form": true,
+        "fieldset": true,
+        "legend": "Prueba tipo test - Ejemplo 3",
+        "inside": false,
+        "flow": "slide",
+        "icons": "csshexent",
+        "qbase": 20,
+        "threshold": 50,
+        "random": false,
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "delstorage": true
+    };
+    jsGeork.Questions.Test(obj_test_ej_2, obj_gapfill_ej_4b);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<div style="height: 100px;"></div>
+<hr />
+<h2>Ejemplo 4</h2>
+<h3>jsGeork.Questions.getStorage
+</h3>
+<p>Ejemplo de obtener los resultados de una actividad o test guardados en el web storage. En este caso se obtienen los resultados previos, si existen,
+    del primer test de esta misma página, test con identificador "<em>test_ej_1</em>". También se muestra la actividad <em>single_ej_1</em>, primera actividad
+    del test anterior. Asegúerese de haber resuelto al menos una vez dicho test. Observe 
+    que como los datos de obtienen del storage la función puede ser utilizada en una página distinta de la que contiene el test o actividad.
+</p>
+
+
+    <div id="resprevej1" style="border: 4px dashed red; width: 400px; margin: 1em; float: left;"></div>
+    <div id="resprevej2" style="border: 4px dashed red; width: 400px; margin: 1em; float: right;"></div>
+
+
+    <script>
+
+        jsGeork.Questions.getStorage("resprevej1", "local", "georkgenej", "test_ej_1");
+        jsGeork.Questions.getStorage("resprevej2", "local", "georkgenej", "single_ej_1");
+
+    </script>
+
+    
+</body>
+</html>

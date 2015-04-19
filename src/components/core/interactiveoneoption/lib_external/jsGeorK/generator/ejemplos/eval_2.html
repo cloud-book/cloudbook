@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos TEA 2</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+    <p>Ejemplo con tres tablas de evaluación. Las tablas tienen un intervalo de refresco de 1s, 2s y 3s. Si hay definido un intervalo de refresco y que debe mostrarse 
+        también el botón para el refresco manual, entonces dicho botón tiene como texto el tiempo de la última actualización. Puede detenerse y volverse a iniciar el refresco automático
+        pulsando en la nota final. Cuando el refresco se para, el tiempo de la última actualización se muestra en color rojo o, aparece un contorno
+        rojo en el botón de actualizar.
+    </p>
+    <p>Se incluye también un botón para controlar la tabla 1 con el fin de mostrar que también puede controlarse el refresco de forma programática:</p>
+     <pre>
+         if (jsGeork.Questions.Question["test_ej_1"]) {
+                clearInterval(jsGeork.Questions.Question["test_ej_1"].refresh());
+         }
+     </pre>
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="test_ej_1">
+</div>
+
+<br />
+    <div style="margin-left: auto; margin-right: auto; text-align: center;">
+    <button onclick="mitimer();">actualizar/iniciar/parar la tabla 1</button>
+    </div>
+<br />
+
+
+<div id="test_ej_2">
+
+
+</div>
+
+<div id="test_ej_3">
+
+
+</div>
+
+<script>
+    jQuery(function ($) {
+        var obj_test_ej_1 = {
+            "id": "test_ej_1",
+            "refresh": false,
+            "timer": "1s"
+        };
+        jsGeork.Questions.Eval(obj_test_ej_1, obj_single_ej_1);
+        var obj_test_ej_2 = {
+            "id": "test_ej_2",
+            "refresh": false,
+            "timer": 2000
+        };
+        jsGeork.Questions.Eval(obj_test_ej_2, obj_multi_ej_1);
+        var obj_test_ej_3 = {
+            "id": "test_ej_3",
+            //"refresh": false,
+            "timer": 3000
+        };
+        jsGeork.Questions.Eval(obj_test_ej_3, obj_single_ej_1, obj_multi_ej_1);
+    });
+</script>
+
+
+    <script>
+        function mitimer() {
+            if (jsGeork.Questions.Question["test_ej_1"]) {
+                clearInterval(jsGeork.Questions.Question["test_ej_1"].refresh());
+            }
+        }
+    </script>
+   
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="single_ej_1">
+   <p>Año de publicación de la primera parte de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="single_ej_1">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="single_ej_1">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">Publicado por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_single_ej_1 = {
+        "id": "single_ej_1",
+        "type": "single",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "weight": 100
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "weight": 0
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta 1",
+        "name": "Ejemplo 1",
+        "random": false,
+        "optsuccess": true,
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+    };
+    jsGeork.Questions.Question(obj_single_ej_1);
+</script>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="multi_ej_1">
+   <p>Año de publicación de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="multi_ej_1">
+           <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+           <span class="CSSMsgSuccess">OK</span>
+       </div>
+       <div data-info-ko="multi_ej_1">
+           <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">La primera parte se publica en 1605 por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+       <div data-opt="optc">En 1602 todavía no se había publicado.</div>
+       <div data-opt="optd">En 1627 ya se había publicado.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_multi_ej_1 = {
+        "id": "multi_ej_1",
+        "type": "multi",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "select": true
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "select": true
+            },
+            {
+                "text": "1602",
+                "answer": "optc",
+                "select": false
+            },
+            {
+                "text": "1627",
+                "answer": "optd",
+                "select": false
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta 2",
+        "optsuccess": true,
+        "hint": true,
+        "random": true,
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        //"fillfromstorage": true,
+        "delstorage": true
+    };
+    jsGeork.Questions.Question(obj_multi_ej_1);
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
+
