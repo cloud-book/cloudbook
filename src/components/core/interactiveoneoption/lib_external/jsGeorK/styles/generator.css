@@ -1,0 +1,159 @@
+﻿#frmopt {
+    padding: 4em;
+    padding-top: 2em;
+    margin: auto;
+    width: 70%;
+}
+#frmopt > fieldset, #textcode {
+    padding-top: 1em;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.5);
+    background-color: #FFFF99;
+}
+#helplib {
+    border: thin solid #999999;
+    padding: 4em;
+    margin: auto;
+    width: 70%;
+    padding-top: 1em;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.5);
+    background-color: #FFFF99;
+    margin-bottom: 100px;
+    font-size: large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#helplib h1 {
+    font-family: 'Gill Sans' , 'Gill Sans MT' , Calibri, 'Trebuchet MS' , sans-serif;
+}
+#helplib code pre {
+
+}
+#infosoft {
+    margin-top: 4em;
+    padding-top: 1em;
+    font-size: smaller;
+    border-top-style: solid;
+    border-top-width: thin;
+    border-top-color: #666666;
+}
+div > fieldset{
+    margin-bottom: 1.5em;
+}
+
+#bloqueej, #htmlorig {
+    margin: auto;
+    width: 70%;
+    margin-bottom: 4em;
+}
+.campogen {
+    margin: 0.5em;
+    margin-left: 2em;
+    padding-left: 1em;
+    padding-bottom: 1em;
+    border: medium groove #C0C0C0;
+    background-color: white;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.5);
+}
+.campogen p {
+    color: #808080;
+    font-size: x-large;
+}
+.campoconfig {
+    margin: 0.5em;
+    margin-left: 2em;
+    padding: 1em;
+    border: medium groove #C0C0C0;
+    background-color: white;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.5);
+}
+.campoconfig p,.campoconfig li {
+    color: #808080;
+}
+#btngenera {
+    margin: auto;
+    margin-top: 0.5em;
+    width: 200px;
+    font-size: x-large;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 2em;
+}
+.divhelp {
+    padding-left: 1.5em;
+    font-family: Georgia, 'Times New Roman' , Times, serif;
+    color: #666666;
+    padding-top: 2em;
+}
+#bloquecode {
+    margin: auto auto 4em auto;
+    width: 70%;
+}
+#textcode {
+    margin: auto;
+    width: 100%;
+    height: 500px;
+}
+#selcode {
+    text-align: right;
+    display: block;
+    float: right;
+}
+#txtareahtml {
+    width: 100%;
+    height: 200px;
+}
+#delsto {
+    cursor: pointer;
+    text-align: right;
+    float: right;
+}
+#opcadv {
+    font-weight: bold;
+    margin-top: 1em;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman' , serif;
+    display: inline-block;
+}
+#infoact {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman' , serif;
+    font-size: larger;
+    margin-bottom: 2em;
+}
+.goindex {
+    margin: auto;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.gentitle {
+    margin: auto;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold' , sans-serif;
+    font-size: x-large;
+}
+#trainblock {
+    margin-top: 2em;
+}
+.iframe_ejemplos {
+    margin: auto;
+    text-align: center;
+    margin-top: 200px;
+    margin-bottom: 2em;
+}
+.iframe_ejemplos iframe {
+    border: thick double #FF0000;
+    margin-top: 1em;
+    width: 70%;
+    height: 500px;
+    margin-bottom: 1em;
+}

@@ -107,6 +107,9 @@ Backend.prototype.loadComponentsRecursive = function loadComponentsRecursive(com
   var metadatapath = path.join(componentpath,'metadata.json');
   if(fs.existsSync(metadatapath)){
     var description = require("./"+metadatapath);
+    if(description.hasOwnProperty('disabled') && description.disabled){
+      return 0;
+    }
     Cloudbook.Actions[description.idtype] = {};
     Cloudbook.Actions[description.idtype]['path'] = componentpath;
     Cloudbook.Actions[description.idtype]['component'] = CBUtil.req(path.join(componentpath,'core.js'));

@@ -194,27 +194,25 @@ ProView.prototype.dialogUpdateSectionName = function dialogUpdateSectionName(cbs
       var seccion = $('#sectionname').val();
       if(seccion==""){
       	 
-	$("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+	      $("#validateindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
        	dialog.find('button').attr("disabled","disabled");		
 		
       }else {
-	$("#validateindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+      	$("#validateindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
        	dialog.find('button').removeAttr("disabled");
    		
-      }	
+      }
    }).focus();
 
-  $(document).keypress(function(e)
-  {
-	if (e.which==13)
-	{
-	    var seccion = $('#sectionname').val();
-      	    if(seccion!=""){ 
+  dialog.find('#sectionname').keypress(function(e){
+      if (e.which==13){
+        var seccion = $('#sectionname').val();
+      	if(seccion!=""){ 
          	dialog.find('button').click();
-            }
         }
- });
-    dialog.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
+      }
+  });
+  dialog.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
 
 }
 

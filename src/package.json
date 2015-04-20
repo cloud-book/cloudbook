@@ -21,6 +21,7 @@
   "webkit": {
     "plugin": true
   },
+	"chromium-args": "--ppapi-flash-path=plugins/libpepflashplayer.so --ppapi-flash-version=17.0.0.134",
   "dependencies": {
     "jed": "~1.1.0",
     "fs-extra": "~0.18.0",
