@@ -18,14 +18,14 @@ ExportHTML.prototype.getSections = function getSections(){
 }
 
 ExportHTML.prototype.do_html = function do_html(path){
-	var myhead='<head>\
-	<script type="text/javascript" src="jquery.js"></script>\
-	<script type="text/javascript" src="jquery.layout.js"></script>\
-	<script type="text/javascript" src="jquery-ui.min.js"></script>\
-	<script type="text/javascript" src="core.js"></script>\
-	<link rel="stylesheet" type="text/css" href="jquery-ui.min.css" />\
-	<link rel="stylesheet" type="text/css" href="estilo.css" />\
-	</head>';
+	var myhead=$('<head></head>');
+	myhead.append('<script type="text/javascript" src="jquery.js"></script>');
+	myhead.append('<script type="text/javascript" src="jquery.layout.js"></script>');
+	myhead.append('<script type="text/javascript" src="jquery-ui.min.js"></script>');
+	myhead.append('<script type="text/javascript" src="core.js"></script>');
+	myhead.append('<link rel="stylesheet" type="text/css" href="jquery-ui.min.css" />');
+	myhead.append('<link rel="stylesheet" type="text/css" href="estilo.css" />');
+
 	var sections=this.getSections();
 	var aside='<aside class="ui-layout-west"><ol>';
 
@@ -42,7 +42,38 @@ ExportHTML.prototype.do_html = function do_html(path){
 			} 
 	}
 */
-	files_to_copy.push('js/lib_external/exporthtml/',path);
+	files_to_copy.push('js/lib_external/exporthtml/');
+	//Determine what external component scripts need to load
+	var types=Cloudbook.Actions;
+	var sm=application.storagemanager.getInstance();
+	var all_types_used = [];
+	for (var i=0; i< sections.length;i++){
+		var content_section=sections[i].content;
+		for (var j=0; j<content_section.length; j++){
+			var obj_into_section_type=sm.getCBObjectById(content_section[j]);
+				if ($.inArray(obj_into_section_type.idtype,all_types_used) == -1)
+					all_types_used.push(obj_into_section_type.idtype);
+		}
+	}
+	var pathUtil = window.require('path');
+	for (var i=0; i<all_types_used.length;i++){
+		var datatype=types[all_types_used[i]];
+		if (datatype.metadata.hasOwnProperty('external_css')){
+			for (var k=0;k<datatype.metadata.external_css.length;k++){
+				files_to_copy.push(datatype.path+'/'+datatype.metadata.external_css[k]);
+				//Add element to head
+				myhead.append('<link rel="stylesheet" type="text/css" href="'+pathUtil.basename(datatype.metadata.external_css[k])+'" />');
+			}
+		}
+		if (datatype.metadata.hasOwnProperty('external_scripts')){
+			for (var k=0;k<datatype.metadata.external_css.length;k++){
+				files_to_copy.push(datatype.path+'/'+datatype.metadata.external_scripts[k]);
+				//Add element to head
+				myhead.append('<script type="text/javascript" src="'+pathUtil.basename(datatype.metadata.external_scripts[k])+'"></script>');
+			}
+		}
+	}
+
 	for (var i = 0; i<sections.length; i++){
 		aside=aside+'<li><a href="#data'+i+'">'+sections[i].name+'</a></li>';
 	}
@@ -62,7 +93,7 @@ ExportHTML.prototype.do_html = function do_html(path){
 	//Change source url into exported objects
 	content = this.rewriteSource(content);
 	content = content[0].outerHTML;
-	var total = this.formatXml('<!DOCTYPE html><html>'+myhead+'<body>'+aside+content+footer+'</body></html>');
+	var total = this.formatXml('<!DOCTYPE html><html>'+myhead[0].outerHTML+'<body>'+aside+content+footer+'</body></html>');
 
 	var fs = window.require('fs');
 	fs.writeFile(path+"outfile.html", total , function(err) {
@@ -78,7 +109,7 @@ ExportHTML.prototype.do_html = function do_html(path){
 	return total;
 }
 ExportHTML.prototype.rewriteSource = function rewriteSource(html){
-	console.log(html);
+	//console.log(html);
 
 	var changed=$.grep($(html),function(o,idx){ 
 		if($(o).find('img').length){ 
@@ -92,7 +123,7 @@ ExportHTML.prototype.rewriteSource = function rewriteSource(html){
 		}	
 		return true;  
 	}); 
-	console.log(changed);
+	//console.log(changed);
 	return changed;
 }
 ExportHTML.prototype.formatXml = function formatXml(xml) {
