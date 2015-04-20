@@ -4,10 +4,9 @@
  */
 function ExportHTML(){
 	this.counters = {};
-	this.counters = {"CBSection": 0, "TextBox": 0, "ImageBox": 0, "VideoBox":0} ;
 }
 
-ExportHTML.prototype.getSections = function getSections2(){
+ExportHTML.prototype.getSections = function getSections(){
 	var storage = application.storagemanager.getInstance();
 	var main_sect = storage.getRoot();
 	var sections = [];
@@ -23,6 +22,7 @@ ExportHTML.prototype.do_html = function do_html(path){
 	<script type="text/javascript" src="jquery.js"></script>\
 	<script type="text/javascript" src="jquery.layout.js"></script>\
 	<script type="text/javascript" src="jquery-ui.min.js"></script>\
+	<script type="text/javascript" src="core.js"></script>\
 	<link rel="stylesheet" type="text/css" href="jquery-ui.min.css" />\
 	<link rel="stylesheet" type="text/css" href="estilo.css" />\
 	</head>';
@@ -30,7 +30,7 @@ ExportHTML.prototype.do_html = function do_html(path){
 	var aside='<aside class="ui-layout-west"><ol>';
 
 	var files_to_copy = [];
-	var h=$(myhead);
+/*	var h=$(myhead);
 
 	for (var i=0; i<h.length; i++){
 			if (h[i].nodeName == 'SCRIPT'){
@@ -41,6 +41,8 @@ ExportHTML.prototype.do_html = function do_html(path){
 				}
 			} 
 	}
+*/
+	files_to_copy.push('js/lib_external/exporthtml/',path);
 	for (var i = 0; i<sections.length; i++){
 		aside=aside+'<li><a href="#data'+i+'">'+sections[i].name+'</a></li>';
 	}
@@ -49,72 +51,19 @@ ExportHTML.prototype.do_html = function do_html(path){
 	var content='<div class="ui-layout-center">';
 	content=content+'<div class="ui-layout-content">';
 	
-	sections.forEach(function(obj,idx){ var JQobj=obj.htmlView('data'+idx); content += JQobj[0].outerHTML })
+	sections.forEach(function(obj,idx){ var JQobj=obj.htmlView('data'+idx); content += JQobj[0].outerHTML });
 
 	content=content+'</div></div>';
 	var footer='<footer class="ui-layout-south"><section><span class="left"><button> Prev </button></span>Footer section<span class="right"><button> Next </button></span></section></footer>';
-	var script='<script type="text/javascript">\
-		var historial = [];\
-		var current = 0;\
-		$(document).ready(\
-			function () {\
-				$("article").css("visibility","hidden");\
-				$("article:first").css("visibility","initial");\
-				historial.push("#"+$("article:first").attr("id"));\
-				current=0;\
-				$("body").layout({ applyDemoStyles: true , south: { minSize: 60}});\
-			});\
-			$("aside>ol>li>a").click(function(){\
-				var clicked=$(this).attr("href");\
-				if (clicked != historial[current]){\
-					for (var i = current+1; i<historial.length-1; i++)\
-						historial.pop();\
-					historial.push(clicked);\
-					current += 1;\
-				}\
-				while (historial.length > 10){\
-					historial.shift();\
-				}\
-				$("article").css("visibility","hidden");\
-				$("article[id="+clicked.substr(1)+"]").css("visibility","initial");\
-			});\
-		  	$(function() {\
-				$("aside>ol>li>a,button")\
-  				.button()\
-  				.click(function( event ) {\
-    				event.preventDefault();\
-  				});\
-  			});\
-  			$(function() {\
-				$("footer>section>span.left>button")\
-  				.button()\
-  				.click(function( event ) {\
-    				event.preventDefault();\
-    				if (current > 0){\
-        				current--;\
-        				$("article").css("visibility","hidden");\
-						$("article[id="+historial[current].substr(1)+"]").css("visibility","initial");\
-					}\
-  				});\
-			});\
-			$(function() {\
-				$("footer>section>span.right>button")\
-  				.button()\
-  				.click(function( event ) {\
-    				event.preventDefault();\
-    				if (current < historial.length-1){\
-        				current++;\
-        				$("article").css("visibility","hidden");\
-						$("article[id="+historial[current].substr(1)+"]").css("visibility","initial");\
-					}\
-  				});\
-			});\
-	</script>';
 
-	var total = this.formatXml('<!DOCTYPE html><html>'+myhead+'<body>'+aside+content+footer+script+'</body></html>');
-	var imgs = $(total);
-	var imgs = imgs.find('img');
+	//Get images & scripts to copy
+	var imgs = $(content).find('img');
 	imgs.each(function(idx){files_to_copy.push(imgs[idx].getAttribute('src'))});
+	//Change source url into exported objects
+	content = this.rewriteSource(content);
+	content = content[0].outerHTML;
+	var total = this.formatXml('<!DOCTYPE html><html>'+myhead+'<body>'+aside+content+footer+'</body></html>');
+
 	var fs = window.require('fs');
 	fs.writeFile(path+"outfile.html", total , function(err) {
     	if(err) {
@@ -128,7 +77,24 @@ ExportHTML.prototype.do_html = function do_html(path){
 	
 	return total;
 }
+ExportHTML.prototype.rewriteSource = function rewriteSource(html){
+	console.log(html);
 
+	var changed=$.grep($(html),function(o,idx){ 
+		if($(o).find('img').length){ 
+			var imgs=$(o).find('img'); 
+			for (var i=0; i< imgs.length; i++){
+				var im=$(imgs[i]) ; 
+				var path=im.attr('src'); 
+				path=path.replace(Project.Info.projectpath+'/rsrc/',''); 
+				im.attr('src',path);
+			}
+		}	
+		return true;  
+	}); 
+	console.log(changed);
+	return changed;
+}
 ExportHTML.prototype.formatXml = function formatXml(xml) {
     var formatted = '';
     var reg = /(>)(<)(\/*)/g;
@@ -163,19 +129,33 @@ ExportHTML.prototype.formatXml = function formatXml(xml) {
 ExportHTML.prototype.copyFileToPath = function copyFileToPath(filename,path){
     var fs = window.require('fs');
     var fsextra = window.require('fs-extra');
+    var fsextra2 = window.require('fs.extra');
     var pathUtil = window.require('path');
 
 
     /*
      * Copy file from project dir to export dir
      */
-
-    var originalbasename = pathUtil.basename(filename);
-    if (filename == originalbasename){
-	    var filename = Project.Info.projectpath +"/rsrc/";
+	fsextra.ensureDirSync(path);
+    
+    var stat=fs.statSync(filename);
+    if (stat.isDirectory()){
+    	fsextra2.copyRecursive(filename, path, 
+    		function (err) {
+  				if (err) {
+    				console.log(err);
+  				}
+			}
+		)
+    }else{
+    	var originalbasename = pathUtil.basename(filename);
+	    if (filename == originalbasename){
+		    var filename = Project.Info.projectpath +"/rsrc/";
+		}
+	  	if(! fsextra.existsSync(path+originalbasename)){
+	    	fsextra.copySync(filename,path+originalbasename);
+	    }
 	}
-  	if(! fsextra.existsSync(path+originalbasename))
-    	fsextra.copySync(filename,path+originalbasename);
 }
 CBUtil.createNameSpace('applicsecation.exporthtml');
 application.exporthtml = CBUtil.singleton(ExportHTML);
