@@ -221,3 +221,18 @@ body{
  }
 
 
+.ui-rotatable-handle {
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    background-image: url(../img/rotate.png);
+    background-size: 100%;
+    left: -9px;
+    bottom: -9px;
+    position: absolute;
+    display: none;
+}
+
+.cbobject.selected .ui-rotatable-handle{
+    display: initial;
+}

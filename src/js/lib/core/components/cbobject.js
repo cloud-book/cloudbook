@@ -33,7 +33,7 @@ CBObject.prototype.editorView = function editorView() {
 	   .attr('data-cbobjectid',this.uniqueid)
 	   .css('position','absolute')
 	   .css('z-index',this.levellayer)
-	   .css('transform',"rotate("+this.degree+"deg)")
+	   .css('transform',"rotate("+this.degree+"rad)")
 	   .css('width',this.size[0].toString() + "px")
 	   .css('height',this.size[1].toString() + "px" );
 	aux.append([cbcontainer]);
@@ -53,6 +53,7 @@ CBObject.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
 	//var x = jquerycbo.get()[0];
 	//x.addEventListener('click',enableEditable);
 	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]} });
+	jquerycbo.rotatable({stop:function(event,ui){objectcbo.degree = ui.angle.current},angle:objectcbo.degree});
 };
 
 
@@ -186,8 +187,9 @@ CBObject.prototype.enableEditable = function enableEditable(e){
 		backward.click({that:that},that.backwardButton);
 		rotate.on('mousedown',{that:that},that.rotateButton);
 		rotate.on('dragstart', function(event) { event.preventDefault(); });
-
-		bar.append([edit,del,forward,backward,rotate]);	
+		//var jqcboffset = jquerycbo.offset();
+		//rotate.css('position',"fixed").css('top',jqcboffset.top + jquerycbo.get()[0].clientHeight - 15 + "px" ).css('left',jqcboffset.left - 15 +"px");
+		bar.append([edit,del,forward,backward]);	
 
 		bar.draggable({
 			drag:function(event,ui){
