@@ -158,24 +158,69 @@
     }
 
 
+   
+   /* Options for export */
+
+    function export_pdf(){
+     	
+          var exportwizard = application.ui.exportpdfwizard.core.getInstance();
+      	exportwizard.initializeWizardDiv();
+     	 exportwizard.showExportPdfProject({data:{that:exportwizard}});
+   /*   $("#wzrdgoback").unbind('click');
+      $("#wzrdgoback").click(function(){$("#wizardnewopenproject").dialog('close');$("#wizardnewopenproject").remove()});
+    }*/
+      
+
+    };
+
+        
+
+      
+
+    var export_project={
+      label:CBI18n.gettext('Export')
+    };
+
+    var export_html = {
+	label: CBI18n.gettext('HTML5'),
+        click: function export_html(){}
+     
+    };
+
+    var export_pdf= {
+	label:CBI18n.gettext('pdf'),
+        click:export_pdf
+        
+    }; 		    
+ 
+    
+   
+
     /**
      * Generate menubar
      */
     var file = new gui.Menu();
     var project = new gui.Menu();
     var import_project_menu = new gui.Menu();
+    var export_project_menu = new gui.Menu();
     import_project_menu.append(new gui.MenuItem(import_file));
     import_project_menu.append(new gui.MenuItem(import_metadata));
     // import_project_menu.append(new gui.MenuItem(import_scorm));
     // import_project_menu.append(new gui.MenuItem(import_metadata));
     import_project.submenu = import_project_menu;
-    
+
+    export_project_menu.append(new gui.MenuItem(export_html));
+    export_project_menu.append(new gui.MenuItem(export_pdf));
+    export_project.submenu=export_project_menu;
+
     file.append(new gui.MenuItem(new_project));
     file.append(new gui.MenuItem(load_project));
     file.append(new gui.MenuItem(save_as_project));
     file.append(new gui.MenuItem(save_project));
     file.append(new gui.MenuItem({type:'separator'}));
     file.append(new gui.MenuItem(import_project));
+    file.append(new gui.MenuItem({type:'separator'}));
+    file.append(new gui.MenuItem(export_project));
     file.append(new gui.MenuItem({type:'separator'}));
     file.append(new gui.MenuItem(quit));
     project.append(new gui.MenuItem(load_metadata));
