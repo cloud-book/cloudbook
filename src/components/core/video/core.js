@@ -2,12 +2,14 @@ var Project = window.Project;
 var util = require('util');
 var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
+var mime = require("./"+__module_path__ + 'lib_external/mime');
 
 function VideoBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"videopath":"/home/kbut/Escritorio/video.ogv", "position" : [200,200], "size":[250,100]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"videopath":"/home/kbut/Escritorio/video.ogv","videoformat":"video/mp4", "position" : [200,200], "size":[250,100]};
   objectdata.idtype = metadata['idtype'];
   VideoBox.super_.call(this,objectdata);
   this.videopath = objectdata.videopath;
+  this.videoformat = objectdata.videoformat;
 }
 
 util.inherits(VideoBox,CBobject);
@@ -15,7 +17,7 @@ util.inherits(VideoBox,CBobject);
 VideoBox.prototype.editorView = function editorView() {
   var aux = VideoBox.super_.prototype.editorView.call(this);
   var videoelement = $(window.document.createElement('video')).attr('controls','');
-  var source = $(window.document.createElement('source')).attr('src',Project.Info.projectpath + "/rsrc/"+ this.videopath).attr('type','video/mp4');
+  var source = $(window.document.createElement('source')).attr('src',Project.Info.projectpath + "/rsrc/"+ this.videopath).attr('type',this.videoformat);
   videoelement.css('height','100%');
   videoelement.css('width','100%');
   videoelement.append(source);
@@ -25,7 +27,7 @@ VideoBox.prototype.editorView = function editorView() {
 
 VideoBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='videodialog'><input id='videopath' type='file'/><button id='action'>Insert</button></div>");
+  var dialog = $("<div id='videodialog'><input id='videopath' type='file' accept='.mp4,.ogg,.webm' /><button id='action'>Insert</button></div>");
   dialog.children('#action').click(function(){
     updateVideoPath(dialog,that);
   });
@@ -63,7 +65,6 @@ VideoBox.prototype.importHTML = function importHTML(node, filePath){
       var height = node.height;
       var left = node.offsetLeft;
       var top = node.offsetTop;
-      this.text = text;
       this.position = [top, left];
       this.videopath = path.basename(videopath);
     }
@@ -104,7 +105,7 @@ function updateVideoPath(dialog,that){
       }
     }
     fsextra.copySync(originalpath,finalpath);
-
+    that.videoformat = mime.lookup(finalpath);
     /*
      * update component file
      */

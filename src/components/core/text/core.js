@@ -12,7 +12,8 @@ var metadata = require( "./"+__module_path__ + 'metadata.json');
  */
 
 function TextBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"text":"Lorem ipsum", "position" : [200,200],'size':[300,50]};
+  var loremipsum = "En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. ";
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"text":loremipsum, "position" : [200,200],'size':[300,80]};
   objectdata.idtype = metadata['idtype'];
   TextBox.super_.call(this,objectdata);
   this.text = objectdata.text;
@@ -69,14 +70,25 @@ TextBox.prototype.HTMLtags = function HTMLtags(){
 
 TextBox.prototype.importHTML = function importHTML(node, filePath){
 
-    var text = "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
-    var width = node.width;
-    var height = node.height;
-    var left = node.offsetLeft;
-    var top = node.offsetTop;
-    this.text = text;
-    this.position = [top, left];
-    this.size = [800, 100];
+  if(node.tagName != null)
+    {
+      var text = "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
+      var width = node.width;
+      var height = node.height;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.text = text;
+      this.position = [left, top];
+      this.size = [800, 100];
+    }
+    else
+    {
+      var text = node;
+      var top = 0;
+      this.text = text;
+      this.size = [800, 300];
+      this.position = [0, top];
+    }
 }
 
 TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
