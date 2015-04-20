@@ -163,49 +163,17 @@
 
     function export_pdf(){
      	
-        var template = application.util.template.getTemplate('templates/exportPdfProyect.hbs');
-  	var dialog=$(template());
-        dialog.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false, minWidth:750});          
-        $("input[name='numeracion']").change(function(e){
-				
-			if(e.currentTarget.value === "0"){
-							
-				$("[name='posicion']").attr('disabled','disabled');
-			}
-			else{
-				$("[name='posicion']").removeAttr('disabled');
-			}
-		});    
-     
-	$("input[name='header']").change(function(e){
-			alert("hola");	
-			if(e.currentTarget.value === "0"){
-							
-				$("[name='posicion']").attr('disabled','disabled');
-			}
-			else{
-				$("[name='posicion']").removeAttr('disabled');
-			}
-		}); 
-        
-        $("input[name='path']").change(function(e){
-         	
-      		if (e.currentTarget.value===''){
-		             $("[id='exportpdfbtn']").attr('disabled','disabled');
-		}
-		else{
-			      $("[id='exportpdfbtn']").removeAttr('disabled');
-                }
-                                 
-          }); 
-        $("[id='exportpdfbtn']").click(function(){
-	       alert("hola");	    
-               var exportpdf = application.core.exports.exportPdf.core.getInstance();
-	       var x='Liurex';	
-               exportpdf(x);
-	});
+          var exportwizard = application.ui.exportpdfwizard.core.getInstance();
+      	exportwizard.initializeWizardDiv();
+     	 exportwizard.showExportPdfProject({data:{that:exportwizard}});
+   /*   $("#wzrdgoback").unbind('click');
+      $("#wzrdgoback").click(function(){$("#wizardnewopenproject").dialog('close');$("#wizardnewopenproject").remove()});
+    }*/
+      
 
     };
+
+        
 
       
 

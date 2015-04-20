@@ -210,3 +210,9 @@ body{
 .cbtextbox{
     overflow: hidden;
 }
+
+.exportpdfwizard .ui-dialog-titlebar-close{
+    display:none;
+ }
+
+
