@@ -51,6 +51,7 @@ CBObject.prototype.editorView = function editorView() {
 	rotate.on('mousedown',{that:this},that.rotateButton);
 	bar.append([edit,del,forward,backward,rotate]);
 	aux.append([bar,cbcontainer]);
+	//aux.click(enableEditable);
 	return aux;
 };
 
@@ -63,7 +64,11 @@ CBObject.prototype.editorView = function editorView() {
 CBObject.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
 	//var x = jquerycbo.get()[0];
 	//x.addEventListener('click',enableEditable);
-	jquerycbo.draggable( {stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; ui.helper.focus(); }, scroll:true,handle:".draggable"});
+	jquerycbo.draggable( {
+		stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; ui.helper.focus(); }, 
+		scroll:true,handle:".draggable",
+		drag: function(event,ui){ if(ui.position.left<0) ui.position.left = 0; if(ui.position.top<0) ui.position.top = 0; }
+	});
 	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]} });
 };
 
@@ -149,16 +154,16 @@ CBObject.prototype.exportHTML = function exportHTML() {
 };
 
 
-// function enableEditable(e){
-// 	var x = $(e.currentTarget);
-// 	if(x !== Cloudbook.UI.cbobjectselected){
-// 		x.addClass("selected");
-// 		if(Cloudbook.UI.cbobjectselected !== undefined){
-// 			Cloudbook.UI.cbobjectselected.removeClass('selected');
-// 		}
-// 		Cloudbook.UI.cbobjectselected = x;
-// 	}
-// 	e.stopPropagation();
-// }
+function enableEditable(e){
+	var newid = this.dataset.cbobjectid;
+	if(Cloudbook.UI.cbobjectselected !== newid ){
+		if(Cloudbook.UI.cbobjectselected !== null)
+			$("[data-cbobjectid='"+Cloudbook.UI.cbobjectselected+"']").removeClass('selected');
+		Cloudbook.UI.cbobjectselected = newid;
+		var actual = $("[data-cbobjectid='"+Cloudbook.UI.cbobjectselected+"']");
+		actual.addClass('selected');
+
+	}
+}
 
 module.exports = CBObject;

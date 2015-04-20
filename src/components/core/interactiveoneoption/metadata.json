@@ -1,0 +1,11 @@
+{
+	"idtype" : "ad2a6410-8dcd-4ca7-9bf7-73043dcd5771",
+	"description":"Append PEM to content",
+	"label": "PEM",
+	"icon" : "icon.png",
+	"category": "core",
+	"external_scripts" : ["lib_external/jsgeork/jquery.jsgeork.js"],
+  	"external_css" : ["lib_external/jsgeork/jquery.jsgeork.css"],
+  	"HTML_export_scripts" : ["lib_external/jsgeork/jquery.jsgeork.js"],
+  	"HTML_export_css" : ["lib_external/jsgeork/jquery.jsgeork.css"]
+}

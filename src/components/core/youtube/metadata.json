@@ -1,0 +1,7 @@
+{
+	"idtype" : "3233071a-24fa-4476-a677-19613ffbafed",
+	"description":"Append Youtube embebed to content",
+	"label": "Youtube",
+	"icon" : "icon.png",
+	"category": "core"
+}

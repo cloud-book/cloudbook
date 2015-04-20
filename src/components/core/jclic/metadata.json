@@ -1,0 +1,8 @@
+{
+	"idtype" : "a63f84aa-b0b9-47d1-9f8a-61fb10ff739f",
+	"description":"Append Jclic to content",
+	"label": "Jclic",
+	"icon" : "icon.png",
+	"category": "core",
+	"disabled":true
+}
