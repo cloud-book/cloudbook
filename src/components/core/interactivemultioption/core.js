@@ -25,6 +25,30 @@ PEMBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+PEMBox.prototype.htmlView = function htmlView() {
+  var aux = PEMBox.super_.prototype.htmlView.call(this);
+  var fs = require('fs');
+  var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityview.hbs',{encoding:'utf8'});
+  var templatecompiled = application.util.template.compile(template);
+  options={"identifier":this.pemidentifier,"description":this.description,questions:this.questions};
+  aux.children('.cbcontainer').append($(templatecompiled(options)));
+  aux.addClass('pms');
+  return aux;
+}
+
+PEMBox.prototype.pdfView = function pdfView() {
+  var aux = PEMBox.super_.prototype.pdfView.call(this);
+  var fs = require('fs');
+  var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityview.hbs',{encoding:'utf8'});
+  var templatecompiled = application.util.template.compile(template);
+  options={"identifier":this.pemidentifier,"description":this.description,questions:this.questions};
+  aux.children('.cbcontainer').append($(templatecompiled(options)));
+  aux.addClass('pms');
+  return aux;
+}
+
+
+
 PEMBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   var dialog = $("<div id='pemdialog'><input id='numberquestions' type='number' min='2' max='10' value='4'/><button id='action'>Insert</button></div>");
@@ -84,6 +108,31 @@ PEMBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,
   }
 };
 
+
+PEMBox.prototype.triggerHTMLView = function triggerHTMLView() {
+  return '$(document).ready(function(){\
+  var obj_myprefix_pem_identifier = {\
+   "id": '+this.pemidentifier+',\
+   "type": "multi",\
+   "opt": '+this.questions+',\
+   "fieldset": true,\
+   "legend": "",\
+   "random": true,\
+   "optsuccess": true,\
+   "weighting": 100,\
+   "lighting": 0,\
+   "icons": "csshexent",\
+   "storage": "local",\
+   "storagekey": "jsgeork",\
+   "showstorage": false,\
+   "fillfromstorage": false,\
+   "delstorage": false\
+  };\
+  jsGeork.Questions.Question(obj_myprefix_pem_identifier);\
+  });';
+};
+
+
 PEMBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;
   var dialog = PEMBox.super_.prototype.editButton.call(this,e);
@@ -133,3 +182,4 @@ exports.restore = function restore(objectdata) {
 */
 
 module.exports = PEMBox;
+//@ sourceURL=interactivemultioption_core.js

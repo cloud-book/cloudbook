@@ -22,6 +22,27 @@ YoutubeBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+YoutubeBox.prototype.htmlView = function htmlView() {
+  var aux = YoutubeBox.super_.prototype.htmlView.call(this);
+  var url = this.url !== null ? this.url : "http://lliurex.net";
+  var imgelement = $(window.document.createElement('iframe')).attr('src', url).attr('frameborder','0').attr('allowfullscreen','');
+  imgelement.css('height','100%');
+  imgelement.css('width','100%');
+  aux.children('.cbcontainer').append(imgelement);
+  return aux;
+}
+
+YoutubeBox.prototype.pdfView = function pdfView() {
+  var aux = YoutubeBox.super_.prototype.pdfView.call(this);
+  var url = this.url !== null ? this.url : "http://lliurex.net";
+  var imgelement = $(window.document.createElement('iframe')).attr('src', url).attr('frameborder','0').attr('allowfullscreen','');
+  imgelement.css('height','100%');
+  imgelement.css('width','100%');
+  aux.children('.cbcontainer').append(imgelement);
+  return aux;
+}
+
+
 YoutubeBox.prototype.importHTML = function importHTML(){
   return ['IFRAME'];
 }
@@ -97,3 +118,4 @@ exports.restore = function restore(objectdata) {
 };
 */
 module.exports = YoutubeBox;
+//@ sourceURL=youtube_core.js

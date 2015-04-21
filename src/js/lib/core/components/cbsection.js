@@ -30,8 +30,31 @@ CBSection.prototype.htmlView = function htmlView(id) {
 	tit.addClass('centered');
 	var content = [];
 	var storage = application.storagemanager.getInstance();
+	var exporthtml = application.exporthtml.core.getInstance();
+	var fs = require('fs');
+	var path = Project.Info.projectpath + "/rsrc/";
+	this.content.forEach(function(objid,idx){ 
+		var x = storage.getCBObjectById(objid);
 
-	this.content.forEach(function(objid,idx){ content.push( storage.getCBObjectById(objid).htmlView())});
+		// Call exportHTMLResoureces
+		if(x.__proto__.hasOwnProperty("triggerHTMLView")){
+			var rawscriptout = x.triggerHTMLView();
+			
+			// fs.writeFile(path + objid+".js", rawscriptout , function(err) {
+		 //    	if(err) {
+		 //        	return console.log(err);
+		 //    	}else{
+		 //    		exporthtml.myhead.append('<script type="text/javascript" src="'+objid+'.js"></script>');
+			// 		//exporthtml.files_to_copy.push("");
+		 //    	}
+			// });
+			fs.writeFileSync(path + objid+".js", rawscriptout);
+			exporthtml.myhead.append('<script type="text/javascript" src="'+objid+'.js"></script>');
+		}
+
+
+		content.push( x.htmlView());
+	});
 	html4render.append(tit);
 	content.forEach(function(a){ html4render.append(a) });
 
@@ -39,3 +62,4 @@ CBSection.prototype.htmlView = function htmlView(id) {
 }
 
 module.exports = CBSection;
+//@ sourceURL=cbsection.js
