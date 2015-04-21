@@ -13,6 +13,7 @@ function CBObject(objectdata){
 	this.uniqueid = typeof objectdata.uniqueid !== 'undefined' ? objectdata.uniqueid : CBUtil.uniqueId();
 	this.levellayer = typeof objectdata.levellayer !== 'undefined' ? objectdata.levellayer : 0;
 	this.degree = typeof objectdata.degree !== 'undefined' ? objectdata.degree : 0;
+	this.settimeoutlist = {};
 }
 
 
@@ -32,26 +33,13 @@ CBObject.prototype.editorView = function editorView() {
 	   .attr('data-cbobjectid',this.uniqueid)
 	   .css('position','absolute')
 	   .css('z-index',this.levellayer)
-	   .css('transform',"rotate("+this.degree+"deg)")
+	   .css('transform',"rotate("+this.degree+"rad)")
 	   .css('width',this.size[0].toString() + "px")
 	   .css('height',this.size[1].toString() + "px" );
-	var bar = $(window.document.createElement('div'));
-	bar.css('background-color','#4c4c4c')
-		.addClass('draggable')
-		.addClass('cbobject-bar');
-	var edit = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/edit.png');
-	var del = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/delete.png');
-	var forward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/forward.png');
-	var backward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/backward.png');
-	var rotate = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/rotate.png');
-	edit.click({that:this},that.editButton);
-	del.click({that:this},that.deleteButton);
-	forward.click({that:this},that.forwardButton);
-	backward.click({that:this},that.backwardButton);
-	rotate.on('mousedown',{that:this},that.rotateButton);
-	bar.append([edit,del,forward,backward,rotate]);
-	aux.append([bar,cbcontainer]);
-	//aux.click(enableEditable);
+	aux.append([cbcontainer]);
+	aux.click({that:this},that.enableEditable);
+	//aux.mousedown({that:this},that.delaymove);
+	//aux.mouseup({that:this},that.cleardelay);
 	return aux;
 };
 
@@ -64,12 +52,8 @@ CBObject.prototype.editorView = function editorView() {
 CBObject.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
 	//var x = jquerycbo.get()[0];
 	//x.addEventListener('click',enableEditable);
-	jquerycbo.draggable( {
-		stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; ui.helper.focus(); }, 
-		scroll:true,
-		drag: function(event,ui){ if(ui.position.left<0) ui.position.left = 0; if(ui.position.top<0) ui.position.top = 0; }
-	});
 	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]} });
+	jquerycbo.rotatable({stop:function(event,ui){objectcbo.degree = ui.angle.current},angle:objectcbo.degree});
 };
 
 
@@ -122,6 +106,7 @@ CBObject.prototype.backwardButton = function backwardButton(e) {
 };
 
 CBObject.prototype.rotateButton = function rotateButton(e) {
+	e.stopImmediatePropagation();
 	var that = e.data.that;
 	var controller = application.controller.getInstance();
 	controller.modifyObjectRotation(that.uniqueid,e);
@@ -154,14 +139,72 @@ CBObject.prototype.exportHTML = function exportHTML() {
 };
 
 
-function enableEditable(e){
+CBObject.prototype.delaymove = function(e) {
+	var that = e.data.that;
+	that.settimeoutlist["delaymove"] = setTimeout(function(){
+		$("[data-cbobjectid='"+that.uniqueid+"']").addClass("draggable");
+	},2000);
+};
+
+CBObject.prototype.cleardelay = function(e) {
+	var that = e.data.that;
+	clearTimeout(that.settimeoutlist["delaymove"]);
+};
+
+
+
+CBObject.prototype.enableEditable = function enableEditable(e){
+	var that = e.data.that;
 	var newid = this.dataset.cbobjectid;
+	e.stopPropagation();
+	
 	if(Cloudbook.UI.cbobjectselected !== newid ){
 		if(Cloudbook.UI.cbobjectselected !== null)
+			$("#cbobjecttoolbar").remove();
 			$("[data-cbobjectid='"+Cloudbook.UI.cbobjectselected+"']").removeClass('selected');
 		Cloudbook.UI.cbobjectselected = newid;
-		var actual = $("[data-cbobjectid='"+Cloudbook.UI.cbobjectselected+"']");
-		actual.addClass('selected');
+		var storagemanager = application.storagemanager.getInstance();
+		var jquerycbo = $("[data-cbobjectid='"+Cloudbook.UI.cbobjectselected+"']");
+		jquerycbo.addClass('selected');
+		var actualtop = jquerycbo.position().top;
+		var toolbartop = actualtop - 30;
+		var top = true;
+		if(actualtop < 30){
+			toolbartop = actualtop + jquerycbo.get()[0].clientHeight  ;
+			top = false;
+		}
+
+		var bar = $("<div id='cbobjecttoolbar'></div>");
+		var edit = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/edit.png');
+		var del = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/delete.png');
+		var forward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/forward.png');
+		var backward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/backward.png');
+		var rotate = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/rotate.png');
+
+		edit.click({that:that},that.editButton);
+		del.click({that:that},that.deleteButton);
+		forward.click({that:that},that.forwardButton);
+		backward.click({that:that},that.backwardButton);
+		rotate.on('mousedown',{that:that},that.rotateButton);
+		rotate.on('dragstart', function(event) { event.preventDefault(); });
+		//var jqcboffset = jquerycbo.offset();
+		//rotate.css('position',"fixed").css('top',jqcboffset.top + jquerycbo.get()[0].clientHeight - 15 + "px" ).css('left',jqcboffset.left - 15 +"px");
+		bar.append([edit,del,forward,backward]);	
+
+		bar.draggable({
+			drag:function(event,ui){
+				ui.position.left = ui.position.left < 0 ? 0 : ui.position.left;
+				ui.position.top = ui.position.top + 30 < 0 ? -30 : ui.position.top;
+				jquerycbo.css('left',ui.position.left+"px").css('top',ui.position.top + 30 +"px");
+			},
+			stop: function(event,ui){
+				var objectcbo = storagemanager.getCBObjectById(Cloudbook.UI.cbobjectselected);
+				objectcbo.position = [ui.position.left,ui.position.top + 30 < 0 ? 0 : ui.position.top + 30 ]; 
+				storagemanager.setCBObjectById(objectcbo,Cloudbook.UI.cbobjectselected);
+			}
+		});
+		bar.css('top', toolbartop +"px").css('left',jquerycbo.position().left+"px").css('position','absolute');
+		$("#targetcontent").append(bar);
 
 	}
 }
