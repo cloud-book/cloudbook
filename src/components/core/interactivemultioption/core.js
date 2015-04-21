@@ -40,7 +40,7 @@ PEMBox.prototype.clickButton = function clickButton(controllerClass) {
     );
 };
 
-PEMBox.prototype.importHTML = function importHTML(){
+PEMBox.prototype.HTMLtags = function HTMLtags(){
   return ['PEM'];
 }
 

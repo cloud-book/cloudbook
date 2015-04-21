@@ -35,42 +35,65 @@ VideoBox.prototype.clickButton = function clickButton(controllerClass) {
   $("#videodialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
-VideoBox.prototype.HTMLtags = function HTMLtags(){
-  return ['VIDEO'];
+VideoBox.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+  var tagTypes = {tags: ['VIDEO']};
+  
+  if(tagTypes.tags.indexOf(node.tagName) > -1) score ++;
+
+  return score;
+
+  //return ['VIDEO'];
 }
 
 VideoBox.prototype.importHTML = function importHTML(node, filePath){
 
-  var fs = require('fs.extra');
+//  var Project = window.Project;
+  var fs = require('fs-extra');
   var path = require('path');
-  var videopath = "";
 
-    try{
-      if (node.innerHTML.indexOf("src=")!=-1){
+     try{
+      
+       if (node.innerHTML.indexOf("src=")!=-1){
         videopath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
-        var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", path.basename(videopath));
 
-        if(fs.existsSync(sourcePath))
-          fs.renameSync(path.join(Project.Info.projectpath, "/rsrc/", path.basename(videopath)), path.join(Project.Info.projectpath, "/rsrc/", 
-            path.basename(videopath).replace(".", Date.now().toString() + ".")));
+        var basename = path.basename(videopath);
+        var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
 
-            fs.copy(path.join(path.dirname(filePath), videopath), path.join(Project.Info.projectpath, "/rsrc/", path.basename(videopath)), function (err){
-              if(err){
-                  console.log("Error copying video");
-              }
-          });
+        while(true){
+          if(!fs.existsSync(sourcePath)){
+              break;
+          }
+          basename = 0 + basename;
+          sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+        }
+        fs.copySync(path.join(path.dirname(filePath), videopath),sourcePath);
+        var width = node.clientWidth;
+        var height = node.clientHeight;
+        var left = node.offsetLeft;
+        var top = node.offsetTop;
+        this.position = [left, top];
+        this.videopath = basename;
+        if(width != 0 && height != 0)
+          this.size = [width,height];
+        else
+        {
+          if(node.hasAttributes())
+          {
+            if(node.attributes['width'] != undefined) 
+              width = node.attributes['width'].nodeValue;
+            if(node.attributes['height'] != undefined)
+              height = node.attributes['height'].nodeValue;   
+            if(width != 0 && height != 0)
+              this.size = [width,height];
+          }
+        }
       }
-
-      var width = node.width;
-      var height = node.height;
-      var left = node.offsetLeft;
-      var top = node.offsetTop;
-      this.position = [top, left];
-      this.videopath = path.basename(videopath);
     }
     catch (err) {
-        console.log(err + 'Errors in Video');
+        console.log('Errors in Video');
     }
+
 };
 VideoBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
   VideoBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);

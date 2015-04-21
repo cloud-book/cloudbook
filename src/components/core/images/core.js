@@ -22,14 +22,21 @@ ImageBox.prototype.editorView = function editorView() {
   return aux;
 };
 
-ImageBox.prototype.HTMLtags = function HTMLtags(){
-  return ['IMG', 'FIGURE'];
+ImageBox.prototype.HTMLtags = function HTMLtags(node){
+//  return ['IMG', 'FIGURE'];
+  var score = 0;
+  var tagTypes = {tags: ['IMG', 'FIGURE']};
+  
+  if(tagTypes.tags.indexOf(node.tagName) > -1) score ++;
+
+  return score;
+
 }
 
 ImageBox.prototype.importHTML = function importHTML(node, filePath){
 
 //  var Project = window.Project;
-  var fs = require('fs.extra');
+  var fs = require('fs-extra');
   var path = require('path');
 
     if(node.tagName == "FIGURE")
@@ -38,27 +45,28 @@ ImageBox.prototype.importHTML = function importHTML(node, filePath){
     try{
       
       var imgpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
-      var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath));
-      if(fs.existsSync(sourcePath))
-        fs.renameSync(sourcePath, path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath).replace(".", Date.now().toString() + ".")));
-
-      fs.copy(path.join(path.dirname(filePath), imgpath), path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath)), function (err){
-        if(err){
-            console.log("Error copying image");
+      var basename = path.basename(imgpath);
+      var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+      while(true){
+        if(!fs.existsSync(sourcePath)){
+            break;
         }
-      });
-
-      var text = node.attributes.getNamedItem("alt") != null? node.attributes.getNamedItem("alt").value:"";
-      var width = node.width;
-      var height = node.height;
+        basename = 0 + basename;
+        sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+      }
+        //fs.renameSync(sourcePath, path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath).replace(".", Date.now().toString() + ".")));
+      fs.copySync(path.join(path.dirname(filePath), imgpath),sourcePath);
+      var width = node.clientWidth;
+      var height = node.clientHeight;
       var left = node.offsetLeft;
       var top = node.offsetTop;
-      this.text = text;
-      this.position = [top, left];
-      this.imgpath = path.basename(imgpath);
+      this.position = [left, top];
+      if(width != 0 && height != 0)
+        this.size = [width,height];
+      this.imgpath = basename;
     }
     catch (err) {
-        console.log('Errors in Image');
+        console.log('Errors in Image' + err);
     }
 }
 

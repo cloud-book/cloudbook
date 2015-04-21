@@ -39,8 +39,44 @@ JclicBox.prototype.clickButton = function clickButton(controllerClass) {
   $("#jclicdialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
-JclicBox.prototype.importHTML = function importHTML(){
-  return ['OBJECT','FLV','SWF'];
+JclicBox.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+  var tagTypes = {tags: ['EMBED']};
+  
+  if(tagTypes.tags.indexOf(node.tagName) > -1) score ++;
+
+  return score;
+
+//  return ['EMBED'];
+}
+
+JclicBox.prototype.importHTML = function importHTML(node, filePath){
+
+  var fs = require('fs.extra');
+  var path = require('path');
+    try{
+      
+      var resourcepath = node.attributes.getNamedItem("activitypack") != null? node.attributes.getNamedItem("activitypack").value:"";
+      var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", path.basename(resourcepath));
+      if(fs.existsSync(sourcePath))
+        fs.renameSync(sourcePath, path.join(Project.Info.projectpath, "/rsrc/", path.basename(resourcepath).replace(".", Date.now().toString() + ".")));
+
+      fs.copy(path.join(path.dirname(filePath), resourcepath), path.join(Project.Info.projectpath, "/rsrc/", path.basename(resourcepath)), function (err){
+        if(err){
+            console.log("Error copying JClic");
+        }
+      });
+
+      var width = node.width;
+      var height = node.height;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.position = [top, left];
+      this.activitypack = path.basename(resourcepath);
+    }
+    catch (err) {
+        console.log('Errors in JClic');
+    }
 }
 
 JclicBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

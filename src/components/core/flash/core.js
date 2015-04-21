@@ -38,8 +38,53 @@ FlashBox.prototype.clickButton = function clickButton(controllerClass) {
   $("#flashdialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
-FlashBox.prototype.importHTML = function importHTML(){
-  return ['OBJECT','FLV','SWF'];
+FlashBox.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+  var tagTypes = {tags: ['OBJECT','EMBED']};
+  
+  if(tagTypes.tags.indexOf(node.tagName) > -1) score ++;
+
+  return score;
+
+  //return ['OBJECT','EMBED'];
+}
+
+FlashBox.prototype.importHTML = function importHTML(node, filePath){
+
+  var fs = require('fs-extra');
+  var path = require('path');
+  var resourcepath = "";
+    try{
+      
+      if(node.tagName == "OBJECT")
+        resourcepath = node.attributes.getNamedItem("data") != null? node.attributes.getNamedItem("data").value:"";
+      if(node.tagName == "EMBED")
+        resourcepath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+
+      var basename = path.basename(resourcepath);
+      var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+      while(true){
+        if(!fs.existsSync(sourcePath)){
+            break;
+        }
+        basename = 0 + basename;
+        sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+      }
+
+        //fs.renameSync(sourcePath, path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath).replace(".", Date.now().toString() + ".")));
+      fs.copySync(path.join(path.dirname(filePath), resourcepath),sourcePath);
+      var width = node.clientWidth;
+      var height = node.clientHeight;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.position = [left, top];
+      this.resourcepath = basename;
+      if(width != 0 && height != 0)
+        this.size = [width,height];
+    }
+    catch (err) {
+        console.log('Errors in flash ' + err);
+    }
 }
 
 FlashBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

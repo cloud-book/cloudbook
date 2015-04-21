@@ -22,8 +22,37 @@ YoutubeBox.prototype.editorView = function editorView() {
   return aux;
 };
 
-YoutubeBox.prototype.importHTML = function importHTML(){
-  return ['IFRAME'];
+YoutubeBox.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+  var tagTypes = {tags: ['IFRAME']};
+  
+  if(tagTypes.tags.indexOf(node.tagName) > -1)
+  {
+   score ++;
+   if(node.attributes.getNamedItem("src") != null)
+    if(node.attributes.getNamedItem("src").value.indexOf("youtube") != -1) score++;
+  }
+  return score;
+
+//  return ['IFRAME'];
+}
+
+YoutubeBox.prototype.importHTML = function importHTML(node, filePath){
+    try{
+      
+      var urlpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+      var width = node.clientWidth;
+      var height = node.clientHeight;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.position = [left, top];
+      if(width != 0 && height != 0)
+        this.size = [width,height];
+      this.url = urlpath;
+    }
+    catch (err) {
+        console.log('Errors in Youtube');
+    }
 }
 
 YoutubeBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

@@ -66,7 +66,7 @@ CBObject.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
 	//x.addEventListener('click',enableEditable);
 	jquerycbo.draggable( {
 		stop: function(event,ui){ objectcbo.position = [ui.position.left,ui.position.top]; ui.helper.focus(); }, 
-		scroll:true,handle:".draggable",
+		scroll:true,
 		drag: function(event,ui){ if(ui.position.left<0) ui.position.left = 0; if(ui.position.top<0) ui.position.top = 0; }
 	});
 	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]} });

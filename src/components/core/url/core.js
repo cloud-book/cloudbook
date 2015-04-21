@@ -22,8 +22,49 @@ ExternalIframe.prototype.editorView = function editorView() {
   return aux;
 };
 
-ExternalIframe.prototype.importHTML = function importHTML(){
-  return ['IFRAME'];
+ExternalIframe.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+  var tagTypes = {tags: ['IFRAME']};
+  
+  if(tagTypes.tags.indexOf(node.tagName) > -1)
+  {
+    score ++;
+    if(node.attributes.getNamedItem("src") != null)
+      if(node.attributes.getNamedItem("src").value.indexOf("youtube") == -1) score++;
+  } 
+  return score;
+
+//  return ['IFRAME'];
+}
+
+ExternalIframe.prototype.importHTML = function importHTML(node, filePath){
+    try{
+      
+      var urlpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+      var width = node.clientWidth;
+      var height = node.clientHeight;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.position = [left, top];
+      if(width != 0 && height != 0)
+          this.size = [width,height];
+        else
+        {
+          if(node.hasAttributes())
+          {
+            if(node.attributes['width'] != undefined) 
+              width = node.attributes['width'].nodeValue;
+            if(node.attributes['height'] != undefined)
+              height = node.attributes['height'].nodeValue;   
+            if(width != 0 && height != 0)
+              this.size = [width,height];
+          }
+        }
+      this.url = urlpath;
+    }
+    catch (err) {
+        console.log('Errors in ExternalIframe');
+    }
 }
 
 ExternalIframe.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
