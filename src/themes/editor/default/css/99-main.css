@@ -141,18 +141,20 @@ body{
     position: relative;
 }
 
-.cbobject-bar{
+#cbobjecttoolbar{
+    background-color:#4c4c4c;
     height:30px;
-    width:100%;
+    width: 250px;
     position:absolute;
-    left:0;
-    top: -30px;
-    opacity: 0;
-    display: none;
-    border: 1px solid black;
+    margin: 0;
+    padding: 0;
     z-index: 10;
     -webkit-transition: display 0.3s opacity 0.3s linear;
 }
+
+/*}
+
+
 
 
 .cbobject:focus .cbobject-bar{
@@ -165,6 +167,10 @@ body{
     border: 1px solid black;
     outline: none;
     z-index: 9999999 !important;
+}*/
+
+.cbobject.selected{
+    border:1px solid black;
 }
 
 /************************
@@ -215,3 +221,18 @@ body{
  }
 
 
+.ui-rotatable-handle {
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    background-image: url(../img/rotate.png);
+    background-size: 100%;
+    left: -9px;
+    bottom: -9px;
+    position: absolute;
+    display: none;
+}
+
+.cbobject.selected .ui-rotatable-handle{
+    display: initial;
+}
