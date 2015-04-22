@@ -11,7 +11,6 @@
 
 
 function CBSection(dataobject){
-	var CBObject = CBUtil.req("js/lib/core/components/cbobject.js");
 	dataobject = typeof dataobject !== 'undefined' ? dataobject : {};
 	this.sections = typeof dataobject.sections !== 'undefined' ? dataobject.sections : [];
 	this.content = typeof dataobject.content !== 'undefined' ? dataobject.content : [];
@@ -21,4 +20,46 @@ function CBSection(dataobject){
 
 }
 
+CBSection.prototype.htmlView = function htmlView(id) {
+	var html4render=$('<article></article>');
+	if (id) {
+		html4render.attr('id',id);
+	}
+	var tit=$('<section>'+this.name+'</section>');
+	tit.attr('id','title');
+	tit.addClass('centered');
+	var content = [];
+	var storage = application.storagemanager.getInstance();
+	var exporthtml = application.exporthtml.core.getInstance();
+	var fs = require('fs');
+	var path = Project.Info.projectpath + "/rsrc/";
+	this.content.forEach(function(objid,idx){ 
+		var x = storage.getCBObjectById(objid);
+
+		// Call exportHTMLResoureces
+		if(x.__proto__.hasOwnProperty("triggerHTMLView")){
+			var rawscriptout = x.triggerHTMLView();
+			
+			// fs.writeFile(path + objid+".js", rawscriptout , function(err) {
+		 //    	if(err) {
+		 //        	return console.log(err);
+		 //    	}else{
+		 //    		exporthtml.myhead.append('<script type="text/javascript" src="'+objid+'.js"></script>');
+			// 		//exporthtml.files_to_copy.push("");
+		 //    	}
+			// });
+			fs.writeFileSync(path + objid+".js", rawscriptout);
+			exporthtml.myhead.append('<script type="text/javascript" src="'+objid+'.js"></script>');
+		}
+
+
+		content.push( x.htmlView());
+	});
+	html4render.append(tit);
+	content.forEach(function(a){ html4render.append(a) });
+
+	return html4render;
+}
+
 module.exports = CBSection;
+//@ sourceURL=cbsection.js

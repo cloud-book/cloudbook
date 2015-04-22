@@ -163,9 +163,9 @@
 
     function export_pdf(){
      	
-          var exportwizard = application.ui.exportpdfwizard.core.getInstance();
-      	exportwizard.initializeWizardDiv();
-     	 exportwizard.showExportPdfProject({data:{that:exportwizard}});
+      var exportwizard = application.ui.exportpdfwizard.core.getInstance();
+      exportwizard.initializeWizardDiv();
+     	exportwizard.showExportPdfProject({data:{that:exportwizard}});
    /*   $("#wzrdgoback").unbind('click');
       $("#wzrdgoback").click(function(){$("#wizardnewopenproject").dialog('close');$("#wizardnewopenproject").remove()});
     }*/
@@ -173,7 +173,11 @@
 
     };
 
-        
+    function export_html(){
+      var exportui = application.ui.exportHtmlwizard.core.getInstance();
+      exportui.initializeWizardDiv();
+      var a=exportui.showExportHtmlProject({data:{that:exportui}});
+    };   
 
       
 
@@ -183,8 +187,7 @@
 
     var export_html = {
 	label: CBI18n.gettext('HTML5'),
-        click: function export_html(){}
-     
+        click: export_html
     };
 
     var export_pdf= {

@@ -113,6 +113,7 @@ Backend.prototype.loadComponentsRecursive = function loadComponentsRecursive(com
     Cloudbook.Actions[description.idtype] = {};
     Cloudbook.Actions[description.idtype]['path'] = componentpath;
     Cloudbook.Actions[description.idtype]['component'] = CBUtil.req(path.join(componentpath,'core.js'));
+    Cloudbook.Actions[description.idtype]['metadata'] = description;
     that.loadComponentExtraScripts(componentpath , description);
   }
   else{

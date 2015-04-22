@@ -35,6 +35,29 @@ TextBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+TextBox.prototype.htmlView = function htmlView() {
+  var aux = TextBox.super_.prototype.htmlView.call(this);
+  var textboxcontent = $(window.document.createElement('div'))
+            .html(this.text)
+            .attr('data-textbox-id',this.uniqueid)
+            .addClass('cbtextbox')
+            .css('padding','5px');
+  aux.children('.cbcontainer').append(textboxcontent);
+  return aux;
+}
+
+TextBox.prototype.pdfView = function pdfView() {
+  var aux = TextBox.super_.prototype.pdfView.call(this);
+  var textboxcontent = $(window.document.createElement('div'))
+            .html(this.text)
+            .attr('data-textbox-id',this.uniqueid)
+            .addClass('cbtextbox')
+            .css('padding','5px');
+  aux.children('.cbcontainer').append(textboxcontent);
+  return aux;
+}
+
+
 TextBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;
   var template = application.util.template.getTemplate(__module_path__+'/toolbar.hbs');
@@ -119,3 +142,4 @@ function toolbarposition(position){
 }
 
 module.exports = TextBox;
+//@ sourceURL=text_core.js

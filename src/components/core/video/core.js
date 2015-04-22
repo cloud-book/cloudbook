@@ -25,6 +25,29 @@ VideoBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+VideoBox.prototype.htmlView = function htmlView() {
+  var aux = VideoBox.super_.prototype.htmlView.call(this);
+  var videoelement = $(window.document.createElement('video')).attr('controls','');
+  var source = $(window.document.createElement('source')).attr('src',Project.Info.projectpath + "/rsrc/"+ this.videopath).attr('type',this.videoformat);
+  videoelement.css('height','100%');
+  videoelement.css('width','100%');
+  videoelement.append(source);
+  aux.children('.cbcontainer').append(videoelement);
+  return aux;
+}
+
+VideoBox.prototype.pdfView = function pdfView() {
+  var aux = VideoBox.super_.prototype.pdfView.call(this);
+  var videoelement = $(window.document.createElement('video')).attr('controls','');
+  var source = $(window.document.createElement('source')).attr('src',Project.Info.projectpath + "/rsrc/"+ this.videopath).attr('type',this.videoformat);
+  videoelement.css('height','100%');
+  videoelement.css('width','100%');
+  videoelement.append(source);
+  aux.children('.cbcontainer').append(videoelement);
+  return aux;
+}
+
+
 VideoBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   var dialog = $("<div id='videodialog'><input id='videopath' type='file' accept='.mp4,.ogg,.webm' /><button id='action'>Insert</button></div>");
@@ -171,3 +194,4 @@ exports.restore = function restore(objectdata) {
 */
 
 module.exports = VideoBox;
+//@ sourceURL=video_core.js

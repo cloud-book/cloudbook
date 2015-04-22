@@ -25,6 +25,22 @@ AudioBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+AudioBox.prototype.htmlView = function htmlView() {
+  var aux = AudioBox.super_.prototype.htmlView.call(this);
+  var audioelement = $(window.document.createElement('audio')).attr('controls','');
+  var source = $(window.document.createElement('source')).attr('src',"rsrc/"+ this.audiopath).attr('type',this.audioformat);
+  audioelement.css('height','100%');
+  audioelement.css('width','100%');
+  audioelement.append(source);
+  aux.children('.cbcontainer').append([audioelement]);
+  return aux;
+}
+
+AudioBox.prototype.pdfView = function pdfView() {
+  return "";
+}
+
+
 AudioBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   var dialog = $("<div id='audiodialog'><input id='audiopath' type='file' accept='.mp3,.ogg,.wav' /><button id='action'>Insert</button></div>");
@@ -148,3 +164,4 @@ exports.restore = function restore(objectdata) {
 */
 
 module.exports = AudioBox;
+//@ sourceURL=audio_core.js

@@ -79,6 +79,27 @@ ImageBox.prototype.importHTML = function importHTML(node, filePath){
     catch (err) {
         console.log('Errors in Image' + err);
     }
+  }
+
+ImageBox.prototype.htmlView = function htmlView() {
+  var aux = ImageBox.super_.prototype.htmlView.call(this);
+//  var imagepath = this.imgpath !== null ? "rsrc/"+ this.imgpath : __module_path__ + "default.png";
+  var imagepath = this.imgpath !== null ? this.imgpath : __module_path__ + "default.png";
+  var imgelement = $(window.document.createElement('img')).attr('src', imagepath);
+  imgelement.css('height','100%');
+  imgelement.css('width','100%');
+  aux.children('.cbcontainer').append(imgelement);
+  return aux;
+}
+
+ImageBox.prototype.pdfView = function pdfView() {
+  var aux = ImageBox.super_.prototype.pdfView.call(this);
+  var imagepath = this.imgpath !== null ? "rsrc/"+ this.imgpath : __module_path__ + "default.png";
+  var imgelement = $(window.document.createElement('img')).attr('src', imagepath);
+  imgelement.css('height','100%');
+  imgelement.css('width','100%');
+  aux.children('.cbcontainer').append(imgelement);
+  return aux;
 }
 
 ImageBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
@@ -157,3 +178,4 @@ exports.restore = function restore(objectdata) {
 };
 */
 module.exports = ImageBox;
+//@ sourceURL=images_core.js

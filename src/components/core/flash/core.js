@@ -28,6 +28,39 @@ FlashBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+FlashBox.prototype.htmlView = function htmlView() {
+  var aux = FlashBox.super_.prototype.editorView.call(this);
+  var flashelement = $(window.document.createElement('object')).attr('type','application/x-shockwave-flash').attr('data',"rsrc/"+ this.resourcepath);
+  var params = [];
+  params.push($(window.document.createElement('param')).attr('name','movie').attr('value',this.resourcepath));
+  params.push($(window.document.createElement('param')).attr('name','quality').attr('value','high'));
+  params.push($(window.document.createElement('param')).attr('name','scale').attr('value','exactfit'));
+  params.push($(window.document.createElement('param')).attr('name','base').attr('value','.'));
+
+  flashelement.css('height','100%');
+  flashelement.css('width','100%');
+  flashelement.append(params);
+  aux.children('.cbcontainer').append(flashelement);
+  return aux;
+}
+
+FlashBox.prototype.pdfView = function pdfView() {
+  var aux = FlashBox.super_.prototype.pdfView.call(this);
+  var flashelement = $(window.document.createElement('object')).attr('type','application/x-shockwave-flash').attr('data',"rsrc/"+ this.resourcepath);
+  var params = [];
+  params.push($(window.document.createElement('param')).attr('name','movie').attr('value',this.resourcepath));
+  params.push($(window.document.createElement('param')).attr('name','quality').attr('value','high'));
+  params.push($(window.document.createElement('param')).attr('name','scale').attr('value','exactfit'));
+  params.push($(window.document.createElement('param')).attr('name','base').attr('value','.'));
+
+  flashelement.css('height','100%');
+  flashelement.css('width','100%');
+  flashelement.append(params);
+  aux.children('.cbcontainer').append(flashelement);
+  return aux;
+}
+
+
 FlashBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   var dialog = $("<div id='flashdialog'><input id='flashpath' type='file' accept='.swf,.flv' /><button id='action'>Insert</button></div>");
@@ -149,3 +182,4 @@ exports.restore = function restore(objectdata) {
 */
 
 module.exports = FlashBox;
+//@ sourceURL=flash_core.js
