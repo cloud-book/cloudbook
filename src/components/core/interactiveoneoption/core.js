@@ -61,7 +61,9 @@ PEMBox.prototype.clickButton = function clickButton(controllerClass) {
 };
 
 PEMBox.prototype.HTMLtags = function HTMLtags(){
-  return ['PEM'];
+  var tagTypes = ['PEM'];
+  var score = 0;
+  return score;
 }
 
 PEMBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
