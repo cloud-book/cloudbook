@@ -5,3 +5,4 @@ function CBMultimedia(objectdata){
   objectdata.idtype = typeof objectdata.idtype !== 'undefined' ? objectdata.idtype : "CBMultimedia";
   ImageBox.super_.call(this,objectdata);
 }
+//@ sourceURL=cbmultimedia.js

@@ -4,7 +4,7 @@ var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function ExternalIframe(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"url":null, "position" : [200,200],"size":[100,50]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"url":null, "position" : [200,200],"size":[640,480]};
   objectdata.idtype = metadata['idtype'];
   ExternalIframe.super_.call(this,objectdata);
   this.url = objectdata.url;
@@ -15,12 +15,33 @@ util.inherits(ExternalIframe,CBobject);
 ExternalIframe.prototype.editorView = function editorView() {
   var aux = ExternalIframe.super_.prototype.editorView.call(this);
   var url = this.url !== null ? this.url : "http://lliurex.net";
-  var imgelement = $(window.document.createElement('iframe')).attr('src', url);
-  imgelement.css('height','100%');
-  imgelement.css('width','100%');
-  aux.children('.cbcontainer').append(imgelement);
+  var iframeelement = $(window.document.createElement('iframe')).attr('src', url);
+  iframeelement.css('height','100%');
+  iframeelement.css('width','100%');
+  aux.children('.cbcontainer').append(iframeelement);
   return aux;
 };
+
+ExternalIframe.prototype.htmlView = function htmlView() {
+  var aux = ExternalIframe.super_.prototype.htmlView.call(this);
+  var url = this.url !== null ? this.url : "http://lliurex.net";
+  var iframeelement = $(window.document.createElement('iframe')).attr('src', url);
+  iframeelement.css('height','100%');
+  iframeelement.css('width','100%');
+  aux.append(iframeelement);
+  return aux;
+}
+
+ExternalIframe.prototype.pdfView = function pdfView() {
+  var aux = ExternalIframe.super_.prototype.pdfView.call(this);
+  var url = this.url !== null ? this.url : "http://lliurex.net";
+  var iframeelement = $(window.document.createElement('iframe')).attr('src', url);
+  iframeelement.css('height','100%');
+  iframeelement.css('width','100%');
+  aux.append(iframeelement);
+  return aux;
+}
+
 
 ExternalIframe.prototype.importHTML = function importHTML(){
   return ['IFRAME'];
@@ -66,3 +87,4 @@ exports.restore = function restore(objectdata) {
 };
 */
 module.exports = ExternalIframe;
+//@ sourceURL=url_core.js
