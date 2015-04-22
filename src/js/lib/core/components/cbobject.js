@@ -22,6 +22,13 @@ function CBObject(objectdata){
  * @return {jQuery}
  */
 CBObject.prototype.editorView = function editorView() {
+	
+	//aux.mousedown({that:this},that.delaymove);
+	//aux.mouseup({that:this},that.cleardelay);
+	return this.getObject();
+};
+
+CBObject.prototype.getObject = function getObject(){
 	var aux = $(window.document.createElement('div'));
 	var cbcontainer = $(window.document.createElement('div')).addClass('cbcontainer');
 	var that = this;
@@ -34,6 +41,10 @@ CBObject.prototype.editorView = function editorView() {
 	   .css('position','absolute')
 	   .css('z-index',this.levellayer)
 	   .css('transform',"rotate("+this.degree+"rad)")
+	   .css('-ms-transform',"rotate("+this.degree+"rad)")
+	   .css('-webkit-transform',"rotate("+this.degree+"rad)")
+	   .css('-moz-transform',"rotate("+this.degree+"rad)")
+	   .css('-o-transform',"rotate("+this.degree+"rad)")
 	   .css('width',this.size[0].toString() + "px")
 	   .css('height',this.size[1].toString() + "px" );
 	aux.append([cbcontainer]);
@@ -41,7 +52,24 @@ CBObject.prototype.editorView = function editorView() {
 	//aux.mousedown({that:this},that.delaymove);
 	//aux.mouseup({that:this},that.cleardelay);
 	return aux;
-};
+}
+
+
+/**
+ * Render object to jQuery object to be exported to html
+ * @return {jQuery}
+ */
+CBObject.prototype.htmlView = function htmlView() {
+	var aux = this.getObject();
+	aux.removeClass('cbobject-editable');
+	return aux;
+}
+
+
+CBObject.prototype.pdfView = function pdfView() {
+	return this.htmlView();
+}
+
 
 /**
  * This string is return core to bind on button click event on editor view
@@ -210,3 +238,4 @@ CBObject.prototype.enableEditable = function enableEditable(e){
 }
 
 module.exports = CBObject;
+//@ sourceURL=cbobject.js
