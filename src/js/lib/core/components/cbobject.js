@@ -49,6 +49,8 @@ CBObject.prototype.getObject = function getObject(){
 	   .css('height',this.size[1].toString() + "px" );
 	aux.append([cbcontainer]);
 	aux.click({that:this},that.enableEditable);
+	//aux.mousedown({that:this},that.delaymove);
+	//aux.mouseup({that:this},that.cleardelay);
 	return aux;
 }
 
