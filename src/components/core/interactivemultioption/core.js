@@ -112,9 +112,9 @@ PEMBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,
 PEMBox.prototype.triggerHTMLView = function triggerHTMLView() {
   return '$(document).ready(function(){\
   var obj_myprefix_pem_identifier = {\
-   "id": '+this.pemidentifier+',\
+   "id": "'+this.pemidentifier+'",\
    "type": "multi",\
-   "opt": '+this.questions+',\
+   "opt": '+JSON.stringify(this.questions)+',\
    "fieldset": true,\
    "legend": "",\
    "random": true,\
