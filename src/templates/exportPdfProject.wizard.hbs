@@ -35,7 +35,7 @@
             <label for="positionheader"></label>
 				<label class="radio-inline"><input type="radio" name="posicionH" value="headerLeft" disabled="disabled">{{gettext "Left"}}</label>
 				<label class="radio-inline"><input type="radio" name="posicionH" value="headerCenter" disabled="disabled" checked="checked">{{gettext "Center"}}</label>
-				<label class="radio-inline"><input type="radio" name="posicionH" value="headerRight" disabled="disabled" >{{gettext "Right"}}</label>
+				<label class="radio-inline"><input type="radio" name="posicionH" value="headerRight" disabled="disabled">{{gettext "Right"}}</label>
       	  
 	  </div>	
          <label for="headertext">{{gettext "Text to header page"}}</label>
@@ -47,6 +47,6 @@
 <div> 
 <button id="exportpdfback">{{gettext "Cancel"}}</button>
 <button id="exportpdfbtn" disabled="disabled">{{gettext "Generate pdf"}}</button>
-
 </div>
+<div class="waiting" style="display:none"><font color="#FC0202"><strong>{{gettext "PDF Generation in progress. Please wait a moment..."}}</strong></font></div>
 
