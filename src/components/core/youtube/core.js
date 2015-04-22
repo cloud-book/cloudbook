@@ -18,7 +18,8 @@ YoutubeBox.prototype.editorView = function editorView() {
   var imgelement = $(window.document.createElement('iframe')).attr('src', url).attr('frameborder','0').attr('allowfullscreen','');
   imgelement.css('height','100%');
   imgelement.css('width','100%');
-  aux.children('.cbcontainer').append(imgelement);
+  var cliclayer = $(window.document.createElement('div')).addClass('cbcliclayer');
+  aux.children('.cbcontainer').append([imgelement,cliclayer]);
   return aux;
 };
 
