@@ -26,7 +26,7 @@ ImageBox.prototype.htmlView = function htmlView() {
   var aux = ImageBox.super_.prototype.htmlView.call(this);
 //  var imagepath = this.imgpath !== null ? "rsrc/"+ this.imgpath : __module_path__ + "default.png";
   var imagepath = this.imgpath !== null ? this.imgpath : __module_path__ + "default.png";
-  var imgelement = $(window.document.createElement('img')).attr('src', imagepath);
+  var imgelement = $(window.document.createElement('img')).attr('src', 'rsrc/'+imagepath);
   imgelement.css('height','100%');
   imgelement.css('width','100%');
   aux.children('.cbcontainer').append(imgelement);

@@ -49,7 +49,7 @@ CBSection.prototype.htmlView = function htmlView(id) {
 		 //    	}
 			// });
 			fs.writeFileSync(path + objid+".js", rawscriptout);
-			exporthtml.myhead.append('<script type="text/javascript" src="'+objid+'.js"></script>');
+			exporthtml.myhead.append('<script type="text/javascript" src="js/'+objid+'.js"></script>');
 		}
 
 
