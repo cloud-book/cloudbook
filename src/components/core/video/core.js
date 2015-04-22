@@ -47,6 +47,16 @@ VideoBox.prototype.pdfView = function pdfView() {
   return aux;
 }
 
+VideoBox.prototype.editButton = function editButton(e) {
+  var dialog = VideoBox.super_.prototype.editButton.call(this,e);
+  var that = e.data.that;
+
+  dialog.append("<input id='videopath' type='file'/>");
+  dialog.callbacks.push(function callbackEditButtonReplaceVideoBox(){
+    updateVideoPath(dialog,that);
+  })
+};
+
 
 VideoBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;

@@ -26,8 +26,8 @@ YoutubeBox.prototype.htmlView = function htmlView() {
   var aux = YoutubeBox.super_.prototype.htmlView.call(this);
   var url = this.url !== null ? this.url : "http://lliurex.net";
   var imgelement = $(window.document.createElement('iframe')).attr('src', url).attr('frameborder','0').attr('allowfullscreen','');
-  imgelement.css('height','100%');
-  imgelement.css('width','100%');
+  imgelement.css('height',this.size[1]);
+  imgelement.css('width',this.size[0]);
   aux.children('.cbcontainer').append(imgelement);
   return aux;
 }
@@ -36,8 +36,8 @@ YoutubeBox.prototype.pdfView = function pdfView() {
   var aux = YoutubeBox.super_.prototype.pdfView.call(this);
   var url = this.url !== null ? this.url : "http://lliurex.net";
   var imgelement = $(window.document.createElement('iframe')).attr('src', url).attr('frameborder','0').attr('allowfullscreen','');
-  imgelement.css('height','100%');
-  imgelement.css('width','100%');
+  imgelement.css('height',this.size[1]);
+  imgelement.css('width',this.size[0]);
   aux.children('.cbcontainer').append(imgelement);
   return aux;
 }
@@ -73,7 +73,7 @@ YoutubeBox.prototype.editButton = function editButton(e) {
   var dialog = YoutubeBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
   dialog.append("<input id='url' type='text' value='"+that.url+"'/>");
-  dialog.callback.push(function(){
+  dialog.callbacks.push(function(){
     that.url = parseYoutubeUrl($("#url").val());
   });
 };

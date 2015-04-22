@@ -37,8 +37,8 @@ FlashBox.prototype.htmlView = function htmlView() {
   params.push($(window.document.createElement('param')).attr('name','scale').attr('value','exactfit'));
   params.push($(window.document.createElement('param')).attr('name','base').attr('value','.'));
 
-  flashelement.css('height','100%');
-  flashelement.css('width','100%');
+  flashelement.css('height',this.size[1]);
+  flashelement.css('width',this.size[0]);
   flashelement.append(params);
   aux.children('.cbcontainer').append(flashelement);
   return aux;
@@ -53,8 +53,8 @@ FlashBox.prototype.pdfView = function pdfView() {
   params.push($(window.document.createElement('param')).attr('name','scale').attr('value','exactfit'));
   params.push($(window.document.createElement('param')).attr('name','base').attr('value','.'));
 
-  flashelement.css('height','100%');
-  flashelement.css('width','100%');
+  flashelement.css('height',this.size[1]);
+  flashelement.css('width',this.size[0]);
   flashelement.append(params);
   aux.children('.cbcontainer').append(flashelement);
   return aux;

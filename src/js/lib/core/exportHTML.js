@@ -108,7 +108,7 @@ ExportHTML.prototype.do_html = function do_html(path){
 	
 	//Change source url into exported objects
 
-	var total = this.formatXml('<!DOCTYPE html><html>'+this.myhead[0].outerHTML+'<body>'+aside+content+footer+'</body></html>');
+	var total = this.formatXml('<!DOCTYPE html><html><meta charset="UTF-8"> '+this.myhead[0].outerHTML+'<body>'+aside+content+footer+'</body></html>');
 
 	var fs = window.require('fs');
 	fs.writeFile(path+"index.html", total , function(err) {
