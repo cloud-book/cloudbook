@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-07 09:19+0000\n"
+"POT-Creation-Date: 2015-04-22 11:03+0000\n"
 "PO-Revision-Date: 2015-03-23 17:17+0100\n"
 "Last-Translator: kbut <raurodse@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -12,10 +12,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/js/lib/core/components/cbsection.js:19
+#: src/js/lib/core/components/cbsection.js:18
 #, fuzzy
 msgid "Section"
 msgstr "Nombre de seccion"
+
+#: src/js/lib/core/exportHTML.js:104
+msgid "Prev"
+msgstr ""
+
+#: src/js/lib/core/exportHTML.js:104
+#, fuzzy
+msgid "Footer section"
+msgstr "Insertar subseccion"
+
+#: src/js/lib/core/exportHTML.js:104
+msgid "Next"
+msgstr ""
 
 #: src/js/lib/gui/dialogMetadata.js:14
 msgid "Dublin Core"
@@ -257,7 +270,10 @@ msgstr "Clasificaciones"
 msgid "Save"
 msgstr "Guardar"
 
-#: src/js/lib/gui/dialogMetadata.js:90 src/templates/initialwizard.step2.hbs:5
+#: src/js/lib/gui/dialogMetadata.js:90
+#: src/templates/exportPdfProject.wizard.hbs:20
+#: src/templates/initialwizard.importprojects.hbs:5
+#: src/templates/initialwizard.step2.hbs:5
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -706,7 +722,9 @@ msgstr "herramienta de apoyo a procesos/procedimientos"
 
 #: src/js/lib/gui/dialogMetadataValues.js:16
 msgid "individual/cooperative/collaborative learning/working management tool"
-msgstr "herramienta de gestión de aprendizaje/trabajo individual/cooperativo/colaborativo"
+msgstr ""
+"herramienta de gestión de aprendizaje/trabajo individual/cooperativo/"
+"colaborativo"
 
 #: src/js/lib/gui/dialogMetadataValues.js:17
 msgid "multimedia creation/edition service"
@@ -733,8 +751,11 @@ msgid "process/procedure supporting service"
 msgstr "herramienta de apoyo a procesos/procedimientos"
 
 #: src/js/lib/gui/dialogMetadataValues.js:18
-msgid "individual/cooperative/collaborative learning/working management service"
-msgstr "herramienta de gestión de aprendizaje/trabajo individual/cooperativo/colaborativo"
+msgid ""
+"individual/cooperative/collaborative learning/working management service"
+msgstr ""
+"herramienta de gestión de aprendizaje/trabajo individual/cooperativo/"
+"colaborativo"
 
 #: src/js/lib/gui/dialogMetadataValues.js:18
 msgid "master class"
@@ -1258,77 +1279,175 @@ msgstr "nivel de seguridad"
 msgid "competency"
 msgstr "competencia"
 
-#: src/js/lib/gui/menu.js:33 src/templates/initialwizard.step1.hbs:2
+#: src/js/lib/gui/menu.js:50 src/templates/initialwizard.step1.hbs:2
 msgid "New project"
 msgstr "Nuevo proyecto"
 
-#: src/js/lib/gui/menu.js:38
+#: src/js/lib/gui/menu.js:55
 msgid "Save Project"
 msgstr "Salvar proyecto"
 
-#: src/js/lib/gui/menu.js:50
+#: src/js/lib/gui/menu.js:67
 msgid "Save Project as ..."
 msgstr "Salvar proyecto como ..."
 
-#: src/js/lib/gui/menu.js:56
+#: src/js/lib/gui/menu.js:73
 msgid "Load Project"
 msgstr "Cargar proyecto"
 
-#: src/js/lib/gui/menu.js:67
+#: src/js/lib/gui/menu.js:84
 msgid "Quit"
 msgstr "Salir"
 
-#: src/js/lib/gui/menu.js:73
+#: src/js/lib/gui/menu.js:90
 msgid "Metadata"
 msgstr "Metadatos"
 
-#: src/js/lib/gui/menu.js:81
-msgid "HTML5"
-msgstr "HTML5"
-
-#: src/js/lib/gui/menu.js:93
-msgid "ODT/DOC/DOCX"
-msgstr "ODT/DOC/DOCX"
-
-#: src/js/lib/gui/menu.js:105
-msgid "SCORM"
-msgstr "SCORM"
-
-#: src/js/lib/gui/menu.js:117
-msgid "Metadata LOM-ES"
-msgstr "Metadatos LOM-ES"
-
-#: src/js/lib/gui/menu.js:129
+#: src/js/lib/gui/menu.js:146
 msgid "Import"
 msgstr "Importar"
 
-#: src/js/lib/gui/menu.js:154
+#: src/js/lib/gui/menu.js:151
+msgid "Import file ..."
+msgstr ""
+
+#: src/js/lib/gui/menu.js:156
+#, fuzzy
+msgid "Import metadata"
+msgstr "Metadatos"
+
+#: src/js/lib/gui/menu.js:178
+#, fuzzy
+msgid "Export"
+msgstr "Exportar"
+
+#: src/js/lib/gui/menu.js:182 src/templates/initialwizard.importprojects.hbs:3
+msgid "HTML5"
+msgstr "HTML5"
+
+#: src/js/lib/gui/menu.js:188
+msgid "pdf"
+msgstr ""
+
+#: src/js/lib/gui/menu.js:247
 msgid "File"
 msgstr "Archivo"
 
-#: src/js/lib/gui/menu.js:155
+#: src/js/lib/gui/menu.js:248
 msgid "Project"
 msgstr "Proyecto"
 
-#: src/js/lib/gui/ui/proview/core.js:66
+#: src/js/lib/gui/menu.js:249
+#, fuzzy
+msgid "Insert"
+msgstr "Insertar despues"
+
+#: src/js/lib/gui/ui/proview/core.js:75
 msgid "Insert before"
 msgstr "Insertar antes"
 
-#: src/js/lib/gui/ui/proview/core.js:70
+#: src/js/lib/gui/ui/proview/core.js:79
 msgid "Insert after"
 msgstr "Insertar despues"
 
-#: src/js/lib/gui/ui/proview/core.js:74
+#: src/js/lib/gui/ui/proview/core.js:83
 msgid "Insert subsection"
 msgstr "Insertar subseccion"
 
-#: src/js/lib/gui/ui/proview/core.js:78
+#: src/js/lib/gui/ui/proview/core.js:87
 msgid "Delete"
 msgstr "Borrar"
 
-#: src/js/lib/gui/ui/proview/core.js:87
+#: src/js/lib/gui/ui/proview/core.js:96
 msgid "Edit"
 msgstr "Editar"
+
+#: src/templates/exportPdfProject.wizard.hbs:1
+msgid "Page size:"
+msgstr "Tamaño de página"
+
+#: src/templates/exportPdfProject.wizard.hbs:2
+msgid "Page Orientation:"
+msgstr "Orientación de página"
+
+#: src/templates/exportPdfProject.wizard.hbs:3
+#, fuzzy
+msgid "Portrait"
+msgstr "Vertical"
+
+#: src/templates/exportPdfProject.wizard.hbs:4
+msgid "Landscape"
+msgstr "Horizontal"
+
+#: src/templates/exportPdfProject.wizard.hbs:5
+msgid "Include page numbers:"
+msgstr "Incluir numeración de página"
+
+#: src/templates/exportPdfProject.wizard.hbs:6
+#: src/templates/exportPdfProject.wizard.hbs:12
+#, fuzzy
+msgid "Yes"
+msgstr "Si"
+
+#: src/templates/exportPdfProject.wizard.hbs:7
+#: src/templates/exportPdfProject.wizard.hbs:13
+msgid "No"
+msgstr "No"
+
+#: src/templates/exportPdfProject.wizard.hbs:8
+#: src/templates/exportPdfProject.wizard.hbs:14
+msgid "Left"
+msgstr "Izquierda"
+
+#: src/templates/exportPdfProject.wizard.hbs:9
+#: src/templates/exportPdfProject.wizard.hbs:15
+msgid "Center"
+msgstr "Centrado"
+
+#: src/templates/exportPdfProject.wizard.hbs:10
+#: src/templates/exportPdfProject.wizard.hbs:16
+#, fuzzy
+msgid "Right"
+msgstr "Derecha"
+
+#: src/templates/exportPdfProject.wizard.hbs:11
+msgid "Include page header:"
+msgstr "Incluir encabezado de página"
+
+#: src/templates/exportPdfProject.wizard.hbs:17
+msgid "Text to header page"
+msgstr "Texto para el encabezado"
+
+#: src/templates/exportPdfProject.wizard.hbs:18
+msgid "Enter header page text"
+msgstr "Introduce el texto para el encabezado"
+
+#: src/templates/exportPdfProject.wizard.hbs:19
+msgid "Path where save of pdf file:"
+msgstr "Ruta donde guardar el fichero pdf"
+
+#: src/templates/exportPdfProject.wizard.hbs:21
+#, fuzzy
+msgid "Generate pdf"
+msgstr "Generar pdf"
+
+#: src/templates/exportPdfProject.wizard.hbs:22
+msgid "PDF Generation in progress. Please wait a moment..."
+msgstr "Generación del PDF en progeso. Espere un momento por favor..."
+
+#: src/templates/initialwizard.importprojects.hbs:1
+#: src/templates/initialwizard.step2.hbs:1
+msgid "Project name"
+msgstr "Nombre del proyecto"
+
+#: src/templates/initialwizard.importprojects.hbs:2
+#: src/templates/initialwizard.step2.hbs:2
+msgid "Enter project name"
+msgstr "Introduce el nombre del proyecto"
+
+#: src/templates/initialwizard.importprojects.hbs:4
+msgid "SCORM"
+msgstr "SCORM"
 
 #: src/templates/initialwizard.step1.hbs:1
 msgid "Open"
@@ -1338,13 +1457,10 @@ msgstr "Abrir"
 msgid "Open project"
 msgstr "Abrir proyecto"
 
-#: src/templates/initialwizard.step2.hbs:1
-msgid "Project name"
-msgstr "Nombre del proyecto"
-
-#: src/templates/initialwizard.step2.hbs:2
-msgid "Enter project name"
-msgstr "Introduce el nombre del proyecto"
+#: src/templates/initialwizard.step1.hbs:4
+#, fuzzy
+msgid "Import project"
+msgstr "proyecto real"
 
 #: src/templates/initialwizard.step2.hbs:3
 msgid "Advanced Project"
@@ -1357,6 +1473,12 @@ msgstr "Proyecto simple"
 #: src/templates/updateSectionName.hbs:1
 msgid "Section name"
 msgstr "Nombre de seccion"
+
+#~ msgid "ODT/DOC/DOCX"
+#~ msgstr "ODT/DOC/DOCX"
+
+#~ msgid "Metadata LOM-ES"
+#~ msgstr "Metadatos LOM-ES"
 
 #~ msgid "Go back"
 #~ msgstr "Atras"
