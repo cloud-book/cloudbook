@@ -4,7 +4,7 @@ var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function FlashBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"resourcepath":null, "position" : [200,200], "size":[250,100]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"resourcepath":null, "position" : [200,200], "size":[640,480]};
   objectdata.idtype = metadata['idtype'];
   FlashBox.super_.call(this,objectdata);
   this.resourcepath = objectdata.resourcepath;

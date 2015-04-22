@@ -54,7 +54,7 @@ IncludeSite.prototype.triggerAddEditorView = function triggerAddEditorView(jquer
 
 IncludeSite.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='includesitedialog'><input id='url' type='text'/><button id='save'>Insert</button></div>");
+  var dialog = $("<div id='includesitedialog'><input id='url' type='file'/><button id='save'>Insert</button></div>");
   dialog.dialog({modal:true,close:function(){$(this).remove()}});
   dialog.find('#url').keypress(function(e){
       if (e.which==13){
@@ -103,7 +103,7 @@ function copySite(orig,that){
     }
     fsextra.mkdirsSync(resourcepath);
     var basedir = path.dirname(orig);
-    fsextra.copySync(basedir+".",resourcepath);
+    fsextra.copySync(basedir+"/.",resourcepath);
 
     /*
      * update component file

@@ -20,7 +20,7 @@ function CBSection(dataobject){
 
 }
 
-CBSection.prototype.htmlView = function htmlView(id) {
+CBSection.prototype.exportView = function(id,rendermethod,triggermethod) {
 	var html4render=$('<article></article>');
 	if (id) {
 		html4render.attr('id',id);
@@ -33,33 +33,26 @@ CBSection.prototype.htmlView = function htmlView(id) {
 	var exporthtml = application.exporthtml.core.getInstance();
 	var fs = require('fs');
 	var path = Project.Info.projectpath + "/rsrc/";
-	this.content.forEach(function(objid,idx){ 
-		var x = storage.getCBObjectById(objid);
+	this.content.forEach(function(cbobjectid,idx){ 
+		var cbobject = storage.getCBObjectById(cbobjectid);
 
 		// Call exportHTMLResoureces
-		if(x.__proto__.hasOwnProperty("triggerHTMLView")){
-			var rawscriptout = x.triggerHTMLView();
-			
-			// fs.writeFile(path + objid+".js", rawscriptout , function(err) {
-		 //    	if(err) {
-		 //        	return console.log(err);
-		 //    	}else{
-		 //    		exporthtml.myhead.append('<script type="text/javascript" src="'+objid+'.js"></script>');
-			// 		//exporthtml.files_to_copy.push("");
-		 //    	}
-			// });
-			fs.writeFileSync(path + objid+".js", rawscriptout);
-			exporthtml.myhead.append('<script type="text/javascript" src="js/'+objid+'.js"></script>');
+		if(cbobject.__proto__.hasOwnProperty(triggermethod)){
+			var rawscriptout = cbobject.prototype[triggermethod]();
+			fs.writeFileSync(path + cbobjectid+".js", rawscriptout);
+			exporthtml.myhead.append('<script type="text/javascript" src="js/'+cbobjectid+'.js"></script>');
 		}
-
-
-		content.push( x.htmlView());
+		content.push( cbobject.prototype[rendermethod]());
 	});
 	html4render.append(tit);
 	content.forEach(function(a){ html4render.append(a) });
 
 	return html4render;
-}
+};
+
+
+
+
 
 module.exports = CBSection;
-//@ sourceURL=cbsection.js
+//@ sourceURL=file:///usr/share/cloudbook/src/js/lib/core/components/cbsection.js

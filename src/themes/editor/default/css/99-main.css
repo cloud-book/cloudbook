@@ -237,6 +237,18 @@ body{
     display: initial;
 }
 
+.ui-resizable-se{
+    right: -9px;
+    bottom: -9px;
+    position: absolute;
+    display: none;
+}
+
+.cbobject.selected .ui-resizable-se{
+    display: initial;
+}
+
+
 .cbcliclayer{
     z-index: 100;
     height: 100%;

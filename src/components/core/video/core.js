@@ -5,7 +5,7 @@ var metadata = require( "./"+__module_path__ + 'metadata.json');
 var mime = require("./"+__module_path__ + 'lib_external/mime');
 
 function VideoBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"videopath":null,"videoformat":"video/mp4", "position" : [200,200], "size":[250,100]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"videopath":null,"videoformat":"video/mp4", "position" : [200,200], "size":[640,480]};
   objectdata.idtype = metadata['idtype'];
   VideoBox.super_.call(this,objectdata);
   this.videopath = objectdata.videopath;
