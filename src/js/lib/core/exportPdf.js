@@ -9,35 +9,127 @@ function ExportPdf(){
 }
 
 
-ExportPdf.prototype.generatePdf=function generatePdf(page,orientacion,path,posicionN,posicionH,textoH){
-      
-	       	
-	var textoPrueba='<h1>HTML Ipsum Presents</h1><p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p><h2>Header Level 2</h2><ol><li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li><li>Aliquam tincidunt mauris eu risus.</li></ol><blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p>';
-
-       var wkhtmltopdf = require('wkhtmltopdf');
-
-	var wkhtmloptionts = {};
+ExportPdf.prototype.htmltoPdf=function htmltoPdf(){
     
-    if (posicionH !==""){
-        wkhtmloptionts[posicionH] = textoH;
-	}
+    /*funcion que se lanzará para generar el html temporal necesario para el obtener el pdf */
 
-    if (posicionN !==""){	
-		wkhtmloptionts[posicionN] = "[page]";
-    }  
-    
-	wkhtmloptionts["O"] = orientacion; 
-      wkhtmloptionts["s"] = page;
-    
-    wkhtmloptionts["output"] = path;
-	
-                      
-       wkhtmltopdf(textoPrueba,wkhtmloptionts);
-
-    
+     var html='/home/netadmin/Documents/htmlTemp/fichero.html';
+     
+     return html
 
 };
 
+
+ExportPdf.prototype.borrarHtml=function borrarHtml(origen){
+     
+     var fs=require('fs');
+     var fsextra=require('fs-extra');
+     var path=require('path');
+
+         
+     var directorio=path.dirname(origen)
+
+     fsextra.deleteSync(directorio,function (err) {
+  	if (err) return console.error(err)
+ 
+  	console.log('success!')
+     });
+
+ 
+};
+
+ExportPdf.prototype.generatePdf=function generatePdf(parametrosPdf){
+
+	var origen=this.htmltoPdf();
+       
+        this.renderPdf(parametrosPdf,origen);
+	     
+        
+};    
+        
+  
+
+ExportPdf.prototype.renderPdf=function renderPdf(parametrosPdf,origen){    
+	
+       var exec = require('child_process').exec;
+ 
+      
+   /*Ruta donde se guardará el fichero pdf */	
+ 	var pdfFileName = parametrosPdf.path;
+
+         
+    
+   /* Se calculan los parametros para el pdf a generar */
+  	
+       var wkhtmloptions="";
+
+       var orientacionP='-O'+ " " + parametrosPdf.orientacion;
+       wkhtmloptions=wkhtmloptions+orientacionP;
+      
+       var size=' -s' + " " + parametrosPdf.page; 
+       wkhtmloptions=wkhtmloptions+size;
+
+  
+      var encabezadoP="";
+              
+	
+	if (parametrosPdf.posicionH !==""){
+		var encabezado=parametrosPdf.posicionH;
+		 switch (encabezado) {
+  			case "headerRight":
+				encabezadoP=' --header-right' + " '" + parametrosPdf.textoH + "' ";
+                              	break;
+
+			case "headerLeft":
+				encabezadoP=' --header-left' + " '" + parametrosPdf.textoH + "' ";
+				break;
+		       	case "headerCenter":
+				encabezadoP=' --header-center' + " '" + parametrosPdf.textoH + "' ";
+				break;
+		}
+		wkhtmloptions=wkhtmloptions+encabezadoP;
+        }			
+
+
+        var pieP="";
+        if (parametrosPdf.posicionN !==""){	
+		var posicionP=parametrosPdf.posicionN;
+               	switch (posicionP) {
+  			case "footerRight":
+				pieP=' --footer-right [page]';
+				break;
+
+			case "footerLeft":
+				pieP=' --footer-left [page]';
+				break;
+		       	case "footerCenter":
+				pieP=' --footer-center [page]';
+				break;
+		}
+		wkhtmloptions=wkhtmloptions+pieP;
+       } 			
+       
+                  
+      /*Se ejecuta el proceso para generar el pdf*/
+	
+	$("#exportpdfwizard").append("<div>Generación en pdf en curso. Espere un momento por favor...:</div>");
+	var that = this;
+        var child=exec("wkhtmltopdf" + " " + wkhtmloptions + " " + origen + " " + pdfFileName,function(err, stdout, stderr) {  	
+	
+		//process.stdout.write( stderr );
+                if (err === null){
+			console.log("Ha tenido exito");
+		       	$("#exportpdfwizard").dialog("destroy");
+                        that.borrarHtml(origen);
+			
+                }else{
+			console.log(stderr);
+			
+               } 
+	                     
+	});
+	
+};
 
 
 CBUtil.createNameSpace('application.core.exports.exportPdf.core');
