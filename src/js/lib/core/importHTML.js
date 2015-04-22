@@ -57,6 +57,34 @@ function getTextTags()
 }
 
 /**
+ * This method is responsible for processing Text blocks
+ * It creates an span element and insert it into a section
+ * @param  {String} content of the element
+ * @param  {String} width of the element
+ * @param  {String} height of the element
+ * @param  {String} top of the element
+ * @param  {String} left of the element
+ * @param  {String} path of the imported project
+ * @param  {String} id of section selected
+ */
+function processTextBlock(textValue, width, height, top, left, filePath, idsectionselected){
+
+	var backend = application.backend.core.getInstance();
+
+	var auxNode = $('<SPAN></SPAN>');
+	auxNode.innerHTML = textValue;
+	auxNode.tagName = 'SPAN';
+	auxNode.clientWidth = width;
+	auxNode.clientHeight = height;
+	auxNode.offsetTop = top;
+	auxNode.offsetLeft = left;
+	candidates = getHTMLTags(auxNode);
+	element = new Cloudbook.Actions[candidates[0]]['component']();
+	element.importHTML(auxNode, filePath);
+	backend.appendCBObjectIntoSection(element, idsectionselected);
+}
+
+/**
  * This method is responsible for reading block elements
  * It creates an element and insert it into a section
  * @param  {String} content of the HTML file
@@ -69,7 +97,7 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 {
 	var candidates;
 	var backend = application.backend.core.getInstance();
-	
+
 	for(var node = element.firstChild; node; node = node.nextSibling){
 		candidates = [];
 		if(node.tagName != undefined)
@@ -86,19 +114,11 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 					if(node.parentElement.tagName =="HEADER" || node.parentElement.tagName =="FOOTER" ||
 					 node.parentElement.id == "tempImportHTML" || node.parentElement.parentNode.id == "tempImportHTML")
 					{
-						var auxNode = $('<SPAN></SPAN>');
-						auxNode.innerHTML = text;
-						auxNode.tagName = 'SPAN';
-						auxNode.clientWidth = width;
-						auxNode.clientHeight = height;
-						auxNode.offsetTop = top;
-						auxNode.offsetLeft = left;
-						candidates = getHTMLTags(auxNode);
-						element = new Cloudbook.Actions[candidates[0]]['component']();
-						element.importHTML(auxNode, filePath);
-						backend.appendCBObjectIntoSection(element, idsectionselected);
-						that.blockText = "";
-						text = "";
+						if(text != ""){
+							processTextBlock(text, width, height, top, left, filePath, idsectionselected);
+							that.blockText = "";
+							text = "";
+						}
 					}
 				break;
 				case "HEADER": case "FOOTER":
@@ -107,7 +127,7 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 				default:
 					if( ($.inArray(node.tagName,that.textCandidates) > -1 )&& (blockName != null))
 					{
-						that.blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + "><br>";
+						that.blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
 					}
 					else
 					{
@@ -120,6 +140,20 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 						}
 					}
 				break;
+			}
+		}
+		else
+		{
+			if(node.nodeValue.trim().length > 0)
+			{
+				if(blockName != null)
+					that.blockText  += "<SPAN>" + node.nodeValue + "</SPAN><br>";
+				else
+				{
+					processTextBlock(node.nodeValue, width, height, top, left, filePath, idsectionselected);
+					that.blockText = "";
+					text = "";
+				}
 			}
 		}
 	}

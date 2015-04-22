@@ -40,13 +40,21 @@ FlashBox.prototype.clickButton = function clickButton(controllerClass) {
 
 FlashBox.prototype.HTMLtags = function HTMLtags(node){
   var score = 0;
-  var tagTypes = {tags: ['OBJECT','EMBED']};
-  
-  if(tagTypes.tags.indexOf(node.tagName) > -1) score ++;
+  var tagTypes = [{'OBJECT':['application/x-shockwave-flash', 'video/flv']}, {'EMBED':['application/x-shockwave-flash', 'video/flv']}];
 
+  for(var i=0;i<tagTypes.length;i++){
+        var obj = tagTypes[i];
+        for(var key in obj){
+            if(key == node.tagName){
+              score++;
+              if(node.hasAttributes() && node.hasAttribute('type'))
+                if(node.attributes["type"] != undefined)
+                  if(obj[key].indexOf(node.attributes["type"].nodeValue)> -1)
+                  score++;
+            }
+        }
+    }
   return score;
-
-  //return ['OBJECT','EMBED'];
 }
 
 FlashBox.prototype.importHTML = function importHTML(node, filePath){
@@ -57,7 +65,8 @@ FlashBox.prototype.importHTML = function importHTML(node, filePath){
     try{
       
       if(node.tagName == "OBJECT")
-        resourcepath = node.attributes.getNamedItem("data") != null? node.attributes.getNamedItem("data").value:"";
+        resourcepath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
+
       if(node.tagName == "EMBED")
         resourcepath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
 

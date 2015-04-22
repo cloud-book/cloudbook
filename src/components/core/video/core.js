@@ -37,13 +37,23 @@ VideoBox.prototype.clickButton = function clickButton(controllerClass) {
 
 VideoBox.prototype.HTMLtags = function HTMLtags(node){
   var score = 0;
-  var tagTypes = {tags: ['VIDEO']};
-  
-  if(tagTypes.tags.indexOf(node.tagName) > -1) score ++;
+
+  var tagTypes = [{'VIDEO':''}, {'OBJECT':['video/mp4', 'video/ogg', 'video/webm']}];
+
+  for(var i=0;i<tagTypes.length;i++){
+        var obj = tagTypes[i];
+        for(var key in obj){
+            if(key == node.tagName){
+              score++;
+              if(node.hasAttributes() && node.hasAttribute('type'))
+                if(node.attributes["type"] != undefined)
+                  if(obj[key].indexOf(node.attributes["type"].nodeValue)> -1)
+                  score++;
+            }
+        }
+    }
 
   return score;
-
-  //return ['VIDEO'];
 }
 
 VideoBox.prototype.importHTML = function importHTML(node, filePath){
@@ -51,12 +61,23 @@ VideoBox.prototype.importHTML = function importHTML(node, filePath){
 //  var Project = window.Project;
   var fs = require('fs-extra');
   var path = require('path');
+  var type = "";
 
      try{
-      
-       if (node.innerHTML.indexOf("src=")!=-1){
-        videopath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
-
+       if(node.tagName == "VIDEO")
+       {
+        if (node.innerHTML.indexOf("src=")!=-1)
+          videopath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
+        if (node.innerHTML.indexOf("type=")!=-1)
+        {
+          type = node.innerHTML.split('type="')[1].trim().replace(">","").replace('"','');
+        }
+       }
+       if(node.tagName == "OBJECT")
+       {
+        videopath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
+        type = node.attributes.getNamedItem("type") != null? node.attributes.getNamedItem("type").value:"";
+       }
         var basename = path.basename(videopath);
         var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
 
@@ -72,8 +93,10 @@ VideoBox.prototype.importHTML = function importHTML(node, filePath){
         var height = node.clientHeight;
         var left = node.offsetLeft;
         var top = node.offsetTop;
+        
         this.position = [left, top];
         this.videopath = basename;
+        this.videoformat = type;
         if(width != 0 && height != 0)
           this.size = [width,height];
         else
@@ -88,10 +111,9 @@ VideoBox.prototype.importHTML = function importHTML(node, filePath){
               this.size = [width,height];
           }
         }
-      }
     }
     catch (err) {
-        console.log('Errors in Video');
+        console.log('Errors in Video ' + err);
     }
 
 };

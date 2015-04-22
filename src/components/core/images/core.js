@@ -23,14 +23,22 @@ ImageBox.prototype.editorView = function editorView() {
 };
 
 ImageBox.prototype.HTMLtags = function HTMLtags(node){
-//  return ['IMG', 'FIGURE'];
   var score = 0;
-  var tagTypes = {tags: ['IMG', 'FIGURE']};
+  var tagTypes = [{'IMG':''}, {'FIGURE':''}, {'OBJECT':['image/gif', 'image/jpeg', 'image/png', 'image/tiff']}];
   
-  if(tagTypes.tags.indexOf(node.tagName) > -1) score ++;
-
+    for(var i=0;i<tagTypes.length;i++){
+        var obj = tagTypes[i];
+        for(var key in obj){
+            if(key == node.tagName){
+              score++;
+              if(node.hasAttributes() && node.hasAttribute('type'))
+                if(node.attributes["type"] != undefined)
+                  if(obj[key].indexOf(node.attributes["type"].nodeValue)> -1)
+                  score++;
+            }
+        }
+    }
   return score;
-
 }
 
 ImageBox.prototype.importHTML = function importHTML(node, filePath){
@@ -45,6 +53,9 @@ ImageBox.prototype.importHTML = function importHTML(node, filePath){
     try{
       
       var imgpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+      if(node.tagName == "OBJECT")
+        imgpath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
+       
       var basename = path.basename(imgpath);
       var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
       while(true){

@@ -38,13 +38,22 @@ AudioBox.prototype.clickButton = function clickButton(controllerClass) {
 AudioBox.prototype.HTMLtags = function HTMLtags(node){
 
   var score = 0;
-  var tagTypes = {tags: ['AUDIO']};
-  
-  if(tagTypes.tags.indexOf(node.tagName) > -1) score ++;
+  var tagTypes = [{'AUDIO':''}, {'OBJECT':['audio/basic', 'audio/mp3', 'audio/ogg', 'audio/wav']}];
 
+  for(var i=0;i<tagTypes.length;i++){
+        var obj = tagTypes[i];
+        for(var key in obj){
+            if(key == node.tagName){
+              score++;
+              if(node.hasAttributes() && node.hasAttribute('type'))
+                if(node.attributes["type"] != undefined)
+                  if(obj[key].indexOf(node.attributes["type"].nodeValue)> -1)
+                  score++;
+            }
+        }
+    }
   return score;
 
-//  return ['AUDIO'];
 }
 
 AudioBox.prototype.importHTML = function importHTML(node, filePath){
@@ -52,11 +61,13 @@ AudioBox.prototype.importHTML = function importHTML(node, filePath){
   var fs = require('fs-extra');
   var path = require('path');
 
-  node = node.firstElementChild;
+  if(node.tagName == "AUDIO")
+    node = node.firstElementChild;
 
     try{
-
       var audiopath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+      if(node.tagName == "OBJECT")
+        audiopath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
       var basename = path.basename(audiopath);
       var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
       while(true){
@@ -72,14 +83,14 @@ AudioBox.prototype.importHTML = function importHTML(node, filePath){
       var height = node.clientHeight;
       var left = node.offsetLeft;
       var top = node.offsetTop;
-      this.type = type;
+      this.audioformat = type;
       this.position = [left, top];
       if(width != 0 && height != 0)
         this.size = [width,height];
       this.audiopath = basename;
     }
     catch (err) {
-        console.log('Errors in Audio');
+        console.log('Errors in Audio: ' + err);
     }
 }
 

@@ -24,17 +24,15 @@ YoutubeBox.prototype.editorView = function editorView() {
 
 YoutubeBox.prototype.HTMLtags = function HTMLtags(node){
   var score = 0;
-  var tagTypes = {tags: ['IFRAME']};
+  var tagTypes = ['IFRAME'];
   
-  if(tagTypes.tags.indexOf(node.tagName) > -1)
+  if(tagTypes.indexOf(node.tagName) > -1)
   {
    score ++;
    if(node.attributes.getNamedItem("src") != null)
-    if(node.attributes.getNamedItem("src").value.indexOf("youtube") != -1) score++;
+    if(node.attributes.getNamedItem("src").value.indexOf("youtube.com") != -1) score++;
   }
   return score;
-
-//  return ['IFRAME'];
 }
 
 YoutubeBox.prototype.importHTML = function importHTML(node, filePath){
