@@ -96,3 +96,4 @@ exports.restore = function restore(objectdata) {
 */
 
 module.exports = JclicBox;
+//@ sourceURL=jclic_core.js
