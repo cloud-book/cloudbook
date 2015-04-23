@@ -55,7 +55,7 @@ CBSection.prototype.htmlView = function htmlView(id) {
 
 		content.push( x.htmlView());
 	});
-	html4render.append(tit);
+	//html4render.append(tit);
 	content.forEach(function(a){ html4render.append(a) });
 
 	return html4render;

@@ -11,8 +11,8 @@ function ExportHTML(){
 ExportHTML.prototype.htmlHead = function() {
 	this.myhead = $('<head></head>');
 	this.myhead.append('<script type="text/javascript" src="js/jquery.js"></script>');
-	this.myhead.append('<script type="text/javascript" src="js/jquery.layout.js"></script>');
 	this.myhead.append('<script type="text/javascript" src="js/jquery-ui.min.js"></script>');
+	this.myhead.append('<script type="text/javascript" src="js/jquery.layout.js"></script>');
 	this.myhead.append('<script type="text/javascript" src="js/core.js"></script>');
 	this.myhead.append('<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />');
 	this.myhead.append('<link rel="stylesheet" type="text/css" href="css/estilo.css" />');
@@ -111,13 +111,14 @@ ExportHTML.prototype.do_html = function do_html(path){
 	var total = this.formatXml('<!DOCTYPE html><html>'+this.myhead[0].outerHTML+'<body>'+aside+content+footer+'</body></html>');
 
 	var fs = window.require('fs');
-	fs.writeFile(path+"index.html", total , function(err) {
-    	if(err) {
-        	return console.log(err);
-    	}else{
-    		console.log("The file was saved!");
-    	}
-	});
+	// fs.writeFile(path+"index.html", total , function(err) {
+ //    	if(err) {
+ //        	return console.log(err);
+ //    	}else{
+ //    		console.log("The file was saved!");
+ //    	}
+	// });
+	fs.writeFileSync(path+"index.html", total);
 	var that = this;
 	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,path)});
 	return total;
