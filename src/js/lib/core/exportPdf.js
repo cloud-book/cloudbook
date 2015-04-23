@@ -13,7 +13,7 @@ ExportPdf.prototype.htmltoPdf=function htmltoPdf(){
     
     /*funcion que se lanzará para generar el html temporal necesario para el obtener el pdf */
 
-     var html='/home/netadmin/Documents/htmlTemp/fichero.html';
+     var html='/home/netadmin/Documents/html Temp/index 1.html';
      
      return html
 
@@ -41,7 +41,7 @@ ExportPdf.prototype.borrarHtml=function borrarHtml(origen){
 ExportPdf.prototype.generatePdf=function generatePdf(parametrosPdf){
 
 	var origen=this.htmltoPdf();
-       
+               
         this.renderPdf(parametrosPdf,origen);
 	     
         
@@ -55,9 +55,9 @@ ExportPdf.prototype.renderPdf=function renderPdf(parametrosPdf,origen){
  
       
    /*Ruta donde se guardará el fichero pdf */	
- 	var pdfFileName = parametrosPdf.path;
+ 	var pdfFileName = " '" + parametrosPdf.path + "' ";
 
-         
+        var ficheroOrigen=" '" + origen + "' "; 
     
    /* Se calculan los parametros para el pdf a generar */
   	
@@ -114,7 +114,7 @@ ExportPdf.prototype.renderPdf=function renderPdf(parametrosPdf,origen){
 	
 	$("#exportpdfwizard").find('.waiting').css("display","inline");
 	var that = this;
-        var child=exec("wkhtmltopdf" + " " + wkhtmloptions + " " + origen + " " + pdfFileName,function(err, stdout, stderr) {  	
+        var child=exec("wkhtmltopdf" + " " + wkhtmloptions + " " + ficheroOrigen + " " + pdfFileName ,function(err, stdout, stderr) {  	
 	
 		//process.stdout.write( stderr );
                 if (err === null){
