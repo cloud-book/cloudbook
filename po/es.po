@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-22 11:03+0000\n"
+"POT-Creation-Date: 2015-04-23 16:37+0000\n"
 "PO-Revision-Date: 2015-03-23 17:17+0100\n"
 "Last-Translator: kbut <raurodse@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -17,16 +17,16 @@ msgstr ""
 msgid "Section"
 msgstr "Nombre de seccion"
 
-#: src/js/lib/core/exportHTML.js:104
+#: src/js/lib/core/exportHTML.js:114
 msgid "Prev"
 msgstr ""
 
-#: src/js/lib/core/exportHTML.js:104
+#: src/js/lib/core/exportHTML.js:114
 #, fuzzy
 msgid "Footer section"
 msgstr "Insertar subseccion"
 
-#: src/js/lib/core/exportHTML.js:104
+#: src/js/lib/core/exportHTML.js:114
 msgid "Next"
 msgstr ""
 
@@ -271,7 +271,9 @@ msgid "Save"
 msgstr "Guardar"
 
 #: src/js/lib/gui/dialogMetadata.js:90
+#: src/templates/exportHtmlProject.wizard.hbs:3
 #: src/templates/exportPdfProject.wizard.hbs:20
+#: src/templates/exportWebZipProject.wizard.hbs:2
 #: src/templates/initialwizard.importprojects.hbs:5
 #: src/templates/initialwizard.step2.hbs:5
 msgid "Cancel"
@@ -1316,28 +1318,32 @@ msgstr ""
 msgid "Import metadata"
 msgstr "Metadatos"
 
-#: src/js/lib/gui/menu.js:178
+#: src/js/lib/gui/menu.js:193
 #, fuzzy
 msgid "Export"
 msgstr "Exportar"
 
-#: src/js/lib/gui/menu.js:182 src/templates/initialwizard.importprojects.hbs:3
+#: src/js/lib/gui/menu.js:197 src/templates/initialwizard.importprojects.hbs:3
 msgid "HTML5"
 msgstr "HTML5"
 
-#: src/js/lib/gui/menu.js:188
+#: src/js/lib/gui/menu.js:202
 msgid "pdf"
 msgstr ""
 
-#: src/js/lib/gui/menu.js:247
+#: src/js/lib/gui/menu.js:208
+msgid "WebZip"
+msgstr ""
+
+#: src/js/lib/gui/menu.js:268
 msgid "File"
 msgstr "Archivo"
 
-#: src/js/lib/gui/menu.js:248
+#: src/js/lib/gui/menu.js:269
 msgid "Project"
 msgstr "Proyecto"
 
-#: src/js/lib/gui/menu.js:249
+#: src/js/lib/gui/menu.js:270
 #, fuzzy
 msgid "Insert"
 msgstr "Insertar despues"
@@ -1362,6 +1368,20 @@ msgstr "Borrar"
 msgid "Edit"
 msgstr "Editar"
 
+#: src/templates/exportHtmlProject.wizard.hbs:1
+#, fuzzy
+msgid "Path where save html project"
+msgstr "Ruta donde guardar el fichero pdf"
+
+#: src/templates/exportHtmlProject.wizard.hbs:2
+msgid "Choose folder"
+msgstr ""
+
+#: src/templates/exportHtmlProject.wizard.hbs:4
+#, fuzzy
+msgid "Generate html"
+msgstr "Generar pdf"
+
 #: src/templates/exportPdfProject.wizard.hbs:1
 msgid "Page size:"
 msgstr "Tamaño de página"
@@ -1380,47 +1400,49 @@ msgid "Landscape"
 msgstr "Horizontal"
 
 #: src/templates/exportPdfProject.wizard.hbs:5
-msgid "Include page numbers:"
-msgstr "Incluir numeración de página"
+msgid "Include page header:"
+msgstr "Incluir encabezado de página"
 
 #: src/templates/exportPdfProject.wizard.hbs:6
-#: src/templates/exportPdfProject.wizard.hbs:12
+#: src/templates/exportPdfProject.wizard.hbs:14
 #, fuzzy
 msgid "Yes"
 msgstr "Si"
 
 #: src/templates/exportPdfProject.wizard.hbs:7
-#: src/templates/exportPdfProject.wizard.hbs:13
+#: src/templates/exportPdfProject.wizard.hbs:15
 msgid "No"
 msgstr "No"
 
 #: src/templates/exportPdfProject.wizard.hbs:8
-#: src/templates/exportPdfProject.wizard.hbs:14
+#: src/templates/exportPdfProject.wizard.hbs:16
 msgid "Left"
 msgstr "Izquierda"
 
 #: src/templates/exportPdfProject.wizard.hbs:9
-#: src/templates/exportPdfProject.wizard.hbs:15
+#: src/templates/exportPdfProject.wizard.hbs:17
 msgid "Center"
 msgstr "Centrado"
 
 #: src/templates/exportPdfProject.wizard.hbs:10
-#: src/templates/exportPdfProject.wizard.hbs:16
+#: src/templates/exportPdfProject.wizard.hbs:18
 #, fuzzy
 msgid "Right"
 msgstr "Derecha"
 
 #: src/templates/exportPdfProject.wizard.hbs:11
-msgid "Include page header:"
-msgstr "Incluir encabezado de página"
-
-#: src/templates/exportPdfProject.wizard.hbs:17
-msgid "Text to header page"
+#, fuzzy
+msgid "Text to header page:"
 msgstr "Texto para el encabezado"
 
-#: src/templates/exportPdfProject.wizard.hbs:18
+#: src/templates/exportPdfProject.wizard.hbs:12
 msgid "Enter header page text"
 msgstr "Introduce el texto para el encabezado"
+
+#: src/templates/exportPdfProject.wizard.hbs:13
+#, fuzzy
+msgid "Include page numbers in foot page:"
+msgstr "Incluir numeración de página en el pie:"
 
 #: src/templates/exportPdfProject.wizard.hbs:19
 msgid "Path where save of pdf file:"
@@ -1433,7 +1455,30 @@ msgstr "Generar pdf"
 
 #: src/templates/exportPdfProject.wizard.hbs:22
 msgid "PDF Generation in progress. Please wait a moment..."
-msgstr "Generación del PDF en progeso. Espere un momento por favor..."
+msgstr "Generación del PDF en progreso. Espere un momento por favor..."
+
+#: src/templates/exportPdfProject.wizard.hbs:23
+msgid "There was an error generating the PDF file. Please cancel de process"
+msgstr "Ha ocurrido un error en la generación del fichero PDF. Por favor cancele el proceso"
+
+#: src/templates/exportWebZipProject.wizard.hbs:1
+#, fuzzy
+msgid "Path where save of zip file:"
+msgstr "Ruta donde guardar el fichero zip:"
+
+#: src/templates/exportWebZipProject.wizard.hbs:3
+#, fuzzy
+msgid "Generate zip"
+msgstr "Generar zip"
+
+#: src/templates/exportWebZipProject.wizard.hbs:4
+#, fuzzy
+msgid "Zip Generation in progress. Please wait a moment..."
+msgstr "Generación del ZIP en progeso. Espere un momento por favor..."
+
+#: src/templates/exportWebZipProject.wizard.hbs:5
+msgid "There was an error generating WebZip file. Please cancel the process"
+msgstr "A ocurrido un error en la generación de fichero ZIP. Por favo cancele el proceso"
 
 #: src/templates/initialwizard.importprojects.hbs:1
 #: src/templates/initialwizard.step2.hbs:1

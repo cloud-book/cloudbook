@@ -15,17 +15,7 @@
 			<label class="radio-inline"><input type="radio" name="orientation" value="Landscape">{{gettext "Landscape"}}</label>
         </div>
         <p><p>
-        <div>
-      		<label for="numerationpage">{{gettext "Include page numbers:"}}</label>
-			<label class="radio-inline"><input type="radio" name="numeracion" value="1">{{gettext "Yes"}}</label>
-			<label class="radio-inline"><input type="radio" name="numeracion" value="0" checked="checked">{{gettext "No"}}</label>
-                  
-                <label for="positionnumber"></label>
-			<label class="radio-inline"><input type="radio" name="posicionN" value="footerLeft" disabled="disabled">{{gettext "Left"}}</label>
-			<label class="radio-inline"><input type="radio" name="posicionN" value="footerCenter" disabled="disabled" checked="checked">{{gettext "Center"}}</label>
-			<label class="radio-inline"><input type="radio" name="posicionN" value="footerRight" disabled="disabled">{{gettext "Right"}}</label>
-       </div>
-       <p><p>
+        
        <div>
       		<label for="headerpage">{{gettext "Include page header:"}}</label>
 			<label class="radio-inline"><input type="radio" name="header" value="1">{{gettext "Yes"}}</label>
@@ -38,12 +28,24 @@
      </div>	
      <p><p>
      <div>
-		<label for="headertext">{{gettext "Text to header page"}}</label>
+		<label for="headertext">{{gettext "Text to header page:"}}</label>
 			<input name="headertext" class="form-control" placeholder="{{gettext "Enter header page text"}}" value="{{headertext}}"disabled="disabled"</input> 
      </div>
      <p><p>
      <div>
-		<label>{{gettext "Path where save of pdf file:"}}</label><input name="path" type="file" nwsaveas="proyect.pdf" disabled="disabled"</label> 
+      		<label for="numerationpage">{{gettext "Include page numbers in foot page:"}}</label>
+			<label class="radio-inline"><input type="radio" name="numeracion" value="1">{{gettext "Yes"}}</label>
+			<label class="radio-inline"><input type="radio" name="numeracion" value="0" checked="checked">{{gettext "No"}}</label>
+                  
+                <label for="positionnumber"></label>
+			<label class="radio-inline"><input type="radio" name="posicionN" value="footerLeft" disabled="disabled">{{gettext "Left"}}</label>
+			<label class="radio-inline"><input type="radio" name="posicionN" value="footerCenter" disabled="disabled" checked="checked">{{gettext "Center"}}</label>
+			<label class="radio-inline"><input type="radio" name="posicionN" value="footerRight" disabled="disabled">{{gettext "Right"}}</label>
+       </div>
+    <p><p>
+
+	<div>
+		<label>{{gettext "Path where save of pdf file:"}}</label><input name="path" type="file" nwsaveas="project.pdf" disabled="disabled"</label> 
      </div>
 </div>
 <p><p>
@@ -52,5 +54,5 @@
 <button id="exportpdfbtn" disabled="disabled">{{gettext "Generate pdf"}}</button>
 </div>
 <p><p>
-<div class="waiting" style="display:none"><font color="#FC0202"><strong>{{gettext "PDF Generation in progress. Please wait a moment..."}}</strong></font></div>
-
+<div class="waitingOK" style="display:none"><font color="#FC0202"><strong>{{gettext "PDF Generation in progress. Please wait a moment..."}}</strong></font></div>
+<div class="waitingER" style="display:none"><font color="#FC0202"><strong>{{gettext "There was an error generating the PDF file. Please cancel de process"}}</strong></font></div>

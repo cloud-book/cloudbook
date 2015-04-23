@@ -65,11 +65,12 @@ ExportWebZip.prototype.createZip=function createZip(directorio,destino){
           
       var that = this;
 
-      $("#exportwebzipwizard").find('.waiting').css("display","inline");
+      $("#exportwebzipwizard").find('.waitingOK').css("display","inline");
        zipFolder(directorioOrigen, zipFileName, function(err) {
     		if(err) {
        		 	console.log('oh no!', err);
-			
+			$("#exportwebzipwizard").find('.waitingOK').css("display","none");
+			$("#exportwebzipwizard").find('.waitingER').css("display","inline");
     		} else {
        			 console.log('EXCELLENT');
 		 	$("#exportwebzipwizard").dialog("destroy");
