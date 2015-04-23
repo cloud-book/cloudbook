@@ -107,6 +107,7 @@ TextBox.prototype.importHTML = function importHTML(node, filePath){
     {
       var text = "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
       TextBox.super_.prototype.importHTML.call(this,node);
+      this.text = text;
     }
     else
     {

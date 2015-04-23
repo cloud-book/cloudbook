@@ -196,13 +196,15 @@ CBObject.prototype.enableEditable = function enableEditable(e){
 		var storagemanager = application.storagemanager.getInstance();
 		var jquerycbo = $("[data-cbobjectid='"+Cloudbook.UI.cbobjectselected+"']");
 		jquerycbo.addClass('selected');
-		var actualtop = jquerycbo.position().top;
+		var node = jquerycbo.get()[0];
+		var actualtop = (node.offsetTop - node.scrollTop + node.clientTop)
 		var toolbartop = actualtop - 30;
 		var top = true;
 		if(actualtop < 30){
 			toolbartop = actualtop + jquerycbo.get()[0].clientHeight  ;
 			top = false;
 		}
+		var toolbarleft = (node.offsetLeft - node.scrollLeft + node.clientLeft);
 
 		var bar = $("<div id='cbobjecttoolbar'></div>");
 		var edit = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/edit.png');
@@ -233,7 +235,7 @@ CBObject.prototype.enableEditable = function enableEditable(e){
 				storagemanager.setCBObjectById(objectcbo,Cloudbook.UI.cbobjectselected);
 			}
 		});
-		bar.css('top', toolbartop +"px").css('left',jquerycbo.position().left+"px").css('position','absolute');
+		bar.css('top', toolbartop +"px").css('left',toolbarleft+"px").css('position','absolute');
 		$("#targetcontent").append(bar);
 
 	}
