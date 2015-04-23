@@ -40,12 +40,23 @@ AudioBox.prototype.pdfView = function pdfView() {
   return "";
 }
 
+AudioBox.prototype.editButton = function editButton(e) {
+  var dialog = AudioBox.super_.prototype.editButton.call(this,e);
+  var that = e.data.that;
+
+  dialog.append("<input id='audiopath' type='file'/>");
+  dialog.callbacks.push(function callbackEditButtonReplaceAudioBox(){
+    updateAudioPath(dialog,that);
+  })
+};
+
+
 
 AudioBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   var dialog = $("<div id='audiodialog'><input id='audiopath' type='file' accept='.mp3,.ogg,.wav' /><button id='action'>Insert</button></div>");
   dialog.children('#action').click(function(){
-    updateVideoPath(dialog,that);
+    updateAudioPath(dialog,that);
   });
   dialog.dialog({modal:true,close:function(){$(this).remove()}});
   $("#audiodialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
@@ -115,7 +126,7 @@ AudioBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
 };
 
 
-function updateVideoPath(dialog,that){
+function updateAudioPath(dialog,that){
     var fs = window.require('fs');
     var fsextra = window.require('fs-extra');
     var path = window.require('path');

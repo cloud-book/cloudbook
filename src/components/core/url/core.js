@@ -18,7 +18,8 @@ ExternalIframe.prototype.editorView = function editorView() {
   var iframeelement = $(window.document.createElement('iframe')).attr('src', url);
   iframeelement.css('height','100%');
   iframeelement.css('width','100%');
-  aux.children('.cbcontainer').append(iframeelement);
+  var cliclayer = $(window.document.createElement('div')).addClass('cbcliclayer');
+  aux.children('.cbcontainer').append([iframeelement,cliclayer]);
   return aux;
 };
 
@@ -114,6 +115,9 @@ ExternalIframe.prototype.editButton = function editButton(e) {
   var that = e.data.that;
 
   dialog.append("<input id='url' type='text' value='"+that.url+"'/>");
+  dialog.callbacks.push(function(){
+    that.url = $("#url").val();
+  });
 };
 
 //ExternalIframe.triggerAddEditorView =  CBobject.triggerAddEditorView;

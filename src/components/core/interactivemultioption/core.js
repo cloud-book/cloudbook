@@ -3,19 +3,19 @@ var util = require('util');
 var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
-function PEMBox(objectdata){
+function PMS(objectdata){
   objectdata = typeof objectdata !== 'undefined' ? objectdata : {"position" : [200,200], "size":[300,0]};
   objectdata.idtype = metadata['idtype'];
-  PEMBox.super_.call(this,objectdata);
+  PMS.super_.call(this,objectdata);
   this.pemidentifier = typeof objectdata.pemidentifier !== 'undefined' ? objectdata.pemidentifier : "pem_" + this.uniqueid ; 
   this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : "Description of your activity" ; 
   this.questions = typeof objectdata.questions !== 'undefined' ? objectdata.questions : [] ;
 }
 
-util.inherits(PEMBox,CBobject);
+util.inherits(PMS,CBobject);
 
-PEMBox.prototype.editorView = function editorView() {
-  var aux = PEMBox.super_.prototype.editorView.call(this);
+PMS.prototype.editorView = function editorView() {
+  var aux = PMS.super_.prototype.editorView.call(this);
   var fs = require('fs');
   var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityview.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
@@ -25,8 +25,8 @@ PEMBox.prototype.editorView = function editorView() {
   return aux;
 };
 
-PEMBox.prototype.htmlView = function htmlView() {
-  var aux = PEMBox.super_.prototype.htmlView.call(this);
+PMS.prototype.htmlView = function htmlView() {
+  var aux = PMS.super_.prototype.htmlView.call(this);
   var fs = require('fs');
   var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityview.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
@@ -36,20 +36,13 @@ PEMBox.prototype.htmlView = function htmlView() {
   return aux;
 }
 
-PEMBox.prototype.pdfView = function pdfView() {
-  var aux = PEMBox.super_.prototype.pdfView.call(this);
-  var fs = require('fs');
-  var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityview.hbs',{encoding:'utf8'});
-  var templatecompiled = application.util.template.compile(template);
-  options={"identifier":this.pemidentifier,"description":this.description,questions:this.questions};
-  aux.children('.cbcontainer').append($(templatecompiled(options)));
-  aux.addClass('pms');
-  return aux;
+PMS.prototype.pdfView = function pdfView() {
+  return this.htmlView();
 }
 
 
 
-PEMBox.prototype.clickButton = function clickButton(controllerClass) {
+PMS.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   var dialog = $("<div id='pemdialog'><input id='numberquestions' type='number' min='2' max='10' value='4'/><button id='action'>Insert</button></div>");
   dialog.dialog({modal:true,close:function(){$(this).remove()}});
@@ -68,10 +61,11 @@ PEMBox.prototype.HTMLtags = function HTMLtags(){
   var tagTypes = ['PEM'];
   var score = 0;
   return score;
+
 }
 
-PEMBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
-  PEMBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
+PMS.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
+  PMS.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
   var obj_myprefix_pem_identifier = {
    "id": this.pemidentifier,
    "type": "multi",
@@ -111,7 +105,7 @@ PEMBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,
 };
 
 
-PEMBox.prototype.triggerHTMLView = function triggerHTMLView() {
+PMS.prototype.triggerHTMLView = function triggerHTMLView() {
   return '$(document).ready(function(){\
   var obj_myprefix_pem_identifier = {\
    "id": "'+this.pemidentifier+'",\
@@ -135,9 +129,9 @@ PEMBox.prototype.triggerHTMLView = function triggerHTMLView() {
 };
 
 
-PEMBox.prototype.editButton = function editButton(e) {
+PMS.prototype.editButton = function editButton(e) {
   var that = e.data.that;
-  var dialog = PEMBox.super_.prototype.editButton.call(this,e);
+  var dialog = PMS.super_.prototype.editButton.call(this,e);
   var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
   dialog.append(templatecompiled({'description':that.description,'questions':that.questions}));
@@ -172,16 +166,21 @@ function updateQuestions(dialog,objectcbo){
   objectcbo.description = description;
 }
 
-//PEMBox.triggerAddEditorView =  CBobject.triggerAddEditorView;
+//PMS.triggerAddEditorView =  CBobject.triggerAddEditorView;
 /*
 exports.add = function add() {
-  return new PEMBox();
+  return new PMS();
 };
 
 exports.restore = function restore(objectdata) {
-  return new PEMBox(objectdata);
+  return new PMS(objectdata);
 };
 */
 
+<<<<<<< HEAD
 module.exports = PEMBox;
 //@ sourceURL=interactivemultioption_core.js
+=======
+module.exports = PMS;
+//@ sourceURL=interactivemultioption_core.js
+>>>>>>> upstream/master

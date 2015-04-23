@@ -51,12 +51,13 @@ ExportPdfWizard.prototype.showExportPdfProject = function showExportPdfProject(e
 				$("[name='posicionH']").attr('disabled','disabled');
 				$("[name='headertext']").attr('disabled','disabled');
                                 $("[name='headertext']").val('');
+                                $("[name='path']").removeAttr('disabled');
 			}
 			else{
 				$("[name='posicionH']").removeAttr('disabled');
 				$("[name='headertext']").removeAttr('disabled');
 				$("[name='path']").attr('disabled','disabled');
-				$("input[name='headertext']").change(function(e){
+				$("input[name='headertext']").keyup(function(e){
 						if (e.currentTarget.value!==""){
 							$("[name='path']").removeAttr('disabled');						
 						}else{
@@ -112,9 +113,19 @@ ExportPdfWizard.prototype.showExportPdfProject = function showExportPdfProject(e
 		var textoH="";
 			
              }	
-             
+          
+          var parametrosPdf={};
+          parametrosPdf['page']=page;
+          parametrosPdf['orientacion']=orientacion;
+          parametrosPdf['path']=path;
+          parametrosPdf['posicionN']=posicionN;
+          parametrosPdf['posicionH']=posicionH;
+          parametrosPdf['textoH']=textoH;
+   
           var exportpdf = application.core.exports.exportPdf.core.getInstance();
-	  exportpdf.generatePdf(page,orientacion,path,posicionN,posicionH,textoH);
+	//  exportpdf.generatePdf(page,orientacion,path,posicionN,posicionH,textoH);
+	  exportpdf.generatePdf(parametrosPdf);	
+
 	});
 
       $("[id='exportpdfback']").click(function(){

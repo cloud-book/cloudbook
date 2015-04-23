@@ -8,14 +8,17 @@ function ExportHTML(){
 }
 
 
-ExportHTML.prototype.htmlHead = function() {
+ExportHTML.prototype.htmlBasicHead = function() {
 	this.myhead = $('<head></head>');
-	this.myhead.append('<script type="text/javascript" src="jquery.js"></script>');
-	this.myhead.append('<script type="text/javascript" src="jquery.layout.js"></script>');
-	this.myhead.append('<script type="text/javascript" src="jquery-ui.min.js"></script>');
-	this.myhead.append('<script type="text/javascript" src="core.js"></script>');
-	this.myhead.append('<link rel="stylesheet" type="text/css" href="jquery-ui.min.css" />');
-	this.myhead.append('<link rel="stylesheet" type="text/css" href="estilo.css" />');
+	this.myhead.append('<script type="text/javascript" src="js/jquery.js"></script>');
+	this.myhead.append('<script type="text/javascript" src="js/jquery.layout.js"></script>');
+	this.myhead.append('<script type="text/javascript" src="js/jquery-ui.min.js"></script>');
+	this.myhead.append('<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />');
+};
+
+ExportHTML.prototype.htmlHeadHTMLExport = function(first_argument) {
+	this.myhead.append('<script type="text/javascript" src="js/core.js"></script>');
+	this.myhead.append('<link rel="stylesheet" type="text/css" href="css/estilo.css" />');		
 };
 
 
@@ -38,14 +41,14 @@ ExportHTML.prototype.getAllNeededFiles = function getAllNeededFiles(all_types_us
 			for (var k=0;k<datatype.metadata.external_css.length;k++){
 				this.files_to_copy.push(datatype.path+'/'+datatype.metadata.external_css[k]);
 				//Add element to head
-				this.myhead.append('<link rel="stylesheet" type="text/css" href="'+pathUtil.basename(datatype.metadata.external_css[k])+'" />');
+				this.myhead.append('<link rel="stylesheet" type="text/css" href="css/'+pathUtil.basename(datatype.metadata.external_css[k])+'" />');
 			}
 		}
 		if (datatype.metadata.hasOwnProperty('external_scripts')){
 			for (var k=0;k<datatype.metadata.external_scripts.length;k++){
 				this.files_to_copy.push(datatype.path+'/'+datatype.metadata.external_scripts[k]);
 				//Add element to head
-				this.myhead.append('<script type="text/javascript" src="'+pathUtil.basename(datatype.metadata.external_scripts[k])+'"></script>');
+				this.myhead.append('<script type="text/javascript" src="js/'+pathUtil.basename(datatype.metadata.external_scripts[k])+'"></script>');
 			}
 		}
 	}
@@ -61,20 +64,8 @@ ExportHTML.prototype.getSections = function getSections(){
 	return sections;
 }
 
-ExportHTML.prototype.do_html = function do_html(path){
 
-	this.files_to_copy = [];
-	this.myhead = "";
-	
-	this.htmlHead();
-	var sections= this.getSections();
-	
-
-	// Copy base javascript
-	this.files_to_copy.push('js/lib_external/exporthtml/');
-
-	//Determine what external component scripts need to load
-	
+ExportHTML.prototype.allTypesObjects = function(sections) {
 	var sm=application.storagemanager.getInstance();
 	var all_types_used = [];
 	for (var i=0; i< sections.length;i++){
@@ -85,7 +76,26 @@ ExportHTML.prototype.do_html = function do_html(path){
 					all_types_used.push(obj_into_section_type.idtype);
 		}
 	}
+	return all_types_used;
+};
 
+ExportHTML.prototype.do_html = function do_html(path){
+
+	this.files_to_copy = [];
+	this.myhead = "";
+	
+	this.htmlBasicHead();
+	this.htmlHeadHTMLExport();
+
+	var sections= this.getSections();
+	
+
+	// Copy base javascript
+	this.files_to_copy.push('js/lib_external/exporthtml/');
+
+	//Determine what external component scripts need to load
+	
+	var all_types_used = this.allTypesObjects(sections);
 	this.getAllNeededFiles(all_types_used);
 	
 
@@ -98,7 +108,7 @@ ExportHTML.prototype.do_html = function do_html(path){
 	var content='<div class="ui-layout-center">';
 	content=content+'<div class="ui-layout-content">';
 	
-	sections.forEach(function(obj,idx){ var JQobj=obj.htmlView('data'+idx); content += JQobj[0].outerHTML });
+	sections.forEach(function(obj,idx){ var JQobj=obj.exportView('data'+idx,'htmlView','triggerHTMLView'); content += JQobj[0].outerHTML });
 
 	content=content+'</div></div>';
 	var footer='<footer class="ui-layout-south"><section><span class="left"><button>'+ CBI18n.gettext("Prev") + '</button></span>'+ CBI18n.gettext("Footer section")+'<span class="right"><button>'+ CBI18n.gettext("Next") +'</button></span></section></footer>';
@@ -108,21 +118,22 @@ ExportHTML.prototype.do_html = function do_html(path){
 	
 	//Change source url into exported objects
 
-	var total = this.formatXml('<!DOCTYPE html><html>'+this.myhead[0].outerHTML+'<body>'+aside+content+footer+'</body></html>');
+	var total = this.formatXml('<!DOCTYPE html><html><meta charset="UTF-8"> '+this.myhead[0].outerHTML+'<body>'+aside+content+footer+'</body></html>');
 
 	var fs = window.require('fs');
 	fs.writeFile(path+"index.html", total , function(err) {
     	if(err) {
         	return console.log(err);
-    	}else{
-    		console.log("The file was saved!");
     	}
+    	//else{
+    	//	console.log("The file was saved!");
+    	//}
 	});
 	var that = this;
 	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,path)});
 	return total;
 }
-ExportHTML.prototype.rewriteSource = function rewriteSource(html){
+/*ExportHTML.prototype.rewriteSource = function rewriteSource(html){
 	//console.log(html);
 
 	var changed=$.grep($(html),function(o,idx){ 
@@ -139,7 +150,7 @@ ExportHTML.prototype.rewriteSource = function rewriteSource(html){
 	}); 
 	//console.log(changed);
 	return changed;
-}
+}*/
 ExportHTML.prototype.formatXml = function formatXml(xml) {
     var formatted = '';
     var reg = /(>)(<)(\/*)/g;
@@ -184,15 +195,81 @@ ExportHTML.prototype.copyFileToPath = function copyFileToPath(filename,path){
     
     var stat=fs.statSync(filename);
     if (stat.isDirectory()){
-    	fsextra.copySync(filename, path);
+    	//fsextra.copySync(filename, path);
+    	this.copyFileFromDirToPath(filename,path);
     }else{
     	var originalbasename = pathUtil.basename(filename);
 	    if (filename == originalbasename){
 		    var filename = Project.Info.projectpath +"/rsrc/";
 		}
-	  	if(! fsextra.existsSync(path+originalbasename)){
-	    	fsextra.copySync(filename,path+originalbasename);
-	    }
+	  	//if(! fsextra.existsSync(path+originalbasename)){
+	    //	fsextra.copySync(filename,path+originalbasename);
+	    //}
+	    var slices = originalbasename.split('.');
+		var ext = slices[slices.length -1];
+		var fsextra = window.require('fs-extra');
+		if (ext === 'js'){
+			fsextra.ensureDirSync(path+'js');
+			fsextra.copySync(filename,path+'js/'+originalbasename);
+		}else{
+			if (ext === 'css'){
+				fsextra.ensureDirSync(path+'css');
+				fsextra.copySync(filename,path+'css/'+originalbasename);
+			}else{
+				fsextra.copySync(filename,path+originalbasename);
+			}
+		}
+	}
+}
+
+
+ExportHTML.prototype.preExportHTMLToPDF = function preExportHTMLToPDF() {
+	var mktemp = require('mktemp');
+	var temppath = mktemp.createDirSync("/tmp/cloudbook_XXXX");
+	var that = this;
+	this.files_to_copy = [];
+	this.myhead = "";
+	var returnlistpaths = [];
+	this.htmlBasicHead();
+	var sections = this.getSections();
+	var all_types_used = this.allTypesObjects(sections);
+	this.getAllNeededFiles(all_types_used);
+	this.files_to_copy.push('js/lib_external/exporthtml/');
+	this.files_to_copy.push(Project.Info.projectpath + "/rsrc/");
+	sections.forEach(function(section,id){
+		var JQobj=section.exportView('data'+id,'pdfView','triggerHTMLView');
+		var page = '<!DOCTYPE html><html><meta charset="UTF-8"> '+that.myhead[0].outerHTML+'<body>'+JQobj[0].outerHTML;+'</body></html>';
+		var fs = window.require('fs');
+		var dest = temppath+"/index"+id+".html";
+		fs.writeFileSync(dest, page);
+		returnlistpaths.push(dest);
+	});
+	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,temppath+"/")});
+	return returnlistpaths;
+};
+
+
+
+ExportHTML.prototype.copyFileFromDirToPath = function copyFileFromDirToPath(dir,path){
+	var fs = window.require('fs');
+	var filenames=fs.readdirSync(dir);
+	for (var i=0; i<filenames.length; i++){
+		var file = filenames[i];
+		var slices = file.split('.');
+		var ext = slices[slices.length -1];
+		var fsextra = window.require('fs-extra');
+		if (ext === 'js'){
+			fsextra.ensureDirSync(path+'js');
+			fsextra.copySync(dir+file,path+'js/'+file);
+		}else{
+			if (ext === 'css'){
+				fsextra.ensureDirSync(path+'css');
+				fsextra.copySync(dir+file,path+'css/'+file);
+			}else{
+				fsextra.ensureDirSync(path+'rsrc');
+				fsextra.copySync(dir+file,path+'rsrc/'+file);
+			}
+		}
 	}
 }
 CBUtil.createNameSpace('application.exporthtml.core');
@@ -205,4 +282,4 @@ var export_html = function(){
 		fs.mkdirSync(Project.Info.projectpath+"/exported",0775);
 	test.do_html(Project.Info.projectpath+"/exported/");	
 }
-console.log('Tip: to begin exportation to workspace, load project and run "export_html()" in console');
+//console.log('Tip: to begin exportation to workspace, load project and run "export_html()" in console');

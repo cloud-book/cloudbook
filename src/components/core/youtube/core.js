@@ -4,7 +4,7 @@ var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function YoutubeBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"url":null, "position" : [200,200],"size":[100,50]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"url":null, "position" : [200,200],"size":[640,480]};
   objectdata.idtype = metadata['idtype'];
   YoutubeBox.super_.call(this,objectdata);
   this.url = objectdata.url;
@@ -18,7 +18,8 @@ YoutubeBox.prototype.editorView = function editorView() {
   var imgelement = $(window.document.createElement('iframe')).attr('src', url).attr('frameborder','0').attr('allowfullscreen','');
   imgelement.css('height','100%');
   imgelement.css('width','100%');
-  aux.children('.cbcontainer').append(imgelement);
+  var cliclayer = $(window.document.createElement('div')).addClass('cbcliclayer');
+  aux.children('.cbcontainer').append([imgelement,cliclayer]);
   return aux;
 };
 
@@ -57,8 +58,8 @@ YoutubeBox.prototype.htmlView = function htmlView() {
   var aux = YoutubeBox.super_.prototype.htmlView.call(this);
   var url = this.url !== null ? this.url : "http://lliurex.net";
   var imgelement = $(window.document.createElement('iframe')).attr('src', url).attr('frameborder','0').attr('allowfullscreen','');
-  imgelement.css('height','100%');
-  imgelement.css('width','100%');
+  imgelement.css('height',this.size[1]);
+  imgelement.css('width',this.size[0]);
   aux.children('.cbcontainer').append(imgelement);
   return aux;
 }
@@ -67,8 +68,8 @@ YoutubeBox.prototype.pdfView = function pdfView() {
   var aux = YoutubeBox.super_.prototype.pdfView.call(this);
   var url = this.url !== null ? this.url : "http://lliurex.net";
   var imgelement = $(window.document.createElement('iframe')).attr('src', url).attr('frameborder','0').attr('allowfullscreen','');
-  imgelement.css('height','100%');
-  imgelement.css('width','100%');
+  imgelement.css('height',this.size[1]);
+  imgelement.css('width',this.size[0]);
   aux.children('.cbcontainer').append(imgelement);
   return aux;
 }
@@ -99,7 +100,7 @@ YoutubeBox.prototype.editButton = function editButton(e) {
   var dialog = YoutubeBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
   dialog.append("<input id='url' type='text' value='"+that.url+"'/>");
-  dialog.callback.push(function(){
+  dialog.callbacks.push(function(){
     that.url = parseYoutubeUrl($("#url").val());
   });
 };

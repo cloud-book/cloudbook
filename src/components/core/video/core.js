@@ -5,7 +5,7 @@ var metadata = require( "./"+__module_path__ + 'metadata.json');
 var mime = require("./"+__module_path__ + 'lib_external/mime');
 
 function VideoBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"videopath":null,"videoformat":"video/mp4", "position" : [200,200], "size":[250,100]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"videopath":null,"videoformat":"video/mp4", "position" : [200,200], "size":[640,480]};
   objectdata.idtype = metadata['idtype'];
   VideoBox.super_.call(this,objectdata);
   this.videopath = objectdata.videopath;
@@ -46,6 +46,16 @@ VideoBox.prototype.pdfView = function pdfView() {
   aux.children('.cbcontainer').append(videoelement);
   return aux;
 }
+
+VideoBox.prototype.editButton = function editButton(e) {
+  var dialog = VideoBox.super_.prototype.editButton.call(this,e);
+  var that = e.data.that;
+
+  dialog.append("<input id='videopath' type='file'/>");
+  dialog.callbacks.push(function callbackEditButtonReplaceVideoBox(){
+    updateVideoPath(dialog,that);
+  })
+};
 
 
 VideoBox.prototype.clickButton = function clickButton(controllerClass) {
