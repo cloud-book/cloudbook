@@ -225,7 +225,7 @@ ExportHTML.prototype.copyFileToPath = function copyFileToPath(filename,path){
 ExportHTML.prototype.preExportHTMLToPDF = function preExportHTMLToPDF() {
 	var mktemp = require('mktemp');
 	var temppath = mktemp.createDirSync("/tmp/cloudbook_XXXX");
-
+	var that = this;
 	this.files_to_copy = [];
 	this.myhead = "";
 	var returnlistpaths = [];
@@ -235,8 +235,8 @@ ExportHTML.prototype.preExportHTMLToPDF = function preExportHTMLToPDF() {
 	this.getAllNeededFiles(all_types_used);
 	this.files_to_copy.push(Project.Info.projectpath + "/rsrc/");
 	sections.forEach(function(section,id){
-		var JQobj=obj.exportView('data'+id,'htmlView','triggerHTMLView');
-		var page = '<!DOCTYPE html><html><meta charset="UTF-8"> '+this.myhead[0].outerHTML+'<body>'+JQobj[0].outerHTML;+'</body></html>';
+		var JQobj=section.exportView('data'+id,'pdfView','triggerHTMLView');
+		var page = '<!DOCTYPE html><html><meta charset="UTF-8"> '+that.myhead[0].outerHTML+'<body>'+JQobj[0].outerHTML;+'</body></html>';
 		var fs = window.require('fs');
 		var dest = temppath+"/index"+id+".html";
 		fs.writeFileSync(dest, page);
@@ -269,7 +269,6 @@ ExportHTML.prototype.copyFileFromDirToPath = function copyFileFromDirToPath(dir,
 			}
 		}
 	}
-	console.log(filenames);
 }
 CBUtil.createNameSpace('application.exporthtml.core');
 application.exporthtml.core = CBUtil.singleton(ExportHTML);

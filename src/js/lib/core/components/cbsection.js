@@ -38,11 +38,11 @@ CBSection.prototype.exportView = function(id,rendermethod,triggermethod) {
 
 		// Call exportHTMLResoureces
 		if(cbobject.__proto__.hasOwnProperty(triggermethod)){
-			var rawscriptout = cbobject.prototype[triggermethod]();
+			var rawscriptout = cbobject[triggermethod]();
 			fs.writeFileSync(path + cbobjectid+".js", rawscriptout);
 			exporthtml.myhead.append('<script type="text/javascript" src="js/'+cbobjectid+'.js"></script>');
 		}
-		content.push( cbobject.prototype[rendermethod]());
+		content.push( cbobject[rendermethod]());
 	});
 	html4render.append(tit);
 	content.forEach(function(a){ html4render.append(a) });
