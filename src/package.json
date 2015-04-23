@@ -25,6 +25,7 @@
   "dependencies": {
     "fs-extra": "~0.18.0",
     "jed": "~1.1.0",
-    "wkhtmltopdf": "^0.1.5"
+    "wkhtmltopdf": "^0.1.5",
+    "zip-folder": "^1.0.0"
   }
 }

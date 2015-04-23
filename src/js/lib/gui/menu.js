@@ -179,7 +179,15 @@
       var a=exportui.showExportHtmlProject({data:{that:exportui}});
     };   
 
+    function export_webzip(){
       
+      var exportwizard = application.ui.exportwebzipwizard.core.getInstance();
+      exportwizard.initializeWizardDiv();
+      exportwizard.showExportWebZipProject({data:{that:exportwizard}});
+   
+    };
+      
+
 
     var export_project={
       label:CBI18n.gettext('Export')
@@ -196,7 +204,10 @@
         
     }; 		    
  
-    
+    var export_webzip={
+      label:CBI18n.gettext('WebZip'),
+      click:export_webzip
+    };
    
 
     /**
@@ -214,6 +225,8 @@
 
     export_project_menu.append(new gui.MenuItem(export_html));
     export_project_menu.append(new gui.MenuItem(export_pdf));
+    export_project_menu.append(new gui.MenuItem(export_webzip));
+    
     export_project.submenu=export_project_menu;
 
     file.append(new gui.MenuItem(new_project));
