@@ -23,6 +23,50 @@ ExternalIframe.prototype.editorView = function editorView() {
   return aux;
 };
 
+ExternalIframe.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+  var tagTypes = ['IFRAME'];
+  
+  if(tagTypes.indexOf(node.tagName) > -1)
+  {
+    score ++;
+    if(node.attributes.getNamedItem("src") != null)
+      if(node.attributes.getNamedItem("src").value.indexOf("youtube.com") == -1) score++;
+
+  } 
+  return score;
+}
+
+ExternalIframe.prototype.importHTML = function importHTML(node, filePath){
+    try{
+      
+      var urlpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+      var width = node.clientWidth;
+      var height = node.clientHeight;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.position = [left, top];
+      if(width != 0 && height != 0)
+          this.size = [width,height];
+        else
+        {
+          if(node.hasAttributes())
+          {
+            if(node.attributes['width'] != undefined) 
+              width = node.attributes['width'].nodeValue;
+            if(node.attributes['height'] != undefined)
+              height = node.attributes['height'].nodeValue;   
+            if(width != 0 && height != 0)
+              this.size = [width,height];
+          }
+        }
+      this.url = urlpath;
+    }
+    catch (err) {
+        console.log('Errors in ExternalIframe');
+    }
+}
+
 ExternalIframe.prototype.htmlView = function htmlView() {
   var aux = ExternalIframe.super_.prototype.htmlView.call(this);
   var url = this.url !== null ? this.url : "http://lliurex.net";
@@ -43,10 +87,6 @@ ExternalIframe.prototype.pdfView = function pdfView() {
   return aux;
 }
 
-
-ExternalIframe.prototype.importHTML = function importHTML(){
-  return ['IFRAME'];
-}
 
 ExternalIframe.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
   ExternalIframe.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);

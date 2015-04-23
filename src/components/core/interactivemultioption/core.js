@@ -57,8 +57,11 @@ PMS.prototype.clickButton = function clickButton(controllerClass) {
     );
 };
 
-PMS.prototype.importHTML = function importHTML(){
-  return ['PEM'];
+PMS.prototype.HTMLtags = function HTMLtags(){
+  var tagTypes = ['PEM'];
+  var score = 0;
+  return score;
+
 }
 
 PMS.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

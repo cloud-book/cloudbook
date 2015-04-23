@@ -18,10 +18,11 @@ Import.prototype.loadFile = function loadFile(projectname,filePath, fileType) {
     switch(fileType)
     {
     	case "HTML": processHTMLFile(filePath); break;
-    	case "ODT_DOC_DOCX": processODTFile(content, filetype); break;
+    	case "ODT_DOC_DOCX": processODTFile(filePath, fileType); break;
     	case "SCORM": processSCORMFile(filePath); break;
     }
   };
+  
 };
 
 
@@ -68,7 +69,7 @@ function processHTMLFile(filePath)
 {
 	$.get(filePath, function(html) {
 		var importationHTML = application.importhtml.getInstance();
-		importationHTML.processHTML(html, filePath);
+		importationHTML.processHTML(html, filePath, Cloudbook.UI.selected.attr('data-cbsectionid'));
     });  
 };
 
@@ -77,31 +78,19 @@ function processHTMLFile(filePath)
  * @param  {String} path of the file
  * @param  {String} type of the file
  */
-function processODTFile(content, fileType)
+function processODTFile(filePath, fileType)
 {
+	var fs = require('fs');
+	fs.readFile(filePath, function(err, data) {
+		if (err) throw err;
+		var HTMLdata = epub2html.convertmetadata()
+			//console.log($(data).html());
+//		$(data).children().each(function(){
+//			console.log($(this).html());
+//		});
+		//console.log(data.toString());
+	});
 
-
-	$page = $(content);
-/*		$.each($page, function(index, element){
-			var tempSection = [];
-			switch(element.tagName)
-			{
-				case "DIV": 
-					$.each($(element).children(), function(index1, element1){
-						console.log(index1 + " " + element1.tagName + " " + $(element1).text());
-					});
-				break;
-				case "P":
-				case "H1":
-				case "H2":
-				case "A":
-					console.log(index + " " + element.tagName + " " + $(element).text());
-				break;
-				default:
-					console.log(index + " " + element.tagName + " " + $(element).text());
-				break;
-			}
-		});*/
 };
 CBUtil.createNameSpace('application.importation');
 application.importation = CBUtil.singleton(Import);

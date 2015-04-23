@@ -1,175 +1,191 @@
 /**
  * @class ImportHTML
  * @classdesc This class is responsible to make import operations of HTML Files
+ * it loads TextTags
  */
-function ImportHTML(){}
+function ImportHTML(){
+	this.topValue = 0;
+	this.blockText = "";
+	this.textCandidates = getTextTags();
+}
 
 /**
- * This method is responsible for processing Text elements
- * It creates a section and includes inside all elements
- * @param  {String} content of the HTML node
+ * This method is responsible for getting tags for each component
+ * @param  {Object} node which tag is to be found
+ * @result  {Object[]} array of possible candidates
  */
-function processText(idsectionselected,node)
+function getHTMLTags(node)
 {
-	var textBox = CBUtil.req("../src/components/core/text/core.js");
-	var textTags = new textBox().importHTML();
-	var backend = application.backend.core.getInstance();
-	if($.inArray(node.tagName, textTags) != -1)
-	{
-		var text = "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
-		var width = node.width;
-		var height = node.height;
-		var left = node.offsetLeft;
-		var top = node.offsetTop;
+	var tag = node.tagName;
+	var listactions = {};
+	var x = Cloudbook.Actions;
+	var keylist = Object.keys(x);
+	var candidates = [];
+	var score = 0;
 
-		text = new textBox({"text":text, "position" : [top,left]});
-		backend.appendCBObjectIntoSection(text,idsectionselected);
-		return true;
-	}
-	else
-	{
-		text = new textBox({"text":node, "position" : [0,0]});
-		backend.appendCBObjectIntoSection(text,idsectionselected);
-		return false;
-	}
+	keylist.forEach(function(key){
+		var aux = new x[key]['component'](); 
+		var scoreElement = aux.HTMLtags(node);
+		if(score < scoreElement)
+		{  
+			candidates = [];
+			candidates.push(key);
+			score = scoreElement;
+		}
+	});
+	return candidates;
 }
 
 /**
- * This method is responsible for processing Image elements
- * It creates a section and includes inside all elements
- * @param  {String} content of the HTML node
- * @param  {String} path of the html element
+ * This method is responsible for getting tags for text component
+ * @param  {String} tag to be found
+ * @result  {Object[]} array of possible candidates
  */
-function processImage(idsectionselected,node, filePath){
+function getTextTags()
+{
+	var listactions = {};
+	var x = Cloudbook.Actions;
+	var keylist = Object.keys(x);
+	var candidates = [];
 
-	var imageBox = CBUtil.req("../src/components/core/images/core.js");
-	var imageTags = new imageBox().importHTML();
-	var backend = application.backend.core.getInstance();
-	if($.inArray(node.tagName, imageTags) != -1)
-	{
-		if(node.tagName == "FIGURE")
-			node = node.firstElementChild;
-		try{
-			var imgpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
-			var text = node.attributes.getNamedItem("alt") != null? node.attributes.getNamedItem("alt").value:"";
-			var width = node.width;
-			var height = node.height;
-			var left = node.offsetLeft;
-			var top = node.offsetTop;
-			image = new imageBox({"text":text, "position" : [top,left], "imgpath":filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath});
-			backend.appendCBObjectIntoSection(image,idsectionselected);
-		}
-		catch (err) {
-		    console.log('Errors in Image');
-		}
-		return true;
-	}
-	else
-		return false;
+	keylist.forEach(function(key){
+		var aux = new x[key]['component']();
+		if(x[key]['path'] ==='components/core/text') 
+		candidates.push.apply(candidates, aux.HTMLtagNames());
+	});
+	return candidates;
 }
+
 /**
- * This method is responsible for processing video elements
- * It creates a section and includes inside all elements
- * @param  {String} content of the HTML node
- * @param  {String} path of the html element
+ * This method is responsible for processing Text blocks
+ * It creates an span element and insert it into a section
+ * @param  {String} content of the element
+ * @param  {String} width of the element
+ * @param  {String} height of the element
+ * @param  {String} top of the element
+ * @param  {String} left of the element
+ * @param  {String} path of the imported project
+ * @param  {String} id of section selected
  */
-function processVideo(idsectionselected,node, filePath){
+function processTextBlock(textValue, width, height, top, left, filePath, idsectionselected){
 
-	var videoBox = CBUtil.req("../src/components/core/video/core.js");
-	var videoTags = new videoBox().importHTML();
 	var backend = application.backend.core.getInstance();
-	if($.inArray(node.tagName, videoTags) != -1)
-	{	
-		var imgpath = "";
-		try{
-			if (node.innerHTML.indexOf("src=")!=-1) 
-				imgpath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
-			var width = node.width;
-			var height = node.height;
-			var left = node.offsetLeft;
-			var top = node.offsetTop;
 
-			video = new videoBox({"position" : [top,left], "videopath":filePath.substring(0,filePath.lastIndexOf("/")) + "/"+imgpath});
-			backend.appendCBObjectIntoSection(video,idsectionselected);
-		}
-		catch (err) {
-		    console.log('Errors in Video');
-		}
-		return true;
-	}
-	else
-		return false;
+	var auxNode = $('<SPAN></SPAN>');
+	auxNode.innerHTML = textValue;
+	auxNode.tagName = 'SPAN';
+	auxNode.clientWidth = width;
+	auxNode.clientHeight = height;
+	auxNode.offsetTop = top;
+	auxNode.offsetLeft = left;
+	candidates = getHTMLTags(auxNode);
+	element = new Cloudbook.Actions[candidates[0]]['component']();
+	element.importHTML(auxNode, filePath);
+	backend.appendCBObjectIntoSection(element, idsectionselected);
 }
+
 /**
  * This method is responsible for reading block elements
- * It creates a section and includes inside all elements
+ * It creates an element and insert it into a section
  * @param  {String} content of the HTML file
  * @param  {String} path of the html element
  * @param  {String} name of block element
+ * @param  {String} id of section selected
+ * @param  {Object} element to share data
  */
-function processBlock(element, filePath, blockName, idsectionselected)
+function processBlock(element, filePath, blockName, idsectionselected,that)
 {
-	var blockText = "";
-	var textBox = CBUtil.req("../src/components/core/text/core.js");
-	var textTags = new textBox().importHTML();
-	var imageBox = CBUtil.req("../src/components/core/images/core.js");
-	var imageTags = new imageBox().importHTML();
-	var videoBox = CBUtil.req("../src/components/core/video/core.js");
-	var videoTags = new videoBox().importHTML();
+	var candidates;
+	var backend = application.backend.core.getInstance();
+
 	for(var node = element.firstChild; node; node = node.nextSibling){
+		candidates = [];
 		if(node.tagName != undefined)
 		{
 			switch(node.tagName)
 			{
-				case "SECTION":case "ARTICLE":case "NAV":case "DIV": case "FOOTER":case "ASIDE":
-					var text = processBlock(node, filePath, node.tagName);
-					processText(idsectionselected,text);
-					text = "";
+				case "SECTION":case "ARTICLE":case "NAV":case "DIV": case "ASIDE":case "MAIN":
+					var width = node.clientWidth;
+				    var height = node.clientHeight;
+				    var left = node.offsetLeft;
+				    var top = node.offsetTop;
+				    var text = "";
+					text = processBlock(node, filePath, node.tagName,idsectionselected,that);
+					if(node.parentElement.tagName =="HEADER" || node.parentElement.tagName =="FOOTER" ||
+					 node.parentElement.id == "tempImportHTML" || node.parentElement.parentNode.id == "tempImportHTML")
+					{
+						if(text != ""){
+							processTextBlock(text, width, height, top, left, filePath, idsectionselected);
+							that.blockText = "";
+							text = "";
+						}
+					}
+				break;
+				case "HEADER": case "FOOTER":
+					processBlock(node, filePath, null,idsectionselected,that);
 				break;
 				default:
-					if($.inArray(node.tagName, textTags) != -1)
+					if( ($.inArray(node.tagName,that.textCandidates) > -1 )&& (blockName != null))
 					{
-						if(blockName != null)
-								blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + "><br>";
-						else
-								processText(idsectionselected,node);
-					}else
+						that.blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
+					}
+					else
 					{
-						if($.inArray(node.tagName, imageTags) != -1){
-							processImage(idsectionselected,node, filePath)
-						}
-						else{
-							if($.inArray(node.tagName, videoTags) != -1){
-								processVideo(idsectionselected,node,filePath);
-							}
+						candidates = getHTMLTags(node);
+						if(candidates.length > 0)
+						{
+							element = new Cloudbook.Actions[candidates[0]]['component']();
+							element.importHTML(node, filePath);
+							backend.appendCBObjectIntoSection(element, idsectionselected);
 						}
 					}
 				break;
 			}
 		}
+		else
+		{
+			if(node.nodeValue.trim().length > 0)
+			{
+				if(blockName != null)
+					that.blockText  += "<SPAN>" + node.nodeValue + "</SPAN><br>";
+				else
+				{
+					processTextBlock(node.nodeValue, width, height, top, left, filePath, idsectionselected);
+					that.blockText = "";
+					text = "";
+				}
+			}
+		}
 	}
 	if(blockName != null)
-		return blockText;
+		return that.blockText;
 }
 /**
  * This method is responsible for reading HTML main block contents
+ * It creates two divs to load content and process content, finally removes two divs
  * @param  {String} content of the HTML file
  * @param  {String} path of the html element
+ * @param  {String} id of section selected
  */
-ImportHTML.prototype.processHTML = function processHTML(data, filePath)
+ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectionselected)
 {
+	var that = this;
 	var includeHTML = $(data);
-	var idsectionselected = Cloudbook.UI.selected.attr('data-cbsectionid');
-	$.each(includeHTML, function(index, element){
-		switch(element.tagName)
-		{
-			case "HEADER":case "DIV":case "SECTION":case "ARTICLE":case "FOOTER":case "ASIDE":
-				processBlock(element, filePath, null,idsectionselected);
-			break;
-			
-		}
-	});
+
+	var temp = $("<div id='tempImportHTML'></div>");
+	temp.append(includeHTML);
+	temp.css("position", "fixed").css("z-index","-1000");
+	$("body").append(temp);
+	$("body").append("<div id='layer' style='z-index:-500;background:#fff; position:fixed; top:0; width:100%;height:100%'></div>");
+
+	//var idsectionselected = Cloudbook.UI.selected.attr('data-cbsectionid');
+	var backend = application.backend.core.getInstance();
+
+	processBlock($('#tempImportHTML')[0], filePath, null,idsectionselected,that);
+
 	var ui = application.ui.core.getInstance();
+	$('#tempImportHTML').remove();
+	$('#layer').remove();
 	ui.loadContent(idsectionselected);
 }
 CBUtil.createNameSpace('application.importhtml');

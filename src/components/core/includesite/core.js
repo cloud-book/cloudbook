@@ -43,9 +43,13 @@ IncludeSite.prototype.pdfView = function pdfView() {
   return aux;
 }
 
-
-IncludeSite.prototype.importHTML = function importHTML(){
-  return ['IFRAME'];
+IncludeSite.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+  var tagTypes = ['IFRAME'];
+  
+  if(tagTypes.indexOf(node.tagName) > -1)
+    score ++;
+  return score;
 }
 
 IncludeSite.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

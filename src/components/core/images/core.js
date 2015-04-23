@@ -22,6 +22,65 @@ ImageBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+ImageBox.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+  var tagTypes = [{'IMG':''}, {'FIGURE':''}, {'OBJECT':['image/gif', 'image/jpeg', 'image/png', 'image/tiff']}];
+  
+    for(var i=0;i<tagTypes.length;i++){
+        var obj = tagTypes[i];
+        for(var key in obj){
+            if(key == node.tagName){
+              score++;
+              if(node.hasAttributes() && node.hasAttribute('type'))
+                if(node.attributes["type"] != undefined)
+                  if(obj[key].indexOf(node.attributes["type"].nodeValue)> -1)
+                  score++;
+            }
+        }
+    }
+  return score;
+}
+
+ImageBox.prototype.importHTML = function importHTML(node, filePath){
+
+//  var Project = window.Project;
+  var fs = require('fs-extra');
+  var path = require('path');
+
+    if(node.tagName == "FIGURE")
+      node = node.firstElementChild;
+
+    try{
+      
+      var imgpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+      if(node.tagName == "OBJECT")
+        imgpath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
+       
+      var basename = path.basename(imgpath);
+      var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+      while(true){
+        if(!fs.existsSync(sourcePath)){
+            break;
+        }
+        basename = 0 + basename;
+        sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+      }
+        //fs.renameSync(sourcePath, path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath).replace(".", Date.now().toString() + ".")));
+      fs.copySync(path.join(path.dirname(filePath), imgpath),sourcePath);
+      var width = node.clientWidth;
+      var height = node.clientHeight;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.position = [left, top];
+      if(width != 0 && height != 0)
+        this.size = [width,height];
+      this.imgpath = basename;
+    }
+    catch (err) {
+        console.log('Errors in Image' + err);
+    }
+  }
+
 ImageBox.prototype.htmlView = function htmlView() {
   var aux = ImageBox.super_.prototype.htmlView.call(this);
 //  var imagepath = this.imgpath !== null ? "rsrc/"+ this.imgpath : __module_path__ + "default.png";
@@ -41,10 +100,6 @@ ImageBox.prototype.pdfView = function pdfView() {
   imgelement.css('width','100%');
   aux.children('.cbcontainer').append(imgelement);
   return aux;
-}
-
-ImageBox.prototype.importHTML = function importHTML(){
-  return ['IMG', 'FIGURE'];
 }
 
 ImageBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

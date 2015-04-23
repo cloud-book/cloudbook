@@ -62,8 +62,63 @@ AudioBox.prototype.clickButton = function clickButton(controllerClass) {
   $("#audiodialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
-AudioBox.prototype.importHTML = function importHTML(){
-  return ['AUDIO'];
+AudioBox.prototype.HTMLtags = function HTMLtags(node){
+
+  var score = 0;
+  var tagTypes = [{'AUDIO':''}, {'OBJECT':['audio/basic', 'audio/mp3', 'audio/ogg', 'audio/wav']}];
+
+  for(var i=0;i<tagTypes.length;i++){
+        var obj = tagTypes[i];
+        for(var key in obj){
+            if(key == node.tagName){
+              score++;
+              if(node.hasAttributes() && node.hasAttribute('type'))
+                if(node.attributes["type"] != undefined)
+                  if(obj[key].indexOf(node.attributes["type"].nodeValue)> -1)
+                  score++;
+            }
+        }
+    }
+  return score;
+
+}
+
+AudioBox.prototype.importHTML = function importHTML(node, filePath){
+
+  var fs = require('fs-extra');
+  var path = require('path');
+
+  if(node.tagName == "AUDIO")
+    node = node.firstElementChild;
+
+    try{
+      var audiopath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+      if(node.tagName == "OBJECT")
+        audiopath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
+      var basename = path.basename(audiopath);
+      var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+      while(true){
+        if(!fs.existsSync(sourcePath)){
+            break;
+        }
+        basename = 0 + basename;
+        sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+      }
+      fs.copySync(path.join(path.dirname(filePath), audiopath),sourcePath);
+      var type = node.attributes.getNamedItem("type") != null? node.attributes.getNamedItem("type").value:"";
+      var width = node.clientWidth;
+      var height = node.clientHeight;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.audioformat = type;
+      this.position = [left, top];
+      if(width != 0 && height != 0)
+        this.size = [width,height];
+      this.audiopath = basename;
+    }
+    catch (err) {
+        console.log('Errors in Audio: ' + err);
+    }
 }
 
 AudioBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
