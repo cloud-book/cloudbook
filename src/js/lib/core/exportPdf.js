@@ -13,9 +13,9 @@ ExportPdf.prototype.htmltoPdf=function htmltoPdf(){
     
     /*funcion que se lanzará para generar el html temporal necesario para el obtener el pdf */
 
-     var html='/home/netadmin/Documents/html Temp/index 1.html';
+     var exporthtml = application.exporthtml.core.getInstance();
      
-     return html
+     return exporthtml.preExportHTMLToPDF();
 
 };
 
@@ -56,8 +56,15 @@ ExportPdf.prototype.renderPdf=function renderPdf(parametrosPdf,origen){
       
    /*Ruta donde se guardará el fichero pdf */	
  	var pdfFileName = " '" + parametrosPdf.path + "' ";
-
-        var ficheroOrigen=" '" + origen + "' "; 
+ 	var ficheroOrigen = "";
+ 	if(origen instanceof Array){
+ 		origen.forEach(function(path){
+ 			ficheroOrigen += " '" + path +"' ";
+ 		});
+ 	}
+ 	else{
+    	ficheroOrigen=" '" + origen + "' "; 
+ 	}
     
    /* Se calculan los parametros para el pdf a generar */
   	
@@ -106,27 +113,27 @@ ExportPdf.prototype.renderPdf=function renderPdf(parametrosPdf,origen){
 				pieP=' --footer-center [page]';
 				break;
 		}
-		wkhtmloptions=wkhtmloptions+pieP;
+		wkhtmloptions = wkhtmloptions + pieP;
        } 			
-       
+       wkhtmloptions += " --load-error-handling ignore ";
                   
       /*Se ejecuta el proceso para generar el pdf*/
 	
 	$("#exportpdfwizard").find('.waiting').css("display","inline");
-	var that = this;
-        var child=exec("wkhtmltopdf" + " " + wkhtmloptions + " " + ficheroOrigen + " " + pdfFileName ,function(err, stdout, stderr) {  	
+		var that = this;
+		var cmd = "wkhtmltopdf" + " " + wkhtmloptions + " " + ficheroOrigen + " " + pdfFileName ;
+		console.log(cmd);
+        exec(cmd,function(err, stdout, stderr) { 
 	
 		//process.stdout.write( stderr );
                 if (err === null){
-			console.log("Ha tenido exito");
-		       	$("#exportpdfwizard").dialog("destroy");
-                        that.borrarHtml(origen);
-			
-                }else{
-			console.log(stderr);
-			
-               } 
-	                     
+					console.log("Ha tenido exito");
+		       		$("#exportpdfwizard").dialog("destroy");
+					that.borrarHtml(origen);
+                }
+                else{
+					console.log(stderr);
+               }
 	});
 	
 };

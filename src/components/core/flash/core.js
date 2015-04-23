@@ -4,7 +4,7 @@ var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function FlashBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"resourcepath":null, "position" : [200,200], "size":[250,100]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"resourcepath":null, "position" : [200,200], "size":[640,480]};
   objectdata.idtype = metadata['idtype'];
   FlashBox.super_.call(this,objectdata);
   this.resourcepath = objectdata.resourcepath;
@@ -37,8 +37,8 @@ FlashBox.prototype.htmlView = function htmlView() {
   params.push($(window.document.createElement('param')).attr('name','scale').attr('value','exactfit'));
   params.push($(window.document.createElement('param')).attr('name','base').attr('value','.'));
 
-  flashelement.css('height','100%');
-  flashelement.css('width','100%');
+  flashelement.css('height',this.size[1]);
+  flashelement.css('width',this.size[0]);
   flashelement.append(params);
   aux.children('.cbcontainer').append(flashelement);
   return aux;
@@ -53,8 +53,8 @@ FlashBox.prototype.pdfView = function pdfView() {
   params.push($(window.document.createElement('param')).attr('name','scale').attr('value','exactfit'));
   params.push($(window.document.createElement('param')).attr('name','base').attr('value','.'));
 
-  flashelement.css('height','100%');
-  flashelement.css('width','100%');
+  flashelement.css('height',this.size[1]);
+  flashelement.css('width',this.size[0]);
   flashelement.append(params);
   aux.children('.cbcontainer').append(flashelement);
   return aux;
