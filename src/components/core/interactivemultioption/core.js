@@ -57,7 +57,7 @@ PMS.prototype.clickButton = function clickButton(controllerClass) {
     );
 };
 
-PEMBox.prototype.HTMLtags = function HTMLtags(){
+PMS.prototype.HTMLtags = function HTMLtags(){
   var tagTypes = ['PEM'];
   var score = 0;
   return score;

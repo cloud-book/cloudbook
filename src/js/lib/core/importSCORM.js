@@ -92,15 +92,14 @@ function processSCORMData(filePath)
 						$.get(filePath + attrib.value, function(html) {
 			  				if(attrib.value =="index.html")
 			  				{
-			  					backend.updateSectionName(attrib.value.split(".")[0],Cloudbook.UI.selected.attr('data-cbsectionid'));		
+			  					controller.updateSectionName(attrib.value.split(".")[0],Cloudbook.UI.selected.attr('data-cbsectionid'));		
 			  					idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
 			  				}
 			  				else
 			  				{
 			  					idsection = controller.appendSection('root')
-				  				backend.updateSectionName(attrib.value.split(".")[0],idsection);	
+				  				controller.updateSectionName(attrib.value.split(".")[0],idsection);	
 			  				}
-							mana.reloadSortable();
 							importationHTML.processHTML(html, filePath + attrib.value, idsection);
 						}); 
 					}
