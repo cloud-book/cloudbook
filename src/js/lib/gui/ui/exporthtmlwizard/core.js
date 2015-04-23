@@ -29,14 +29,14 @@ exportHtmlwizard.prototype.showExportHtmlProject = function showExportHtmlProjec
 	var templatecompiled = application.util.template.compile(template);
 	$("#exportHtmlwizard").append(templatecompiled());
        
-    $("input[name='path']").change(function(e){
- 		console.log('Path changed');                
-  	}); 
+    //$("input[name='path']").change(function(e){
+ 	//	console.log('Path changed');                
+  	//}); 
     
 		
 	$("[id='exporthtmlbtn']").click(function(){
 	    var path = $("input[name='path']").val();
-	    console.log('Doing html in '+path+'/');  
+	    //console.log('Doing html in '+path+'/');  
         var exporthtml = application.exporthtml.core.getInstance();
 	  	exporthtml.do_html(path+'/');
 	  	$('#exportHtmlwizard').dialog('close');

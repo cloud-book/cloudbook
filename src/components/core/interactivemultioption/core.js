@@ -37,14 +37,7 @@ PMS.prototype.htmlView = function htmlView() {
 }
 
 PMS.prototype.pdfView = function pdfView() {
-  var aux = PMS.super_.prototype.pdfView.call(this);
-  var fs = require('fs');
-  var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityview.hbs',{encoding:'utf8'});
-  var templatecompiled = application.util.template.compile(template);
-  options={"identifier":this.pemidentifier,"description":this.description,questions:this.questions};
-  aux.children('.cbcontainer').append($(templatecompiled(options)));
-  aux.addClass('pms');
-  return aux;
+  return this.htmlView();
 }
 
 

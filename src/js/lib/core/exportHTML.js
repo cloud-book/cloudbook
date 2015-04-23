@@ -124,9 +124,10 @@ ExportHTML.prototype.do_html = function do_html(path){
 	fs.writeFile(path+"index.html", total , function(err) {
     	if(err) {
         	return console.log(err);
-    	}else{
-    		console.log("The file was saved!");
     	}
+    	//else{
+    	//	console.log("The file was saved!");
+    	//}
 	});
 	var that = this;
 	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,path)});
@@ -233,6 +234,7 @@ ExportHTML.prototype.preExportHTMLToPDF = function preExportHTMLToPDF() {
 	var sections = this.getSections();
 	var all_types_used = this.allTypesObjects(sections);
 	this.getAllNeededFiles(all_types_used);
+	this.files_to_copy.push('js/lib_external/exporthtml/');
 	this.files_to_copy.push(Project.Info.projectpath + "/rsrc/");
 	sections.forEach(function(section,id){
 		var JQobj=section.exportView('data'+id,'pdfView','triggerHTMLView');
@@ -280,4 +282,4 @@ var export_html = function(){
 		fs.mkdirSync(Project.Info.projectpath+"/exported",0775);
 	test.do_html(Project.Info.projectpath+"/exported/");	
 }
-console.log('Tip: to begin exportation to workspace, load project and run "export_html()" in console');
+//console.log('Tip: to begin exportation to workspace, load project and run "export_html()" in console');

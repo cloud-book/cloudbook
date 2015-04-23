@@ -13,9 +13,9 @@ ExportPdf.prototype.htmltoPdf=function htmltoPdf(){
     
     /*funcion que se lanzará para generar el html temporal necesario para el obtener el pdf */
 
-     var html='/home/netadmin/Documents/html Temp/index 1.html';
+     var exporthtml = application.exporthtml.core.getInstance();
      
-     return html
+     return exporthtml.preExportHTMLToPDF();
 
 };
 
@@ -56,8 +56,15 @@ ExportPdf.prototype.renderPdf=function renderPdf(parametrosPdf,origen){
       
    /*Ruta donde se guardará el fichero pdf */	
  	var pdfFileName = " '" + parametrosPdf.path + "' ";
-
-        var ficheroOrigen=" '" + origen + "' "; 
+ 	var ficheroOrigen = "";
+ 	if(parametrosPdf instanceof Array){
+ 		parametrosPdf.forEach(function(path){
+ 			ficheroOrigen += " '" + path +"' ";
+ 		});
+ 	}
+ 	else{
+    	var ficheroOrigen=" '" + origen + "' "; 
+ 	}
     
    /* Se calculan los parametros para el pdf a generar */
   	
