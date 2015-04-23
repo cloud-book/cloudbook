@@ -42,7 +42,6 @@ ImageBox.prototype.HTMLtags = function HTMLtags(node){
 }
 
 ImageBox.prototype.importHTML = function importHTML(node, filePath){
-
 //  var Project = window.Project;
   var fs = require('fs-extra');
   var path = require('path');
@@ -55,26 +54,10 @@ ImageBox.prototype.importHTML = function importHTML(node, filePath){
       var imgpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
       if(node.tagName == "OBJECT")
         imgpath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
-       
-      var basename = path.basename(imgpath);
-      var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
-      while(true){
-        if(!fs.existsSync(sourcePath)){
-            break;
-        }
-        basename = 0 + basename;
-        sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
-      }
-        //fs.renameSync(sourcePath, path.join(Project.Info.projectpath, "/rsrc/", path.basename(imgpath).replace(".", Date.now().toString() + ".")));
-      fs.copySync(path.join(path.dirname(filePath), imgpath),sourcePath);
-      var width = node.clientWidth;
-      var height = node.clientHeight;
-      var left = node.offsetLeft;
-      var top = node.offsetTop;
-      this.position = [left, top];
-      if(width != 0 && height != 0)
-        this.size = [width,height];
-      this.imgpath = basename;
+      ImageBox.super_.prototype.importHTML.call(this,node);
+
+      var aux = this.copyresource(path.join(path.dirname(filePath),imgpath));
+      this.imgpath = path.basename(aux);
     }
     catch (err) {
         console.log('Errors in Image' + err);

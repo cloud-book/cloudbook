@@ -84,7 +84,6 @@ AudioBox.prototype.HTMLtags = function HTMLtags(node){
 }
 
 AudioBox.prototype.importHTML = function importHTML(node, filePath){
-
   var fs = require('fs-extra');
   var path = require('path');
 
@@ -92,29 +91,17 @@ AudioBox.prototype.importHTML = function importHTML(node, filePath){
     node = node.firstElementChild;
 
     try{
+
+      AudioBox.super_.prototype.importHTML.call(this,node);
+      this.audioformat = node.attributes.getNamedItem("type") != null? node.attributes.getNamedItem("type").value:"";
+
       var audiopath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
       if(node.tagName == "OBJECT")
         audiopath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
-      var basename = path.basename(audiopath);
-      var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
-      while(true){
-        if(!fs.existsSync(sourcePath)){
-            break;
-        }
-        basename = 0 + basename;
-        sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
-      }
-      fs.copySync(path.join(path.dirname(filePath), audiopath),sourcePath);
-      var type = node.attributes.getNamedItem("type") != null? node.attributes.getNamedItem("type").value:"";
-      var width = node.clientWidth;
-      var height = node.clientHeight;
-      var left = node.offsetLeft;
-      var top = node.offsetTop;
-      this.audioformat = type;
-      this.position = [left, top];
-      if(width != 0 && height != 0)
-        this.size = [width,height];
-      this.audiopath = basename;
+
+      var finalpath = this.copyresource(path.join(path.dirname(filePath),audiopath));
+      
+      this.audiopath = path.basename(finalpath);
     }
     catch (err) {
         console.log('Errors in Audio: ' + err);

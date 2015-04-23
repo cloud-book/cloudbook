@@ -41,25 +41,8 @@ ExternalIframe.prototype.importHTML = function importHTML(node, filePath){
     try{
       
       var urlpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
-      var width = node.clientWidth;
-      var height = node.clientHeight;
-      var left = node.offsetLeft;
-      var top = node.offsetTop;
-      this.position = [left, top];
-      if(width != 0 && height != 0)
-          this.size = [width,height];
-        else
-        {
-          if(node.hasAttributes())
-          {
-            if(node.attributes['width'] != undefined) 
-              width = node.attributes['width'].nodeValue;
-            if(node.attributes['height'] != undefined)
-              height = node.attributes['height'].nodeValue;   
-            if(width != 0 && height != 0)
-              this.size = [width,height];
-          }
-        }
+
+      ExternalIframe.super_.prototype.importHTML.call(this,node);
       this.url = urlpath;
     }
     catch (err) {

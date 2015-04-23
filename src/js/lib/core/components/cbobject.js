@@ -239,5 +239,72 @@ CBObject.prototype.enableEditable = function enableEditable(e){
 	}
 }
 
+CBObject.prototype.importHTML = function importHTML(node) {
+	try{
+
+	  var width = this.size[0];
+	  if(node.hasOwnProperty("clientWidth")){
+		  if ( node.clientWidth !== null && node.clientWidth !== undefined ){
+		  	width = node.clientWidth;
+		  }
+		  else{
+		  	if(node.hasAttributes()){
+	        	if(node.attributes['width'] != undefined) 
+	          		width = node.attributes['width'].nodeValue;
+	        }
+		  }
+	  }
+	  var height = this.size[1];
+	  if(node.hasOwnProperty("clientHeight")){
+		  if ( node.clientHeight !== null && node.clientHeight !== undefined){
+		  	height = node.clientHeight;
+		  }
+		  else{
+		  	if(node.hasAttributes()){
+		  		if(node.attributes['height'] != undefined)
+	          		height = node.attributes['height'].nodeValue;   
+	        }
+		  }
+	  }
+	  var left = 0;
+	  if(node.hasOwnProperty("offsetLeft")){
+	  	left = node.offsetLeft !== null && node.offsetLeft !== undefined ? node.offsetLeft : this.position[0];
+	  }
+	  else{
+	  	left = this.position[0];
+	  }
+
+	  var top = 0;
+	  if(node.hasOwnProperty("offsetLeft")){
+	  	top = node.offsetTop !== null && node.offsetTop !== undefined ? node.offsetTop : this.position[1];
+	  }
+	  else{
+	  	top = this.position[1];
+	  }
+      this.position = [left,top];
+      this.size = [width,height];
+	}
+	catch(e){
+	}
+};
+
+CBObject.prototype.copyresource = function(origpath) {
+	var path = require('path');
+	var fs = require('fs-extra');
+	
+	var basename = path.basename(origpath);
+	var destpath = path.join(Project.Info.projectpath, "rsrc", basename);
+	while(true){
+        if(!fs.existsSync(destpath)){
+            break;
+        }
+        basename = 0 + basename;
+        destpath = path.join(Project.Info.projectpath, "rsrc", basename);
+    }
+    fs.copySync(origpath,destpath);
+    return destpath;
+};
+
+
 module.exports = CBObject;
-//@ sourceURL=cbobject.js
+//@ sourceURL=/usr/share/cloudbook/src/js/lib/core/components/cbobject.js

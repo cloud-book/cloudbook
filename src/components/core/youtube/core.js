@@ -38,15 +38,8 @@ YoutubeBox.prototype.HTMLtags = function HTMLtags(node){
 
 YoutubeBox.prototype.importHTML = function importHTML(node, filePath){
     try{
-      
+      YoutubeBox.super_.prototype.importHTML.call(this,node);
       var urlpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
-      var width = node.clientWidth;
-      var height = node.clientHeight;
-      var left = node.offsetLeft;
-      var top = node.offsetTop;
-      this.position = [left, top];
-      if(width != 0 && height != 0)
-        this.size = [width,height];
       this.url = urlpath;
     }
     catch (err) {
