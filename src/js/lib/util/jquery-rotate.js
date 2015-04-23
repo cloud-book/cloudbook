@@ -45,7 +45,7 @@ $.widget("ui.rotatable", $.ui.mouse, {
 			wheelRotate: $.proxy(this.wheelRotate, this)
         };
 
-		this.element.bind('wheel', this.listeners.wheelRotate);
+		//this.element.bind('wheel', this.listeners.wheelRotate);
 
 		handle.draggable({ helper: 'clone', start: this.dragStart, handle: handle });
         handle.bind('mousedown', this.listeners.startRotate);
@@ -126,6 +126,24 @@ $.widget("ui.rotatable", $.ui.mouse, {
 				predefinedAngle *= -1;
 			rotateAngle -= (rotateAngle + predefinedAngle / 2) % (predefinedAngle) - predefinedAngle / 2;
 		}
+
+        var deg = rotateAngle * 180 / Math.PI;
+
+        if( - deg > -5 && - deg < 5 ){
+            rotateAngle = 0;
+        }
+
+        if( - deg >  85 && - deg < 95 ){
+            rotateAngle = - Math.PI / 2;
+        }
+        
+        if( - deg >  175 && - deg < 185 ){
+            rotateAngle = - Math.PI;
+        }
+
+        if( - deg >  265 && - deg < 275 ){
+            rotateAngle = - 3 * Math.PI / 2;
+        }
 
         this.performRotation(rotateAngle);
         var previousRotateAngle = this.elementCurrentAngle;
