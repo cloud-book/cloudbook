@@ -177,10 +177,5 @@ exports.restore = function restore(objectdata) {
 };
 */
 
-<<<<<<< HEAD
-module.exports = PEMBox;
-//@ sourceURL=interactivemultioption_core.js
-=======
 module.exports = PMS;
 //@ sourceURL=interactivemultioption_core.js
->>>>>>> upstream/master

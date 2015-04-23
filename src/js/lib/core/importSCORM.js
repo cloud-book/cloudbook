@@ -97,13 +97,8 @@ function processSCORMData(filePath)
 			  				}
 			  				else
 			  				{
-				  				idsection = backend.appendNewSectionObjectByUID('root','basic');
-				  				controller.appendSection(idsection);
+			  					idsection = controller.appendSection('root')
 				  				backend.updateSectionName(attrib.value.split(".")[0],idsection);	
-								var son = mana.createSectionView(idsection);
-	  							var list = $("[data-cbsectionid='root'] > ul");
-							    list.append(son);
-	  							$($(son.children('.displaysection')).children('.divselector')).click();
 			  				}
 							mana.reloadSortable();
 							importationHTML.processHTML(html, filePath + attrib.value, idsection);
