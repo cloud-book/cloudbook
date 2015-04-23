@@ -69,7 +69,7 @@ function processHTMLFile(filePath)
 {
 	$.get(filePath, function(html) {
 		var importationHTML = application.importhtml.getInstance();
-		importationHTML.processHTML(html, filePath);
+		importationHTML.processHTML(html, filePath, Cloudbook.UI.selected.attr('data-cbsectionid'));
     });  
 };
 

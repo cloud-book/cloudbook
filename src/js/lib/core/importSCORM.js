@@ -72,23 +72,44 @@ function deleteFolderRecursive(path) {
 
 /**
  * This method is responsible for reading SCORM data
+ * It reads files to be included and creates sections for each one
  * @param  {String} path of the unzipped elements
  */
 function processSCORMData(filePath)
 {
 	var fs = require('fs');
-	var importationHTML = application.importhtml.getInstance();
+	var backend = application.backend.core.getInstance();
+	var controller = application.controller.getInstance();
+	var idsection = "";
+	var promanager = CBUtil.req('js/lib/gui/ui/proview/core.js');
+	var mana = new promanager();
 
+	var importationHTML = application.importhtml.getInstance();
 	fs.readFile(filePath+"imsmanifest.xml", function(err, data) {
 	  	  	$(data.toString()).find("resource").each(function(){
 		  		$.each(this.attributes, function(i, attrib){
 		  			if(attrib.name == "href"){
 						$.get(filePath + attrib.value, function(html) {
-							importationHTML.processHTML(html, filePath);
-					    }); 
+			  				if(attrib.value =="index.html")
+			  				{
+			  					backend.updateSectionName(attrib.value.split(".")[0],Cloudbook.UI.selected.attr('data-cbsectionid'));		
+			  					idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
+			  				}
+			  				else
+			  				{
+				  				idsection = backend.appendNewSectionObjectByUID('root','basic');
+				  				controller.appendSection(idsection);
+				  				backend.updateSectionName(attrib.value.split(".")[0],idsection);	
+								var son = mana.createSectionView(idsection);
+	  							var list = $("[data-cbsectionid='root'] > ul");
+							    list.append(son);
+	  							$($(son.children('.displaysection')).children('.divselector')).click();
+			  				}
+							mana.reloadSortable();
+							importationHTML.processHTML(html, filePath + attrib.value, idsection);
+						}); 
 					}
 		  		});
-  		
 			});
 	});
 }

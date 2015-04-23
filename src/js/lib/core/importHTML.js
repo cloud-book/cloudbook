@@ -165,8 +165,9 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
  * It creates two divs to load content and process content, finally removes two divs
  * @param  {String} content of the HTML file
  * @param  {String} path of the html element
+ * @param  {String} id of section selected
  */
-ImportHTML.prototype.processHTML = function processHTML(data, filePath)
+ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectionselected)
 {
 	var that = this;
 	var includeHTML = $(data);
@@ -177,7 +178,7 @@ ImportHTML.prototype.processHTML = function processHTML(data, filePath)
 	$("body").append(temp);
 	$("body").append("<div id='layer' style='z-index:-500;background:#fff; position:fixed; top:0; width:100%;height:100%'></div>");
 
-	var idsectionselected = Cloudbook.UI.selected.attr('data-cbsectionid');
+	//var idsectionselected = Cloudbook.UI.selected.attr('data-cbsectionid');
 	var backend = application.backend.core.getInstance();
 
 	processBlock($('#tempImportHTML')[0], filePath, null,idsectionselected,that);
