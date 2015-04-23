@@ -8,14 +8,17 @@ function ExportHTML(){
 }
 
 
-ExportHTML.prototype.htmlHead = function() {
+ExportHTML.prototype.htmlBasicHead = function() {
 	this.myhead = $('<head></head>');
 	this.myhead.append('<script type="text/javascript" src="js/jquery.js"></script>');
-	this.myhead.append('<script type="text/javascript" src="js/jquery.layout.js"></script>');
 	this.myhead.append('<script type="text/javascript" src="js/jquery-ui.min.js"></script>');
-	this.myhead.append('<script type="text/javascript" src="js/core.js"></script>');
+	this.myhead.append('<script type="text/javascript" src="js/jquery.layout.js"></script>');
 	this.myhead.append('<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />');
-	this.myhead.append('<link rel="stylesheet" type="text/css" href="css/estilo.css" />');
+};
+
+ExportHTML.prototype.htmlHeadHTMLExport = function(first_argument) {
+	this.myhead.append('<script type="text/javascript" src="js/core.js"></script>');
+	this.myhead.append('<link rel="stylesheet" type="text/css" href="css/estilo.css" />');		
 };
 
 
@@ -61,20 +64,8 @@ ExportHTML.prototype.getSections = function getSections(){
 	return sections;
 }
 
-ExportHTML.prototype.do_html = function do_html(path){
 
-	this.files_to_copy = [];
-	this.myhead = "";
-	
-	this.htmlHead();
-	var sections= this.getSections();
-	
-
-	// Copy base javascript
-	this.files_to_copy.push('js/lib_external/exporthtml/');
-
-	//Determine what external component scripts need to load
-	
+ExportHTML.prototype.allTypesObjects = function(sections) {
 	var sm=application.storagemanager.getInstance();
 	var all_types_used = [];
 	for (var i=0; i< sections.length;i++){
@@ -85,7 +76,26 @@ ExportHTML.prototype.do_html = function do_html(path){
 					all_types_used.push(obj_into_section_type.idtype);
 		}
 	}
+	return all_types_used;
+};
 
+ExportHTML.prototype.do_html = function do_html(path){
+
+	this.files_to_copy = [];
+	this.myhead = "";
+	
+	this.htmlBasicHead();
+	this.htmlHeadHTMLExport();
+
+	var sections= this.getSections();
+	
+
+	// Copy base javascript
+	this.files_to_copy.push('js/lib_external/exporthtml/');
+
+	//Determine what external component scripts need to load
+	
+	var all_types_used = this.allTypesObjects(sections);
 	this.getAllNeededFiles(all_types_used);
 	
 
@@ -98,7 +108,7 @@ ExportHTML.prototype.do_html = function do_html(path){
 	var content='<div class="ui-layout-center">';
 	content=content+'<div class="ui-layout-content">';
 	
-	sections.forEach(function(obj,idx){ var JQobj=obj.htmlView('data'+idx); content += JQobj[0].outerHTML });
+	sections.forEach(function(obj,idx){ var JQobj=obj.exportView('data'+idx,'htmlView','triggerHTMLView'); content += JQobj[0].outerHTML });
 
 	content=content+'</div></div>';
 	var footer='<footer class="ui-layout-south"><section><span class="left"><button>'+ CBI18n.gettext("Prev") + '</button></span>'+ CBI18n.gettext("Footer section")+'<span class="right"><button>'+ CBI18n.gettext("Next") +'</button></span></section></footer>';
@@ -108,16 +118,17 @@ ExportHTML.prototype.do_html = function do_html(path){
 	
 	//Change source url into exported objects
 
-	var total = this.formatXml('<!DOCTYPE html><html>'+this.myhead[0].outerHTML+'<body>'+aside+content+footer+'</body></html>');
+	var total = this.formatXml('<!DOCTYPE html><html><meta charset="UTF-8"> '+this.myhead[0].outerHTML+'<body>'+aside+content+footer+'</body></html>');
 
 	var fs = window.require('fs');
-	fs.writeFile(path+"index.html", total , function(err) {
-    	if(err) {
-        	return console.log(err);
-    	}else{
-    		console.log("The file was saved!");
-    	}
-	});
+	// fs.writeFile(path+"index.html", total , function(err) {
+ //    	if(err) {
+ //        	return console.log(err);
+ //    	}else{
+ //    		console.log("The file was saved!");
+ //    	}
+	// });
+	fs.writeFileSync(path+"index.html", total);
 	var that = this;
 	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,path)});
 	return total;
@@ -210,6 +221,35 @@ ExportHTML.prototype.copyFileToPath = function copyFileToPath(filename,path){
 		}
 	}
 }
+
+
+ExportHTML.prototype.preExportHTMLToPDF = function preExportHTMLToPDF() {
+	var mktemp = require('mktemp');
+	var temppath = mktemp.createDirSync("/tmp/cloudbook_XXXX");
+	var that = this;
+	this.files_to_copy = [];
+	this.myhead = "";
+	var returnlistpaths = [];
+	this.htmlBasicHead();
+	var sections = this.getSections();
+	var all_types_used = this.allTypesObjects(sections);
+	this.getAllNeededFiles(all_types_used);
+	this.files_to_copy.push('js/lib_external/exporthtml/');
+	this.files_to_copy.push(Project.Info.projectpath + "/rsrc/");
+	sections.forEach(function(section,id){
+		var JQobj=section.exportView('data'+id,'pdfView','triggerHTMLView');
+		var page = '<!DOCTYPE html><html><meta charset="UTF-8"> '+that.myhead[0].outerHTML+'<body>'+JQobj[0].outerHTML;+'</body></html>';
+		var fs = window.require('fs');
+		var dest = temppath+"/index"+id+".html";
+		fs.writeFileSync(dest, page);
+		returnlistpaths.push(dest);
+	});
+	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,temppath+"/")});
+	return returnlistpaths;
+};
+
+
+
 ExportHTML.prototype.copyFileFromDirToPath = function copyFileFromDirToPath(dir,path){
 	var fs = window.require('fs');
 	var filenames=fs.readdirSync(dir);
@@ -231,7 +271,6 @@ ExportHTML.prototype.copyFileFromDirToPath = function copyFileFromDirToPath(dir,
 			}
 		}
 	}
-	console.log(filenames);
 }
 CBUtil.createNameSpace('application.exporthtml.core');
 application.exporthtml.core = CBUtil.singleton(ExportHTML);
@@ -243,4 +282,4 @@ var export_html = function(){
 		fs.mkdirSync(Project.Info.projectpath+"/exported",0775);
 	test.do_html(Project.Info.projectpath+"/exported/");	
 }
-console.log('Tip: to begin exportation to workspace, load project and run "export_html()" in console');
+//console.log('Tip: to begin exportation to workspace, load project and run "export_html()" in console');

@@ -67,7 +67,9 @@ CBObject.prototype.htmlView = function htmlView() {
 
 
 CBObject.prototype.pdfView = function pdfView() {
-	return this.htmlView();
+	var aux = this.getObject();
+	aux.removeClass('cbobject-editable');
+	return aux;
 }
 
 

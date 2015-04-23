@@ -1,30 +1,10 @@
-/*aside{
-	float:left;
-	margin-top:100px;
-	width: 191px;
-}*/
-aside>ol>li{
-	list-style-type:none;
-}
 article{
 	position:absolute;
 	display:block;
-	/*left: 200px;*/
-	/*height: 100%;*/
 	width: 80%;
 }
 footer{
-/*	position: absolute;
-	display: block;
-	left: -1px;
-	bottom: -1px;
-	height: 8%;
-	width: 100%;
-*/
 	height: 30%;
-}
-.centered{
-	text-align: center;
 }
 span.right{
 	text-align: right;
@@ -49,6 +29,12 @@ footer{
 .bordered{
 	border: 1px solid black;
 }
+.centered{
+	text-align: center;
+}
+.hide{
+	display:none;
+}
 #title{
 	height: 5%;
 }
@@ -58,26 +44,30 @@ footer{
 	z-index: 99;
 	left: 45%;
 }
+
+.sectionlevel1{
+	margin-left: 0ex;
+}
+.sectionlevel2{
+	margin-left: 1ex;
+}
+.sectionlevel3{
+	margin-left: 2ex;
+}
+.sectionlevel4{
+	margin-left: 3ex;
+}
+aside>ol{
+	padding: 0px;
+}
 aside>ol>li{
-	font-size: large;
+	list-style-type:none;
+	margin-bottom: 2px;
+	/*font-size: large;*/
 }
-/*img{
-	position: absolute;
+aside>ol>li>a{
+	width:100%;
 }
-#data1 img{
-	left: 100px;
-	top:100px;
-	height:50px;
-	width: 100px;
-	transform: rotate(10deg);
-}
-#data2 img{
-	left: 500px;
-	top: 400px;
-	height:200px;
-	width: 100px;
-	transform: rotate(110deg);
-}*/
-.hide{
-	display:none;
+aside>ol>li>a>span{
+	font-size: 1.5ex;
 }

@@ -12,13 +12,13 @@ function ExportWebZip(){
 ExportWebZip.prototype.createHtml=function createHtml(){
     var fs = require('fs-extra');
     var path='/tmp/cloudbook/WebZip/';
-    fs.mkdirs(path, function (err) {
+    fs.mkdirsSync(path, function (err) {
   	if (err) return console.error(err)
   	console.log("success!")
-    })  ; 
+    }) 
      
     var createhtml = application.exporthtml.core.getInstance();
-    var html=createhtml.do_html('/tmp/cloudbook/WebZip'+'/');
+    createhtml.do_html('/tmp/cloudbook/WebZip'+'/');
     
    return path;
 
@@ -73,7 +73,7 @@ ExportWebZip.prototype.createZip=function createZip(directorio,destino){
     		} else {
        			 console.log('EXCELLENT');
 		 	$("#exportwebzipwizard").dialog("destroy");
-                         that.borrarHtml(directorio);
+                        that.borrarHtml(directorio);
 			
    		}
 	});
