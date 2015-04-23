@@ -88,11 +88,42 @@ TextBox.prototype.disableEditMode = function(e) {
 	aux.text = $('[data-textbox-id="'+that.uniqueid+'"]').html();
 };
 
+TextBox.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+  var tagTypes = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
+  'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA'];
+  
+  if(tagTypes.indexOf(node.tagName) > -1) score ++;
 
+  return score;
+};
 
-TextBox.prototype.importHTML = function importHTML(){
-	return ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
-	'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA'];
+TextBox.prototype.HTMLtagNames = function HTMLtagNames(){
+  return ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
+  'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA'];
+}
+TextBox.prototype.importHTML = function importHTML(node, filePath){
+
+  if(node.tagName != null)
+    {
+      var text = "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
+      var width = node.clientWidth;
+      var height = node.clientHeight;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.text = text;
+      this.position = [left, top];
+      if(width != 0 && height != 0)
+        this.size = [width,height];
+    }
+    else
+    {
+      var text = node;
+      var top = 0;
+      this.text = text;
+      this.size = [800, 300];
+      this.position = [0, top];
+    }
 }
 
 TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

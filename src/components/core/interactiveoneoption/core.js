@@ -60,8 +60,10 @@ PEMBox.prototype.clickButton = function clickButton(controllerClass) {
     );
 };
 
-PEMBox.prototype.importHTML = function importHTML(){
-  return ['PEM'];
+PEMBox.prototype.HTMLtags = function HTMLtags(){
+  var tagTypes = ['PEM'];
+  var score = 0;
+  return score;
 }
 
 PEMBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

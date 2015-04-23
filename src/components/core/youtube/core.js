@@ -23,6 +23,37 @@ YoutubeBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+YoutubeBox.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+  var tagTypes = ['IFRAME'];
+  
+  if(tagTypes.indexOf(node.tagName) > -1)
+  {
+   score ++;
+   if(node.attributes.getNamedItem("src") != null)
+    if(node.attributes.getNamedItem("src").value.indexOf("youtube.com") != -1) score++;
+  }
+  return score;
+}
+
+YoutubeBox.prototype.importHTML = function importHTML(node, filePath){
+    try{
+      
+      var urlpath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+      var width = node.clientWidth;
+      var height = node.clientHeight;
+      var left = node.offsetLeft;
+      var top = node.offsetTop;
+      this.position = [left, top];
+      if(width != 0 && height != 0)
+        this.size = [width,height];
+      this.url = urlpath;
+    }
+    catch (err) {
+        console.log('Errors in Youtube');
+    }
+}
+
 YoutubeBox.prototype.htmlView = function htmlView() {
   var aux = YoutubeBox.super_.prototype.htmlView.call(this);
   var url = this.url !== null ? this.url : "http://lliurex.net";
@@ -41,11 +72,6 @@ YoutubeBox.prototype.pdfView = function pdfView() {
   imgelement.css('width',this.size[0]);
   aux.children('.cbcontainer').append(imgelement);
   return aux;
-}
-
-
-YoutubeBox.prototype.importHTML = function importHTML(){
-  return ['IFRAME'];
 }
 
 YoutubeBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

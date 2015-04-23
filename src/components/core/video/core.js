@@ -68,10 +68,88 @@ VideoBox.prototype.clickButton = function clickButton(controllerClass) {
   $("#videodialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
-VideoBox.prototype.importHTML = function importHTML(){
-  return ['VIDEO'];
+VideoBox.prototype.HTMLtags = function HTMLtags(node){
+  var score = 0;
+
+  var tagTypes = [{'VIDEO':''}, {'OBJECT':['video/mp4', 'video/ogg', 'video/webm']}];
+
+  for(var i=0;i<tagTypes.length;i++){
+        var obj = tagTypes[i];
+        for(var key in obj){
+            if(key == node.tagName){
+              score++;
+              if(node.hasAttributes() && node.hasAttribute('type'))
+                if(node.attributes["type"] != undefined)
+                  if(obj[key].indexOf(node.attributes["type"].nodeValue)> -1)
+                  score++;
+            }
+        }
+    }
+
+  return score;
 }
 
+VideoBox.prototype.importHTML = function importHTML(node, filePath){
+
+//  var Project = window.Project;
+  var fs = require('fs-extra');
+  var path = require('path');
+  var type = "";
+
+     try{
+       if(node.tagName == "VIDEO")
+       {
+        if (node.innerHTML.indexOf("src=")!=-1)
+          videopath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
+        if (node.innerHTML.indexOf("type=")!=-1)
+        {
+          type = node.innerHTML.split('type="')[1].trim().replace(">","").replace('"','');
+        }
+       }
+       if(node.tagName == "OBJECT")
+       {
+        videopath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
+        type = node.attributes.getNamedItem("type") != null? node.attributes.getNamedItem("type").value:"";
+       }
+        var basename = path.basename(videopath);
+        var sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+
+        while(true){
+          if(!fs.existsSync(sourcePath)){
+              break;
+          }
+          basename = 0 + basename;
+          sourcePath = path.join(Project.Info.projectpath, "/rsrc/", basename);
+        }
+        fs.copySync(path.join(path.dirname(filePath), videopath),sourcePath);
+        var width = node.clientWidth;
+        var height = node.clientHeight;
+        var left = node.offsetLeft;
+        var top = node.offsetTop;
+        
+        this.position = [left, top];
+        this.videopath = basename;
+        this.videoformat = type;
+        if(width != 0 && height != 0)
+          this.size = [width,height];
+        else
+        {
+          if(node.hasAttributes())
+          {
+            if(node.attributes['width'] != undefined) 
+              width = node.attributes['width'].nodeValue;
+            if(node.attributes['height'] != undefined)
+              height = node.attributes['height'].nodeValue;   
+            if(width != 0 && height != 0)
+              this.size = [width,height];
+          }
+        }
+    }
+    catch (err) {
+        console.log('Errors in Video ' + err);
+    }
+
+};
 VideoBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
   VideoBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 };
