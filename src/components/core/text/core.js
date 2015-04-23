@@ -103,18 +103,10 @@ TextBox.prototype.HTMLtagNames = function HTMLtagNames(){
   'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA'];
 }
 TextBox.prototype.importHTML = function importHTML(node, filePath){
-
   if(node.tagName != null)
     {
       var text = "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
-      var width = node.clientWidth;
-      var height = node.clientHeight;
-      var left = node.offsetLeft;
-      var top = node.offsetTop;
-      this.text = text;
-      this.position = [left, top];
-      if(width != 0 && height != 0)
-        this.size = [width,height];
+      TextBox.super_.prototype.importHTML.call(this,node);
     }
     else
     {

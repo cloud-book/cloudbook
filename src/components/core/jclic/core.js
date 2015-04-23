@@ -67,11 +67,8 @@ JclicBox.prototype.importHTML = function importHTML(node, filePath){
         }
       });
 
-      var width = node.width;
-      var height = node.height;
-      var left = node.offsetLeft;
-      var top = node.offsetTop;
-      this.position = [top, left];
+      JclicBox.super_.prototype.importHTML.call(this,node);
+
       this.activitypack = path.basename(resourcepath);
     }
     catch (err) {
