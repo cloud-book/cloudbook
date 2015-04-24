@@ -5,5 +5,5 @@
   "icon" : "icon.png",
   "external_scripts" : ["lib_external/bootstrap-wysiwyg/bootstrap-wysiwyg.js"],
   "external_css" : [],
-  "category":"core"
+  "category":"root"
 }

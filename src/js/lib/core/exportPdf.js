@@ -119,7 +119,7 @@ ExportPdf.prototype.renderPdf=function renderPdf(parametrosPdf,origen){
                   
       /*Se ejecuta el proceso para generar el pdf*/
 	
-	$("#exportpdfwizard").find('.waiting').css("display","inline");
+	$("#exportpdfwizard").find('.waitingOK').css("display","inline");
 		var that = this;
 		var cmd = "wkhtmltopdf" + " " + wkhtmloptions + " " + ficheroOrigen + " " + pdfFileName ;
 		console.log(cmd);
@@ -128,11 +128,13 @@ ExportPdf.prototype.renderPdf=function renderPdf(parametrosPdf,origen){
 		//process.stdout.write( stderr );
                 if (err === null){
 					console.log("Ha tenido exito");
-		       		$("#exportpdfwizard").dialog("destroy");
+		       			$("#exportpdfwizard").dialog("destroy");
 					that.borrarHtml(origen);
                 }
                 else{
-					console.log(stderr);
+				$("#exportpdfwizard").find('.waitingOK').css("display","none");
+				$("#exportpdfwizard").find('.waitingER').css("display","inline");
+				console.log(stderr);
                }
 	});
 	

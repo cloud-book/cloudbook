@@ -3,5 +3,5 @@
 	"description":"Append external Iframe to content",
 	"label": "Include site",
 	"icon" : "icon.png",
-	"category": "core"
+	"category": "embed object"
 }
