@@ -358,7 +358,7 @@ Backend.prototype.checkProjectExists = function checkProjectExists(projectname) 
  */
 Backend.prototype.updateSectionName = function(name,cbsectionid) {
   var CBStorage = application.storagemanager.getInstance();
-  x = CBStorage.getSectionById(cbsectionid);
+  var x = CBStorage.getSectionById(cbsectionid);
   x.name = name;
   CBStorage.setSectionById(x,cbsectionid);
 };
