@@ -3,5 +3,5 @@
 	"description":"Append textbox to content",
 	"label": "Imagen",
 	"icon" : "icon.png",
-	"category": "core"
+	"category": "root"
 }
