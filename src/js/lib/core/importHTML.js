@@ -112,7 +112,8 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 				    var text = "";
 					text = processBlock(node, filePath, node.tagName,idsectionselected,that);
 					if(node.parentElement.tagName =="HEADER" || node.parentElement.tagName =="FOOTER" ||
-					 node.parentElement.id == "tempImportHTML" || node.parentElement.parentNode.id == "tempImportHTML")
+						node.parentElement.nodeName == "BODY" || node.parentElement.parentElement.nodeName == "BODY")
+					 //node.parentElement.id == "tempImportHTML" || node.parentElement.parentNode.id == "tempImportHTML")
 					{
 						if(text != ""){
 							processTextBlock(text, width, height, top, left, filePath, idsectionselected);
@@ -172,16 +173,26 @@ ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectio
 	var that = this;
 	var includeHTML = $(data);
 
-	var temp = $("<div id='tempImportHTML'></div>");
+	var temp = $('<iframe id="tempImportHTML" width="100%" height="100%" ;/>');
+	temp.css("position", "fixed").css("z-index","-1000");
+	$("body").append(temp);
+	temp.contents().find("html").html(data);
+	$("body").append("<div id='layer' style='z-index:-500;background:#fff; position:fixed; top:0; width:100%;height:100%'></div>");
+
+	processBlock($('#tempImportHTML').contents().find("body").length == 0? temp.contents().get()[0].children[0]:temp.contents().get()[0].children[0].childNodes[2],
+	 filePath, null,idsectionselected,that);
+
+/*	var temp = $("<div id='tempImportHTML'></div>");
 	temp.append(includeHTML);
 	temp.css("position", "fixed").css("z-index","-1000");
 	$("body").append(temp);
 	$("body").append("<div id='layer' style='z-index:-500;background:#fff; position:fixed; top:0; width:100%;height:100%'></div>");
-
-	//var idsectionselected = Cloudbook.UI.selected.attr('data-cbsectionid');
-	var backend = application.backend.core.getInstance();
-
 	processBlock($('#tempImportHTML')[0], filePath, null,idsectionselected,that);
+*/
+	//var idsectionselected = Cloudbook.UI.selected.attr('data-cbsectionid');
+	//var backend = application.backend.core.getInstance();
+
+//	
 
 	var ui = application.ui.core.getInstance();
 	$('#tempImportHTML').remove();

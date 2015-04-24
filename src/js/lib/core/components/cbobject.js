@@ -277,7 +277,7 @@ CBObject.prototype.importHTML = function importHTML(node) {
 	  }
 
 	  var top = 0;
-	  if(node.hasOwnProperty("offsetLeft")){
+	  if(node.hasOwnProperty("offsetTop")){
 	  	top = node.offsetTop !== null && node.offsetTop !== undefined ? node.offsetTop : this.position[1];
 	  }
 	  else{
@@ -285,6 +285,7 @@ CBObject.prototype.importHTML = function importHTML(node) {
 	  }
       this.position = [left,top];
       this.size = [width,height];
+      console.log(node.tagName + " " + node.hasOwnProperty("clientWidth") + " " + width + " " + height + " " + top + " " + left);
 	}
 	catch(e){
 	}
