@@ -37,7 +37,19 @@ AudioBox.prototype.htmlView = function htmlView() {
 }
 
 AudioBox.prototype.pdfView = function pdfView() {
-  return "";
+  var aux = AudioBox.super_.prototype.pdfView.call(this);
+  var fsextra = require('fs-extra');
+  var pathtosavefile = Project.Info.projectpath + "/pdfextrafiles/"+this.uniqueid + "/";
+  var linktopdf = "pdfextrafiles/"+this.uniqueid+"/"+this.audiopath;
+  var stringtopdf = CBI18n.gettext("Click to listen a sound");
+  /**
+   * Create folder to resources and copy inside these
+   */
+  fsextra.mkdirsSync(pathtosavefile);
+  fsextra.copySync(Project.Info.projectpath + "/rsrc/"+ this.audiopath, pathtosavefile+this.audiopath);
+
+  aux.append("<a href='"+linktopdf+"'>"+stringtopdf+"</a>");
+  return aux;
 }
 
 AudioBox.prototype.editButton = function editButton(e) {

@@ -38,13 +38,11 @@ VideoBox.prototype.htmlView = function htmlView() {
 
 VideoBox.prototype.pdfView = function pdfView() {
   var aux = VideoBox.super_.prototype.pdfView.call(this);
-  var videoelement = $(window.document.createElement('video')).attr('controls','');
-  var source = $(window.document.createElement('source')).attr('src',Project.Info.projectpath + "/rsrc/"+ this.videopath).attr('type',this.videoformat);
-  videoelement.css('height','100%');
-  videoelement.css('width','100%');
-  videoelement.append(source);
-  aux.children('.cbcontainer').append(videoelement);
-  return aux;
+  var fsextra = require('fs-extra');
+  var pathtosavefile = Project.Info.projectpath + "/pdfextrafiles/"+this.uniqueid + "/";
+  fsextra.mkdirsSync(pathtosavefile);
+  fsextra.copySync(Project.Info.projectpath + "/rsrc/"+ this.videopath,pathtosavefile+this.videopath);
+  return aux.append("<a href='pdfextrafiles/"+this.uniqueid+"/"+this.videopath+"'>Click to view a video</a>");  
 }
 
 VideoBox.prototype.editButton = function editButton(e) {

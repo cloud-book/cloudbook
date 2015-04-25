@@ -14,8 +14,7 @@ util.inherits(IncludeSite,CBobject);
 
 IncludeSite.prototype.editorView = function editorView() {
   var aux = IncludeSite.super_.prototype.editorView.call(this);
-  var url = this.url !== null ? this.url : "http://lliurex.net";
-  var iframeelement = $(window.document.createElement('iframe')).attr('src', url);
+  var iframeelement = $(window.document.createElement('iframe')).attr('src',Project.Info.projectpath + "/rsrc/"+ this.url);
   iframeelement.css('height','100%');
   iframeelement.css('width','100%');
   var cliclayer = $(window.document.createElement('div')).addClass('cbcliclayer');
@@ -25,8 +24,7 @@ IncludeSite.prototype.editorView = function editorView() {
 
 IncludeSite.prototype.htmlView = function htmlView() {
   var aux = IncludeSite.super_.prototype.htmlView.call(this);
-  var url = this.url !== null ? this.url : "http://lliurex.net";
-  var iframeelement = $(window.document.createElement('iframe')).attr('src', url);
+  var iframeelement = $(window.document.createElement('iframe')).attr('src',this.url );
   iframeelement.css('height','100%');
   iframeelement.css('width','100%');
   aux.append(iframeelement);
@@ -35,12 +33,14 @@ IncludeSite.prototype.htmlView = function htmlView() {
 
 IncludeSite.prototype.pdfView = function pdfView() {
   var aux = IncludeSite.super_.prototype.pdfView.call(this);
-  var url = this.url !== null ? this.url : "http://lliurex.net";
-  var iframeelement = $(window.document.createElement('iframe')).attr('src', url);
-  iframeelement.css('height','100%');
-  iframeelement.css('width','100%');
-  aux.append(iframeelement);
-  return aux;
+  var fsextra = require('fs-extra');
+  var path = require('path');
+  var pathtosavefile = Project.Info.projectpath + "/pdfextrafiles/"+this.uniqueid + "/";
+  fsextra.mkdirsSync(pathtosavefile);
+  var copyfolder = path.dirname(this.url);
+  console.log(Project.Info.projectpath + "/rsrc/"+ copyfolder + "/.");+
+  fsextra.copySync(Project.Info.projectpath + "/rsrc/"+ copyfolder + "/.",pathtosavefile);
+  return aux.append("<a href='pdfextrafiles/"+this.uniqueid+"/"+path.basename(this.url)+"'>Click to view resource</a>");
 }
 
 IncludeSite.prototype.HTMLtags = function HTMLtags(node){
@@ -112,7 +112,7 @@ function copySite(orig,that){
     /*
      * update component file
      */
-    that.url = resourcepath + originalbasename;
+    that.url = that.uniqueid + "/" + originalbasename;
 }
 
 

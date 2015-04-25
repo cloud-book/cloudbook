@@ -62,12 +62,7 @@ ExternalIframe.prototype.htmlView = function htmlView() {
 
 ExternalIframe.prototype.pdfView = function pdfView() {
   var aux = ExternalIframe.super_.prototype.pdfView.call(this);
-  var url = this.url !== null ? this.url : "http://lliurex.net";
-  var iframeelement = $(window.document.createElement('iframe')).attr('src', url);
-  iframeelement.css('height','100%');
-  iframeelement.css('width','100%');
-  aux.append(iframeelement);
-  return aux;
+  return aux.append("<a href='"+this.url+"'>Click view site "+this.url+"</a>");
 }
 
 
