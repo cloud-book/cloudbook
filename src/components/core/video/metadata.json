@@ -3,5 +3,6 @@
 	"description":"Append Video to content",
 	"label": "Video",
 	"icon" : "icon.png",
+	"version" : "0.2.0",
 	"category": "multimedia"
 }

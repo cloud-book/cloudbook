@@ -3,6 +3,7 @@
 	"description":"Append PMS to content",
 	"label": "PMS",
 	"icon" : "icon.png",
+	"version" : "0.2.0",
 	"category": "activity",
 	"external_scripts" : ["lib_external/jsgeork/jquery.jsgeork.js"],
 	"external_css" : ["lib_external/jsgeork/jquery.jsgeork.css","lib/pms.css"]

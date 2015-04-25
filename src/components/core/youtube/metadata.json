@@ -3,5 +3,6 @@
 	"description":"Append Youtube embebed to content",
 	"label": "Youtube",
 	"icon" : "icon.png",
+	"version" : "0.2.0",
 	"category": "embed object"
 }
