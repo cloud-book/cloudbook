@@ -425,6 +425,22 @@ Backend.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cbobj
   CBStorage.setCBObjectById(cbobject);
 };
 
+Backend.prototype.checkUpstreamVersion = function checkUpstreamVersion(){
+  var that = this;
+  $.get("https://github.com/cloud-book/cloudbook/raw/master/src/package.json",function(data){
+    var upstreampackage = JSON.parse(data);
+    if (upstreampackage.version > Cloudbook.version ){
+      var dialog = $("<div></div>").addClass("newversionavailable").html(CBI18n.gettext("New version available :") + upstreampackage.version);
+      dialog.dialog({
+          position:{my:"right bottom", at:"right bottom",of: window},
+          show:{effect:"slide",direction:"right"},
+          hide:{effect:"slide",direction:"right"},
+          open:function(){setTimeout(function(){dialog.dialog('close')},2500)}
+        });
+    }
+  });
+};
+
 
 /**
  * This namespace has singleton instance of Backend class

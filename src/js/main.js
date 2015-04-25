@@ -60,8 +60,9 @@
 
  	backend.prepareWorkspace();
  	backend.loadComponents();
+ 	backend.checkUpstreamVersion();
  	ui.loadTheme();
-
+ 	
 
  	var gui = require('nw.gui');
 
