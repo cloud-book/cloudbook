@@ -32,10 +32,16 @@ function Backend() {
    */
   CBUtil.createNameSpace('Cloudbook.UI');
   /**
+   * Version of cloudbook
+   * @type String
+   */
+  Cloudbook.version = require('./package.json').version;
+  /**
    * Description of project. This contain authods, name project , etc
    * @namespace Info
    * @memberOf Project
    */
+  
   CBUtil.createNameSpace('Project.Info');
   /**
    * All sections, subsections and components of project
@@ -268,7 +274,9 @@ Backend.prototype.saveProject = function(projectfolder) {
   var CBStorage = application.storagemanager.getInstance();
   var projectpath = projectfolder + "/project.cloudbook";
   objectProject['name'] = Project.Info.projectname;
-  objectProject['author'] = "Usuario 1 <micorreo@midominio.com>";
+  objectProject['info'] = Project.Info;
+  objectProject['cloudbook'] = {};
+  objectProject['cloudbook']['version'] = Cloudbook.version;
   objectProject['data'] = {};
   objectProject['data']['sections'] = [];
   objectProject['data']['objects'] = [];
@@ -287,10 +295,11 @@ Backend.prototype.saveProject = function(projectfolder) {
     objectProject['data']['sections'].push([identifier,result.obj]);
     pool = pool.concat(result.list);
   }
-  var rootobjects = CBStorage.getRootObject();
-  var listkeys = Object.keys(rootobjects);
+  var listkeys = CBStorage.getRootObject();
   listkeys.forEach(function(id){
-    objectProject['data']['objects'].push([id,rootobjects[id]]);
+    var auxobject = CBStorage.getCBObjectById(id);
+    auxobject.componentversion = Cloudbook.Actions[auxobject.idtype]['metadata'].version;
+    objectProject['data']['objects'].push([id,auxobject]);
   });
   var result_string = JSON.stringify(objectProject,null," ");
   fs.writeFile(projectpath,result_string);
