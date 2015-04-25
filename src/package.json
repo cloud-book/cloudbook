@@ -2,7 +2,7 @@
   "main": "index.html",
   "name": "CloudBook",
   "description": "Graphical editor book",
-  "version": "0.1.9",
+  "version": "0.2.1",
   "keywords": [
     "editor",
     "book",
