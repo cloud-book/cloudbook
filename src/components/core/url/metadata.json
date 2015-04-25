@@ -3,5 +3,6 @@
 	"description":"Append external Iframe to content",
 	"label": "Url",
 	"icon" : "icon.png",
+	"version" : "0.2.0",
 	"category": "embed object"
 }

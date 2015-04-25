@@ -59,12 +59,8 @@ YoutubeBox.prototype.htmlView = function htmlView() {
 
 YoutubeBox.prototype.pdfView = function pdfView() {
   var aux = YoutubeBox.super_.prototype.pdfView.call(this);
-  var url = this.url !== null ? this.url : "http://lliurex.net";
-  var imgelement = $(window.document.createElement('iframe')).attr('src', url).attr('frameborder','0').attr('allowfullscreen','');
-  imgelement.css('height',this.size[1]);
-  imgelement.css('width',this.size[0]);
-  aux.children('.cbcontainer').append(imgelement);
-  return aux;
+  var stringtopdf = CBI18n.gettext("Click view youtube video");
+  return aux.append("<a href='"+this.url+"&autoplay=1'>"+stringtopdf+"</a>");
 }
 
 YoutubeBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

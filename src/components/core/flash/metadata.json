@@ -3,5 +3,6 @@
 	"description":"Append Flash to content",
 	"label": "Flash",
 	"icon" : "icon.png",
-	"category": "embed object"
+	"category": "embed object",
+	"version" : "0.2.0"
 }

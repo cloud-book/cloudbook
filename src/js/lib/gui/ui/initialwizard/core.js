@@ -41,7 +41,7 @@ InitialWizard.prototype.showNewOpenProject = function showNewOpenProject(e) {
     $('#listProjects button').click({that:that},that.launcherloadProject);
     $('#newproject').click({that:that},that.showTypeProject);
     $('#importproject').click({that:that},that.showImportProject);
-    
+    $('#openproject').click({that:that},that.showOpenProject);
 };
 
 /**
@@ -149,6 +149,18 @@ InitialWizard.prototype.launcherloadProject = function launcherloadProject(e) {
   controller.loadProject(path + "/project.cloudbook");
   $("#wizardnewopenproject").dialog('close');
   $("#wizardnewopenproject").remove();
+};
+
+InitialWizard.prototype.showOpenProject = function showOpenProject(e) {
+	var that = e.data.that;
+	var input = $(document.createElement('input')).attr('type','file');
+	input.change(function(){
+		var controller = application.controller.getInstance();
+		controller.loadProject($(this).val());
+		$("#wizardnewopenproject").dialog('close');
+  		$("#wizardnewopenproject").remove();
+	});
+	input.trigger('click');
 };
 
 
