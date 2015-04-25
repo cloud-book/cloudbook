@@ -65,6 +65,16 @@ TextBox.prototype.editButton = function editButton(e) {
   var textbox = $('[data-textbox-id="'+that.uniqueid+'"]');
   $('body').append(toolbar);
   toolbarposition(textbox.offset());
+  var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 
+            'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+            'Times New Roman', 'Verdana'],
+            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+  $.each(fonts, function (idx, fontName) {
+          fontTarget.append($('<li><a data-edit="fontName ' + fontName +'" style="font-family:\''+ fontName +'\'">'+fontName + '</a></li>'));
+  });
+  $('.dropdown-toggle').click(function(){$(this).siblings('.dropdown-menu').dropdown('toggle')})
+        .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
+        .keydown('esc', function () {this.value='';$(this).change();});
   textbox.wysiwyg();
   e.stopImmediatePropagation();
   textbox.click(that.stopPropagation);
