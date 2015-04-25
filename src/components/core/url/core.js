@@ -62,7 +62,8 @@ ExternalIframe.prototype.htmlView = function htmlView() {
 
 ExternalIframe.prototype.pdfView = function pdfView() {
   var aux = ExternalIframe.super_.prototype.pdfView.call(this);
-  return aux.append("<a href='"+this.url+"'>Click view site "+this.url+"</a>");
+  var stringtopdf = CBI18n.gettext("Click view site ")+this.url ;
+  return aux.append("<a href='"+this.url+"'>"+stringtopdf+"</a>");
 }
 
 

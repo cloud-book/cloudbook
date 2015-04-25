@@ -49,9 +49,15 @@ FlashBox.prototype.pdfView = function pdfView() {
   var aux = FlashBox.super_.prototype.pdfView.call(this);
   var fsextra = require('fs-extra');
   var pathtosavefile = Project.Info.projectpath + "/pdfextrafiles/"+this.uniqueid + "/";
+  var linktopdf = "pdfextrafiles/"+this.uniqueid+"/"+this.resourcepath;
+  var stringtopdf = CBI18n.gettext("Click to view interactive Flash resource");
+  /**
+   * Create folder to resources and copy inside these
+   */
   fsextra.mkdirsSync(pathtosavefile);
   fsextra.copySync(Project.Info.projectpath + "/rsrc/"+ this.resourcepath,pathtosavefile+this.resourcepath);
-  aux.append("<a href='pdfextrafiles/"+this.uniqueid+"/"+this.resourcepath+"'>Click to view interactive Flash resource</a>");
+
+  aux.append("<a href='"+linktopdf+"'>"+stringtopdf+"</a>");
   return aux;
 }
 

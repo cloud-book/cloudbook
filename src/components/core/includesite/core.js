@@ -36,11 +36,16 @@ IncludeSite.prototype.pdfView = function pdfView() {
   var fsextra = require('fs-extra');
   var path = require('path');
   var pathtosavefile = Project.Info.projectpath + "/pdfextrafiles/"+this.uniqueid + "/";
-  fsextra.mkdirsSync(pathtosavefile);
   var copyfolder = path.dirname(this.url);
-  console.log(Project.Info.projectpath + "/rsrc/"+ copyfolder + "/.");+
+  var linktopdf = "pdfextrafiles/"+this.uniqueid+"/"+path.basename(this.url)
+  var stringtopdf = CBI18n.gettext("Click to view resource");
+  /**
+   * Create folder to resources and copy inside these
+   */
+  fsextra.mkdirsSync(pathtosavefile);
   fsextra.copySync(Project.Info.projectpath + "/rsrc/"+ copyfolder + "/.",pathtosavefile);
-  return aux.append("<a href='pdfextrafiles/"+this.uniqueid+"/"+path.basename(this.url)+"'>Click to view resource</a>");
+  
+  return aux.append("<a href='"+linktopdf+"'>"+stringtopdf+"</a>");
 }
 
 IncludeSite.prototype.HTMLtags = function HTMLtags(node){

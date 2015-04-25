@@ -40,9 +40,15 @@ VideoBox.prototype.pdfView = function pdfView() {
   var aux = VideoBox.super_.prototype.pdfView.call(this);
   var fsextra = require('fs-extra');
   var pathtosavefile = Project.Info.projectpath + "/pdfextrafiles/"+this.uniqueid + "/";
+  var linktopdf = "pdfextrafiles/"+this.uniqueid+"/"+this.videopath;
+  var stringtopdf = CBI18n.gettext("Click to view a video");
+  /**
+   * Create folder to resources and copy inside these
+   */
   fsextra.mkdirsSync(pathtosavefile);
   fsextra.copySync(Project.Info.projectpath + "/rsrc/"+ this.videopath,pathtosavefile+this.videopath);
-  return aux.append("<a href='pdfextrafiles/"+this.uniqueid+"/"+this.videopath+"'>Click to view a video</a>");  
+  
+  return aux.append("<a href='"+linktopdf+"'>"+stringtopdf+"</a>");  
 }
 
 VideoBox.prototype.editButton = function editButton(e) {

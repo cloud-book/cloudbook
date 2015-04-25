@@ -59,7 +59,8 @@ YoutubeBox.prototype.htmlView = function htmlView() {
 
 YoutubeBox.prototype.pdfView = function pdfView() {
   var aux = YoutubeBox.super_.prototype.pdfView.call(this);
-  return aux.append("<a href='"+this.url+"&autoplay=1'>Click view youtube video</a>");
+  var stringtopdf = CBI18n.gettext("Click view youtube video");
+  return aux.append("<a href='"+this.url+"&autoplay=1'>"+stringtopdf+"</a>");
 }
 
 YoutubeBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
