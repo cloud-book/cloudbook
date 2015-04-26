@@ -1,0 +1,9 @@
+{
+	"idtype" : "9e8a1c12-56a5-4799-80d3-4eb2c8e21feb",
+	"description":"Append audio to content",
+	"label": "Whiteboard",
+	"icon" : "icon.png",
+	"category": "multimedia",
+	"external_scripts" : ["lib_external/fabric.js","lib_external/whiteboard.js"],
+	"version" : "0.2.0"
+}
