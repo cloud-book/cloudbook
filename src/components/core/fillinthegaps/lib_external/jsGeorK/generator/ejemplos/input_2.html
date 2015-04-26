@@ -1,0 +1,374 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos PIB</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+
+    <!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_ej2">
+    <p>El resultado introducido debe ser exacto.</p>
+<span data-makeqs="input_ej2">
+   12 + 11.5 = <span data-input-make="box1">23.5</span>
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_ej2"></span><span data-input-btnhint="input_ej2"></span>
+<div data-info-hint="input_ej2" style="display: none;" aria-hidden="true">
+   23 y medio
+</div>
+<div data-input-showinfo="input_ej2">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_ej2" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_ej2" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<div data-stored-results="input_ej2">
+   <!-- mostrará los resultados previos -->
+</div>
+</div> <!-- end div id=input_ej2 -->
+
+
+<script>
+    var obj_input_ej2 = {
+        "id": "input_ej2",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "number",
+                "values": [],
+                "weight": 100,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "size"
+            }
+        },
+        "fieldset": true,
+        "legend": "Pregunta con respuestas en cuadros numéricos - Ejemplo 2",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true
+    };
+    jsGeork.Questions.Question(obj_input_ej2);
+</script>
+
+
+    <!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_ej3">
+    <p>Propiedad <code>"min": 23,</code><br />
+       Propiedad <code>"max": 24,</code></p>
+    <p>Admite valores entre 23 y 24 ya que así se especifica con las propiedades <code>"min": 23, "max": 24,</code>.</p>
+<span data-makeqs="input_ej3">
+   12 + 11.5 = <span data-input-make="box1"></span>
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_ej3"></span><span data-input-btnhint="input_ej3"></span>
+<div data-info-hint="input_ej3" style="display: none;" aria-hidden="true">
+   23 y medio
+</div>
+<div data-input-showinfo="input_ej3">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_ej3" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_ej3" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<div data-stored-results="input_ej3">
+   <!-- mostrará los resultados previos -->
+</div>
+</div> <!-- end div id=input_ej3 -->
+
+
+<script>
+    var obj_input_ej3 = {
+        "id": "input_ej3",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "number",
+                "values": [23.5],
+                "min": 23,
+                "max": 24,
+                "weight": 100,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "size",
+                "aria-label": "once más doce y medio"
+            }
+        },
+        "fieldset": true,
+        "button": "Chequea",
+        "legend": "Pregunta con respuestas en cuadros numéricos - Ejemplo 3",
+        "hint": true,
+        "btnhint": "Ayuda",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true
+    };
+    jsGeork.Questions.Question(obj_input_ej3);
+</script>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_ej4">
+    <p>Propiedad <code>"values": [11, 13, 17, 19],</code></p>
+    <p>Ejemplo de cuadro numérico con varios valores correctos. Los valores aceptados se introducen en la matriz de la propiedad <code>values</code>. 
+        Si incluimos las propiedades min y max su rango también se considerará válido. En este ejemplo se han utilzado para admitir el valor 23.</p>
+    <p>En este ejemplo se utiliza el evento <em>oncheck</em> para mostrar la puntuación de la actividad (El código empleado es <code>"oncheck": function () { $('[data-input-showinfo="input_ej4"]').append('Puntuación: '+ this.score); }</code>).</p>
+<span data-makeqs="input_ej4">
+   Introduzca un número primo entre 10 y 25: <span data-input-make="box1"></span>
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_ej4"></span><span data-input-btnhint="input_ej4"></span>
+<div data-info-hint="input_ej4" style="display: none;" aria-hidden="true">
+   Numeros solamente divisibles entre 1 y si mismos. Serán siempre números impares.
+</div>
+<div data-input-showinfo="input_ej4">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_ej4" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡BIEN!</span>
+</div>
+<div data-info-ko="input_ej4" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡Mal!</span>
+</div>
+<div data-stored-results="input_ej4">
+   <!-- mostrará los resultados previos -->
+</div>
+</div> <!-- end div id=input_ej4 -->
+
+
+<script>
+    var obj_input_ej4 = {
+        "id": "input_ej4",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "number",
+                "values": [11, 13, 17, 19],
+                "min": 23,
+                "max": 23,
+                "weight": 100,
+                "placeholder": "#",
+                "autocomplete": "on",
+                "adjustgaps": "size",
+                "aria-label": "primos entre 10 y 25"
+            }
+        },
+        "fieldset": true,
+        "legend": "Pregunta con respuestas en cuadros numéricos - Ejemplo 4",
+        "button": "Ok",
+        "hint": true,
+        "btnhint": "?",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true,
+        "oncheck": function () { $('[data-input-showinfo="input_ej4"]').append('Puntuación: '+ this.score); }
+    };
+    jsGeork.Questions.Question(obj_input_ej4);
+</script>
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_ej5">
+    <p>Propiedad <code>"accuracy": 90,</code></p>
+    <p>Se admite la respuesta con una precisión del 90%, es decir, la solución debe introducirse con un margen de error del 10%. . Si la respuesta es 500 será válida
+        una respuesta de 500&plusmn;50.
+    </p>
+<span data-makeqs="input_ej5">
+   L * X en romanos equivale a: <span data-input-make="box1">500</span>
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_ej5"></span><span data-input-btnhint="input_ej5"></span>
+<div data-info-hint="input_ej5" style="display: none;" aria-hidden="true">
+   Contenido a mostrar cuando se pulsa en el botón de ayuda
+</div>
+<div data-input-showinfo="input_ej5">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_ej5" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_ej5" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<div data-stored-results="input_ej5">
+   <!-- mostrará los resultados previos -->
+</div>
+</div> <!-- end div id=input_ej5 -->
+
+
+<script>
+    var obj_input_ej5 = {
+        "id": "input_ej5",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "number",
+                "values": [],
+                "accuracy": 90,
+                "weight": 100,
+                "placeholder": "#",
+                "autocomplete": "on",
+                "adjustgaps": "size",
+                "aria-label": "500 con un margen de error del 10%"
+            }
+        },
+        "fieldset": true,
+        "legend": "Pregunta con respuestas en cuadros numéricos - Ejemplo 5",
+        "button": "Ok",
+        "hint": false,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        //"storage": "local",
+        //"storagekey": "georkgenej",
+        //"showstorage": true,
+        //"fillfromstorage": true,
+        //"delstorage": true,
+    };
+    jsGeork.Questions.Question(obj_input_ej5);
+</script>
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="input_ej6">
+    <p><strong>Operaciones con decimales</strong></p>
+    <p>Propiedad <code>"decimals": 2,</code><br />
+       Propiedad <code>"tofixed": 1,</code></p>
+    <p>Cuando pedimos una respuesta con decimales, en general, no deberemos contentarnos con introducir el valor pedido. Primero podemos colocar en la propiedad <em>placeholder</em> 
+        almohadillas para indicar al usuario los decimales pedidos (p .ej. #.## para dos decimales), pero como en los antiguos navegadores no funciona este atributo también podemos indicar
+        el número de decimales que se requieren en la respuesta utilizando la propiedad <em>decimals</em>. El programa se encargará se introducir en el cuadro de 
+        texto una almohadilla por cada decimal que se pida (p .ej. con <code>decimals: 2,</code> se colocará #.##).
+    </p>
+    <p>Aunque indiquemos el nº de decimales la respuesta puede ser demasiado estricta o el usuario introducir más decimales de los pedidos de forma que, por ejemplo, la respuesta correcta 15.12 
+        y el valor introducido 15.123 después de compararse serán considerados como distintos. Existen varias soluciones a este problema: introducir un intervalo válido para la respuesta con las
+        propiedades <em>min</em> y <em>max</em>, o introducir un margen de erro admitido con la propiedad <em>accuracy</em>.
+    </p>
+    <p>Una de las mejores opciones es utilizar la propiedad <em>tofixed</em> para indicar a la biblioteca que antes de comparar la respuesta correcta con el valor introducido
+        los convierta a un número concreto de decimales. Por ejemplo, con la propiedad <code>tofixed: 2,</code> el valor 15.123 será convertido a 15.12 antes de compararlo con 15.12 y dará la respuesta
+        como correcta. Sin embargo todavía existe el problema de que el código convierte el valor &plusmn;15.125 a &plusmn;15.13 al redondear JavaScript los medios hacia arriba (hacia el infinito, positivo o negativo). Para evitar estos problemas de redondeo lo más recomendable
+        es pedir al usuario x números de decimales y redondear las respuestas a x-1 decimales. Por ejemplo, pondríamos las propiedades <code>"decimals": 2, "tofixed": 1,</code>.
+    </p>
+    <p>En el siguiente ejemplo el primer cuadro tiene la propiedad <em>"tofixed"</em> puesta a 2 y el segundo a 1. El primero da como errónea la respuesta de 15.125 y el segundo como correcta.</p>
+<span data-makeqs="input_ej6">
+ 1)  4.2 x 3.6 = <span data-input-make="box1">15.12</span> (tofixed: 2)<br />
+ 2)  4.2 x 3.6 = <span data-input-make="box2">15.12</span> (tofixed: 1)<br />
+</span>
+<!-- botones -->
+<span data-input-btnchek="input_ej6"></span><span data-input-btnhint="input_ej6"></span>
+<div data-info-hint="input_ej6" style="display: none;" aria-hidden="true">
+   Contenido a mostrar cuando se pulsa en el botón de ayuda
+</div>
+<div data-input-showinfo="input_ej6">
+   <!-- muestra información sobre los intentos y aciertos -->
+</div>
+<div data-info-ok="input_ej6" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+</div>
+<div data-info-ko="input_ej6" style="display: none;" aria-hidden="true">
+   <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+   <span class="CSSMsgFail">¡ERROR!</span>
+</div>
+<div data-stored-results="input_ej6">
+   <!-- mostrará los resultados previos -->
+</div>
+</div> <!-- end div id=input_ej6 -->
+
+
+<script>
+    var obj_input_ej6 = {
+        "id": "input_ej6",
+        "type": "input",
+        "boxs": {
+            "box1": {
+                "type": "number",
+                "values": [],
+                "decimals": 2,
+                "tofixed": 2,
+                "weight": 100,
+                "placeholder": "#.##",
+                "autocomplete": "on",
+                "adjustgaps": ""
+            },
+            "box2": {
+                "type": "number",
+                "values": [],
+                "decimals": 2,
+                "tofixed": 1,
+                "weight": 100,
+                "placeholder": "#.##",
+                "autocomplete": "on",
+                "adjustgaps": ""
+            }
+        },
+        "fieldset": true,
+        "legend": "Pregunta con respuestas en cuadros numéricos - Ejemplo 6",
+        "button": "Ok",
+        "hint": false,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        //"storage": "local",
+        //"storagekey": "georkgenej",
+        //"showstorage": true,
+        //"fillfromstorage": true,
+        //"delstorage": true,
+        "oncheck": function () { alert("oncheck\n\nscore: " + this.score); }
+    };
+    jsGeork.Questions.Question(obj_input_ej6);
+</script>
+
+
+
+</body>
+</html>

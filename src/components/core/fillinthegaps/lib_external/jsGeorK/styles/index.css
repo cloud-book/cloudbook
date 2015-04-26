@@ -1,0 +1,159 @@
+﻿body {
+    background-color: #FFFF99;
+    margin-top: 40px;
+    margin-bottom: 150px;
+}
+a {
+    color: #0000FF;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+    color: #FF0000;
+}
+img {
+	max-width: 100%;
+}
+.logo {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold' , sans-serif;
+    font-size: 50px;
+    padding: 4px;
+    margin-left: 30px;
+    text-shadow: 4px 4px 2px rgba(150, 150, 150, 1);
+}
+#cuerpo {
+    border: thin solid #666666;
+    padding: 0;
+    padding-bottom: 20px;
+    margin: 0 auto;
+    width: 780px;
+    background-color: white;
+    min-height: 100%;
+    top: 0px;
+    border-radius: 10px;
+}
+.title {
+    position: relative;
+    width: 780px;
+    height: 80px;
+    margin: 0px auto;
+    padding: 0px;
+    top: 0px;
+    background-color: #CCCCCC;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.title nav {
+    bottom: 0px;
+    right: 0px;
+    position: absolute;
+}
+.title nav a {
+    font-family: "Lucida Sans" , "Lucida Sans Regular" , "Lucida Grande" , "Lucida Sans Unicode" , Geneva, Verdana, sans-serif;
+    font-size: large;
+    color: #0000FF;
+    text-decoration: none;
+    padding: 0.2em;
+}
+.title nav a:hover {
+    border: 1px solid #FF0000;
+    color: #FF0000;
+    /*text-decoration: underline;*/
+    background-color: #FFFFFF;
+}
+#inicio h1 {
+    padding: 1em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #0066FF;
+    font-size: 22px;
+}
+#inicio p {
+    padding-left: 2em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+.bloque h1 {
+    padding: 1em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 22px;
+}
+.bloque p {
+    padding-left: 2em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+.imgej {
+    /*border: thin solid #000000;*/
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: table;
+    margin-top: 2em;
+}
+.imgej img {
+    border: medium solid #FF0000;  
+    box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.5); 
+}
+.imgej p {
+    font-family: Georgia, 'Times New Roman' , Times, serif;
+    padding-top: 1em;
+    max-width: 480px;
+}
+.codigo {
+    position: relative;
+    margin-bottom: .5em;
+    padding: 0 1.5em;
+    background-color: #CCCCFF;
+}
+.coment {
+    color: #999999;
+    font-style: italic;
+}
+.htag {
+    color: navy;
+}
+.hattr {
+    color: teal;
+}
+.vattr {
+    color: #CC0066;
+}
+#jsgeorkdown {
+    padding-left: 4em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    color: #0066FF;
+    text-decoration: none;
+}
+#jsgeorkdown:hover {
+    text-decoration: underline;
+    color: #FF0000;
+}
+.linkg {
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+#cuerpo {
+    width: 90%;
+}
+.title {
+    width: 100%;
+	height: 100%;
+}
+.logo {
+   margin-bottom: 30px;
+}
+}
+@media screen and (max-width: 500px) {
+.logo {
+   margin-bottom: 50px;
+}
+}
