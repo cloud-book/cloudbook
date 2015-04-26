@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos TEA 6</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+    <p>Ejemplo tomando los datos del web storage. Una actividad está incluida en la misma página y la otra no. Como parámetros a la
+        función Eval(), además del objeto de configuración, se introducen los objetos de las actividades <code>jsGeork.Questions.Eval(obj_test_ej_1, obj_single_ej_1, obj_multi_ej_1);</code> pero definidos de forma reducida
+        con solamente las propiedades  id, storagekey, url, name y legend.
+    </p>
+
+    <p>
+        La primera actividad enlaza con la página <code>single_1.html</code> y la segunda actividad con la página <code>multi_1.html</code>.
+        Podemos observar que las tablas con los resultados del storage en las actividades muestran la primera y última vez que se resolvió la
+        actividad y las tablas de evaluación muestran el último resultado.
+    </p>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="test_ej_1">
+</div>
+
+
+<script>
+    var obj_single_ej_1 = {
+        "id": "single_ej_1",
+        "legend": "Pregunta 1",
+        "name": "Ejemplo 1",
+        "url": "single_1.html",
+        "storagekey": "georkgenej"
+    };
+    var obj_multi_ej_1 = {
+        "id": "multi_ej_1",
+        //"legend": "Pregunta 2",
+        "url": "multi_1.html",
+        "storagekey": "georkgenej"
+    };
+    var obj_test_ej_1 = {
+        "id": "test_ej_1",
+        //"refresh": false,
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "qbase": 20,
+        //"refresh": false,
+        "timer": ""
+    };
+    jQuery(function ($) {
+        //console.log(jsGeork);
+        jsGeork.Questions.Eval(obj_test_ej_1, obj_single_ej_1, obj_multi_ej_1);
+
+    });
+</script>
+
+    <div style="height: 100px;"></div>
+    <p>Ejemplo de obtener los resultados de las actividades guardados en el web storage con <code>jsGeork.Questions.getStorage()</code>.</p>
+    <p>Como parámetros de la función, en lugar de los ids de las actividades se pasan sus objetos para poder incluir el enlace a la página en la que está
+        ubicada la actividad. En el objeto de la actividad solamente son necesarias las propiedades id y url.</p>
+
+    <div id="resprevej1" style="border: 4px dashed red; width: 400px; margin: 1em; float: left;"></div>
+    <div id="resprevej2" style="border: 4px dashed red; width: 400px; margin: 1em; float: right;"></div>
+
+
+    <script>
+        jQuery(function ($) {
+            jsGeork.Questions.getStorage("resprevej1", "local", "georkgenej", obj_single_ej_1);
+            jsGeork.Questions.getStorage("resprevej2", "local", "georkgenej", obj_multi_ej_1);
+        });
+    </script>
+
+
+</body>
+</html>
+
+
+

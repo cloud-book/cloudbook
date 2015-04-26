@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos PIB</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+        <style scoped="scoped">
+        #input_ej1 {
+            width: 70%; margin: auto;
+            margin-top: 4em; margin-bottom: 4em;
+        }
+        .expej {
+        width: 70%; margin: auto;
+        font-family: serif;
+        color: darkgray;
+        }
+        </style>
+
+        <!-- Ejemplo 1 -->
+        <div class="expej">
+
+        <h3>Ejemplo 1</h3>
+        <p>Ejemplo de una actividad con varios cuadros de entrada, cuatro cuadros de entrada de texto y uno de numérico. Los tres primeros
+            cuadros admiten varias entradas ("Mancha", "estepa", "pradera", "tundra", "Tierra")("hidalgo", "señor", "caballero", "paladín")("galgo", "perro", "can", "conejo"). 
+            También el cuadro numérico admite dos valores, 1605 y 1615. Todos los cuadros tienen un peso de 100 excepto el tercero que tiene un peso de 50. Si todos tuvieran el
+            peso de 100 acertar uno tendría un valor de 20. Los textos que salen al entregar se muestran utilizando los eventos onok y onko en lugar de colocarlos en bloques con 
+            atributos <code>data-info-ok=""</code> y <code>data-info-ko=""</code>.
+        </p>
+        </div>
+        <div id="input_ej1">
+            
+        
+    
+            <p data-makeqs="input_ej1">En un lugar de la <span data-input-make="box1">Mancha</span>, de cuyo nombre no quiero acordarme, no ha mucho tiempo 
+            que vivía un <span data-input-make="box2">hidalgo</span> de los de lanza en astillero, adarga antigua, rocín flaco y <span data-input-make="box3"></span> corredor. Una olla de 
+            algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lentejas los viernes, 
+            algún palomino de añadidura los <span data-input-make="box4">domingos</span>, consumían las tres partes de su hacienda.</p>
+        
+            <p data-makeqs="input_ej1">Año de publicación: <span data-input-make="box5">1605</span> <span data-input-btnchek="input_ej1"></span></p>
+            
+            <div style="margin-top: 1em;">
+                <div id="input_ej1_onok" style="display: none;"><span style="color: blue; font-size: xx-large;">¡Ejercicio CORRECTO!</span></div>
+                <div id="input_ej1_onko" style="display: none;"><span style="color: red;">¡Ejercicio con errores!</span></div>
+            </div>
+            <div style="display: none;">
+            <div data-info-bottom="input_ej1">Complete los cuadros del texto siguiente.
+            </div>
+        </div>
+
+        
+    </div>
+
+        
+
+
+    <script>
+        var objInput3 = {
+            id: "input_ej1",
+            "type": "input",
+            "makeqs": "input_ej1", //elemento en el que se buscaran y generarán los huecos
+            "boxs": {
+                "box1": {
+                    "type": "text",
+                    "values": ["estepa", "pradera", "tundra", "Tierra"],
+                    "weight": 100,
+                    "placeholder": "",              //(string) atributo placeholder del input
+                    "casesensitive": false,         //(boolean) si el hueco es sensible a mayúsculas
+                    "autocomplete": "",             //(string)(on,off) Si hay que poner el atributo autocomplete en el input
+                    "adjustgaps": "all"               //(string)("" o none,all,size,width) 
+                },
+                "box2": {
+                    "type": "text",
+                    "values": ["señor", "caballero", "paladín"],
+                    "weight": 100,
+                    "placeholder": "lléname",              //(string) atributo placeholder del input
+                    "casesensitive": false,         //(boolean) si el hueco es sensible a mayúsculas
+                    "autocomplete": "",             //(string)(on,off) Si hay que poner el atributo autocomplete en el input
+                    "adjustgaps": "all"               //(string)("" o none,all,size,width) 
+                },
+                "box3": {
+                    "type": "text",
+                    "values": ["galgo", "perro", "can", "conejo"],
+                    "weight": 50,
+                    "placeholder": "?",              //(string) atributo placeholder del input
+                    "casesensitive": false,         //(boolean) si el hueco es sensible a mayúsculas
+                    "autocomplete": "",             //(string)(on,off) Si hay que poner el atributo autocomplete en el input
+                    "adjustgaps": "size"            //(string)("" o none,all,size,maxlength) 
+                },
+                "box4": {
+                    "type": "text",
+                    "values": [],
+                    "weight": 100,
+                    "placeholder": "?",              //(string) atributo placeholder del input
+                    "casesensitive": false,         //(boolean) si el hueco es sensible a mayúsculas
+                    "autocomplete": "",             //(string)(on,off) Si hay que poner el atributo autocomplete en el input
+                    "adjustgaps": "all"               //(string)("" o none,all,size,width) 
+                },
+                "box5": {
+                    "type": "number",
+                    "values": [1615],
+                    "weight": 100,
+                    "placeholder": "####",       //(string) atributo placeholder del input
+                    "casesensitive": false,         //(boolean) si el hueco es sensible a mayúsculas
+                    "autocomplete": "",             //(string)(on,off) Si hay que poner el atributo autocomplete en el input
+                    "adjustgaps": "all"               //(string)("" o none,all,size,width) 
+                }
+            },
+            "fieldset": true,
+            "legend": "Completar cuadros",
+            "button": "Chequea",
+            "clase": "",
+            "weighting": 100,
+            "attempts": 5,
+            "hint": true,
+            "storage": "local",
+            "storagekey": "georkgenej",
+            "fillfromstorage": true,
+            "oncheck": function () { alert("score: " + this.score); },
+            "onok": function () {
+                document.getElementById("input_ej1_onok").style.display = "block";
+                document.getElementById("input_ej1_onko").style.display = "none";
+            },
+            "onko": function () {
+                document.getElementById("input_ej1_onok").style.display = "none";
+                document.getElementById("input_ej1_onko").style.display = "block";
+            }
+        };
+        jsGeork.Questions.Question(objInput3);
+
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos PGF</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="gapfill_ej_2">
+   <p>Actividad sin límite de intentos para resolver (<code>"attempts": 0,</code>). Pese al límte de intentos se utiliza el evento <code>oncheck</code> para
+       mostrar un mensaje cuando se llega a los tres intentos.
+   </p>
+   <p data-makeqs="gapfill_ej_2">El científico considerado como el más importante del siglo XX es Albert <span data-gap-fill="gap1">Einstein</span>.</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="gapfill_ej_2">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="gapfill_ej_2">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+   </div>
+</div>
+
+
+<script>
+    var obj_gapfill_ej_2 = {
+        "id": "gapfill_ej_2",
+        "type": "gapfill",
+        "gaps": {
+            "gap1": {
+                "words": [],
+                "showwords": false,
+                "casesensitive": false,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "all",
+                "weight": 100
+            }
+        },
+        "attempts": 0,
+        "fieldset": true,
+        "legend": "Actividad de rellenar huecos - Ejemplo2",
+        "name": "Ejemplo 2",
+        "button": "",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storagekey": "georkgenej",
+        "storage": "local",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true,
+        "oncheck": function () { if (this.attempts == 3) { alert("oncheck\n\nAlcanzados los " + this.attempts + " intentos."); } }
+    };
+    jsGeork.Questions.Question(obj_gapfill_ej_2);
+</script>
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="gapfill_ej_3">
+   <p>Actividad con dos intentos permitidos para resolver. Se admiten varias respuestas como válidas.</p>
+   <p data-makeqs="gapfill_ej_3">El científico considerado como el más importante de la historia es <span data-gap-fill="gap1"></span>.</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="gapfill_ej_3">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="gapfill_ej_3">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+   </div>
+</div>
+
+
+<script>
+    var obj_gapfill_ej_3 = {
+        "id": "gapfill_ej_3",
+        "type": "gapfill",
+        "gaps": {
+            "gap1": {
+                "words": ['Arquímedes', 'Da Vinci', 'Copernico', 'Galileo', 'Newton', 'Darwin', 'Curie', 'Edison', 'Einstein', 'Pasteur', 'Fleming'],
+                "showwords": true,
+                "casesensitive": false,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "all",
+                "weight": 100
+            }
+        },
+        "attempts": 2,
+        "fieldset": true,
+        "legend": "Actividad de rellenar huecos - Ejemplo 3",
+        "name": "Ejemplo 3",
+        "button": "",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true
+    };
+    jsGeork.Questions.Question(obj_gapfill_ej_3);
+</script>
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="gapfill_ej_4">
+   <p>Actividad con 5 intentos permitidos para resolver. El hueco se rellena con una lista desplegable de la que hay que seleccionar la respuesta correcta. 
+       Una vez gastados los intentos se lanza el evento <code>oncomplete</code> y para volver a resolver debe recargarse la página.
+   </p>
+   <p data-makeqs="gapfill_ej_4">El científico considerado como el más importante de la historia es <span data-gap-select="gap1">Newton</span>.</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="gapfill_ej_4">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="gapfill_ej_4">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+   </div>
+</div>
+
+
+<script>
+    var obj_gapfill_ej_4 = {
+        "id": "gapfill_ej_4",
+        "type": "gapfill",
+        "gaps": {
+            "gap1": {
+                "words": ['Arquímedes', 'Da Vinci', 'Copernico', 'Galileo', 'Darwin', 'Curie', 'Edison', 'Einstein', 'Pasteur', 'Fleming'],
+                "showwords": true,
+                "casesensitive": false,
+                "placeholder": "?",
+                "autocomplete": "",
+                "adjustgaps": "all",
+                "weight": 100
+            }
+        },
+        "attempts": 5,
+        "fieldset": true,
+        "legend": "Actividad de rellenar huecos - Ejemplo 4",
+        "name": "Ejemplo 4",
+        "button": "",
+        "hint": true,
+        "btnhint": "",
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true,
+        "oncomplete": function () { alert("oncomplete\n\nattempts: " + this.attempts + "\nscore: " + this.score); }
+    };
+    jsGeork.Questions.Question(obj_gapfill_ej_4);
+</script>
+
+</body>
+</html>

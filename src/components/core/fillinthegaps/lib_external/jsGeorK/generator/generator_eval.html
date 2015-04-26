@@ -1,0 +1,502 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="author" content="Jordi cavallé" />
+	<meta name="abstract" content="Generador de ejercicios, actividades y test para la educación" />
+	<meta name="copyright" content="© 2014 Jordi Cavallé" />
+	<link rel="canonical" href="http://jsgeork.geork.com/" />
+    <title>TEA. Generador de tablas evaluadoras de actividades</title>
+    <script src="../js/jquery.js"></script>
+    <script src="../jsgeork/jquery.jsgeork.js"></script>
+    <script src="generator_eval.js"></script>
+    <link href="../styles/generator.css" rel="stylesheet" />
+    <link href="../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+</head>
+<body>
+
+
+    <div class="goindex">
+    [ <a href="index.html">Índice</a> ]
+    </div>
+
+    <div class="gentitle">
+    <h1>TEA</h1>
+    </div>
+    
+
+    <form id="frmopt">
+        <fieldset>
+            <legend>Generador de tablas de evaluación</legend>
+            <div id="infoact">
+            <p>El generador de tablas evaluadoras de actividades (TEA) permite evaluar las <em><a href="generator_single.html">actividades de preguntas con respuestas de elección múltiple</a></em> (PEM), las <em><a href="generator_multi.html">actividades de preguntas con respuestas multiselección</a></em> (PMS),
+                las <em><a href="generator_input.html">actividades de preguntas con respuestas  en cuadros de entrada</a></em> (PIB) y/o las <em><a href="generator_gapfill.html">actividades de rellenar huecos</a></em> (PGF) sin necesidad de utilizar las <a href="generator_test.html">pruebas tipo test</a> (PTT).
+
+                Puede ver un ejemplo de tabla evaluadora de varias actividades en <a href="#bloqueej">esta sección de la página</a>.
+            </p>
+            <p>También puede ver ejemplos de evaluadores <a href="#iframe_ejemplos">al final de la página</a>.</p>
+            <p>En un principio, las actividades cuando actúan de forma independiente no reciben puntuación. Solo son puntuadas cuando forman parte de un <a href="generator_test.html">test</a> y este es entregado. Sin embargo,
+                cada vez que una actividad es comprobada se guardan en la memoria de la página los datos de la actividad, entre ellos el porcentaje sobre 100 recibido. Estos datos pueden ser utilizados para evaluar las actividades
+                sin necesidad de crear un test. La función <code>jsGeork.Questions.Eval()</code> se ocupa de sondear la memoria para ver qué actividades han sido realizadas, dar su puntuación individual y su puntuación conjunta. 
+                Los datos guardados en la memoria corresponden a la última vez que se ha realizado la actividad. Se pierden cada vez que se recarga la página pero pueden ser una buena manera de 
+                conseguir que el alumno realice todas las actividades y las complete correctamente. Si su navegador soporta el almacenamiento local podrá saber entre distintas sesiones si ha completado las actividades con los resultados previos
+                ya que estos guardan la primera y última vez que una actividad ha sido chequeada.
+            </p>
+            <p>Este formulario ayuda a generar el código para crear este tipo de tablas utilizando la biblioteca jsGeork. Después pulsar en el botón '<strong>Genera</strong>' 
+                se creará el código html+javascript que deberá copiar y pegar en su página.
+            </p>
+            </div>
+        <div class="campoconfig">
+            <label for="idact">identificador: <input type="text" name="idact" id="idact" value="ptt_identifier" /></label>
+            <label for="idprefix">prefijo: <input type="text" name="idprefix" id="idprefix" value="myprefix_" /></label><br />
+            <span id="finalid"></span>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Llenar campo <strong>id</strong> es obligatorio e indispensable para que el evaluador funcione. Se utiliza como atributo <em>id</em> del bloque
+                HTML que contendrá la tabla evaluadora, así como para generar otros identificadores y nombres de objetos para los scripts. Dado que los atributos <em>id</em>
+                dentro de los documentos HTML deben ser únicos, debe introducir una cadena que no se repita dentro del mismo documento o página web. Para facilitar que
+                terceras personas puedan reutilizar el código, conviene que añadamos al principio del identificador un prefijo que nos identifique como autores. De esta
+                forma minimizamos la probabilidad de que coincidan dos identificadores iguales en el mismo documento. El identificador debe tener como mínimo un carácter,
+                no puede contener espacios y es sensible a las mayúsculas.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="timer">timer:</label>
+        <select name="timer" id="timer">
+            <option value="" selected="selected">&nbsp;</option>
+            <option value="1s">1s</option>
+            <option value="5s">5s</option>
+            <option value="10s">10s</option>
+            <option value="30s">30s</option>
+            <option value="1m">1m</option>
+            <option value="5m">5m</option>
+            <option value="10m">10m</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <em>timer</em> permite definir un intervalo de tiempo para que la tabla se actualice automáticamente, sin necesidad de
+                    pulsar en el botón de refresco. Un evaluador con <em>timer</em> mostrará un reloj en la tabla con la hora de la última actualización de la tabla. 
+                    Pulsando sobre la puntuación final podemos parar y volver a reiniciar el refresco automático de la tabla, situando el cursor encima podemos ver la 
+                    hora de la última actualización y entre paréntesis el intervalo de refresco.
+                </span>
+            </div> 
+        </div>
+        <div class="campoconfig">
+        <label for="refresh">refresh: <input type="checkbox" name="refresh" id="refresh" checked="checked" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Si no marcamos la opción <em>refresh</em> no se incluirá en la tabla el botón para actualizar. Es la opción recomendada si las actividades no están
+                    en la misma página que la tabla. Pero si sí lo están y queremos que la tabla se actualice deberemos dar un valor a la propiedad <em>timer</em> 
+                    si ocultamos el botón de refresco, y conviene que el intervalo de refresco no sea muy grande o el usuario podría cansarse de esperar.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="storage">storage:</label>
+        <select name="storage" id="storage">
+            <option value="" selected="selected">&nbsp;</option>
+            <option value="local">local</option>
+            <option value="session">session</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    Indica si deben tomarse los valores de la memoria de la página (no dando valor a la propiedad) o deben utilizarse los valores guardados en el HTML5 Web Storage. Si se selecciona
+                    un almacenamiento, el navegador soporta el Web Storage y hay datos guardados, se cogerán los valores de la última ocasión en que se realizó la actividad. 
+                    Estos valores son más persistentes ya que no se pierden cada vez que se recarga la página pero están asociados al navegador y dominio de la página. Algunos 
+                    navegadores soportan el web storage en modo local (dominio file://) y otros no. Con el storage podemos evaluar actividades que se han realizado desde otras páginas web 
+                    del mismo dominio.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                    Para tener en cuenta los casos en los que no se soporta el web storage podríamos inicialmente no añadir la propiedad en el objeto javascript y después añadir 
+                    unas líneas que detecten si el navegador soporta la característica. Si fuera así modificaríamos/añadiríamos la propiedad al objeto. Por ejemplo, si el objeto evaluador 
+                    es <code>obj_tea</code> podríamos escribir <code>if(localStorage){ obj_tea.storage="local"; }</code>. Sin embargo no es necesario hacerlo ya que la propia biblioteca 
+                    se encarga de ello, tomando los valores de la página en lugar de del storage, pero debe comprender que si las actividades que evalúa la tabla no están en la misma
+                    página estos datos nunca existirán. 
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="storagekey">storagekey: <input type="text" name="storagekey" id="storagekey" value="jsgeork" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    Permite introducir una clave en la que almacenar los datos en el storage. Si introducimos siempre la misma clave
+                    en todas nuestras actividades conseguiremos que se agrupen todos los datos en el storage en un mismo objeto. Si dejamos el campo vacío
+                    se utilizará el id de la actividad como clave para almacenar los datos. Es recomendable utilizar una clave para mantener ordenados los
+                    datos y saber que pertenecen a la biblioteca.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                    <button id="delstokey">delete storagekey</button>
+                    Para evitar acumular datos en el Web Storage, el botón anterior permite borrar la entrada <em>storagekey</em> del Web Storage en la que se habrán guardado los datos de las
+                    actividades. Se borrarán los datos de todas las actividades; para borrar los datos de una sola actividad utilice los botones que hay en las tablas con los resultados
+                    previos. La página del generador utiliza su propia entrada de nombre '<span id="stokeyname"></span>' para guardar la configuración.
+                </span>
+            </div>
+        </div>
+            <div class="campoconfig">
+        <label for="url">url: <input type="text" name="url" id="url" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    Permite introducir la página en la que se encuentran las actividades. Sólo se utiliza si en lugar de entrar como parámetro en la función Eval() el objeto de una actividad 
+                    introducimos su id. Si introducimos el objeto de la actividad se utilizará la propiedad url del objeto.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="names">names:</label>
+        <select name="names" id="names">
+            <option value="">&nbsp;</option>
+            <option value="name">name</option>
+            <option value="legend">legend</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <em>names</em> permite configurar si los nombres de las actividades se tomarán de su propiedad <code>name</code> o de su propiedad <code>legend</code>.
+                    Si una propiedad no existe se tomará el valor de la otra o, en último caso, el id de la actividad.
+                </span>
+            </div> 
+        </div>
+        
+
+
+        <div class="campoconfig clshtml">
+        <label for="txtareahtml">código html (solo lectura): 
+<textarea id="txtareahtml" readonly="readonly">
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+&lt;div id="myprefix_identifier"&gt;
+    &lt;div data-info-bottom="myprefix_identifier" style="display: none;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</textarea>
+
+        </label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    El código para que un evaluador funcione estará compuesto por una combinación de código HTML, CSS y JAVASCRIPT. El 
+                    campo anterior muestra el código HTML necesario. En este caso se limita al bloque en el que se colocará la tabla. Su id debe
+                    coincidir con la propiedad id del objeto javascript. También es posible añadir un bloque con el atributo <code>data-activities-eval=""</code> 
+                    de valor igual al id del objeto.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                 Se incluyen las instrucciones (en forma de comentarios html) para que se añadan las bibliotecas jQuery y jsGeork, necesarias
+                    para que funcione la actividad.
+                </span>
+            </div>
+        </div>
+
+            <p><span id="opcadv">Opciones avanzadas</span> <span id="advopt_toggle" style="cursor: pointer;">[ mostrar/ocultar ]</span></p>
+            <div id="advopt" style="display: none;">
+                <p>Además de los campos que incluye el formulario anterior existen otras opciones que puede utilizar. Naturalmente puede modificar las opciones 
+                editando directamente el código con las propiedades del objeto, pero entonces deberá tener cuidado de que el código javascript no contenga errores.
+            </p>
+
+        <div class="campoconfig">
+        <label for="caption">caption: <input type="text" name="caption" id="caption" placeholder="" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Define el título de la tabla con los resultados de la evaluación.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="details">details: <input type="text" name="details" id="details" placeholder="" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Permite introducir el valor de la etiqueta <em>details</em> de la tabla con los resultados de la evaluación. Es una etiqueta nueva en html5 
+                    y, de momento, no la soportan todos los navegadores.
+                    Requiere introducir los valores para el título de la tabla.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="summary">summary: <input type="text" name="summary" id="summary" placeholder="" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Permite introducir el valor de la etiqueta <em>summary</em> para los detalles de la tabla con los resultados de la evaluación, etiqueta que define un encabezado visible para el elemento <em>details</em>. Al pulsar sobre el texto se muestran/ocultan los detalles. 
+                   Requiere introducir los valores para el título de la tabla y los detalles.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="icons">icons:</label>
+        <select name="icons" id="icons">
+            <option value="">&nbsp;</option>
+            <option value="csshexent" selected="selected">csshexent</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Seleccionando 'csshexent' se utilizarán entidades css hexadecimales para añadir iconos.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="qbase">qbase:</label>
+        <select name="qbase" id="qbase">
+            <option value="">&nbsp;</option>
+            <option value="100">100</option>
+            <option value="20">20</option>
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                 Permite especificar la base sobre la que se puntuará la tabla. Si no se especifica se puntúa sobre 10.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="threshold">threshold:</label>
+        <select name="threshold" id="threshold">
+            <option value="">(100%)</option>
+            <option value="100">100</option>
+            <option value="90">90</option>
+            <option value="80">80</option>
+            <option value="70">70</option>
+            <option value="60">60</option>
+            <option value="50">50</option>
+            <option value="40">40</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                 Umbral, en forma de porcentaje (entero de 0-100) sobre la base, a partir del cual se considera la evaluación como superada. Se utiliza para lanzar los eventos onok y onko. 
+                    Por ejemplo, si la nota en porcentaje sobre 100 es mayor que el umbral se lanza onok, en caso contrario se lanza onko. Si no se especifica el valor es 100.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="wai-aria">wai-aria: <input type="checkbox" name="wai-aria" id="wai-aria" checked="checked" disabled="disabled" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Marcando esta opción se generará internamente código html conforme a la especificación sobre accesibilidad <strong>WAI-ARIA</strong> (Web Accessibility Initiative - Accessible Rich Internet Applications)
+                    del <em>World Wide Web Consortium</em>. Si lo necesita puede deshabilitar la opción poniendo el valor de la propiedad a falso en el código del objeto (<code>"wai-aria": false,</code>), pero no se recomienda.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+            <label for="onok">onok:  <input type="checkbox" name="onok" id="onok" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <code>onok</code> permite introducir una función que se llamará cuando se actualice la tabla, se hayan realizado todas
+                    las actividades y la puntuación supere el umbral de nota pedido (threshold).
+                </span> 
+            </div>
+        </div>
+        <div class="campoconfig">
+            <label for="onko">onko:  <input type="checkbox" name="onko" id="onko" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <code>onko</code> permite introducir una función que se llamará cuando  se actualice la tabla y no se hayan realizado
+                    todas las actividades o no se supere el umbral de nota pedido (threshold).
+                </span> 
+            </div>
+        </div>
+                
+       </div> <!--advopt-->
+
+        <button type="button" id="btngenera">Genera</button>
+
+            <span id="delsto">[ Borrar valores almacenados y reajustar ]</span>
+
+
+        </fieldset>
+    </form>
+
+    <div id="htmlorig">
+
+        <div id="ejtest_single1">
+           <div style="display: none;">
+               <div data-info-bottom="ejtest_single1">El autor de 'Don Quijote de la Mancha' es:</div>
+               <div data-opt="opta"><span style="color: blue;">Miguel de Cervantes Saavedra.</span></div>
+               <div data-opt="optb"><span style="color: red;">No es el autor.</span></div>
+               <div data-info-ok="ejtest_single1">
+                   <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+                   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+               </div>
+               <div data-info-ko="ejtest_single1">
+                   <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+                   <span class="CSSMsgFail">¡NO es correcto!</span>
+               </div>
+           </div>
+        </div>
+
+
+        <div id="ejtest_multi1">
+           <div style="display: none;">
+               <div data-info-bottom="ejtest_multi1">Seleccione las afirmaciones correctas sobre la novela 'Don Quijote de la Mancha':</div>
+               <div data-opt="opta">Cierto. La primera parte se publiuca en 1605.</div>
+               <div data-opt="optb">Falso. La segunda parte se publica en 1615.</div>
+               <div data-opt="optc">Falso. Genitor es el nombre del caballo de Julio César con el que cruzó el Rubicón. Sancho Panza solo nombra a su asno por el color de su pelo, 'el rucio'.</div>
+               <div data-opt="optd">Cierto. Don Quijote enloquece a causa de la lectura de libros de caballería, siendo Amadís de Gaula la más repesentativa de este género.</div>
+               <div data-opt="opte">Cierto. El nombre verdadero de Don Quijote es Alonso Quijano.</div>
+               <div data-info-ok="ejtest_multi1">
+                   <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+                   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+               </div>
+               <div data-info-ko="ejtest_multi1">
+                   <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+                   <span class="CSSMsgFail">¡NO es correcto!</span>
+               </div>
+           </div>
+        </div>
+
+        <div id="ejtest_input1">
+            
+
+                    <div data-makeqs="ejtest_input1">
+                        ¿En qué año murió Cervantes?<br /><br />
+                        Año: <span data-input-make="box1">1616</span>
+                        <!-- botones -->
+                        <span data-input-btnchek="ejtest_input1"></span><span data-input-btnhint="ejtest_input1"></span>
+                        <div data-info-ok="ejtest_input1" style="display: none;">
+                            <span style="color: blue;">¡Correcto!</span><br />
+                             Miguel de Cervantes Saavedra (Alcalá de Henares, 29 de septiembre de 1547 – Madrid, 22 de abril de 1616)
+                        </div>
+                        <div data-info-hint="ejtest_input1" style="display: none;" aria-hidden="true">
+                            4^2bis
+                        </div>
+                        <div data-info-ok="ejtest_input1" style="display: none;">
+                            <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+                            <span class="CSSMsgSuccess">¡CORRECTO!</span>
+                        </div>
+                        <div data-info-ko="ejtest_input1" style="display: none;">
+                            <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+                            <span class="CSSMsgFail">¡NO es correcto!</span>
+                        </div>
+                    </div>
+                        
+            
+            </div>
+
+        <div id="ejtest_gapfill1">
+                
+                <div><em>Complete los huecos del texto siguiente:</em></div>
+                <p data-makeqs="ejtest_gapfill1">En un lugar de la <span data-gap-select="gap1">Mancha</span>, de cuyo nombre no quiero acordarme, no ha mucho tiempo 
+                que vivía un <span data-gap-fill="gap2">hidalgo</span> de los de lanza en astillero, adarga antigua, rocín flaco y <span data-gap-select="gap3">galgo</span> corredor. Una olla de 
+                algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lentejas los viernes, 
+                algún palomino de añadidura los <span data-gap-fill="gap4">domingos</span>, consumían las tres partes de su hacienda.</p>
+        
+                <span data-makeqs="ejtest_gapfill1">Autor: <span data-gap-fill="gap5">Cervantes</span></span>
+
+                <div style="display: none;">
+                    <div data-info-ok="ejtest_gapfill1">
+                        <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+                        <span class="CSSMsgSuccess">¡CORRECTO!</span>
+                    </div>
+                    <div data-info-ko="ejtest_gapfill1">
+                        <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+                        <span class="CSSMsgFail">¡NO es correcto!</span>
+                    </div>
+                </div>
+                <div id="ejtest_gapfill1_onok" style="display: none;"><span style="color: blue; font-size: xx-large;">¡Ejercicio CORRECTO!</span></div>
+                <div id="ejtest_gapfill1_onko" style="display: none;"><span style="color: red;">¡Ejercicio con errores!</span></div>
+
+            
+        </div>
+
+        
+
+    </div>
+
+    <div id="bloqueej">
+
+        
+
+    </div><!-- end bloquej-->
+
+
+    <div id="bloquecode">
+        <span>Código:</span> <span id="selcode" style="cursor: pointer;">[Selecciona el código]</span>
+        <textarea id="textcode">
+
+
+        </textarea>
+        <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                El cuadro anterior incluye el código del evaluador de actividades para que lo copie y pegue en su página. Para que funcione correctamente
+                    es necesario que incluya en la página el código las actividades que deben evaluarse y que complete
+                    la llamada a la función <code>jsGeork.Questions.Eval(obj_myprefix_identifier, ???, ??? );</code> colocando después del objeto del evaluador 
+                    los objetos de cada actividad separados por comas (también pueden ponerse los ids de las actividades en lugar de sus objetos). En realidad no es tan complicado si sigue estos pasos.
+                </span>
+                    <ol>
+                        <li>Genere el código del evaluador con el formulario de esta página y péguelo en su documento.</li>
+                        <li>Cree actividades o preguntas utilizando los formularios <em><a href="generator_single.html" target="_blank">actividades de preguntas con respuestas de elección múltiple</a></em> (PEM), <em><a href="generator_multi.html" target="_blank">actividades de preguntas con respuestas multiselección</a></em> (PMS),
+                        <em><a href="generator_input.html" target="_blank">actividades de preguntas con respuestas  en cuadros de entrada</a></em> (PIB) y/o <em><a href="generator_gapfill.html" target="_blank">actividades de rellenar huecos</a></em> (PGF).</li>
+                        <li>Copie y pegue el código de las actividades en su documento delante del código del evaluador que ha pegado en el primer paso. Modifique el html, cargue la página y compruebe que las actividades funcionan de la forma deseada.</li>
+                        <li>Copie el nombre del objeto de la actividad, el que está dentro de los paréntesis en la línea que llama a la biblioteca, detrás del nombre del objeto del evaluador de la línea que
+                            llama a la biblioteca del código del evaluador. Por ejemplo, en <code>jsGeork.Questions.Eval(obj_eval, <strong>obj_ejeval_single1</strong>);</code> se ha añadido el objeto <code>obj_ejeval_single1</code>. Los objetos deben separarse con una coma.
+                        </li>
+                        <li>Repita los pasos 2 a 5 para añadir más actividades al evaluador.</li>
+                        <li>Compruebe que el evaluador funciona correctamente.
+                        </li>
+                    </ol>
+                <span class="spanhelp">
+                    También es necesario que la página cargue las bibliotecas jQuery y jsGeork. Para que la actividad se vea correctamente es necesario
+                    también que existan en la página las reglas CSS adecuadas. Si utiliza el software este se encarga de incluir los enlaces
+                    a los archivos .js y .css con las bibliotecas javascript y los estilos css. Si no utiliza el software deberá incluir 
+                    los enlaces de forma manual.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                Si tiene los mínimos conocimientos necesarios para escribir objetos javascript en notación literal puede editar el código 
+                    manualmente para modificar la actividad, por ejemplo añadir más opciones de respuesta. Para detectar errores puede probar
+                    el código del interior de la etiqueta <code>script</code> en páginas como <a href="http://www.jshint.com/" target="_blank">www.jshint.com</a>.
+                    Por ejemplo, es aconsejable que no incluya la coma (,) final en las últimas propiedades de un objeto ya que en algunos navegadores antiguos produce error.
+                </span>
+            </div>
+
+    </div>
+
+
+    <div id="iframe_ejemplos" class="iframe_ejemplos">
+
+    <h1>Ejemplos</h1>
+
+        <h3><a href="ejemplos/eval_1.html" target="_blank">Ejemplos con tablas de evaluación de las actividades</a></h3>
+            
+        <h3><a href="ejemplos/eval_2.html" target="_blank">Ejemplos de actualización automática</a></h3>
+            
+        <h3><a href="ejemplos/eval_3.html" target="_blank">Ejemplos con local storage</a></h3>
+
+        <h3><a href="ejemplos/eval_4.html" target="_blank">Ejemplos con local storage y las actividades en otra página</a></h3>
+
+        <h3><a href="ejemplos/eval_5.html" target="_blank">Ejemplos con local storage y las actividades en otra página</a></h3>
+
+        <h3><a href="ejemplos/eval_6.html" target="_blank">Ejemplos con local storage y las actividades en otra página</a></h3>
+            
+
+    </div>
+
+     
+
+    <div class="goindex">
+    [ <a href="index.html">Índice</a> ]
+    </div>
+</body>
+</html>
+
+

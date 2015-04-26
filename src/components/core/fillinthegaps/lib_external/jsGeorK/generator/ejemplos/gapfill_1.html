@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos PGF</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+
+        <!-- Ejemplo 1 -->
+    <hr />
+        <div class="expej">
+        <h3>Ejemplo 1</h3>
+        <p>Ejemplo de una actividad con varios huecos, tanto de cuadro de texto como de lista desplegable. El primer hueco tipo cuadro admite varias respuestas (p. ej. señor),
+            está ajustado tanto en tamaño como en caracteres admitidos, y tiene establecida la propiedad 'placeholder' a 'lléname'. Si se introduce una de las respuestas alternativas 
+            aceptadas mostrará tanto la correcta como las aceptadas.
+        </p>
+        </div>
+    <div id="gapfill_ej1" style="">
+            
+    <style scoped="scoped">
+        #gapfill_ej1 {
+            width: 70%; margin: auto;
+            margin-top: 4em; margin-bottom: 4em;
+        }
+        .expej {
+            font-family: serif;
+            color: darkgray;
+        }
+    </style>
+            <p>Rellene los huecos del texto siguiente. Dispone de 5 intentos para rellenar los 5 huecos. Si deja un cuadro vacío obtendrá una
+                ayuda pulsando en el botón 'Indicio'.
+            </p>
+            <hr />
+        
+
+            <p data-makeqs="gapfill_ej1">En un lugar de la <span data-gap-select="gap1">Mancha</span>, de cuyo nombre no quiero acordarme, no ha mucho tiempo 
+            que vivía un <span data-gap-fill="gap2">hidalgo</span> de los de lanza en astillero, adarga antigua, rocín flaco y <span data-gap-select="gap3">galgo</span> corredor. Una olla de 
+            algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lentejas los viernes, 
+            algún palomino de añadidura los <span data-gap-fill="gap4">domingos</span>, consumían las tres partes de su hacienda.</p>
+        
+            <span data-makeqs="gapfill_ej1">Autor: <span data-gap-fill="gap5">Cervantes</span></span>
+            <div style="margin-top: 1em;">
+                <div id="gapfill_ej1_onok" style="display: none;"><span style="color: blue; font-size: xx-large;">¡Ejercicio CORRECTO!</span>
+                    <br />Considerado correcto al alcanzar un 75% (<code>"threshold": 75,</code>).
+                </div>
+                <div id="gapfill_ej1_onko" style="display: none;"><span style="color: red;">¡Ejercicio con errores!</span></div>
+            </div>
+            
+           
+
+        
+    </div>
+
+        
+
+
+    <script>
+        var objGapFill3 = {
+            id: "gapfill_ej1",
+            "type": "gapfill",
+            "makeqs": "gapfill_ej1", //elemento en el que se buscaran y generarán los huecos
+            "gaps": {
+                "gap1": {
+                    "words": ["estepa", "pradera", "tundra", "Tierra"],
+                    "weight": 100,
+                    "showwords": true,
+                    "placeholder": "",              //(string) atributo placeholder del input
+                    "casesensitive": false,         //(boolean) si el hueco es sensible a mayúsculas
+                    "autocomplete": "",             //(string)(on,off) Si hay que poner el atributo autocomplete en el input
+                    "adjustgaps": ""               //(string)("" o none,all,size,width) 
+                },
+                "gap2": {
+                    "words": ["señor", "caballero", "paladín"],
+                    "showwords": true,
+                    "weight": 100,
+                    "placeholder": "lléname",              //(string) atributo placeholder del input
+                    "casesensitive": false,         //(boolean) si el hueco es sensible a mayúsculas
+                    "autocomplete": "",             //(string)(on,off) Si hay que poner el atributo autocomplete en el input
+                    "adjustgaps": "all"               //(string)("" o none,all,size,width) 
+                },
+                "gap3": {
+                    "words": ["perro", "can", "conejo"],
+                    "weight": 50,
+                    "placeholder": "?",              //(string) atributo placeholder del input
+                    "casesensitive": false,         //(boolean) si el hueco es sensible a mayúsculas
+                    "autocomplete": "",             //(string)(on,off) Si hay que poner el atributo autocomplete en el input
+                    "adjustgaps": "size"            //(string)("" o none,all,size,maxlength) 
+                }
+            },
+            "fieldset": true,
+            "legend": "Rellenar huecos",
+            "button": "Entrega",
+            "clase": "",
+            "weighting": 100,
+            "attempts": 5,
+            "threshold": 75,
+            "hint": true,
+            //"storage": "local",
+            //"fillfromstorage": true,
+            "oncheck": function () { alert("score: " + this.score); },
+            "onok": function () {
+                document.getElementById("gapfill_ej1_onok").style.display = "block";
+                document.getElementById("gapfill_ej1_onko").style.display = "none";
+            },
+            "onko": function () {
+                document.getElementById("gapfill_ej1_onok").style.display = "none";
+                document.getElementById("gapfill_ej1_onko").style.display = "block";
+            }
+        };
+        jsGeork.Questions.Question(objGapFill3);
+
+
+
+    </script>
+
+</body>
+</html>

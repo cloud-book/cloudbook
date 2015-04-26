@@ -75,7 +75,7 @@ TextBox.prototype.editButton = function editButton(e) {
   $('.dropdown-toggle').click(function(){$(this).siblings('.dropdown-menu').dropdown('toggle')})
         .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
         .keydown('esc', function () {this.value='';$(this).change();});
-  textbox.wysiwyg();
+  textbox.wysiwyg({extracommandhandler:that.handlerExtraCommands});
   e.stopImmediatePropagation();
   textbox.click(that.stopPropagation);
   document.execCommand('selectAll');
@@ -137,12 +137,21 @@ TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo
   });
 };
 
+TextBox.prototype.handlerExtraCommands = function handlerExtraCommands(command) {
+  if(command === "table"){
+    console.log("Ejecutando el codigo de tablas");
+  }
+};
+
+
 function toolbarposition(position){
 	var toolbar = $(".cbtextbox-toolbar");
 	toolbar.css('position','fixed')
 	       .css('top',position.top - 60 + "px")
 	       .css('left',position.left + "px");
 }
+
+
 
 module.exports = TextBox;
 //@ sourceURL=text_core.js

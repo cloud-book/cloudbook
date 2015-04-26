@@ -1,0 +1,10 @@
+{
+	"idtype" : "b966e4b3-05e9-41db-a1ae-7ed1e03a7bc4",
+	"description":"Append PMS to content",
+	"label": "Fill in the gaps",
+	"icon" : "icon.png",
+	"version" : "0.2.0",
+	"category": "activity",
+	"external_scripts" : ["lib_external/jsgeork/jquery.jsgeork.js","lib_external/bootstrap-wysiwyg/bootstrap-wysiwyg.js"],
+	"external_css" : ["lib_external/jsgeork/jquery.jsgeork.css"]
+}
