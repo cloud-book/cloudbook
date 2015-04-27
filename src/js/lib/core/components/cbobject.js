@@ -285,7 +285,6 @@ CBObject.prototype.importHTML = function importHTML(node) {
 	  }
       this.position = [left,top];
       this.size = [width,height];
-      console.log(node.tagName + " " + node.hasOwnProperty("clientWidth") + " " + width + " " + height + " " + top + " " + left);
 	}
 	catch(e){
 	}

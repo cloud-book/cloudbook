@@ -86,7 +86,7 @@ function processTextBlock(textValue, width, height, top, left, filePath, idsecti
 
 /**
  * This method is responsible for reading block elements
- * It creates an element and insert it into a section
+ * It creates an element and inserts it into a section
  * @param  {String} content of the HTML file
  * @param  {String} path of the html element
  * @param  {String} name of block element
@@ -112,8 +112,9 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 				    var text = "";
 					text = processBlock(node, filePath, node.tagName,idsectionselected,that);
 					if(node.parentElement.tagName =="HEADER" || node.parentElement.tagName =="FOOTER" ||
-						node.parentElement.nodeName == "BODY" || node.parentElement.parentElement.nodeName == "BODY")
-					 //node.parentElement.id == "tempImportHTML" || node.parentElement.parentNode.id == "tempImportHTML")
+						node.parentElement.nodeName == "BODY" || (node.parentElement.parentElement != null && 
+							node.parentElement.parentElement.nodeName == "BODY") || (node.parentElement.parentElement != null &&
+					    node.parentElement.parentNode.nodeName == "HTML"))
 					{
 						if(text != ""){
 							processTextBlock(text, width, height, top, left, filePath, idsectionselected);
@@ -163,7 +164,8 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 }
 /**
  * This method is responsible for reading HTML main block contents
- * It creates two divs to load content and process content, finally removes two divs
+ * It creates one div and one iframe to load content and process content, 
+ * finally removes two elements and loads content of selected section
  * @param  {String} content of the HTML file
  * @param  {String} path of the html element
  * @param  {String} id of section selected
@@ -182,22 +184,10 @@ ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectio
 	processBlock($('#tempImportHTML').contents().find("body").length == 0? temp.contents().get()[0].children[0]:temp.contents().get()[0].children[0].childNodes[2],
 	 filePath, null,idsectionselected,that);
 
-/*	var temp = $("<div id='tempImportHTML'></div>");
-	temp.append(includeHTML);
-	temp.css("position", "fixed").css("z-index","-1000");
-	$("body").append(temp);
-	$("body").append("<div id='layer' style='z-index:-500;background:#fff; position:fixed; top:0; width:100%;height:100%'></div>");
-	processBlock($('#tempImportHTML')[0], filePath, null,idsectionselected,that);
-*/
-	//var idsectionselected = Cloudbook.UI.selected.attr('data-cbsectionid');
-	//var backend = application.backend.core.getInstance();
-
-//	
-
 	var ui = application.ui.core.getInstance();
 	$('#tempImportHTML').remove();
 	$('#layer').remove();
-	ui.loadContent(idsectionselected);
+	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 }
 CBUtil.createNameSpace('application.importhtml');
 application.importhtml = CBUtil.singleton(ImportHTML);
