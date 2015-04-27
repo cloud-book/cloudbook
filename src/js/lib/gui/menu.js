@@ -187,7 +187,14 @@
    
     };
       
-
+    function export_epub(){
+      
+      var exportwizard = application.ui.exportepubwizard.core.getInstance();
+      exportwizard.initializeWizardDiv();
+      exportwizard.showExportEpubProject({data:{that:exportwizard}});
+		   
+   
+    };
 
     var export_project={
       label:CBI18n.gettext('Export')
@@ -209,6 +216,11 @@
       click:export_webzip
     };
    
+    var export_epub={
+      label:CBI18n.gettext('EPUB'),
+      click:export_epub
+    };
+   
 
     /**
      * Generate menubar
@@ -226,6 +238,7 @@
     export_project_menu.append(new gui.MenuItem(export_html));
     export_project_menu.append(new gui.MenuItem(export_pdf));
     export_project_menu.append(new gui.MenuItem(export_webzip));
+    export_project_menu.append(new gui.MenuItem(export_epub));
     
     export_project.submenu=export_project_menu;
 
