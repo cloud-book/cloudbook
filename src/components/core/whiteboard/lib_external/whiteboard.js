@@ -32,7 +32,6 @@
         });
     };
     WhiteBoardHelper.prototype.draw = function(that) {
-        debugger;
         that.canvas.isDrawingMode = true;
         that.canvas.freeDrawingLineWidth = 5;
         that.canvas.renderAll();

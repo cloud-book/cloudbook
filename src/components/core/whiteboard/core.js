@@ -4,7 +4,7 @@ var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function WhiteboardBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"position" : [200,200], "size":[250,100]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"position" : [200,200], "size":[600,400]};
   objectdata.idtype = metadata['idtype'];
   WhiteboardBox.super_.call(this,objectdata);
 }
@@ -23,6 +23,11 @@ WhiteboardBox.prototype.editorView = function editorView() {
 WhiteboardBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
   WhiteboardBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
   var handler = new WhiteBoardHelper('whiteboard'+this.uniqueid);
+  handler.canvas.setWidth(objectcbo.size[0]);
+  handler.canvas.setHeight(objectcbo.size[1]) - jquerycbo.find(".whiteboardtoolbar").height() ;
+  jquerycbo.on('resizestop',function(event,ui){
+    handler.canvas.setHeight(ui.size.height - jquerycbo.find(".whiteboardtoolbar").height());
+    handler.canvas.setWidth(ui.size.width)});
   handler.run(handler);
   var buttons = jquerycbo.find(".whiteboardtoolbar [data-command]");
   // var x = jquerycbo.find(".whiteboardtoolbar [data-command='draw']");

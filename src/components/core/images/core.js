@@ -4,7 +4,7 @@ var CBobject = CBUtil.req("js/lib/core/components/cbobject.js");
 var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function ImageBox(objectdata){
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"imgpath":null, "position" : [200,200],"size":[100,50]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"imgpath":null, "position" : [200,200],"size":[250,100]};
   objectdata.idtype = metadata['idtype'];
   ImageBox.super_.call(this,objectdata);
   this.imgpath = objectdata.imgpath;
@@ -105,9 +105,6 @@ ImageBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;
 
   dialog.append("<input id='imgpath' type='file'/>");
-  dialog.append("<input id='aspectratio' type='radio'/>");
-  dialog.append("<input id='aspectratio' type='radio'/>");
-  dialog.append("<input id='aspectratio' type='radio'/>");
   dialog.callbacks.push(function callbackEditButtonReplaceImageBox(){
     updateImagePath(dialog,that);
   })
