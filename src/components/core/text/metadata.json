@@ -3,7 +3,8 @@
   "description":"Append textbox to content",
   "label": "Textbox",
   "icon" : "icon.png",
+  "version" : "0.2.0",
   "external_scripts" : ["lib_external/bootstrap-wysiwyg/bootstrap-wysiwyg.js"],
   "external_css" : [],
-  "category":"core"
+  "category":"root"
 }

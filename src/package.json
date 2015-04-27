@@ -2,7 +2,7 @@
   "main": "index.html",
   "name": "CloudBook",
   "description": "Graphical editor book",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "keywords": [
     "editor",
     "book",
@@ -26,7 +26,6 @@
     "fs-extra": "~0.18.0",
     "jed": "~1.1.0",
     "mktemp": "~0.4.0",
-    "wkhtmltopdf": "^0.1.5",
     "zip-folder": "^1.0.0"
   }
 }

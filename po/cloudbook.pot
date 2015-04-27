@@ -8,10 +8,50 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-04-07 09:19+0000\n"
+"POT-Creation-Date: 2015-04-25 18:49+0000\n"
 
-#: src/js/lib/core/components/cbsection.js:19
+#: src/components/core/audio/core.js:44
+msgid "Click to listen a sound"
+msgstr ""
+
+#: src/components/core/flash/core.js:53
+msgid "Click to view interactive Flash resource"
+msgstr ""
+
+#: src/components/core/includesite/core.js:41
+msgid "Click to view resource"
+msgstr ""
+
+#: src/components/core/url/core.js:65
+msgid "Click view site "
+msgstr ""
+
+#: src/components/core/video/core.js:44
+msgid "Click to view a video"
+msgstr ""
+
+#: src/components/core/youtube/core.js:62
+msgid "Click view youtube video"
+msgstr ""
+
+#: src/js/lib/core/backend/core.js:433
+msgid "New version available :"
+msgstr ""
+
+#: src/js/lib/core/components/cbsection.js:18
 msgid "Section"
+msgstr ""
+
+#: src/js/lib/core/exportHTML.js:114
+msgid "Prev"
+msgstr ""
+
+#: src/js/lib/core/exportHTML.js:114
+msgid "Footer section"
+msgstr ""
+
+#: src/js/lib/core/exportHTML.js:114
+msgid "Next"
 msgstr ""
 
 #: src/js/lib/gui/dialogMetadata.js:14
@@ -260,6 +300,10 @@ msgid "Save"
 msgstr ""
 
 #: src/js/lib/gui/dialogMetadata.js:90
+#: src/templates/exportHtmlProject.wizard.hbs:3
+#: src/templates/exportPdfProject.wizard.hbs:20
+#: src/templates/exportWebZipProject.wizard.hbs:2
+#: src/templates/initialwizard.importprojects.hbs:5
 #: src/templates/initialwizard.step2.hbs:5
 msgid "Cancel"
 msgstr ""
@@ -1261,77 +1305,209 @@ msgstr ""
 msgid "competency"
 msgstr ""
 
-#: src/js/lib/gui/menu.js:33
+#: src/js/lib/gui/menu.js:50
 #: src/templates/initialwizard.step1.hbs:2
 msgid "New project"
 msgstr ""
 
-#: src/js/lib/gui/menu.js:38
+#: src/js/lib/gui/menu.js:55
 msgid "Save Project"
 msgstr ""
 
-#: src/js/lib/gui/menu.js:50
+#: src/js/lib/gui/menu.js:67
 msgid "Save Project as ..."
 msgstr ""
 
-#: src/js/lib/gui/menu.js:56
+#: src/js/lib/gui/menu.js:73
 msgid "Load Project"
 msgstr ""
 
-#: src/js/lib/gui/menu.js:67
+#: src/js/lib/gui/menu.js:84
 msgid "Quit"
 msgstr ""
 
-#: src/js/lib/gui/menu.js:73
+#: src/js/lib/gui/menu.js:90
 msgid "Metadata"
 msgstr ""
 
-#: src/js/lib/gui/menu.js:81
-msgid "HTML5"
-msgstr ""
-
-#: src/js/lib/gui/menu.js:93
-msgid "ODT/DOC/DOCX"
-msgstr ""
-
-#: src/js/lib/gui/menu.js:105
-msgid "SCORM"
-msgstr ""
-
-#: src/js/lib/gui/menu.js:117
-msgid "Metadata LOM-ES"
-msgstr ""
-
-#: src/js/lib/gui/menu.js:129
+#: src/js/lib/gui/menu.js:146
 msgid "Import"
 msgstr ""
 
-#: src/js/lib/gui/menu.js:154
+#: src/js/lib/gui/menu.js:151
+msgid "Import file ..."
+msgstr ""
+
+#: src/js/lib/gui/menu.js:156
+msgid "Import metadata"
+msgstr ""
+
+#: src/js/lib/gui/menu.js:193
+msgid "Export"
+msgstr ""
+
+#: src/js/lib/gui/menu.js:197
+#: src/templates/initialwizard.importprojects.hbs:3
+msgid "HTML5"
+msgstr ""
+
+#: src/js/lib/gui/menu.js:202
+msgid "pdf"
+msgstr ""
+
+#: src/js/lib/gui/menu.js:208
+msgid "WebZip"
+msgstr ""
+
+#: src/js/lib/gui/menu.js:304
 msgid "File"
 msgstr ""
 
-#: src/js/lib/gui/menu.js:155
+#: src/js/lib/gui/menu.js:305
 msgid "Project"
 msgstr ""
 
-#: src/js/lib/gui/ui/proview/core.js:66
+#: src/js/lib/gui/menu.js:306
+msgid "Insert"
+msgstr ""
+
+#: src/js/lib/gui/ui/proview/core.js:75
 msgid "Insert before"
 msgstr ""
 
-#: src/js/lib/gui/ui/proview/core.js:70
+#: src/js/lib/gui/ui/proview/core.js:79
 msgid "Insert after"
 msgstr ""
 
-#: src/js/lib/gui/ui/proview/core.js:74
+#: src/js/lib/gui/ui/proview/core.js:83
 msgid "Insert subsection"
 msgstr ""
 
-#: src/js/lib/gui/ui/proview/core.js:78
+#: src/js/lib/gui/ui/proview/core.js:87
 msgid "Delete"
 msgstr ""
 
-#: src/js/lib/gui/ui/proview/core.js:87
+#: src/js/lib/gui/ui/proview/core.js:96
 msgid "Edit"
+msgstr ""
+
+#: src/templates/exportHtmlProject.wizard.hbs:1
+msgid "Path where save html project"
+msgstr ""
+
+#: src/templates/exportHtmlProject.wizard.hbs:2
+msgid "Choose folder"
+msgstr ""
+
+#: src/templates/exportHtmlProject.wizard.hbs:4
+msgid "Generate html"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:1
+msgid "Page size:"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:2
+msgid "Page Orientation:"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:3
+msgid "Portrait"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:4
+msgid "Landscape"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:5
+msgid "Include page header:"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:6
+#: src/templates/exportPdfProject.wizard.hbs:14
+msgid "Yes"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:7
+#: src/templates/exportPdfProject.wizard.hbs:15
+msgid "No"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:8
+#: src/templates/exportPdfProject.wizard.hbs:16
+msgid "Left"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:9
+#: src/templates/exportPdfProject.wizard.hbs:17
+msgid "Center"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:10
+#: src/templates/exportPdfProject.wizard.hbs:18
+msgid "Right"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:11
+msgid "Text to header page:"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:12
+msgid "Enter header page text"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:13
+msgid "Include page numbers in foot page:"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:19
+msgid "Path where save of pdf file:"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:21
+msgid "Generate pdf"
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:22
+msgid "PDF Generation in progress. Please wait a moment..."
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:23
+msgid "PDF Generation in progress. Copying interactive files..."
+msgstr ""
+
+#: src/templates/exportPdfProject.wizard.hbs:24
+msgid "There was an error generating the PDF file. Please cancel de process"
+msgstr ""
+
+#: src/templates/exportWebZipProject.wizard.hbs:1
+msgid "Path where save of zip file:"
+msgstr ""
+
+#: src/templates/exportWebZipProject.wizard.hbs:3
+msgid "Generate zip"
+msgstr ""
+
+#: src/templates/exportWebZipProject.wizard.hbs:4
+msgid "Zip Generation in progress. Please wait a moment..."
+msgstr ""
+
+#: src/templates/exportWebZipProject.wizard.hbs:5
+msgid "There was an error generating WeZip file. Please cancel the process"
+msgstr ""
+
+#: src/templates/initialwizard.importprojects.hbs:1
+#: src/templates/initialwizard.step2.hbs:1
+msgid "Project name"
+msgstr ""
+
+#: src/templates/initialwizard.importprojects.hbs:2
+#: src/templates/initialwizard.step2.hbs:2
+msgid "Enter project name"
+msgstr ""
+
+#: src/templates/initialwizard.importprojects.hbs:4
+msgid "SCORM"
 msgstr ""
 
 #: src/templates/initialwizard.step1.hbs:1
@@ -1342,12 +1518,8 @@ msgstr ""
 msgid "Open project"
 msgstr ""
 
-#: src/templates/initialwizard.step2.hbs:1
-msgid "Project name"
-msgstr ""
-
-#: src/templates/initialwizard.step2.hbs:2
-msgid "Enter project name"
+#: src/templates/initialwizard.step1.hbs:4
+msgid "Import project"
 msgstr ""
 
 #: src/templates/initialwizard.step2.hbs:3

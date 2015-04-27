@@ -44,16 +44,30 @@ UI.prototype.loadTheme = function loadTheme(){
   if(!Cloudbook.UI.renderedActionsButtons){
     var that = this;
     var backend = application.backend.core.getInstance();
-    var path = require('path');
-    Object.keys(Cloudbook.Actions).forEach(function (component) {
-      var componentpath = Cloudbook.Actions[component]['path'];
-      var description = require("./" + path.join(componentpath,"metadata.json"));
-      backend.loadComponentExtraCss(componentpath,description);
-      $(Cloudbook.UI.navactions).append($(document.createElement('button'))
-        .bind('click', function () {that.getCBObjectFromButton(component)})
+    var userconfigmanager = application.config.user.getInstance();
+    var userconfig = userconfigmanager.getUserConfig();
+    if (! userconfig.hasOwnProperty('toolbar')){
+      userconfig['toolbar'] = that.defaultToolbar();
+      userconfigmanager.saveUserConfig(userconfig);
+    }
+    userconfig['toolbar'].forEach(function(identifier){
+        var componentpath = Cloudbook.Actions[identifier]['path'];
+        var description = Cloudbook.Actions[identifier]['metadata'];
+        $(Cloudbook.UI.navactions).append($(document.createElement('button'))
+        .bind('click', function () {that.getCBObjectFromButton(identifier)})
         .addClass('btn').addClass('btn-default')
-        .html(that.calculeButtonContent(componentpath, description)));
-    });
+        .html(that.calculeButtonContent(componentpath, description)));  
+    })
+    // var path = require('path');
+    // Object.keys(Cloudbook.Actions).forEach(function (component) {
+    //   var componentpath = Cloudbook.Actions[component]['path'];
+    //   var description = require("./" + path.join(componentpath,"metadata.json"));
+    //   backend.loadComponentExtraCss(componentpath,description);
+    //   $(Cloudbook.UI.navactions).append($(document.createElement('button'))
+    //     .bind('click', function () {that.getCBObjectFromButton(component)})
+    //     .addClass('btn').addClass('btn-default')
+    //     .html(that.calculeButtonContent(componentpath, description)));
+    // });
   /**
    * Flag to detect if actions were rendered
    * @type {boolean}
@@ -61,6 +75,11 @@ UI.prototype.loadTheme = function loadTheme(){
    Cloudbook.UI.renderedActionsButtons = true;
  }
 }
+
+UI.prototype.defaultToolbar = function defaultToolbar() {
+  return ["438eef56-06c2-4ece-b516-16937ef42208","aa0e3021-2315-4950-a3b2-ccf4cc51af5","4041227c-8738-4787-af3d-71d196aad257"];
+};
+
 
 /**
  * Create element from component. This include cbobject and rendered view on targetcontent.

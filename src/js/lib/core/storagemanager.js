@@ -73,7 +73,7 @@ StorageManager.prototype.deleteCBObjectById = function deleteCBObjectById(cbobje
 
 
 StorageManager.prototype.getRootObject = function getRootObject() {
-	return Project.Data._rawobjects;
+	return Object.keys(Project.Data._rawobjects);
 };
 /**
  * This namespace has singleton instance of StorageManager class
