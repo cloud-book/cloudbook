@@ -81,8 +81,9 @@ function processSCORMData(filePath)
 	var backend = application.backend.core.getInstance();
 	var controller = application.controller.getInstance();
 	var idsection = "";
-	var promanager = CBUtil.req('js/lib/gui/ui/proview/core.js');
-	var mana = new promanager();
+	var ui = application.ui.core.getInstance();
+//	var promanager = CBUtil.req('js/lib/gui/ui/proview/core.js');
+//	var mana = new promanager();
 
 	var importationHTML = application.importhtml.getInstance();
 	fs.readFile(filePath+"imsmanifest.xml", function(err, data) {
@@ -106,6 +107,7 @@ function processSCORMData(filePath)
 		  		});
 			});
 	});
+	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 }
 
 CBUtil.createNameSpace('application.importscorm');

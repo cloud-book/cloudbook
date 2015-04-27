@@ -113,7 +113,8 @@ VideoBox.prototype.importHTML = function importHTML(node, filePath){
         videopath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
         type = node.attributes.getNamedItem("type") != null? node.attributes.getNamedItem("type").value:"";
       }
-      var basename = path.basename(this.copyresource(path.join(path.dirname(filePath), videopath)));
+      var aux = path.basename(this.copyresource(path.join(path.dirname(filePath), videopath)));
+      this.videopath = path.basename(aux);
 
     }
     catch (err) {
