@@ -179,7 +179,15 @@
       var a=exportui.showExportHtmlProject({data:{that:exportui}});
     };   
 
+    function export_webzip(){
       
+      var exportwizard = application.ui.exportwebzipwizard.core.getInstance();
+      exportwizard.initializeWizardDiv();
+      exportwizard.showExportWebZipProject({data:{that:exportwizard}});
+   
+    };
+      
+
 
     var export_project={
       label:CBI18n.gettext('Export')
@@ -196,7 +204,10 @@
         
     }; 		    
  
-    
+    var export_webzip={
+      label:CBI18n.gettext('WebZip'),
+      click:export_webzip
+    };
    
 
     /**
@@ -214,6 +225,8 @@
 
     export_project_menu.append(new gui.MenuItem(export_html));
     export_project_menu.append(new gui.MenuItem(export_pdf));
+    export_project_menu.append(new gui.MenuItem(export_webzip));
+    
     export_project.submenu=export_project_menu;
 
     file.append(new gui.MenuItem(new_project));
@@ -235,12 +248,25 @@
     
     var actions = new gui.Menu();
 
+     //Definir un submenu por tipo
+    
+    var catobj={};
+   
+    var i=0;
+    
     Object.keys(Cloudbook.Actions).forEach(function (component) {
       var path = require('path');
       var componentpath = Cloudbook.Actions[component]['path'];
       var description = require("./" + path.join(componentpath,"metadata.json"));
       var backend = application.backend.core.getInstance();
       backend.loadComponentExtraCss(componentpath,description);
+      var category=CBI18n.gettext(description.category);
+      if (description.category === "root" ){
+	       category = "root";
+      }
+      if (!catobj.hasOwnProperty(category)){
+		    catobj[category]=[];
+      }
       var aux = {
         label : CBI18n.gettext(description.label),
         click : function generateElement(){
@@ -248,9 +274,32 @@
           var controller = application.controller.getInstance();
           fullobject.clickButton(controller);
         }
-      }
-      actions.append(new gui.MenuItem(aux));
+      };
+      catobj[category].push(new gui.MenuItem(aux));
+       
+     
+   
+	/*actions.append(new gui.MenuItem(aux));*/
     });
+	if (catobj.hasOwnProperty("root")){
+		catobj["root"].forEach(function(element){
+			actions.append(element);
+		});
+		delete catobj["root"];
+	}
+
+  Object.keys(catobj).forEach(function(category){
+    var labelcategory={label:category};
+    var categorymenu = new gui.Menu();
+
+
+    catobj[category].forEach(function(element){
+        categorymenu.append(element);
+    });
+     labelcategory.submenu=categorymenu;
+     actions.append(new gui.MenuItem(labelcategory)) ;
+  });
+       
 
     menubar.append(new gui.MenuItem({ label: CBI18n.gettext('File'), submenu: file}));
     menubar.append(new gui.MenuItem({ label: CBI18n.gettext('Project'), submenu: project}));

@@ -3,5 +3,6 @@
 	"description":"Append audio to content",
 	"label": "Audio",
 	"icon" : "icon.png",
-	"category": "core"
+	"category": "multimedia",
+	"version" : "0.2.0"
 }

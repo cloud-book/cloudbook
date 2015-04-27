@@ -24,7 +24,8 @@ FlashBox.prototype.editorView = function editorView() {
   flashelement.css('height','100%');
   flashelement.css('width','100%');
   flashelement.append(params);
-  aux.children('.cbcontainer').append(flashelement);
+  var cliclayer = $(window.document.createElement('div')).addClass('cbcliclayer');
+  aux.children('.cbcontainer').append([flashelement,cliclayer]);
   return aux;
 };
 
@@ -46,17 +47,17 @@ FlashBox.prototype.htmlView = function htmlView() {
 
 FlashBox.prototype.pdfView = function pdfView() {
   var aux = FlashBox.super_.prototype.pdfView.call(this);
-  var flashelement = $(window.document.createElement('object')).attr('type','application/x-shockwave-flash').attr('data',"rsrc/"+ this.resourcepath);
-  var params = [];
-  params.push($(window.document.createElement('param')).attr('name','movie').attr('value',this.resourcepath));
-  params.push($(window.document.createElement('param')).attr('name','quality').attr('value','high'));
-  params.push($(window.document.createElement('param')).attr('name','scale').attr('value','exactfit'));
-  params.push($(window.document.createElement('param')).attr('name','base').attr('value','.'));
+  var fsextra = require('fs-extra');
+  var pathtosavefile = Project.Info.projectpath + "/pdfextrafiles/"+this.uniqueid + "/";
+  var linktopdf = "pdfextrafiles/"+this.uniqueid+"/"+this.resourcepath;
+  var stringtopdf = CBI18n.gettext("Click to view interactive Flash resource");
+  /**
+   * Create folder to resources and copy inside these
+   */
+  fsextra.mkdirsSync(pathtosavefile);
+  fsextra.copySync(Project.Info.projectpath + "/rsrc/"+ this.resourcepath,pathtosavefile+this.resourcepath);
 
-  flashelement.css('height',this.size[1]);
-  flashelement.css('width',this.size[0]);
-  flashelement.append(params);
-  aux.children('.cbcontainer').append(flashelement);
+  aux.append("<a href='"+linktopdf+"'>"+stringtopdf+"</a>");
   return aux;
 }
 

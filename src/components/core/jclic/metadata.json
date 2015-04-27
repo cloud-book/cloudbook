@@ -3,6 +3,7 @@
 	"description":"Append Jclic to content",
 	"label": "Jclic",
 	"icon" : "icon.png",
-	"category": "core",
+	"version" : "0.2.0",
+	"category": "embed object",
 	"disabled":true
 }

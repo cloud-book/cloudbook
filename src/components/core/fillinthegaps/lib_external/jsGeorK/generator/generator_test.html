@@ -1,0 +1,701 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="author" content="Jordi cavallé" />
+	<meta name="abstract" content="Generador de ejercicios, actividades y test para la educación" />
+	<meta name="copyright" content="© 2014 Jordi Cavallé" />
+	<link rel="canonical" href="http://jsgeork.geork.com/" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>PTT. Generador de pruebas tipo test</title>
+    <script src="../js/jquery.js"></script>
+    <script src="../jsgeork/jquery.jsgeork.js"></script>
+    <script src="generator_test.js"></script>
+    <link href="../styles/generator.css" rel="stylesheet" />
+    <link href="../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="goindex">
+    [ <a href="index.html">Índice</a> ]
+    </div>
+
+    <div class="gentitle">
+    <h1>PTT</h1>
+    </div>
+
+    <form id="frmopt">
+        <fieldset>
+            <legend>Generador de pruebas tipo test</legend>
+            <div id="infoact">
+            <p>El generador de test permite crear pruebas que contengan <em><a href="generator_single.html">actividades de preguntas con respuestas de elección múltiple</a></em> (PEM), <em><a href="generator_multi.html">actividades de preguntas con respuestas multiselección</a></em> (PMS),
+                <em><a href="generator_input.html">actividades de preguntas con respuestas  en cuadros de entrada</a></em> (PIB) y/o <em><a href="generator_gapfill.html">actividades de rellenar huecos</a></em> (PGF).
+
+                Puede ver un ejemplo de test generado con las opciones seleccionadas y una actividad de cada tipo en <a href="#bloqueej">esta sección de la página</a>.
+            </p>
+            <p>También puede ver ejemplos de test <a href="#iframe_ejemplos">al final de la página</a>.</p>
+            <p>Este formulario ayuda a generar el código para crear este tipo de test utilizando la biblioteca jsGeork. Después pulsar en el botón '<strong>Genera</strong>' 
+                se creará el código html+javascript que deberá copiar y pegar en su página, además del código propio de cada actividad.
+            </p>
+            </div>
+        <div class="campoconfig">
+            <label for="idact">identificador: <input type="text" name="idact" id="idact" value="ptt_identifier" /></label>
+            <label for="idprefix">prefijo: <input type="text" name="idprefix" id="idprefix" value="myprefix_" /></label><br />
+            <span id="finalid"></span>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Llenar campo <strong>id</strong> es obligatorio e indispensable para que el test funcione. Se utiliza como atributo <em>id</em> del bloque
+                HTML que contendrá el test, así como para generar otros identificadores y nombres de objetos para los scripts. Dado que los atributos <em>id</em>
+                dentro de los documentos HTML deben ser únicos debe introducir una cadena que no se repita dentro del mismo documento o página web. Para facilitar que
+                terceras personas puedan reutilizar el código, conviene que añadamos al principio del identificador un prefijo que nos identifique como autores. De esta
+                forma minimizamos la probabilidad de que coincidan dos identificadores iguales en el mismo documento. El identificador debe tener como mínimo un carácter,
+                no puede contener espacios y es sensible a las mayúsculas.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="nametest">name: <input type="text" name="nametest" id="nametest" placeholder="" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Nombre del test. Se utilizará en el título de la tabla con los resultados previos del test.
+                </span>
+            </div>
+        </div>
+
+        <div class="campoconfig">
+        <label for="fieldset">fieldset: <input type="checkbox" name="fieldset" id="fieldset" checked="checked" /></label><br />
+        <label for="legend">legend: <input type="text" name="legend" id="legend" value="Pregunta con respuestas de elección múltiple" size="80"/></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Si seleccionamos la opción <em>fieldset</em> se añadirá la etiqueta html del mismo nombre (grupo de campos). La etiqueta 
+                    <code>fieldset</code> puede incorporar una etiqueta <code>legend</code> con la leyenda o título del grupo. 
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="flow">flow:</label>
+        <select name="flow" id="flow">
+            <option value="">&nbsp;</option>
+            <option value="slide">slide</option>
+            <option value="train">train</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                 Si no seleccionamos nada todas las actividades serán visibles al mismo tiempo.<br /><br />
+                 Si seleccionamos la opción 'slide' las actividades se mostrarán una a una con un control para moverse de una a otra. El usuario podrá
+                    pasar de una actividad a otra, hacia adelante y hacia atrás, resolviendo en el orden que quiera y pulsando en el botón para entregar.<br /><br />
+                 Si seleccionamos la opción 'train' las actividades se mostrarán una a una de forma correlativa. El usuario deberá responder la actividad
+                    que se le presente y pulsar en el botón para pasar a la actividad siguiente, pero no podrá volver atrás.
+                </span>
+            </div> 
+            <div id="trainblock">
+                <label for="slidercolor">slidercolor:</label>
+                <select name="slidercolor" id="slidercolor">
+                    <option value="">&nbsp;</option>
+                    <option value="def">def</option>
+                    <option value="none">none</option>
+                    <option value="gradient">gradient</option>
+                    <option value="rate">rate</option>
+                    <option value="red">red</option>
+                    <option value="blue">blue</option>
+                    <option value="#CCFF33">#CCFF33</option>
+                </select>
+                    <div class="divhelp">
+                        <span class="btnhelp"></span>
+                        <span class="spanhelp">
+                         Establece el color de la barra de progreso. 'def' utiliza el valor por defecto y equivale a no especificar esta propiedad. 'none' no pone ningún color, por tanto se utiliza el del archivo css.
+                            'gradient' utiliza un graiente. 'rate' pone colores en función
+                            del porcentaje de progreso. También puede entrarse cualquier valor css admitido para los colores.
+                        </span>
+                    </div>
+                <br /><br />
+                <label for="sliderinfo">sliderinfo:</label>
+                <select name="sliderinfo" id="sliderinfo">
+                    <option value="">&nbsp;</option>
+                    <option value="def">def</option>
+                    <option value="def%">def%</option>
+                    <option value="none">none</option>
+                    <option value="mytext">mytext</option>
+                </select>
+                    <div class="divhelp">
+                        <span class="btnhelp"></span>
+                        <span class="spanhelp">
+                         Establece el texto de la barra de progreso. 'def' utiliza el valor por defecto, del tipo paso/total, y equivale a no especificar esta propiedad. 'def%' pone el
+                            porcentaje de progreso de los pasos. 'none' no pone ningún texto en absoluto. 'mytext' es un ejemplo de que también puede entrarse cualquier texto, solo tiene que editar este valor en el código.
+                        </span>
+                    </div>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="inside">inside: <input type="checkbox" name="inside" id="inside" checked="checked" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Si marcamos la opción las actividades se moverán al interior del bloque de los controles del test. Si no 
+                    la marcamos se dejarán en su lugar original dentro del documento. Esta opción necesita por tanto que exista
+                    un bloque con id igual al del objeto del test.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig" id="randomblock" style="display: none;">
+            <label for="random">random: <input type="checkbox" name="random" id="random" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Si marcamos la opción <em>random</em> las preguntas se ordenan aleatoriamente. Solo se aplica si la opción inside también está marcada o si el flujo es 
+                    de tipo diapositiva (flow: 'slide').
+                </span>
+            </div>
+        </div>
+
+
+        <div class="campoconfig clshtml">
+        <label for="txtareahtml">código html (solo lectura): 
+<textarea id="txtareahtml" readonly="readonly">
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+&lt;div id="myprefix_identifier"&gt;
+    &lt;div data-info-bottom="myprefix_identifier" style="display: none;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</textarea>
+
+        </label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    El código para que un test funcione estará compuesto por una combinación de código HTML, CSS y JAVASCRIPT. El 
+                    campo anterior muestra el código HTML necesario. Podrá modificarlo cuando copie y pegue
+                    el código completo en su documento HTML. Deberá incluir todo el código de las actividades que formen parte del test, 
+                    <strong>eliminando o comentando la línea de JavaScript que llama a la biblioteca para que cree la actividad</strong>.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                 Se incluyen las instrucciones (en forma de comentarios html) para que se añadan las bibliotecas jQuery y jsGeork, necesarias
+                    para que funcione la actividad.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                  <strong>Otras opciones:</strong>
+                </span>
+                    <ol>
+                        <li>Puede resituar los controles del test en otros bloques. Deberá ser en bloques vacíos y colocando como valor el id del test en los atributos. Las opciones son:
+                            <ul>
+                                <li>Bloque con el atributo <code>data-move-btncheck=""</code> para mover el botón de entrega.</li>
+                                <li>Bloque con el atributo <code>data-move-btnctrl=""</code> para mover los controles pasar pasar de actividad.</li>
+                                <li>Bloque con el atributo <code>data-move-prgbar=""</code> para mover la barra de progreso en la modalidad 'train'.</li>
+                                <li>Bloque con el atributo <code>data-move-results=""</code> para mover la tabla de resultados.</li>
+                            </ul>
+                            Recuerde que si coloca estos bloques detrás de la llamada a la biblioteca debe posponer su llamada hasta que el documento esté listo o no los encontrará. Puede hacerlo colocando el código dentro de la función autoejecutable <code>jQuery(function ($) { });</code>.
+                        </li>
+                        <li>Se copiará al final del bloque con los controles el contenido del bloque con atributo <code>data-info-bottom=""</code> de valor igual al id del test. 
+                             Puede incluir también bloques ocultos con atributos <code>data-info-ok=""</code> y <code>data-info-ko=""</code> de valor igual al id del
+                            test. Su contenido se colocará detrás de los controles y se mostrará cuando el test se supere o no se supere respectivamente. Un test se 
+                            considerará superado si se alcanza el umbral introducido en la propiedad <code>threshold</code> (predeterminado al 50% de la nota máxima).
+                        </li>
+                        <li>Puede también recolocar los resultados previos utilizando la función <code>jsGeork.Questions.getStorage("id_bloque_salida", "local", "storage_key", "id_obj_test")</code>. El primer parámetro es el
+                            id del bloque dónde se quiere colocar la tabla con los resultados previos; el segundo parámetro es el tipo de web storage (local o session); el tercer parámetro es la clave del storage utilizada para guardar los resultados;
+                            el cuarto parámetro es el id del test, es decir, el valor de la propiedad "id" del objeto del test. Si colocamos la propiedad "showstorage" a false no se mostrarán los resultados previos en el bloque con el id del test, y con la
+                            función anterior podremos mostrarlos en cualquier documento del mismo dominio.
+                        </li>
+                        <li>    
+                            El bloque que contenga el atributo id igual al atributo del test terminado en "_info_aria" será enlazado por medio de atributos
+                            aria (<code>aria-describedby=""</code>) como descripción del botón de entrega. En el código generado se utiliza en el enunciado del test 
+                            para describir el botón.
+                        </li>
+                    </ol>
+            </div>
+        </div>
+
+            <p><span id="opcadv">Opciones avanzadas</span> <span id="advopt_toggle" style="cursor: pointer;">[ mostrar/ocultar ]</span></p>
+            <div id="advopt" style="display: none;">
+            <p>Además de los campos que incluye el formulario anterior existen otras opciones que puede utilizar. Naturalmente puede modificar las opciones 
+                editando directamente el código con las propiedades del objeto, pero entonces deberá tener cuidado de que el código javascript no contenga errores.
+            </p>
+        <div class="campoconfig">
+        <label for="type">type:</label>
+        <select name="type" id="type">
+            <option value="" selected="selected">&nbsp;</option>
+            <option value="pager">pager</option>
+            <option value="checker">checker</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                 La propiedad <code>type</code> de un objeto test permite cambiar su comportamiento. Existen dos opciones:
+                </span>
+                <ul class="spanhelp">
+                    <li><code>pager</code>: Las actividades se comportan como si no formaran parte de un test y se muestran una
+                        a una con los mismos controles para pasar de una  a otra que en un test con el valor 'slide' en la propiedad 'flow' (<code>"flow": "slide",</code>).
+                    </li>
+                    <li><code>checker</code>: Las actividades se comportan como si no formaran parte de un test y se muestran una
+                        a una con los mismos controles para pasar de una  a otra que en un test con el valor 'train' en la propiedad 'flow' (<code>"flow": "train",</code>).
+                        La diferencia es que para poder pasar a una actividad debe solucionarse correctamente la que le precede.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="btntext">button: <input type="text" name="btntext" id="btntext" placeholder="Comprueba" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Permite introducir el texto del interior del botón para comprobar la respuesta. Si lo dejamos vacío se utilizará el
+                    valor predeterminado.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="formtest">form: <input type="checkbox" name="formtest" id="formtest" checked="checked" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Si marcamos la opción los controles del test se colocarán dentro de una etiqueta html FORM.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="caption">caption: <input type="text" name="caption" id="caption" placeholder="" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Define el título de la tabla con los resultados del test.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="details">details: <input type="text" name="details" id="details" placeholder="" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Permite introducir el valor de la etiqueta <em>details</em> de la tabla con los resultados del test. Es una etiqueta nueva en html5 
+                    y, de momento, no la soportan todos los navegadores.
+                    Requiere introducir los valores para el título de la tabla.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="summary">summary: <input type="text" name="summary" id="summary" placeholder="" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Permite introducir el valor de la etiqueta <em>summary</em> para los detalles de la tabla con los resultados del test, etiqueta que define un encabezado visible para el elemento <em>details</em>. Al pulsar sobre el texto se muestran/ocultan los detalles. 
+                   Requiere introducir los valores para el título de la tabla y los detalles.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="icons">icons:</label>
+        <select name="icons" id="icons">
+            <option value="">&nbsp;</option>
+            <option value="csshexent" selected="selected">csshexent</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Seleccionando 'csshexent' se utilizarán entidades css hexadecimales para añadir iconos.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="qbase">qbase:</label>
+        <select name="qbase" id="qbase">
+            <option value="">&nbsp;</option>
+            <option value="100">100</option>
+            <option value="20">20</option>
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                 Permite especificar la base sobre la que se puntuará el test. Si no se especifica la propiedad se puntúa sobre 10.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="threshold">threshold:</label>
+        <select name="threshold" id="threshold">
+            <option value="">(50%)</option>
+            <option value="100">100</option>
+            <option value="90">90</option>
+            <option value="80">80</option>
+            <option value="70">70</option>
+            <option value="60">60</option>
+            <option value="50">50</option>
+            <option value="40">40</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                 Umbral, en forma de porcentaje (entero de 0-100) sobre la base, a partir del cual se considera el test como superado. Se utiliza para lanzar los eventos onok y onko. 
+                    Por ejemplo, si la nota en porcentaje sobre 100 es mayor que el umbral se lanza onok, en caso contrario se lanza onko. Por defecto el valor es 50.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="storage">storage:</label>
+        <select name="storage" id="storage">
+            <option value="">&nbsp;</option>
+            <option value="local" selected="selected">local</option>
+            <option value="session">session</option>
+        </select>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    Indica si debe utilizarse el HTML5 Web Storage para guardar si la actividad ha sido realizada. Si el navegador 
+                    soporta el Web Storage, se guardará en el storage la fecha de la primera y última ocasión en el que el usuario 
+                    responda la actividad. Cuando se recargue el documento se mostrará una tabla mostrando las fechas y puntuaciones.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="storagekey">storagekey: <input type="text" name="storagekey" id="storagekey" value="jsgeork" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    Permite introducir una clave en la que almacenar los datos en el storage. Si introducimos siempre la misma clave
+                    en todas nuestras actividades conseguiremos que se agrupen todos los datos en el storage en un mismo objeto. Si dejamos el campo vacío
+                    se utilizará el id de la actividad como clave para almacenar los datos. Es recomendable utilizar una clave para mantener ordenados los
+                    datos y saber que pertenecen a la biblioteca.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                    <button id="delstokey">delete storagekey</button>
+                    Para evitar acumular datos en el Web Storage, el botón anterior permite borrar la entrada <em>storagekey</em> del Web Storage en la que se habrán guardado los datos de las
+                    actividades. Se borrarán los datos de todas las actividades; para borrar los datos de una sola actividad utilice los botones que hay en las tablas con los resultados
+                    previos. La página del generador utiliza su propia entrada de nombre '<span id="stokeyname"></span>' para guardar la configuración.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="showstorage">showstorage: <input type="checkbox" name="showstorage" id="showstorage" checked="checked" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Marcando esta opción se añadirá al documento la tabla con los resultados previos leídos del <em>storage</em>. Si no la marcamos
+                    no saldrá la tabla pero seguirán guardándose los resultados y podrán mostrarse en otros documentos utilizando la instrucción 
+                    <code><strong>jsGeork.Questions.getStorage(idOut, tipo_storage, storagekey, iden);</strong></code> en la que <em>idOut</em> es el atributo id 
+                    del bloque de la página en la que se colocará la tabla; <em>tipo_storage</em> es el tipo de web storage en el que están los
+                    datos (local o session); <code>storagekey</code> la clave para almacenar los datos; <code>iden</code> es el Id de la actividad 
+                    de la que se quieren los resultados.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="delstorage">delstorage: <input type="checkbox" name="delstorage" id="delstorage" checked="checked" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Marcando esta opción aparecerá el botón, en la tabla con los resultados previos, para borrar el <em>storage</em>.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+        <label for="wai-aria">wai-aria: <input type="checkbox" name="wai-aria" id="wai-aria" checked="checked" disabled="disabled" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Marcando esta opción se generará internamente código html conforme a la especificación sobre accesibilidad <strong>WAI-ARIA</strong> (Web Accessibility Initiative - Accessible Rich Internet Applications)
+                    del <em>World Wide Web Consortium</em>. Si lo necesita puede deshabilitar la opción poniendo el valor de la propiedad a falso en el código del objeto (<code>"wai-aria": false,</code>), pero no se recomienda.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+            <label for="onready">onready:  <input type="checkbox" name="onready" id="onready" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <code>onready</code> permite introducir una función que se llamará cuando la actividad termine de crearse en la página (ej. <code>onready: function(){  },</code>). 
+                </span>
+                <span class="spanhelp">
+                    Desde esta función se puede acceder a la nota total (this.total), es decir al <code>qbase</code>, y al umbral de nota para superar la prueba (this.threshold) en valor absoluto.
+                </span>
+            </div>
+        </div>
+        <div class="campoconfig">
+            <label for="oncheck">oncheck:  <input type="checkbox" name="oncheck" id="oncheck" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <div class="spanhelp">
+                La propiedad <code>oncheck</code> permite introducir una función que se llamará cuando el usuario pulse en el botón para
+                    comprobar el resultado. Puede utilizar esta función para mostrar elementos de la página ocultos hasta ese momento  
+                    (ej. <code>oncheck: function(){ $("#newq").show(); },</code>) y puede hacerlo según la nota obtenida (p.  ej. <code>if(this.score>9){ $("#excellent").show(); }</code> ).
+                    <br />
+                    <br />
+                </div>
+                <div class="spanhelp">
+                    La función <code>jsGeork.Questions.Test</code> tiene varias variables públicas que permiten acceder a los datos guardados en ella en sus últimas llamadas. Las variables disponibles son:<br />
+                    <div style="padding-left: 2em;">
+                    <code>total</code>: {number} puntuación máxima que puede obtenerse en el test<br />
+                    <code>score</code>: {number} puntuación obtenida sobre la puntuación máxima<br />
+                    <code>threshold</code>: {number} umbral de puntuación para considerar la prueba como superada<br />
+                    <code>objscore</code>: {object} objeto JavaScript con los datos del test. Las propiedades del objeto son:<br />
+                        <div style="padding-left: 2em;">
+                            <code>objscore.id</code>: {string} identificador del test<br />
+                            <code>objscore.total</code>: {number} nota total del test<br />
+                            <code>objscore.score</code>: {number} nota obtenida en el test<br />
+                            <code>objscore.threshold</code>: {number} umbral de nota para considerar la prueba superada<br />
+                            <code>objscore.act</code>: {array of objects} matriz de objetos cada uno con los datos de una actividad del test. Las propiedades de un objeto n de la matriz son:<br />
+                            <div style="padding-left: 2em;">
+                                <code>[n].type</code>: {string} tipo de actividad<br />
+                                <code>[n].id</code>: {string} identificador de la actividad<br />
+                                <code>[n].name</code>: {string} nombre de la actividad<br />
+                                <code>[n].weighting</code>: {number} peso de la actividad en el test respecto a las otras actividades<br />
+                                <code>[n].lighting</code>: {number} porcentaje que debe quitarse si se falla<br />
+                                <code>[n].score</code>: {number} puntos obtenidos sobre el total del test<br />
+                                <code>[n].success</code>: {string} porcentaje de acierto<br />
+                                <code>[n].ptsplay</code>: {number} puntos en juego del total del test<br />
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <br /><br />
+                <div class="spanhelp">
+                    Tenga en cuenta que en estas variables se guardan los valores de la última llamada a la función. Por lo tanto, si se llama una segunda vez
+                    a la función, por ejemplo volviendo a realizar un test, los datos nuevos sobrescriben los anteriores. También pasará si en un documento, en una página
+                    web, existen dos test. Cada test al entregarse guardará sus valores en las variables. Sin embargo, también se guarda en la función <code>setTest</code> 
+                    el objeto <code>objscore</code> en una variable de nombre igual al id del test, por tanto, en un documento con varios test puede acceder a los resultados de la última
+                    entrega accediendo a esta variable, p. ej. <code>setTest["test_obj_1"]</code> para el objeto  <em>objscore</em> de un test de id="test_obj_1". Naturalmente, también
+                    debe tener presente que todos estos datos se pierden cuando se recarga la página.
+                </div>
+            </div>
+        </div>
+        <div class="campoconfig">
+            <label for="onok">onok:  <input type="checkbox" name="onok" id="onok" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <code>onok</code> permite introducir una función que se llamará cuando el usuario pulse en el botón para
+                    comprobar el resultado y se supere el umbral de nota pedido (threshold). Desde esta función se puede acceder, entre otros datos, a la 
+                    nota total (this.total), al umbral de nota para superar la prueba (this.threshold) y a la nota obtenida (this.score). Vea el comentario
+                    de la propiedad <code>oncheck</code>.
+                </span> 
+            </div>
+        </div>
+        <div class="campoconfig">
+            <label for="onko">onko:  <input type="checkbox" name="onko" id="onko" /></label>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                La propiedad <code>onko</code> permite introducir una función que se llamará cuando el usuario pulse en el botón para
+                    comprobar el resultado y no se supere el umbral de nota pedido (threshold). Desde esta función se puede acceder, entre otros datos, a la 
+                    nota total (this.total), al umbral de nota para superar la prueba (this.threshold) y a la nota obtenida (this.score). Vea el comentario
+                    de la propiedad <code>oncheck</code>.
+                </span> 
+            </div>
+        </div>
+        <div class="campoconfig">
+            NOTA DE ACLARACIÓN
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    Las variables <code>this.score, this.threshold, etc.</code> son variables públicas de la función <code>jsGeork.Questions.Test()</code>. Por tanto, la palabra reservada
+                    <em>this</em> se refiere a esta función y podemos acceder a estas variables utilizando <code>jsGeork.Questions.Test.score, jsGeork.Questions.Test["threshold"], etc</code>.
+                    Debe tener en cuenta que si la función es llamada por otros test el valor de estas variables será sobrescrito. Por tanto debe utilizarlas
+                    inmediatamente después de su llamada por el test. Desde los eventos <code>onready, oncheck, onok y onko</code> es segura su utilización ya que su llamada actualiza
+                    su valor al del test; sin embargo, si leemos el valor de <code>jsGeork.Questions.Test.score</code> obtendremos el del último test que los ha actualizado. 
+                    Puede saber el id del último test que ha actualizado las variables utilizando <code>jsGeork.Questions.Test.update</code>. Si necesita acceder a estos datos desde fuera
+                    de los eventos utilice la propiedad de la función cuyo nombre es el del id del test, por ejemplo <code>jsGeork.Questions.Test["id"]</code>. Esta propiedad 
+                    contiene como valor un objeto con los datos del test. Puede ver en la consola de su navegador qué datos guarda este objeto con el script <code>console.log(jsGeork.Questions.Test["id"]);</code>. 
+                </span> 
+            </div>
+        </div>
+                
+       </div> <!--advopt-->
+
+        <button type="button" id="btngenera">Genera</button>
+
+            <span id="delsto">[ Borrar valores almacenados y reajustar ]</span>
+
+
+        </fieldset>
+    </form>
+
+    <div id="htmlorig">
+
+        <div id="ejtest_single1">
+           <div style="display: none;">
+               <div data-info-bottom="ejtest_single1">El autor de 'Don Quijote de la Mancha' es:</div>
+               <div data-opt="opta"><span style="color: blue;">Miguel de Cervantes Saavedra.</span></div>
+               <div data-opt="optb"><span style="color: red;">No es el autor.</span></div>
+               <div data-info-ok="ejtest_single1">
+                   <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+                   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+               </div>
+               <div data-info-ko="ejtest_single1">
+                   <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+                   <span class="CSSMsgFail">¡NO es correcto!</span>
+               </div>
+           </div>
+        </div>
+
+
+        <div id="ejtest_multi1">
+           <div style="display: none;">
+               <div data-info-bottom="ejtest_multi1">Seleccione las afirmaciones correctas sobre la novela 'Don Quijote de la Mancha':</div>
+               <div data-opt="opta">Cierto. La primera parte se publiuca en 1605.</div>
+               <div data-opt="optb">Falso. La segunda parte se publica en 1615.</div>
+               <div data-opt="optc">Falso. Genitor es el nombre del caballo de Julio César con el que cruzó el Rubicón. Sancho Panza solo nombra a su asno por el color de su pelo, 'el rucio'.</div>
+               <div data-opt="optd">Cierto. Don Quijote enloquece a causa de la lectura de libros de caballería, siendo Amadís de Gaula la más repesentativa de este género.</div>
+               <div data-opt="opte">Cierto. El nombre verdadero de Don Quijote es Alonso Quijano.</div>
+               <div data-info-ok="ejtest_multi1">
+                   <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+                   <span class="CSSMsgSuccess">¡CORRECTO!</span>
+               </div>
+               <div data-info-ko="ejtest_multi1">
+                   <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+                   <span class="CSSMsgFail">¡NO es correcto!</span>
+               </div>
+           </div>
+        </div>
+
+        <div id="ejtest_input1">
+                    <div data-makeqs="ejtest_input1">
+                        ¿En qué año murió Cervantes?<br /><br />
+                        Año: <span data-input-make="box1">1616</span>
+                        <!-- botones -->
+                        <span data-input-btnchek="ejtest_input1"></span><span data-input-btnhint="ejtest_input1"></span>
+                        <div data-info-ok="ejtest_input1" style="display: none;">
+                            <span style="color: blue;">¡Correcto!</span><br />
+                             Miguel de Cervantes Saavedra (Alcalá de Henares, 29 de septiembre de 1547 – Madrid, 22 de abril de 1616)
+                        </div>
+                        <div data-info-hint="ejtest_input1" style="display: none;" aria-hidden="true">
+                            4^2bis
+                        </div>
+                        <div style="display: none;">
+                            <div data-info-ko="ejtest_input1">
+                            <span style="color: red;">Error</span>
+                            </div>
+                            <div data-info-ok="ejtest_input1">
+                                <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+                                <span class="CSSMsgSuccess">¡CORRECTO!</span>
+                            </div>
+                            <div data-info-ko="ejtest_input1">
+                                <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+                                <span class="CSSMsgFail">¡NO es correcto!</span>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+
+        <div id="ejtest_gapfill1">
+                
+                <div><em>Complete los huecos del texto siguiente:</em></div>
+                <p data-makeqs="ejtest_gapfill1">En un lugar de la <span data-gap-select="gap1">Mancha</span>, de cuyo nombre no quiero acordarme, no ha mucho tiempo 
+                que vivía un <span data-gap-fill="gap2">hidalgo</span> de los de lanza en astillero, adarga antigua, rocín flaco y <span data-gap-select="gap3">galgo</span> corredor. Una olla de 
+                algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lentejas los viernes, 
+                algún palomino de añadidura los <span data-gap-fill="gap4">domingos</span>, consumían las tres partes de su hacienda.</p>
+        
+                <span data-makeqs="ejtest_gapfill1">Autor: <span data-gap-fill="gap5">Cervantes</span></span>
+
+                <div style="display: none;">
+                    <div data-info-ok="ejtest_gapfill1">
+                        <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+                        <span class="CSSMsgSuccess">¡CORRECTO!</span>
+                    </div>
+                    <div data-info-ko="ejtest_gapfill1">
+                        <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+                        <span class="CSSMsgFail">¡NO es correcto!</span>
+                    </div>
+                </div>
+                <div id="ejtest_gapfill1_onok" style="display: none;"><span style="color: blue; font-size: xx-large;">¡Ejercicio CORRECTO!</span></div>
+                <div id="ejtest_gapfill1_onko" style="display: none;"><span style="color: red;">¡Ejercicio con errores!</span></div>
+
+            
+        </div>
+
+        
+
+    </div>
+
+    <div id="bloqueej">
+
+        
+
+    </div><!-- end bloquej-->
+
+
+    <div id="bloquecode">
+        <span>Código:</span> <span id="selcode" style="cursor: pointer;">[Selecciona el código]</span>
+        <textarea id="textcode">
+
+
+        </textarea>
+        <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    El cuadro anterior incluye el código del test para que lo copie y pegue en su página. Para que funcione correctamente
+                    es necesario que incluya en la misma página el código de las actividades que formarán parte del test, pero sin la instrucción que llama a la biblioteca. También debe completar 
+                    la llamada a la función <code>jsGeork.Questions.Test(obj_myprefix_identifier, ???, ??? );</code> colocando después del objeto del test 
+                    los objetos de cada actividad separados por comas. En realidad no es tan complicado si sigue estos pasos.
+                </span>
+                    <ol>
+                        <li>Cree actividades o preguntas utilizando los formularios <em><a href="generator_single.html" target="_blank">actividades de preguntas con respuestas de elección múltiple</a></em> (PEM), <em><a href="generator_multi.html" target="_blank">actividades de preguntas con respuestas multiselección</a></em> (PMS),
+                        <em><a href="generator_input.html" target="_blank">actividades de preguntas con respuestas  en cuadros de entrada</a></em> (PIB) y/o <em><a href="generator_gapfill.html" target="_blank">actividades de rellenar huecos</a></em> (PGF).</li>
+                        <li>Copie y pegue el código de las actividades en su página web. Modifique el html, cargue la página y compruebe que la actividad funciona de la forma deseada de manera autónoma, es decir, cuando no forman parte de un test. 
+                            Tenga en cuenta que al realizar las actividades puede guardarse en el storage un resultado previo completado mientras que cuando la actividad forma parte de un test no se guardan.</li>
+                        <li>Como las actividades serán generadas por el test, debe quitar o mejor comentar la línea del código de la actividad que llama a la biblioteca colocando delante dos barras inclinadas //. Se trata de la última línea del código JavaScript, p. ej. <code>//jsGeork.Questions.Question(obj_ejtest_single1);</code>.</li>
+                        <li>Genere el código del test con el formulario de esta página y péguelo en su documento, detrás del código de las actividades.</li>
+                        <li>Copie el nombre del objeto de la actividad, el que está dentro de los paréntesis en la línea comentada en el paso anterior, detrás del nombre del objeto del test de la línea que
+                            llama a la biblioteca del código del test. Por ejemplo, en <code>jsGeork.Questions.Test(obj_test,<strong>obj_ejtest_single1</strong>);</code> se ha añadido el objeto <code>obj_ejtest_single1</code>. Los objetos deben separarse con una coma.
+                        </li>
+                        <li>Si quiere añadir más actividades, repita los pasos 1 a 5 exceptuando el paso 4.</li>
+                        <li>Compruebe que el test funciona correctamente. Puede colocar temporalmente la propiedad <em>slide</em> a <em>true</em> ("slide": true,) en el objeto test para comprobar
+                            que efectivamente las actividades están controladas por el test.
+                        </li>
+                    </ol>
+                <span class="spanhelp">
+                    También es necesario que la página cargue las bibliotecas jQuery y jsGeork. Para que las actividades y el test se vean correctamente es necesario
+                    también que existan en la página las reglas CSS adecuadas. Si utiliza el software este se encarga de incluir los enlaces
+                    a los archivos .js y .css con las bibliotecas javascript y los estilos css. Si no utiliza el software deberá incluir 
+                    los enlaces de forma manual.
+                </span>
+                <br /><br />
+                <span class="spanhelp">
+                Si tiene los mínimos conocimientos necesarios para escribir objetos javascript en notación literal puede editar el código 
+                    manualmente para modificar la actividad, por ejemplo añadir más opciones de respuesta. Para detectar errores puede probar
+                    el código del interior de la etiqueta <code>script</code> en páginas como <a href="http://www.jshint.com/" target="_blank">www.jshint.com</a>.
+                    Por ejemplo, es aconsejable que no incluya la coma (,) final en las últimas propiedades de un objeto ya que en algunos navegadores antiguos produce error.
+                </span>
+            </div>
+
+    </div>
+
+
+    <div id="iframe_ejemplos" class="iframe_ejemplos">
+
+    <h1>Ejemplos</h1>
+
+            <h3><a href="ejemplos/test_1.html" target="_blank">Ejemplos con diferente tipo de presentación (flow) de las preguntas</a></h3>
+           
+        
+
+            <h3><a href="ejemplos/test_2.html" target="_blank">Ejemplos de preguntas individuales utilizando la función Test para presentarlas</a></h3>
+           
+
+
+            <h3><a href="ejemplos/test_3.html" target="_blank">Ejemplos mostrando varias opciones disponibles</a></h3>
+            
+
+
+            <h3><a href="ejemplos/test_4.html" target="_blank">Ejemplos resituando controles, con una sola actividad o mostrando resultados.</a></h3>
+            
+
+    </div>
+   
+
+    <div class="goindex">
+    [ <a href="index.html">Índice</a> ]
+    </div>
+</body>
+</html>
+

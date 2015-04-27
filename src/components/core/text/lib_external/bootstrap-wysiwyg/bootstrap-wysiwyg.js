@@ -23,6 +23,7 @@
 			selectedRange,
 			options,
 			toolbarBtnSelector,
+			toolbarExtraCommandsSelector,
 			updateToolbar = function () {
 				if (options.activeToolbarClass) {
 					$(options.toolbarSelector).find(toolbarBtnSelector).each(function () {
@@ -109,6 +110,14 @@
 					execCommand($(this).data(options.commandRole));
 					saveSelection();
 				});
+				if(options.hasOwnProperty('extracommandhandler')){
+					toolbar.find(toolbarExtraCommandsSelector).click(function () {
+						restoreSelection();
+						editor.focus();
+						options.extracommandhandler($(this).data(options.extraCommandSelector));
+						saveSelection();
+					});
+				}
 				toolbar.find('[data-toggle=dropdown]').click(restoreSelection);
 
 				toolbar.find('input[type=text][data-' + options.commandRole + ']').on('webkitspeechchange change', function () {
@@ -154,6 +163,7 @@
 			};
 		options = $.extend({}, $.fn.wysiwyg.defaults, userOptions);
 		toolbarBtnSelector = 'a[data-' + options.commandRole + '],button[data-' + options.commandRole + '],input[type=button][data-' + options.commandRole + ']';
+		toolbarExtraCommandsSelector = 'a[data-' + options.extraCommandSelector + '],button[data-' + options.extraCommandSelector + '],input[type=button][data-' + options.extraCommandSelector + ']';
 		bindHotkeys(options.hotKeys);
 		if (options.dragAndDropImages) {
 			initFileDrops();
@@ -191,6 +201,7 @@
 		},
 		toolbarSelector: '[data-role=editor-toolbar]',
 		commandRole: 'edit',
+		extraCommandSelector: 'extracommand',
 		activeToolbarClass: 'btn-info',
 		selectionMarker: 'edit-focus-marker',
 		selectionColor: 'darkgrey',
