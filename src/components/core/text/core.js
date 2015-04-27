@@ -139,40 +139,90 @@ TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo
 
 TextBox.prototype.handlerExtraCommands = function handlerExtraCommands(command) {
   var tablevalues=[];
+  var fullSize=0;
+  var withheader=0;
   if(command === "marcar"){
-    $('#tablemenuRow a,#tablemenuCol a ').each(function(idx,o){
-        $(o).click(function(){
-          $(this).dropdown('toggle');$(this).parent().addClass('active');
+    $('#tablemenuRow a,#tablemenuCol a').each(function(idx,o){
+        $(o).click(function(e){
+          e.stopPropagation();
+          if ($(this).parent().hasClass('active')){
+            $(this).parent().removeClass('active');
+          }else{
+            $(this).parent().addClass('active');
+          }
+        });
+    });
+    $('#inputFullSize').each(function(idx,o){
+        $(o).click(function(e){
+//          debugger;
+          e.stopPropagation();
+        });
+    });
+    $('#inputWithHeader').each(function(idx,o){
+        $(o).click(function(e){
+//          debugger;
+          e.stopPropagation();
         });
     });
     $('#tablemenuButton').click(function(){
       $(this).parent().find('li.active a').each(function(idx,o){
           tablevalues.push($(o).text());
       });
+      if($('#inputFullSize').is(':checked')){
+        fullSize=1;
+      }
+      if($('#inputWithHeader').is(':checked')){
+        withheader=1;
+      }
+      //clean fields
       $('#tablemenuRow a,#tablemenuCol a ').each(function(idx,o){
           $(this).parent().removeClass('active');
       });
-      document.execCommand('insertHTML', 0, createTable(tablevalues[0],tablevalues[1]));
+      $('#inputFullSize').each(function(idx,o){
+        $(o).click(function(){
+          $(this).prop('checked',false);
+        });
+      });
+      $('#inputWithHeader').each(function(idx,o){
+        $(o).click(function(){
+          $(this).prop('checked',false);
+        });
+      });
+      document.execCommand('insertHTML', 0, createTable(tablevalues[0],tablevalues[1],fullSize,withheader));
     });
   }
 };
 
-function createTable(row,col){
+function createTable(row,col,tableclass,header){
   var k=1;
-  var t=$('<table></table>').append('<thead><tr></tr></thead>');
-  for(var i = 0; i < col; i++){ 
-    t.find('tr').append('<th>'+(k++)+'</th>');
+  if (tableclass){
+    var t=$("<table class='fullsize'></table>");
+  }else{
+    var t=$('<table></table>');
+  }
+  if(header){
+    t.append('<thead><tr></tr></thead>');
+    for(var i = 0; i < col; i++){ 
+      t.find('tr').append('<th>'+(k++)+'</th>');
+    }
   }
   t.append('<tbody>');
   for(var i = 0; i < row; i++) {
     t.append('<tr></tr>');
-            for(var j = 0; j < col; j++) {
-                $(t).find('tr').eq(i+1).append('<td>'+(k++)+'</td>');
-                $(t).find('tr').eq(i+1).find('td').eq(j).attr('data-row',i).attr('data-col', j);
-            }
-        }
-   t.append('</tbody>');   
-    return t[0].outerHTML;
+    
+    if(header){
+      var u=i+1;
+    }else{
+      var u=i;
+    }
+
+    for(var j = 0; j < col; j++) {
+        $(t).find('tr').eq(u).append('<td>'+(k++)+'</td>');
+        $(t).find('tr').eq(u).find('td').eq(j).attr('data-row',i).attr('data-col', j);
+    }
+  }
+  t.append('</tbody>');  
+  return t[0].outerHTML;
 }
 
 function toolbarposition(position){

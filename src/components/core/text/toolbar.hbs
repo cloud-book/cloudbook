@@ -36,7 +36,7 @@
       <div class="btn-group">
         <a class="btn dropdown-toggle" data-toggle="dropdown" title="Insert Table" data-extracommand="marcar"><i class="fa fa-table"></i></a>
         <div class="dropdown-menu" style="padding-left:10px;">
-            <span>Filas:</span>
+            <span>{{gettext "Rows:"}}</span>
             <span>
             <ul id="tablemenuRow" class="pagination pagination-sm">
               <li><a href="#">1</a></li>
@@ -47,7 +47,7 @@
             </ul>
             </span>
             <li role="presentation" class="divider"></li>
-            <span>Columnas:</span>
+            <span>{{gettext "Cols:"}}</span>
             <span>
             <ul id="tablemenuCol" class="pagination pagination-sm">
               <li><a href="#">1</a></li>
@@ -57,6 +57,10 @@
               <li><a href="#">5</a></li>
             </ul>
             </span>
+            <li role="presentation" class="divider"></li>
+            <input id="inputFullSize" type="checkbox" />{{gettext "Full Size:"}}
+            <br />
+            <input id="inputWithHeader" type="checkbox" />{{gettext "With Header:"}}
             <li role="presentation" class="divider"></li>
             <button id="tablemenuButton" class="btn" type="button">Add</button>
           </div>

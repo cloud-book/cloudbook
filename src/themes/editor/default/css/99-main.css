@@ -279,7 +279,7 @@ body{
 /*
  * Tables inside text-component
  */
-.cbtextbox table{
+.cbtextbox table.fullsize{
     width:100%;
     height:98%;  
 }
