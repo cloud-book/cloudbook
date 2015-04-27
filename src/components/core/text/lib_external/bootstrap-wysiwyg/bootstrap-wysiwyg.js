@@ -37,8 +37,8 @@
 			},
 			execCommand = function (commandWithArgs, valueArg) {
 				var commandArr = commandWithArgs.split(' '),
-					command = commandArr.shift(),
-					args = commandArr.join(' ') + (valueArg || '');
+-                   			command = commandArr.shift(),
+-                   			args = commandArr.join(' ') + (valueArg || '');
 				document.execCommand(command, 0, args);
 				updateToolbar();
 			},
@@ -198,3 +198,4 @@
 		fileUploadError: function (reason, detail) { console.log("File upload error", reason, detail); }
 	};
 }(window.jQuery));
+//@ sourceURL=bootstrap_wysiwyg_textbox.js
