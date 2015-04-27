@@ -34,13 +34,40 @@
         
       </div>
       <div class="btn-group">
-      <a class="btn" data-edit="insertHTML <table cellspacing='0'><thead><th>head1</th><th>head2</th></thead><tbody><tr><td>Val1</td><td>Val2</td></tr><tr><td>Val3</td><td>Val4</td></tr></tbody></table>" title="Table"><i class="fa fa-table"></i></a>
-		  <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
-		    <div class="dropdown-menu input-append">
-			    <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
-			    <button class="btn" type="button">Add</button>
-        </div>
-        <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
+        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Insert Table" data-extracommand="marcar"><i class="fa fa-table"></i></a>
+        <div class="dropdown-menu">
+            <span>Filas:</span>
+            <span>
+            <ul id="tablemenuRow" class="pagination pagination-sm">
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+            </ul>
+            </span>
+            <li role="presentation" class="divider"></li>
+            <span>Columnas:</span>
+            <span>
+            <ul id="tablemenuCol" class="pagination pagination-sm">
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+            </ul>
+            </span>
+            <li role="presentation" class="divider"></li>
+            <button id="tablemenuButton" class="btn" type="button">Add</button>
+          </div>
+      </div>
+      <div class="btn-group">
+  		  <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
+  		    <div class="dropdown-menu input-append">
+  			    <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
+  			    <button class="btn" type="button">Add</button>
+          </div>
+          <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
 
       </div>
       

@@ -138,11 +138,42 @@ TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo
 };
 
 TextBox.prototype.handlerExtraCommands = function handlerExtraCommands(command) {
-  if(command === "table"){
-    console.log("Ejecutando el codigo de tablas");
+  var tablevalues=[];
+  if(command === "marcar"){
+    $('#tablemenuRow a,#tablemenuCol a ').each(function(idx,o){
+        $(o).click(function(){
+          $(this).dropdown('toggle');$(this).parent().addClass('active');
+        });
+    });
+    $('#tablemenuButton').click(function(){
+      $(this).parent().find('li.active a').each(function(idx,o){
+          tablevalues.push($(o).text());
+      });
+      $('#tablemenuRow a,#tablemenuCol a ').each(function(idx,o){
+          $(this).parent().removeClass('active');
+      });
+      document.execCommand('insertHTML', 0, createTable(tablevalues[0],tablevalues[1]));
+    });
   }
 };
 
+function createTable(row,col){
+  var k=1;
+  var t=$('<table></table>').append('<thead><tr></tr></thead>');
+  for(var i = 0; i < col; i++){ 
+    t.find('tr').append('<th>'+(k++)+'</th>');
+  }
+  t.append('<tbody>');
+  for(var i = 0; i < row; i++) {
+    t.append('<tr></tr>');
+            for(var j = 0; j < col; j++) {
+                $(t).find('tr').eq(i+1).append('<td>'+(k++)+'</td>');
+                $(t).find('tr').eq(i+1).find('td').eq(j).attr('data-row',i).attr('data-col', j);
+            }
+        }
+   t.append('</tbody>');   
+    return t[0].outerHTML;
+}
 
 function toolbarposition(position){
 	var toolbar = $(".cbtextbox-toolbar");
@@ -150,8 +181,6 @@ function toolbarposition(position){
 	       .css('top',position.top - 60 + "px")
 	       .css('left',position.left + "px");
 }
-
-
 
 module.exports = TextBox;
 //@ sourceURL=text_core.js
