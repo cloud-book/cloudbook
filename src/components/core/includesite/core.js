@@ -24,7 +24,9 @@ IncludeSite.prototype.editorView = function editorView() {
 
 IncludeSite.prototype.htmlView = function htmlView() {
   var aux = IncludeSite.super_.prototype.htmlView.call(this);
-  var iframeelement = $(window.document.createElement('iframe')).attr('src',this.url );
+  // Bug, Firefox flash don't support transform attribute
+  aux.css('transform','');
+  var iframeelement = $(window.document.createElement('iframe')).attr('src',"rsrc/"+this.url );
   iframeelement.css('height','100%');
   iframeelement.css('width','100%');
   aux.append(iframeelement);

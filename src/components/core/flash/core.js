@@ -31,6 +31,8 @@ FlashBox.prototype.editorView = function editorView() {
 
 FlashBox.prototype.htmlView = function htmlView() {
   var aux = FlashBox.super_.prototype.editorView.call(this);
+  // Bug, Firefox flash don't support transform attribute
+  aux.css('transform','');
   var flashelement = $(window.document.createElement('object')).attr('type','application/x-shockwave-flash').attr('data',"rsrc/"+ this.resourcepath);
   var params = [];
   params.push($(window.document.createElement('param')).attr('name','movie').attr('value',this.resourcepath));
