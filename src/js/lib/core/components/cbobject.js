@@ -93,32 +93,28 @@ CBObject.prototype.clickButton = function clickButton(controllerClass) {
 
 CBObject.prototype.editButton = function editButton(e) {
 	var that = e.data.that;
-	var dialog = $("<div></div>");
+	var dialog = $("<div><div class='content'></div><footer><div id='savedialog'><button id='save'>Save</button><button id='cancel'>Cancel</button></div></footer></div>");
 	dialog.callbacks = [];
 	dialog.dialog({
 		modal:true,
 		close:function(){
-			
-			var savedialog = $("<div id='savedialog'><button id='save'>Save</button><button id='cancel'>"+ CBI18n.gettext("Cancel") +"</button></div>");
-			savedialog.children('#save').click(function(){
-				dialog.callbacks.forEach(function lanzador(e){e()});
-				var viewobject = $("[data-cbobjectid='"+that.uniqueid+"']");
-				viewobject.replaceWith(that.editorView());
-				that.triggerAddEditorView($("[data-cbobjectid='"+that.uniqueid+"']"),that);
-				var CBStorage = application.storagemanager.getInstance();
-    			CBStorage.setCBObjectById(that,that.uniqueid);
-				dialog.remove() ;
-				$('#savedialog').dialog('destroy'); });
-			savedialog.children('#cancel').click(function(){dialog.remove() ; $('#savedialog').dialog('destroy');});
-			savedialog.dialog({
-				modal:true,
-				close:function(){
-					$(this).remove();
-					dialog.dialog('open')}
-			});
-			
 		}
 	});
+	dialog.find('#save').click(function(){
+		dialog.callbacks.forEach(function lanzador(e){e()});
+		var viewobject = $("[data-cbobjectid='"+that.uniqueid+"']");
+		viewobject.replaceWith(that.editorView());
+		that.triggerAddEditorView($("[data-cbobjectid='"+that.uniqueid+"']"),that);
+		var CBStorage = application.storagemanager.getInstance();
+    	CBStorage.setCBObjectById(that,that.uniqueid);
+		dialog.remove() ;
+		$('#savedialog').dialog('destroy'); 
+	});
+	dialog.find('#cancel').click(function(){
+		dialog.remove() ;
+		$('#savedialog').dialog('destroy');
+	});
+
 	return dialog;
 };
 

@@ -86,9 +86,8 @@ IncludeSite.prototype.editButton = function editButton(e) {
   var dialog = IncludeSite.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
 
-  dialog.append("<input id='url' type='text' value='"+that.url+"'/>");
+  dialog.children(".content").append("<input id='url' type='file'/>");
   dialog.callbacks.push(function(){
-    
     copySite($("#url").val(),that);
   });
 };

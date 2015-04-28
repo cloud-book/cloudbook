@@ -150,7 +150,7 @@ FillGapBox.prototype.editButton = function editButton(e) {
   var toolbar = template({identifier:"#activitytext"});
   template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
-  dialog.append(templatecompiled({description:that.description,toolbar:toolbar,activitytext:that.activitytext}));
+  dialog.children(".content").append(templatecompiled({description:that.description,toolbar:toolbar,activitytext:that.activitytext}));
   dialog.find("#activitytext").wysiwyg({extracommandhandler:that.extracommandhandler});
   dialog.callbacks.push(function(){updateText(dialog,that);});
 }

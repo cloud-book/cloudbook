@@ -117,6 +117,17 @@ FlashBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
 };
 
 
+FlashBox.prototype.editButton = function editButton(e) {
+  var that = this;
+  var dialog = FlashBox.super_.prototype.editButton.call(this,e);
+  dialog.children(".content").append("<div id='flashdialog'><input id='flashpath' type='file' accept='.swf,.flv' /></div>");
+  dialog.callbacks.push(function(){updateFlashPath(dialog,that)});
+};
+
+
+
+
+
 function updateFlashPath(dialog,that){
     var fs = window.require('fs');
     var fsextra = window.require('fs-extra');

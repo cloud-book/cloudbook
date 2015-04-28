@@ -15,6 +15,7 @@
  	$(document).ready(function(){
  		$('body').layout({
  			applyDefaultStyles:true,
+ 			enableCursorHotkey:false,
  			north:{
  				resizable:false,
  				closable:false,

@@ -88,7 +88,7 @@ YoutubeBox.prototype.clickButton = function clickButton(controllerClass) {
 YoutubeBox.prototype.editButton = function editButton(e) {
   var dialog = YoutubeBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
-  dialog.append("<input id='url' type='text' value='"+that.url+"'/>");
+  dialog.children(".content").append("<input id='url' type='text' value='"+that.url+"'/>");
   dialog.callbacks.push(function(){
     that.url = parseYoutubeUrl($("#url").val());
   });

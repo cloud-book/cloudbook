@@ -56,7 +56,7 @@ AudioBox.prototype.editButton = function editButton(e) {
   var dialog = AudioBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
 
-  dialog.append("<input id='audiopath' type='file'/>");
+  dialog.children(".content").append("<input id='audiopath' type='file'/>");
   dialog.callbacks.push(function callbackEditButtonReplaceAudioBox(){
     updateAudioPath(dialog,that);
   })
