@@ -66,7 +66,7 @@ IncludeSite.prototype.triggerAddEditorView = function triggerAddEditorView(jquer
 IncludeSite.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   var dialog = $("<div id='includesitedialog'><input id='url' type='file'/><button id='save'>"+ CBI18n.gettext("Insert") +"</button></div>");
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
   dialog.find('#url').keypress(function(e){
       if (e.which==13){
         var seccion = $('#url').val();

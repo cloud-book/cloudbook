@@ -95,7 +95,7 @@ ImageBox.prototype.clickButton = function clickButton(controllerClass) {
   dialog.children('#action').click(function(){
     updateImagePath(dialog,that);
   });
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
   $("#imagedialog button").on('click',function(){that.calculateDimensions(that);controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 ImageBox.prototype.calculateDimensions = function calculateDimensions(that) {

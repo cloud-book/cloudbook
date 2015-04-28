@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-04-28 12:39+0000\n"
+"POT-Creation-Date: 2015-04-28 15:46+0000\n"
 
 #: src/components/core/audio/core.js:44
 #: src/components/core/whiteboard/core.js:61
@@ -67,6 +67,58 @@ msgstr ""
 
 #: src/components/core/youtube/core.js:62
 msgid "Click view youtube video"
+msgstr ""
+
+#: src/i18n/all.js:1
+msgid "Url"
+msgstr ""
+
+#: src/i18n/all.js:2
+msgid "Include site"
+msgstr ""
+
+#: src/i18n/all.js:3
+msgid "PEM"
+msgstr ""
+
+#: src/i18n/all.js:4
+msgid "Audio"
+msgstr ""
+
+#: src/i18n/all.js:5
+msgid "Jclic"
+msgstr ""
+
+#: src/i18n/all.js:6
+msgid "Video"
+msgstr ""
+
+#: src/i18n/all.js:7
+msgid "Youtube"
+msgstr ""
+
+#: src/i18n/all.js:8
+msgid "PMS"
+msgstr ""
+
+#: src/i18n/all.js:9
+msgid "Flash"
+msgstr ""
+
+#: src/i18n/all.js:10
+msgid "Imagen"
+msgstr ""
+
+#: src/i18n/all.js:11
+msgid "Fill in the gaps"
+msgstr ""
+
+#: src/i18n/all.js:12
+msgid "Whiteboard"
+msgstr ""
+
+#: src/i18n/all.js:13
+msgid "Textbox"
 msgstr ""
 
 #: src/js/lib/core/backend/core.js:433

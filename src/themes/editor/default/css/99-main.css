@@ -1,9 +1,12 @@
 body{
-    background-color: #4c4c4c;
+    background-color: #1f1f1f;
     margin: 0;
     padding: 0;
 }
-
+*{
+    outline: none;
+    font-family: 'Roboto';
+}
 
 /********************************
  *
@@ -22,7 +25,7 @@ body{
 .ui-layout-north{
     padding: 0 !important;
     border:none !important;
-    background:  linear-gradient(#707070,#4c4c4c) !important;
+    background:  linear-gradient(#505050,#1f1f1f) !important;
 }
 
 .ui-layout-resizer-north{
@@ -31,7 +34,7 @@ body{
 .ui-layout-south{
 
     border:none !important;
-    background:  linear-gradient(#4c4c4c,#707070) !important;
+    background:  linear-gradient(#1f1f1f,#505050) !important;
 }
 
 .ui-layout-resizer-west, .ui-layout-resizer-south {
@@ -63,14 +66,13 @@ body{
     background-color: #4c4c4c;
 }
 
-#navsections > div > ul{
-    padding: 0;
-}
-
 
 #navsections ul{
-    list-style-type: none;
-    padding-left: 15px;
+    
+}
+
+#navsections > ul{
+    padding: 5px;
 }
 
 .displaysection{
@@ -82,6 +84,7 @@ body{
     border: 1px solid #000000;
     display: block;
     position: relative;
+    box-shadow: 1px 1px 5px 1px #aaa inset;
 }
 
 .displaysection button{
@@ -103,7 +106,8 @@ body{
 }
 
 .sectionselected{
-    box-shadow: 0 0 4px 3px #77d;
+    box-shadow: 0 0 4px 3px #49a8de;
+    color: #49a8de;
 }
 
 /*
@@ -126,6 +130,8 @@ body{
 #navactions button{
     max-height: 40;
     position: relative;
+    background-color: transparent;
+    border: none;
 }
 
 #navactions button img{
@@ -142,14 +148,14 @@ body{
 }
 
 #cbobjecttoolbar{
-    background-color:#4c4c4c;
-    height:30px;
-    width: 250px;
+    background-color:#49a8de;
+    height: 24px;
+    width: 140px;
     position:absolute;
     margin: 0;
     padding: 0;
-    z-index: 10;
-    -webkit-transition: display 0.3s opacity 0.3s linear;
+    z-index: 1000;
+    /*-webkit-transition: display 0.3s opacity 0.3s linear;*/
 }
 
 /*}
@@ -170,7 +176,7 @@ body{
 }*/
 
 .cbobject.selected{
-    border:1px solid black;
+    border:1px solid #49a8de;
 }
 
 /************************
@@ -214,6 +220,7 @@ body{
 }
 .cbtextbox{
     overflow: hidden;
+    padding: 5px;
 }
 
 .exportpdfwizard .ui-dialog-titlebar-close{
@@ -225,12 +232,14 @@ body{
     height: 16px;
     width: 16px;
     cursor: pointer;
-    background-image: url(../img/rotate.png);
-    background-size: 100%;
-    left: -9px;
-    bottom: -9px;
+    background-image: url(../img/Cloudbook_Sprite.png);
+    background-position: -183px -209px;
+    left: -8px;
+    bottom: -8px;
     position: absolute;
     display: none;
+    border-radius: 100%;
+    border: 1px solid #49a8de;
 }
 
 .cbobject.selected .ui-rotatable-handle{
@@ -241,12 +250,40 @@ body{
     right: -9px;
     bottom: -9px;
     position: absolute;
-    display: none;
+    display: none !important;
+    border-radius: 100%;
+    border: 1px solid #49a8de;
+    background-image: url(../img/Cloudbook_Sprite.png);
+    background-position: -210px -209px;
 }
 
 .cbobject.selected .ui-resizable-se{
-    display: initial;
+    display: initial !important;
 }
+
+.cb-ui-icons{
+    background-image: url(../img/Cloudbook_Sprite.png);
+}
+.cb-toolbar{
+    height: 22px;
+    width: 22px;
+    display: inline-block;
+}
+
+.cb-ui-edit{
+    background-position: -50px -204px;
+}
+.cb-ui-delete{
+    background-position: -71px -204px;
+}
+.cb-ui-forward{
+    background-position: -95px -204px;
+}
+.cb-ui-backward{
+    background-position: -122px -204px;
+}
+
+
 
 
 .cbcliclayer{
@@ -379,4 +416,41 @@ body{
     background: #f2f2f2;
     background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
     background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);  
+}
+
+.CSSActGapFillBtnHint{
+    display: none !important;
+}
+
+
+.cbdialog button{
+    background-color: #1d99cf;
+    border-radius: 7px;
+    font-family: roboto;
+    border: none;
+    color: white;
+    padding: 1px 10px 4px 10px;
+    margin: 5px;
+}
+
+
+
+.cbdialog .ui-dialog-titlebar-close{
+    background-image: url("../img/Cloudbook_Sprite.png");
+    background-position: -24px -62px;
+    margin-top: -8px;
+    margin-right: 5px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    width: 14px;
+    height: 14px;
+    border-radius: 1px;
+}
+
+.cbdialog .ui-dialog-titlebar{
+    background: -webkit-gradient(linear, left top, left bottom, from(#55aae1), to(#0571b1));
+    border-radius: 7px;
+    color: #49a8de;
 }
