@@ -94,7 +94,7 @@ ExternalIframe.prototype.editButton = function editButton(e) {
   var dialog = ExternalIframe.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
 
-  dialog.append("<input id='url' type='text' value='"+that.url+"'/>");
+  dialog.children(".content").append("<input id='url' type='text' value='"+that.url+"'/>");
   dialog.callbacks.push(function(){
     var auxurl = $("#url").val();
     that.url = auxurl.search(/\b(http|https):\/\//) < 0 ? "http://" + auxurl : auxurl;
