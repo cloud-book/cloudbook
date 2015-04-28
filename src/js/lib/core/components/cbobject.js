@@ -127,12 +127,14 @@ CBObject.prototype.forwardButton = function forwardButton(e) {
 	var that = e.data.that;
 	var controller = application.controller.getInstance();
 	controller.modifyObjectLevelLayer(that.uniqueid,that.levellayer + 1);
+	e.stopPropagation();
 };
 
 CBObject.prototype.backwardButton = function backwardButton(e) {
 	var that = e.data.that;
 	var controller = application.controller.getInstance();
 	controller.modifyObjectLevelLayer(that.uniqueid,that.levellayer - 1);
+	e.stopPropagation();
 };
 
 CBObject.prototype.rotateButton = function rotateButton(e) {
