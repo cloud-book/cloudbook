@@ -84,7 +84,8 @@ ExternalIframe.prototype.clickButton = function clickButton(controllerClass) {
       }
   });
   $("#imagedialog button").on('click',function(){
-    that.url = $("#url").val();
+    var auxurl = $("#url").val();
+    that.url = auxurl.search(/\b(http|https):\/\//) < 0 ? "http://" + auxurl : auxurl;
     controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
@@ -95,7 +96,8 @@ ExternalIframe.prototype.editButton = function editButton(e) {
 
   dialog.append("<input id='url' type='text' value='"+that.url+"'/>");
   dialog.callbacks.push(function(){
-    that.url = $("#url").val();
+    var auxurl = $("#url").val();
+    that.url = auxurl.search(/\b(http|https):\/\//) < 0 ? "http://" + auxurl : auxurl;
   });
 };
 
