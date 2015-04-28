@@ -64,7 +64,7 @@ VideoBox.prototype.editButton = function editButton(e) {
 
 VideoBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='videodialog'><input id='videopath' type='file' accept='.mp4,.ogg,.webm' /><button id='action'>Insert</button></div>");
+  var dialog = $("<div id='videodialog'><input id='videopath' type='file' accept='.mp4,.ogg,.webm' /><button id='action'>"+ CBI18n.gettext("Insert") +"</button></div>");
   dialog.children('#action').click(function(){
     updateVideoPath(dialog,that);
   });

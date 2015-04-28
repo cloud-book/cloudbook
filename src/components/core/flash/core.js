@@ -66,7 +66,7 @@ FlashBox.prototype.pdfView = function pdfView() {
 
 FlashBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='flashdialog'><input id='flashpath' type='file' accept='.swf,.flv' /><button id='action'>Insert</button></div>");
+  var dialog = $("<div id='flashdialog'><input id='flashpath' type='file' accept='.swf,.flv' /><button id='action'>"+ CBI18n.gettext("Insert") +"</button></div>");
   dialog.children('#action').click(function(){
     updateFlashPath(dialog,that);
   });

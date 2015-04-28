@@ -66,7 +66,7 @@ AudioBox.prototype.editButton = function editButton(e) {
 
 AudioBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='audiodialog'><input id='audiopath' type='file' accept='.mp3,.ogg,.wav' /><button id='action'>Insert</button></div>");
+  var dialog = $("<div id='audiodialog'><input id='audiopath' type='file' accept='.mp3,.ogg,.wav' /><button id='action'>"+ CBI18n.gettext("Insert") +"</button></div>");
   dialog.children('#action').click(function(){
     updateAudioPath(dialog,that);
   });

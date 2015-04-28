@@ -69,7 +69,7 @@ YoutubeBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquery
 
 YoutubeBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='imagedialog'><input id='url' type='text'/><button id='save'>Insert</button></div>");
+  var dialog = $("<div id='imagedialog'><input id='url' type='text'/><button id='save'>"+ CBI18n.gettext("Insert") +"</button></div>");
   dialog.dialog({modal:true,close:function(){$(this).remove()}});
   dialog.find('#url').keypress(function(e){
       if (e.which==13){

@@ -99,7 +99,7 @@ CBObject.prototype.editButton = function editButton(e) {
 		modal:true,
 		close:function(){
 			
-			var savedialog = $("<div id='savedialog'><button id='save'>Save</button><button id='cancel'>Cancel</button></div>");
+			var savedialog = $("<div id='savedialog'><button id='save'>Save</button><button id='cancel'>"+ CBI18n.gettext("Cancel") +"</button></div>");
 			savedialog.children('#save').click(function(){
 				dialog.callbacks.forEach(function lanzador(e){e()});
 				var viewobject = $("[data-cbobjectid='"+that.uniqueid+"']");
@@ -147,7 +147,7 @@ CBObject.prototype.rotateButton = function rotateButton(e) {
 
 CBObject.prototype.deleteButton = function deleteButton(e) {
 	var that = e.data.that;
-	var dialog = $('<div><button id="delete">Delete</button><button id="cancel">Cancel</button></div>');
+	var dialog = $('<div><button id="delete">'+ CBI18n.gettext("Delete") +'</button><button id="cancel">'+ CBI18n.gettext("Cancel") +'</button></div>');
 	dialog.children('#delete').click(function(){
 		var controller = application.controller.getInstance();
 		controller.deleteCBObjectById(Cloudbook.UI.selected.attr('data-cbsectionid'),that.uniqueid);

@@ -31,7 +31,7 @@ JclicBox.prototype.editorView = function editorView() {
 
 JclicBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='jclicdialog'><input id='jclicpath' type='file' /><button id='action'>Insert</button></div>");
+  var dialog = $("<div id='jclicdialog'><input id='jclicpath' type='file' /><button id='action'>"+ CBI18n.gettext("Insert") +"</button></div>");
   dialog.children('#action').click(function(){
     updateJclicPath(dialog,that);
   });
