@@ -96,10 +96,14 @@ ImageBox.prototype.clickButton = function clickButton(controllerClass) {
     updateImagePath(dialog,that);
   });
   dialog.dialog({modal:true,close:function(){$(this).remove()}});
-  $("#imagedialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
+  $("#imagedialog button").on('click',function(){that.calculateDimensions(that);controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
-
-
+ImageBox.prototype.calculateDimensions = function calculateDimensions(that) {
+  var sizeOf = require('image-size');
+  var dim = sizeOf(Project.Info.projectpath+'/rsrc/'+that.imgpath);
+  var newsize=(dim.height*this.size[0])/dim.width;
+  this.size=[this.size[0],newsize];
+};
 ImageBox.prototype.editButton = function editButton(e) {
   var dialog = ImageBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
