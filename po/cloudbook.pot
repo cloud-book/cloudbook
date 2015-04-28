@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-04-28 11:32+0000\n"
+"POT-Creation-Date: 2015-04-28 12:39+0000\n"
 
 #: src/components/core/audio/core.js:44
 #: src/components/core/whiteboard/core.js:61
@@ -73,8 +73,14 @@ msgstr ""
 msgid "New version available :"
 msgstr ""
 
-#: src/js/lib/core/components/cbobject.js:102
-#: src/js/lib/core/components/cbobject.js:150
+#: src/js/lib/core/components/cbobject.js:96
+#: src/js/lib/gui/dialogMetadata.js:85
+#: src/templates/updateSectionName.hbs:2
+msgid "Save"
+msgstr ""
+
+#: src/js/lib/core/components/cbobject.js:96
+#: src/js/lib/core/components/cbobject.js:146
 #: src/js/lib/gui/dialogMetadata.js:90
 #: src/templates/exportEpubProject.wizard.hbs:9
 #: src/templates/exportHtmlProject.wizard.hbs:3
@@ -85,8 +91,10 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/js/lib/core/components/cbobject.js:150
+#: src/js/lib/core/components/cbobject.js:146
 #: src/js/lib/gui/ui/proview/core.js:87
+#: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:1
+#: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:1
 msgid "Delete"
 msgstr ""
 
@@ -344,11 +352,6 @@ msgstr ""
 
 #: src/js/lib/gui/dialogMetadata.js:50
 msgid "Classifications"
-msgstr ""
-
-#: src/js/lib/gui/dialogMetadata.js:85
-#: src/templates/updateSectionName.hbs:2
-msgid "Save"
 msgstr ""
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:4
@@ -1615,4 +1618,30 @@ msgstr ""
 
 #: src/templates/updateSectionName.hbs:1
 msgid "Section name"
+msgstr ""
+
+#: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:2
+#: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:2
+msgid "Add question"
+msgstr ""
+
+#: src/components/core/text/toolbar.hbs:1
+msgid "Rows:"
+msgstr ""
+
+#: src/components/core/text/toolbar.hbs:2
+msgid "Cols:"
+msgstr ""
+
+#: src/components/core/text/toolbar.hbs:3
+msgid "Full Size:"
+msgstr ""
+
+#: src/components/core/text/toolbar.hbs:4
+msgid "With Header:"
+msgstr ""
+
+#: src/components/core/text/toolbar.hbs:5
+#: src/components/core/text/toolbar.hbs:6
+msgid "Add"
 msgstr ""
