@@ -1,0 +1,30 @@
+<div id="exportEpubProject"class="form-group has-feedback ">
+      
+          <div>
+		<label for="titlebook">{{gettext "Title of de book:"}}</label><input name="titlebook" class="form-control" placeholder="{{gettext "Enter the title of the book"}}" value="{{titlebook}}"</input> 
+	 </div>
+	 <p><p>
+	 <div>
+		<label for="authorbook">{{gettext "Author:"}}</label><input name="authorbook" class="form-control" placeholder="{{gettext "Enter the author of the book"}}" value="{{authorbook}}"</input> 
+	 </div>
+	 <p><p>
+	 <div>
+		<label for="publisherbook">{{gettext "Publisher:"}}</label><input name="publisherbook" class="form-control" placeholder="{{gettext "Enter the publisher of the book"}}" value="{{publisherbook}}"</input> 
+	 </div>
+	 <p><p>
+	<div>
+		<label for="coverbook">{{gettext "Path of the cover:"}}</label><input name="coverbook" type="file"</label> 
+	 </div>
+	<p><p>
+     <div>
+		<label>{{gettext "Path where save of epub file:"}}</label><input name="path" type="file" nwsaveas="project.epub" disabled="disabled"</label> 
+     </div>
+</div>
+<p><p>
+<div> 
+<button id="exportepubback">{{gettext "Cancel"}}</button>
+<button id="exportepubbtn" disabled="disabled">{{gettext "Generate EPUB"}}</button>
+</div>
+<p><p>
+<div class="waitingOK" style="display:none"><font color="#FC0202"><strong>{{gettext "EPUB Generation in progress. Please wait a moment..."}}</strong></font></div>
+<div class="waitingER" style="display:none"><font color="#FC0202"><strong>{{gettext "There was an error generating EPUB file. Please cancel the process"}}</strong></font></div>
