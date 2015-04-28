@@ -91,7 +91,7 @@ ImageBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
 
 ImageBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='imagedialog'><input id='imgpath' type='file'/><button id='action'>Insert</button></div>");
+  var dialog = $("<div id='imagedialog'><input id='imgpath' type='file'/><button id='action'>" + CBI18n.gettext("Insert") +"</button></div>");
   dialog.children('#action').click(function(){
     updateImagePath(dialog,that);
   });

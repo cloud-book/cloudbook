@@ -8,7 +8,7 @@ function PMS(objectdata){
   objectdata.idtype = metadata['idtype'];
   PMS.super_.call(this,objectdata);
   this.pemidentifier = typeof objectdata.pemidentifier !== 'undefined' ? objectdata.pemidentifier : "pem_" + this.uniqueid ; 
-  this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : "Description of your activity" ; 
+  this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : CBI18n.gettext("Description of your activity") ; 
   this.questions = typeof objectdata.questions !== 'undefined' ? objectdata.questions : [] ;
 }
 
@@ -44,14 +44,14 @@ PMS.prototype.pdfView = function pdfView() {
 
 PMS.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='pemdialog'><input id='numberquestions' type='number' min='2' max='10' value='4'/><button id='action'>Insert</button></div>");
+  var dialog = $("<div id='pemdialog'><input id='numberquestions' type='number' min='2' max='10' value='4'/><button id='action'>"+ CBI18n.gettext("Insert") +"</button></div>");
   dialog.dialog({modal:true,close:function(){$(this).remove()}});
   
   $("#pemdialog button").on('click',function(){
     var counter = $("#numberquestions").val();
-    that.questions.push({"text": "Correct option","answer": "opt0","select": true,"checked":"checked"});
+    that.questions.push({"text": CBI18n.gettext("Correct option"),"answer": "opt0","select": true,"checked":"checked"});
     for (var i = 1 ; i < counter ; i++){
-      that.questions.push({"text": "Option " + i.toString(),"answer": "opt"+ i.toString(),"select": false,"checked":""});  
+      that.questions.push({"text": CBI18n.gettext("Option ") + i.toString(),"answer": "opt"+ i.toString(),"select": false,"checked":""});  
     }
     controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')}
     );
@@ -155,7 +155,7 @@ function updateQuestions(dialog,objectcbo){
   var description = dialog.find("#activitydescription").val();
   var newlist = [];
   for(var i = 0; i < questions.length; i++){
-    var tempquestion = {"text": "Option A","answer": "opta","select": false};
+    var tempquestion = {"text": CBI18n.gettext("Option A"),"answer": "opta","select": false};
     tempquestion['answer'] = $(questions[i]).attr('data-pemidentifier');
     tempquestion['select'] = $(questions[i]).find('input[type="checkbox"]').prop("checked") ? true : false;
     tempquestion['checked'] = $(questions[i]).find('input[type="checkbox"]').prop("checked") ? "checked" : "";

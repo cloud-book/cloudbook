@@ -8,7 +8,7 @@ function FillGapBox(objectdata){
   objectdata.idtype = metadata['idtype'];
   FillGapBox.super_.call(this,objectdata);
   this.fgpidentifier = typeof objectdata.fgpidentifier !== 'undefined' ? objectdata.fgpidentifier : "pem_" + this.uniqueid ; 
-  this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : "Description of your activity" ; 
+  this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : CBI18n.gettext("Description of your activity") ; 
   this.activitytext = typeof objectdata.activitytext !== 'undefined' ? objectdata.activitytext : 'En un lugar de la <span data-gap-fill="gap">Mancha</span>, de cuyo nombre no quiero acordarme,...' ;
   this.gaps = typeof objectdata.gaps !== 'undefined' ? objectdata.gaps : {
         "gap": {
