@@ -113,7 +113,7 @@ InitialWizard.prototype.showImportProject = function showImportProject(e) {
 	});
 
 	$("#importscorm").click(function(){
-		var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', 'zip');
+		var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.zip');
 	              pathelement.change(function(evt) {
 	                  var importation = application.importation.getInstance();
 	                  var projectname = $('#projectname').val();
