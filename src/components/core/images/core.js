@@ -108,7 +108,7 @@ ImageBox.prototype.editButton = function editButton(e) {
   var dialog = ImageBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
 
-  dialog.append("<input id='imgpath' type='file'/>");
+  dialog.children(".content").append("<input id='imgpath' type='file'/>");
   dialog.callbacks.push(function callbackEditButtonReplaceImageBox(){
     updateImagePath(dialog,that);
   })

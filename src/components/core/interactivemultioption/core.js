@@ -134,7 +134,7 @@ PMS.prototype.editButton = function editButton(e) {
   var dialog = PMS.super_.prototype.editButton.call(this,e);
   var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
-  dialog.append(templatecompiled({'description':that.description,'questions':that.questions}));
+  dialog.children(".content").append(templatecompiled({'description':that.description,'questions':that.questions}));
   var questions = dialog.find("#listquestions");
   var addbutton = dialog.find("#addquestion");
   var questiontemplate =  '<div data-pemidentifier="{{identifier}}"><input type="checkbox" name="question" value="" {{this.checked}}><textarea>{{this.text}}</textarea><button type="button" onclick="deleteQuestion(this)">{{gettext "Delete"}}</button></div>';
