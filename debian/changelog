@@ -1,3 +1,9 @@
+cloudbook (0.2.1) trusty; urgency=high
+
+  * Fixed bugs 
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Wed, 29 Apr 2015 17:56:09 +0200
+
 cloudbook (0.2.0) trusty; urgency=high
 
   * First version on ppa
