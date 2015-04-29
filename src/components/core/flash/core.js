@@ -70,7 +70,10 @@ FlashBox.prototype.clickButton = function clickButton(controllerClass) {
   dialog.children('#action').click(function(){
     updateFlashPath(dialog,that);
   });
-  dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
+  dialog.dialog({
+    dialogClass: "cbdialog",
+    width: 356,
+    modal:true,close:function(){$(this).remove()}});
   $("#flashdialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
@@ -120,6 +123,7 @@ FlashBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
 FlashBox.prototype.editButton = function editButton(e) {
   var that = this;
   var dialog = FlashBox.super_.prototype.editButton.call(this,e);
+  dialog.dialog("option","width",356);
   dialog.children(".content").append("<div id='flashdialog'><input id='flashpath' type='file' accept='.swf,.flv' /></div>");
   dialog.callbacks.push(function(){updateFlashPath(dialog,that)});
 };

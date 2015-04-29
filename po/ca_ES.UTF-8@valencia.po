@@ -1,43 +1,154 @@
+# Pilar Embid Giner <embid_mar@gva.es>, 2015.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: cloudbok\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-25 18:49+0000\n"
-"PO-Revision-Date: 2015-04-28 14:51+0200\n"
-"Last-Translator: aberlanas <aberlanas@bloom>\n"
-"Language-Team: Catalan\n"
+"POT-Creation-Date: 2015-04-29 06:26+0000\n"
+"PO-Revision-Date: 2015-04-29 12:19+0200\n"
+"Last-Translator: Pilar Embid Giner <embid_mar@gva.es>\n"
+"Language-Team: LliureX\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
 
 #: src/components/core/audio/core.js:44
+#: src/components/core/whiteboard/core.js:61
 msgid "Click to listen a sound"
-msgstr ""
+msgstr "Feu clic per a escoltar un so"
 
-#: src/components/core/flash/core.js:53
+#: src/components/core/audio/core.js:69 src/components/core/flash/core.js:69
+#: src/components/core/images/core.js:94
+#: src/components/core/includesite/core.js:68
+#: src/components/core/interactivemultioption/core.js:47
+#: src/components/core/interactiveoneoption/core.js:50
+#: src/components/core/jclic/core.js:34 src/components/core/video/core.js:67
+#: src/components/core/youtube/core.js:72 src/js/lib/gui/menu.js:319
+msgid "Insert"
+msgstr "Inserix"
+
+#: src/components/core/fillinthegaps/core.js:11
+#: src/components/core/interactivemultioption/core.js:11
+#: src/components/core/interactiveoneoption/core.js:11
+msgid "Description of your activity"
+msgstr "Descripció de la vostra activitat"
+
+#: src/components/core/flash/core.js:55
 msgid "Click to view interactive Flash resource"
-msgstr ""
+msgstr "Feu clic per a veure el recurs interactiu Flash"
 
-#: src/components/core/includesite/core.js:41
+#: src/components/core/includesite/core.js:43
 msgid "Click to view resource"
-msgstr ""
+msgstr "Feu clic per a veure el recurs"
+
+#: src/components/core/interactivemultioption/core.js:52
+#: src/components/core/interactiveoneoption/core.js:55
+msgid "Correct option"
+msgstr "Opció correcta"
+
+#: src/components/core/interactivemultioption/core.js:54
+#: src/components/core/interactiveoneoption/core.js:57
+msgid "Option "
+msgstr "Opció"
+
+#: src/components/core/interactivemultioption/core.js:158
+#: src/components/core/interactiveoneoption/core.js:162
+msgid "Option A"
+msgstr "Opció A"
 
 #: src/components/core/url/core.js:65
 msgid "Click view site "
-msgstr ""
+msgstr "Feu clic per a veure el web"
 
 #: src/components/core/video/core.js:44
 msgid "Click to view a video"
-msgstr ""
+msgstr "Feu clic per a veure el vídeo"
 
 #: src/components/core/youtube/core.js:62
 msgid "Click view youtube video"
-msgstr ""
+msgstr "Feu clic per a veure el vídeo de YouTube"
+
+#: src/i18n/all.js:1
+msgid "Url"
+msgstr "URL"
+
+#: src/i18n/all.js:2
+msgid "Include site"
+msgstr "Inclou el lloc web"
+
+#: src/i18n/all.js:3
+msgid "PEM"
+msgstr "PEM"
+
+#: src/i18n/all.js:4
+msgid "Audio"
+msgstr "Àudio"
+
+#: src/i18n/all.js:5
+msgid "Jclic"
+msgstr "JClic"
+
+#: src/i18n/all.js:6
+msgid "Video"
+msgstr "Vídeo"
+
+#: src/i18n/all.js:7
+msgid "Youtube"
+msgstr "YouTube"
+
+#: src/i18n/all.js:8
+msgid "PMS"
+msgstr "PMS"
+
+#: src/i18n/all.js:9
+msgid "Flash"
+msgstr "Flash"
+
+#: src/i18n/all.js:10
+msgid "Imagen"
+msgstr "Imatge"
+
+#: src/i18n/all.js:11
+msgid "Fill in the gaps"
+msgstr "Ompliu els buits"
+
+#: src/i18n/all.js:12
+msgid "Whiteboard"
+msgstr "Pissarra"
+
+#: src/i18n/all.js:13
+msgid "Textbox"
+msgstr "Quadre de text"
 
 #: src/js/lib/core/backend/core.js:433
 msgid "New version available :"
-msgstr ""
+msgstr "Nova versió disponible:"
+
+#: src/js/lib/core/components/cbobject.js:96
+#: src/js/lib/gui/dialogMetadata.js:85 src/templates/updateSectionName.hbs:2
+msgid "Save"
+msgstr "Guarda"
+
+#: src/js/lib/core/components/cbobject.js:96
+#: src/js/lib/core/components/cbobject.js:142
+#: src/js/lib/gui/dialogMetadata.js:90
+#: src/templates/exportEpubProject.wizard.hbs:9
+#: src/templates/exportHtmlProject.wizard.hbs:3
+#: src/templates/exportPdfProject.wizard.hbs:20
+#: src/templates/exportWebZipProject.wizard.hbs:2
+#: src/templates/initialwizard.importprojects.hbs:5
+#: src/templates/initialwizard.step2.hbs:5
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: src/js/lib/core/components/cbobject.js:142
+#: src/js/lib/gui/ui/proview/core.js:87
+#: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:1
+#: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:1
+msgid "Delete"
+msgstr "Suprimix"
 
 #: src/js/lib/core/components/cbsection.js:18
 msgid "Section"
@@ -49,7 +160,7 @@ msgstr "Anterior"
 
 #: src/js/lib/core/exportHTML.js:114
 msgid "Footer section"
-msgstr ""
+msgstr "Peu de la secció"
 
 #: src/js/lib/core/exportHTML.js:114
 msgid "Next"
@@ -61,7 +172,7 @@ msgstr "Dublin Core"
 
 #: src/js/lib/gui/dialogMetadata.js:14
 msgid "LOM-ES"
-msgstr ""
+msgstr "LOM-ES"
 
 #: src/js/lib/gui/dialogMetadata.js:15
 msgid "Content"
@@ -69,79 +180,13 @@ msgstr "Contingut"
 
 #: src/js/lib/gui/dialogMetadata.js:15
 msgid "Intellectual property"
-msgstr ""
+msgstr "Propietat intel·lectual"
 
 #: src/js/lib/gui/dialogMetadata.js:16
 msgid "Instantiation"
-msgstr ""
+msgstr "Instanciació"
 
-# #-#-#-#-#  openshot_qcv.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  OpenShot.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  pinta.po (pinta)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  lxpanel.po (lxpanel)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  tracker.po (tracker)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  gimp20-std-plug-ins.po (gimp20-std-plug-ins)  #-#-#-#-#
-#  General options
-#  General options
-# #-#-#-#-#  gnome-panel-2.0.po (gnome-panel-2.0)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  glade3.po (glade3)  #-#-#-#-#
-#  * General Page.
-# #-#-#-#-#  gimp20.po (gimp20)  #-#-#-#-#
-#  General
-# #-#-#-#-#  synaptic.po (synaptic)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  ibus.po (ibus)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  gnome-panel-3.0.po (gnome-panel 2.11.92)  #-#-#-#-#
-# #-#-#-#-#  gimp20-std-plug-ins.po (gimp20-std-plug-ins)  #-#-#-#-#
-#  General options
-#  General options
-# #-#-#-#-#  tracker.po (tracker)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  glade3.po (glade3)  #-#-#-#-#
-#  * General Page.
-# #-#-#-#-#  pinta.po (pinta)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  synaptic.po (synaptic)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  ibus.po (ibus)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  pcmanfm.po (pcmanfm)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  gnome-panel-2.0.po (gnome-panel-2.0)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  lxpanel.po (lxpanel)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
-# #-#-#-#-#  gimp20.po (gimp20)  #-#-#-#-#
-#  General
-# #-#-#-#-#  pcmanfm.po (pcmanfm)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
 #: src/js/lib/gui/dialogMetadata.js:18
-#, fuzzy
 msgid "General"
 msgstr "General"
 
@@ -179,18 +224,9 @@ msgstr "Títol"
 #: src/js/lib/gui/dialogMetadataGUIElements.js:224
 #: src/js/lib/gui/dialogMetadataGUIElements.js:227
 #: src/js/lib/gui/dialogMetadataGUIElements.js:231
-#, fuzzy
 msgid "Language"
-msgstr "Llengua"
+msgstr "Idioma"
 
-# #-#-#-#-#  apturl.po (apturl)  #-#-#-#-#
-# Winrar 2.9->String:rarlng.dll
-# #-#-#-#-#  gnumeric.po (gnumeric)  #-#-#-#-#
-# Winrar 2.9->String:rarlng.dll
-# #-#-#-#-#  bum.po (bum)  #-#-#-#-#
-# Winrar 2.9->String:rarlng.dll
-# #-#-#-#-#  gdebi.po (gdebi)  #-#-#-#-#
-# Winrar 2.9->String:rarlng.dll
 #: src/js/lib/gui/dialogMetadata.js:20 src/js/lib/gui/dialogMetadata.js:41
 #: src/js/lib/gui/dialogMetadata.js:45
 #: src/js/lib/gui/dialogMetadataGUIElements.js:4
@@ -202,7 +238,6 @@ msgstr "Llengua"
 #: src/js/lib/gui/dialogMetadataGUIElements.js:204
 #: src/js/lib/gui/dialogMetadataGUIElements.js:215
 #: src/js/lib/gui/dialogMetadataGUIElements.js:221
-#, fuzzy
 msgid "Description"
 msgstr "Descripció"
 
@@ -213,24 +248,20 @@ msgstr "Paraula clau"
 
 #: src/js/lib/gui/dialogMetadata.js:21
 #: src/js/lib/gui/dialogMetadataGUIElements.js:6
-#, fuzzy
 msgid "Coverage"
-msgstr "Àmbit"
+msgstr "Cobertura"
 
-# #-#-#-#-#  dia.po (1.0)  #-#-#-#-#
-#  Translators: Menu item Verb/Support/Secure
 #: src/js/lib/gui/dialogMetadata.js:22
-#, fuzzy
 msgid "Structure"
 msgstr "Estructura"
 
 #: src/js/lib/gui/dialogMetadata.js:22
 msgid "Aggregation Level"
-msgstr ""
+msgstr "Nivell d'agregació"
 
 #: src/js/lib/gui/dialogMetadata.js:24
 msgid "Life cycle"
-msgstr ""
+msgstr "Cicle de vida"
 
 #: src/js/lib/gui/dialogMetadata.js:24
 msgid "Version"
@@ -250,27 +281,18 @@ msgstr "Metametadades"
 
 #: src/js/lib/gui/dialogMetadata.js:28
 msgid "Metadata Schema"
-msgstr ""
+msgstr "Esquema de metadades"
 
 #: src/js/lib/gui/dialogMetadata.js:31
 msgid "Technical"
 msgstr "Tècnica"
 
-# #-#-#-#-#  gnome-scan.po (gnome-scan)  #-#-#-#-#
-# Netscape_4.7->Menu:RESDLL.DLL
-# #-#-#-#-#  inkscape.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:RESDLL.DLL
-# #-#-#-#-#  gnumeric.po (gnumeric)  #-#-#-#-#
-# Netscape_4.7->Menu:RESDLL.DLL
-# #-#-#-#-#  beast-v0.7.1.po (beast-v0.7.1)  #-#-#-#-#
-# Netscape_4.7->Menu:RESDLL.DLL
 #: src/js/lib/gui/dialogMetadata.js:31
 #: src/js/lib/gui/dialogMetadataGUIElements.js:14
 msgid "Format"
 msgstr "Format"
 
 #: src/js/lib/gui/dialogMetadata.js:32
-#, fuzzy
 msgid "Size"
 msgstr "Mida"
 
@@ -280,44 +302,43 @@ msgstr "Ubicació"
 
 #: src/js/lib/gui/dialogMetadata.js:33
 msgid "Requirements"
-msgstr "Requeriments"
+msgstr "Requisits"
 
 #: src/js/lib/gui/dialogMetadata.js:33
 msgid "Installation Remarks"
-msgstr ""
+msgstr "Comentaris sobre la instal·lació"
 
 #: src/js/lib/gui/dialogMetadata.js:34
 msgid "Other Platform Requirements"
-msgstr ""
+msgstr "Altres requisits de la plataforma"
 
 #: src/js/lib/gui/dialogMetadata.js:34
-#, fuzzy
 msgid "Duration"
-msgstr "Durada"
+msgstr "Duració"
 
 #: src/js/lib/gui/dialogMetadata.js:36
 msgid "Educational"
-msgstr "Educativa"
+msgstr "Ús educatiu"
 
 #: src/js/lib/gui/dialogMetadata.js:36
 msgid "Interactivity type"
-msgstr ""
+msgstr "Tipus d'interactivitat"
 
 #: src/js/lib/gui/dialogMetadata.js:37
 msgid "Learning Resource Type"
-msgstr ""
+msgstr "Tipus de recurs educatiu"
 
 #: src/js/lib/gui/dialogMetadata.js:37
 msgid "Interactivity level"
-msgstr ""
+msgstr "Nivell d'interactivitat"
 
 #: src/js/lib/gui/dialogMetadata.js:38
 msgid "Semantic density"
-msgstr ""
+msgstr "Nivell de densitat semàntica"
 
 #: src/js/lib/gui/dialogMetadata.js:38
 msgid "Intended end user role"
-msgstr ""
+msgstr "Destinatari"
 
 #: src/js/lib/gui/dialogMetadata.js:39
 msgid "Context"
@@ -325,7 +346,7 @@ msgstr "Context"
 
 #: src/js/lib/gui/dialogMetadata.js:39
 msgid "Typical age range"
-msgstr ""
+msgstr "Interval normal d'edat"
 
 #: src/js/lib/gui/dialogMetadata.js:40
 msgid "Difficulty"
@@ -333,11 +354,11 @@ msgstr "Dificultat"
 
 #: src/js/lib/gui/dialogMetadata.js:40
 msgid "Typical learning time"
-msgstr ""
+msgstr "Temps normal d'aprenentatge"
 
 #: src/js/lib/gui/dialogMetadata.js:42
 msgid "Cognitive process"
-msgstr ""
+msgstr "Procés cognitiu"
 
 #: src/js/lib/gui/dialogMetadata.js:44
 #: src/js/lib/gui/dialogMetadataGUIElements.js:10
@@ -350,11 +371,11 @@ msgstr "Cost"
 
 #: src/js/lib/gui/dialogMetadata.js:45
 msgid "Copyright and other restrictions"
-msgstr ""
+msgstr "Copyright i altres restriccions"
 
 #: src/js/lib/gui/dialogMetadata.js:46
 msgid "Access"
-msgstr ""
+msgstr "Accés"
 
 #: src/js/lib/gui/dialogMetadata.js:48
 #: src/js/lib/gui/dialogMetadataGUIElements.js:6
@@ -378,57 +399,13 @@ msgid "Classification"
 msgstr "Classificació"
 
 #: src/js/lib/gui/dialogMetadata.js:50
-#, fuzzy
 msgid "Classifications"
 msgstr "Classificacions"
-
-# #-#-#-#-#  xsane.po (xsane)  #-#-#-#-#
-#  NOTEBOOK_SAVING_OPTIONS
-#: src/js/lib/gui/dialogMetadata.js:85 src/templates/updateSectionName.hbs:2
-#, fuzzy
-msgid "Save"
-msgstr "Guarda"
-
-# #-#-#-#-#  openshot_qcv.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  OpenShot.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  indicator-session.po (indicator-session)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  xsane.po (xsane)  #-#-#-#-#
-#  BUTTON_CANCEL
-# #-#-#-#-#  openbox.po (openbox)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  gutenprint.po (gutenprint)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  gnome-codec-install.po (gnome-codec-install)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  stellarium_qcv_nemo.po (PACKAGE VERSION)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-#: src/js/lib/gui/dialogMetadata.js:90
-#: src/templates/exportHtmlProject.wizard.hbs:3
-#: src/templates/exportPdfProject.wizard.hbs:20
-#: src/templates/exportWebZipProject.wizard.hbs:2
-#: src/templates/initialwizard.importprojects.hbs:5
-#: src/templates/initialwizard.step2.hbs:5
-#, fuzzy
-msgid "Cancel"
-msgstr "Cancel·la"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:4
 msgid "Subject"
 msgstr "Assumpte"
 
-# #-#-#-#-#  gimp20-std-plug-ins.po (gimp20-std-plug-ins)  #-#-#-#-#
-#  * Filter type controls...
-# #-#-#-#-#  xsane.po (xsane)  #-#-#-#-#
-#  TEXT_FILETYPE
 #: src/js/lib/gui/dialogMetadataGUIElements.js:5
 #: src/js/lib/gui/dialogMetadataGUIElements.js:103
 msgid "Type"
@@ -436,24 +413,20 @@ msgstr "Tipus"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:5
 #: src/js/lib/gui/dialogMetadataGUIElements.js:226
-#, fuzzy
 msgid "Source"
-msgstr "Origen"
+msgstr "Font"
 
-# #-#-#-#-#  nautilus.po (nautilus)  #-#-#-#-#
-#  add the "create folder" menu item
 #: src/js/lib/gui/dialogMetadataGUIElements.js:9
-#, fuzzy
 msgid "Creator"
-msgstr "Creador"
+msgstr "Creador/a"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:9
 msgid "Publisher"
-msgstr "Editor"
+msgstr "Editor/a"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:10
 msgid "Contributor"
-msgstr ""
+msgstr "Col·laborador/a"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:13
 #: src/js/lib/gui/dialogMetadataGUIElements.js:61
@@ -493,38 +466,29 @@ msgstr "Nom"
 msgid "Organization"
 msgstr "Organització"
 
-# #-#-#-#-#  nautilus-sendto.po (1.0)  #-#-#-#-#
-#  TRANSLATORS: Alias for the Debian package section "mail"
-# #-#-#-#-#  synaptic.po (synaptic)  #-#-#-#-#
-#  TRANSLATORS: Alias for the Debian package section "mail"
-# #-#-#-#-#  gnome-doc-utils.po (1.0)  #-#-#-#-#
-#  TRANSLATORS: Alias for the Debian package section "mail"
-# #-#-#-#-#  gnome-keyring.po (1.0)  #-#-#-#-#
-#  TRANSLATORS: Alias for the Debian package section "mail"
 #: src/js/lib/gui/dialogMetadataGUIElements.js:60
 #: src/js/lib/gui/dialogMetadataGUIElements.js:83
 #: src/js/lib/gui/dialogMetadataGUIElements.js:211
-#, fuzzy
 msgid "Email"
-msgstr "Correu-e"
+msgstr "Correu electrònic"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:105
 msgid "Min. Version"
-msgstr ""
+msgstr "Versió mínima"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:106
 msgid "Max Version"
-msgstr ""
+msgstr "Versió màxima"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:119
 #: src/js/lib/gui/dialogMetadataGUIElements.js:161
 msgid "Years"
-msgstr "anys"
+msgstr "Anys"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:120
 #: src/js/lib/gui/dialogMetadataGUIElements.js:162
 msgid "Months"
-msgstr ""
+msgstr "Mesos"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:121
 #: src/js/lib/gui/dialogMetadataGUIElements.js:163
@@ -543,26 +507,24 @@ msgstr "Minuts"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:124
 #: src/js/lib/gui/dialogMetadataGUIElements.js:166
-#, fuzzy
 msgid "Seconds"
 msgstr "Segons"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:195
 msgid "Access Type"
-msgstr ""
+msgstr "Tipus d'accés"
 
-#  head line
 #: src/js/lib/gui/dialogMetadataGUIElements.js:200
 msgid "Kind"
 msgstr "Tipus"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:213
 msgid "Date Descr."
-msgstr ""
+msgstr "Descr. de la data"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:214
 msgid "Date Language"
-msgstr ""
+msgstr "Idioma de la data"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:219
 msgid "Purpose"
@@ -570,7 +532,7 @@ msgstr "Propòsit"
 
 #: src/js/lib/gui/dialogMetadataGUIElements.js:230
 msgid "Id"
-msgstr "Id"
+msgstr "ID"
 
 #: src/js/lib/gui/dialogMetadataValues.js:3
 msgid "atomic"
@@ -594,19 +556,19 @@ msgstr "connectat a una xarxa"
 
 #: src/js/lib/gui/dialogMetadataValues.js:4
 msgid "resources and integrated resources"
-msgstr ""
+msgstr "mitjanes i mitjanes integrades"
 
 #: src/js/lib/gui/dialogMetadataValues.js:4
 msgid "learning objects"
-msgstr ""
+msgstr "objectes d'aprenentatge"
 
 #: src/js/lib/gui/dialogMetadataValues.js:4
 msgid "teaching sequences"
-msgstr ""
+msgstr "seqüències didàctiques"
 
 #: src/js/lib/gui/dialogMetadataValues.js:4
 msgid "training programmes, courses and plans"
-msgstr ""
+msgstr "cursos, plans i programes de formació"
 
 #: src/js/lib/gui/dialogMetadataValues.js:5
 msgid "draft"
@@ -618,110 +580,107 @@ msgstr "final"
 
 #: src/js/lib/gui/dialogMetadataValues.js:5
 msgid "revised"
-msgstr "revisades"
+msgstr "revisat"
 
 #: src/js/lib/gui/dialogMetadataValues.js:5
 msgid "unavailable"
-msgstr "no està disponible"
+msgstr "no disponible"
 
 #: src/js/lib/gui/dialogMetadataValues.js:6
 msgid "author"
-msgstr ""
+msgstr "autor/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:6
 msgid "publisher"
-msgstr ""
+msgstr "editor/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:6
 msgid "initiator"
-msgstr ""
+msgstr "iniciador"
 
 #: src/js/lib/gui/dialogMetadataValues.js:6
 msgid "terminator"
-msgstr ""
+msgstr "terminador"
 
 #: src/js/lib/gui/dialogMetadataValues.js:6
 #: src/js/lib/gui/dialogMetadataValues.js:8
 msgid "validator"
-msgstr ""
+msgstr "validador/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:6
 msgid "editor"
-msgstr ""
+msgstr "redactor/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:6
 msgid "graphical designer"
-msgstr ""
+msgstr "disseny gràfic"
 
 #: src/js/lib/gui/dialogMetadataValues.js:6
 msgid "technical implementer"
-msgstr ""
+msgstr "implementació tècnica"
 
 #: src/js/lib/gui/dialogMetadataValues.js:6
 msgid "content provider"
-msgstr ""
+msgstr "proveïdor/a de continguts"
 
 #: src/js/lib/gui/dialogMetadataValues.js:7
 msgid "technical validator"
-msgstr ""
+msgstr "validació tècnica"
 
 #: src/js/lib/gui/dialogMetadataValues.js:7
 msgid "educational validator"
-msgstr ""
+msgstr "validació educativa"
 
 #: src/js/lib/gui/dialogMetadataValues.js:7
 msgid "script writer"
-msgstr ""
+msgstr "guionista"
 
 #: src/js/lib/gui/dialogMetadataValues.js:7
 msgid "instructional designer"
-msgstr ""
+msgstr "disseny didàctic"
 
 #: src/js/lib/gui/dialogMetadataValues.js:7
 #: src/js/lib/gui/dialogMetadataValues.js:23
 msgid "subject matter expert"
-msgstr ""
+msgstr "expert en la matèria"
 
 #: src/js/lib/gui/dialogMetadataValues.js:8
 msgid "creator"
-msgstr ""
+msgstr "creador/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:9
 msgid "operating system"
-msgstr ""
+msgstr "sistema operatiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:9
 msgid "browser"
-msgstr ""
+msgstr "navegador"
 
 #: src/js/lib/gui/dialogMetadataValues.js:10
 msgid "pc-dos"
-msgstr ""
+msgstr "pc-dos"
 
 #: src/js/lib/gui/dialogMetadataValues.js:10
 msgid "ms-windows"
-msgstr ""
+msgstr "ms-windows"
 
 #: src/js/lib/gui/dialogMetadataValues.js:10
 msgid "linux"
-msgstr ""
+msgstr "linux"
 
 #: src/js/lib/gui/dialogMetadataValues.js:10
 msgid "macos"
-msgstr ""
+msgstr "macos"
 
 #: src/js/lib/gui/dialogMetadataValues.js:10
 msgid "unix"
-msgstr ""
+msgstr "unix"
 
 #: src/js/lib/gui/dialogMetadataValues.js:10
 msgid "multi-os"
-msgstr ""
+msgstr "multiplataforma"
 
-# #-#-#-#-#  xsane.po (xsane)  #-#-#-#-#
-#  TEXT_NONE
 #: src/js/lib/gui/dialogMetadataValues.js:10
-#, fuzzy
 msgid "none"
 msgstr "cap"
 
@@ -731,44 +690,44 @@ msgstr "qualsevol"
 
 #: src/js/lib/gui/dialogMetadataValues.js:11
 msgid "mozilla firefox"
-msgstr ""
+msgstr "mozilla firefox"
 
 #: src/js/lib/gui/dialogMetadataValues.js:11
 msgid "netscape communicator"
-msgstr ""
+msgstr "comunicador del Netscape"
 
 #: src/js/lib/gui/dialogMetadataValues.js:11
 msgid "ms-internet explorer"
-msgstr ""
+msgstr "ms-internet explorer"
 
 #: src/js/lib/gui/dialogMetadataValues.js:11
 msgid "opera"
-msgstr ""
+msgstr "Opera"
 
 #: src/js/lib/gui/dialogMetadataValues.js:11
 msgid "amaya"
-msgstr ""
+msgstr "Amaya"
 
 #: src/js/lib/gui/dialogMetadataValues.js:12
 msgid "active"
-msgstr "finestra activa"
+msgstr "actiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:12
 msgid "expositive"
-msgstr ""
+msgstr "expositiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:12
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "mixed"
-msgstr ""
+msgstr "mesclat"
 
 #: src/js/lib/gui/dialogMetadataValues.js:13
 msgid "photograph"
-msgstr ""
+msgstr "fotografia"
 
 #: src/js/lib/gui/dialogMetadataValues.js:13
 msgid "illustration"
-msgstr ""
+msgstr "il·lustració"
 
 #: src/js/lib/gui/dialogMetadataValues.js:13
 msgid "video"
@@ -784,35 +743,35 @@ msgstr "música"
 
 #: src/js/lib/gui/dialogMetadataValues.js:13
 msgid "sound effect"
-msgstr ""
+msgstr "efectes de so"
 
 #: src/js/lib/gui/dialogMetadataValues.js:13
 msgid "voice-over"
-msgstr ""
+msgstr "veu en off"
 
 #: src/js/lib/gui/dialogMetadataValues.js:13
 msgid "compound audio"
-msgstr ""
+msgstr "àudio compost"
 
 #: src/js/lib/gui/dialogMetadataValues.js:13
 msgid "narrative text"
-msgstr ""
+msgstr "text narratiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:13
 msgid "hipertext"
-msgstr ""
+msgstr "hipertext"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "computer graphics"
-msgstr ""
+msgstr "infografia"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "integrated media"
-msgstr ""
+msgstr "multimèdia integrat"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "database"
-msgstr ""
+msgstr "base de dades"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "table"
@@ -820,144 +779,148 @@ msgstr "taula"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "graph"
-msgstr ""
+msgstr "gràfic"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "conceptual map"
-msgstr ""
+msgstr "mapa conceptual"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "navigation map"
-msgstr ""
+msgstr "mapa de navegació"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "multimedia presentation"
-msgstr ""
+msgstr "presentació multimèdia"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "tutorial"
-msgstr ""
+msgstr "programa d'aprenentatge"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "digital dictionary"
-msgstr ""
+msgstr "diccionari digital"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
 msgid "digital encyclopaedia"
-msgstr ""
+msgstr "enciclopèdia digital"
 
 #: src/js/lib/gui/dialogMetadataValues.js:15
 msgid "digital periodical publication"
-msgstr ""
+msgstr "publicació periòdica digital"
 
 #: src/js/lib/gui/dialogMetadataValues.js:15
 msgid "thematic or corporate webs/web portals"
-msgstr ""
+msgstr "webs corporatives o temàtiques/portals web"
 
 #: src/js/lib/gui/dialogMetadataValues.js:15
 msgid "wiki"
-msgstr ""
+msgstr "wiki"
 
 #: src/js/lib/gui/dialogMetadataValues.js:15
 msgid "weblog"
-msgstr ""
+msgstr "blog"
 
 #: src/js/lib/gui/dialogMetadataValues.js:15
 msgid "multimedia creation/edition tool"
-msgstr ""
+msgstr "ferramenta d'edició/creació multimèdia"
 
 #: src/js/lib/gui/dialogMetadataValues.js:15
 msgid "web design tool"
-msgstr ""
+msgstr "ferramenta de disseny web"
 
 #: src/js/lib/gui/dialogMetadataValues.js:15
 msgid "office tool"
-msgstr ""
+msgstr "ferramenta d'oficina"
 
 #: src/js/lib/gui/dialogMetadataValues.js:15
 msgid "programming tool"
-msgstr ""
+msgstr "ferramenta de programació"
 
 #: src/js/lib/gui/dialogMetadataValues.js:16
 msgid "information/knowledge analysys/organization"
-msgstr ""
+msgstr "ferramenta d'anàlisi / organització de la informació / coneixement"
 
 #: src/js/lib/gui/dialogMetadataValues.js:16
 msgid "process procedure supporting tools"
-msgstr ""
+msgstr "ferramentes de suport de procediments / processaments"
 
 #: src/js/lib/gui/dialogMetadataValues.js:16
 msgid "individual/cooperative/collaborative learning/working management tool"
 msgstr ""
+"ferramenta de gestió d'aprenentatge / treball individual / "
+"col·laboratiu/cooperatiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:17
 msgid "multimedia creation/edition service"
-msgstr ""
+msgstr "servici d'edició/creació multimèdia"
 
 #: src/js/lib/gui/dialogMetadataValues.js:17
 msgid "web design service"
-msgstr ""
+msgstr "servici de disseny web"
 
 #: src/js/lib/gui/dialogMetadataValues.js:17
 msgid "office service"
-msgstr ""
+msgstr "servici d'oficina"
 
 #: src/js/lib/gui/dialogMetadataValues.js:17
 msgid "programming service"
-msgstr ""
+msgstr "servici de programació"
 
 #: src/js/lib/gui/dialogMetadataValues.js:17
 msgid "information/knowledge analysis/organization service"
-msgstr ""
+msgstr "servici d'anàlisi / organització de la informació / coneixement"
 
 #: src/js/lib/gui/dialogMetadataValues.js:17
 msgid "process/procedure supporting service"
-msgstr ""
+msgstr "servici de suport de procediments / processaments"
 
 #: src/js/lib/gui/dialogMetadataValues.js:18
 msgid ""
 "individual/cooperative/collaborative learning/working management service"
 msgstr ""
+"servici de gestió d'aprenentatge / treball individual / "
+"col·laboratiu/cooperatiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:18
 msgid "master class"
-msgstr ""
+msgstr "classe magistral"
 
 #: src/js/lib/gui/dialogMetadataValues.js:18
 msgid "textual-image analysis"
-msgstr ""
+msgstr "anàlisi textual/d'imatges"
 
 #: src/js/lib/gui/dialogMetadataValues.js:18
 msgid "discussion activity"
-msgstr ""
+msgstr "activitat de discussió"
 
 #: src/js/lib/gui/dialogMetadataValues.js:18
 msgid "closed exercise or problem"
-msgstr ""
+msgstr "exercici o problema tancats"
 
 #: src/js/lib/gui/dialogMetadataValues.js:19
 msgid "contextualized case problem"
-msgstr ""
+msgstr "problema contextualitzat"
 
 #: src/js/lib/gui/dialogMetadataValues.js:19
 msgid "open problem"
-msgstr ""
+msgstr "problema obert"
 
 #: src/js/lib/gui/dialogMetadataValues.js:19
 msgid "real or virtual learning environment"
-msgstr ""
+msgstr "entorn d'aprenentatge real o virtual"
 
 #: src/js/lib/gui/dialogMetadataValues.js:19
 msgid "didactic game"
-msgstr ""
+msgstr "joc didàctic"
 
 #: src/js/lib/gui/dialogMetadataValues.js:19
 msgid "webquest"
-msgstr ""
+msgstr "webquest"
 
 #: src/js/lib/gui/dialogMetadataValues.js:19
 msgid "real project"
-msgstr ""
+msgstr "projecte real"
 
 #: src/js/lib/gui/dialogMetadataValues.js:19
 msgid "simulation"
@@ -965,21 +928,21 @@ msgstr "simulació"
 
 #: src/js/lib/gui/dialogMetadataValues.js:19
 msgid "questionnaire"
-msgstr ""
+msgstr "qüestionari"
 
 #: src/js/lib/gui/dialogMetadataValues.js:19
 msgid "exam"
-msgstr ""
+msgstr "examen"
 
 #: src/js/lib/gui/dialogMetadataValues.js:19
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "self assessment"
-msgstr ""
+msgstr "autoavaluació"
 
 #: src/js/lib/gui/dialogMetadataValues.js:20
 #: src/js/lib/gui/dialogMetadataValues.js:21
 msgid "very low"
-msgstr ""
+msgstr "molt baix"
 
 #: src/js/lib/gui/dialogMetadataValues.js:20
 #: src/js/lib/gui/dialogMetadataValues.js:21
@@ -994,183 +957,180 @@ msgstr "mitjà"
 
 #: src/js/lib/gui/dialogMetadataValues.js:20
 #: src/js/lib/gui/dialogMetadataValues.js:21
-#, fuzzy
 msgid "high"
 msgstr "alt"
 
 #: src/js/lib/gui/dialogMetadataValues.js:20
 #: src/js/lib/gui/dialogMetadataValues.js:21
 msgid "very high"
-msgstr ""
+msgstr "molt alt"
 
 #: src/js/lib/gui/dialogMetadataValues.js:22
 msgid "learner"
-msgstr ""
+msgstr "aprenent/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:22
 msgid "special needs learner"
-msgstr ""
+msgstr "alumnat amb necessitats educatives especials"
 
 #: src/js/lib/gui/dialogMetadataValues.js:22
 msgid "gifted learner"
-msgstr ""
+msgstr "alumnat amb altes capacitats intel·lectuals"
 
 #: src/js/lib/gui/dialogMetadataValues.js:22
 msgid "learners late integration into the education system"
-msgstr ""
+msgstr "alumnat d'incorporació tardana al sistema educatiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:22
 msgid "learner with other specific educational support needs"
-msgstr ""
+msgstr "alumnat amb altres necessitats específiques se suport educatiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:23
 msgid "general public"
-msgstr ""
+msgstr "públic en general"
 
 #: src/js/lib/gui/dialogMetadataValues.js:23
 msgid "individual"
-msgstr ""
+msgstr "individual"
 
-# #-#-#-#-#  xsane.po (xsane)  #-#-#-#-#
-#  TEXT_SETUP_PERMISSION_GROUP
 #: src/js/lib/gui/dialogMetadataValues.js:23
 msgid "group"
-msgstr "grup"
+msgstr "en grup"
 
 #: src/js/lib/gui/dialogMetadataValues.js:23
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "teacher"
-msgstr ""
+msgstr "professor/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:23
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "tutor"
-msgstr ""
+msgstr "tutor/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:23
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "family"
-msgstr ""
+msgstr "família"
 
 #: src/js/lib/gui/dialogMetadataValues.js:23
 msgid "information scientist"
-msgstr ""
+msgstr "documentalista"
 
 #: src/js/lib/gui/dialogMetadataValues.js:23
 msgid "computer scientist"
-msgstr ""
+msgstr "informàtic/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:23
 msgid "manager"
-msgstr ""
+msgstr "gestor/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:23
 msgid "education expert"
-msgstr ""
+msgstr "expert en educació"
 
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "classroom"
-msgstr ""
+msgstr "aula"
 
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "laboratory"
-msgstr ""
+msgstr "laboratori"
 
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "real environment"
-msgstr ""
+msgstr "entorn real"
 
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "home"
-msgstr "inici"
+msgstr "domicili"
 
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "schoolmate"
-msgstr ""
+msgstr "company/a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "independent"
-msgstr ""
+msgstr "independent"
 
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "blended"
-msgstr ""
+msgstr "assistència mixta"
 
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "presencial"
-msgstr ""
+msgstr "presencial"
 
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "face to face"
-msgstr ""
+msgstr "semipresencial"
 
 #: src/js/lib/gui/dialogMetadataValues.js:24
 msgid "distance"
-msgstr "distància"
+msgstr "a distància"
 
 #: src/js/lib/gui/dialogMetadataValues.js:25
 msgid "very easy"
-msgstr ""
+msgstr "molt fàcil"
 
 #: src/js/lib/gui/dialogMetadataValues.js:25
 msgid "easy"
-msgstr ""
+msgstr "fàcil"
 
 #: src/js/lib/gui/dialogMetadataValues.js:25
 msgid "difficult"
-msgstr ""
+msgstr "difícil"
 
 #: src/js/lib/gui/dialogMetadataValues.js:25
 msgid "very difficult"
-msgstr ""
+msgstr "molt difícil"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "analyse"
-msgstr ""
+msgstr "analitza"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "implement"
-msgstr ""
+msgstr "aplica"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "collaborate"
-msgstr ""
+msgstr "col·labora"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "compare"
-msgstr ""
+msgstr "compara"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "share"
-msgstr "compartit"
+msgstr "compartix"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "compete"
-msgstr ""
+msgstr "competix"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "understand"
-msgstr ""
+msgstr "comprén"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "prove"
-msgstr ""
+msgstr "comprova"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "communicate"
-msgstr ""
+msgstr "comunica"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "contextualize"
-msgstr ""
+msgstr "contextualitza"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "control"
-msgstr ""
+msgstr "controla"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "cooperate"
-msgstr ""
+msgstr "coopera"
 
 #: src/js/lib/gui/dialogMetadataValues.js:26
 msgid "create"
@@ -1178,107 +1138,107 @@ msgstr "crea"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "decide"
-msgstr ""
+msgstr "decidix"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "define"
-msgstr ""
+msgstr "definix"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "describe"
-msgstr ""
+msgstr "descriu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "discuss"
-msgstr ""
+msgstr "parla de"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "desing"
-msgstr ""
+msgstr "dissenya"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "explain"
-msgstr ""
+msgstr "explica"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "extrapolate"
-msgstr ""
+msgstr "extrapola"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "innovate"
-msgstr ""
+msgstr "innova"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "investigate"
-msgstr ""
+msgstr "investiga"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "judge"
-msgstr ""
+msgstr "jutja"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "motivate"
-msgstr ""
+msgstr "motiva"
 
 #: src/js/lib/gui/dialogMetadataValues.js:27
 msgid "observe"
-msgstr ""
+msgstr "observa"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "organize"
-msgstr ""
+msgstr "organitza"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "organize oneself"
-msgstr ""
+msgstr "organitza't"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "plan"
-msgstr ""
+msgstr "planifica"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "practise"
-msgstr ""
+msgstr "practica"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "produce"
-msgstr ""
+msgstr "produïx"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "recognize"
-msgstr ""
+msgstr "reconeix"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "remember"
-msgstr ""
+msgstr "recorda"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "write up"
-msgstr ""
+msgstr "redacta"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "consider"
-msgstr ""
+msgstr "considera"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "connect"
-msgstr ""
+msgstr "relaciona"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "represent"
-msgstr ""
+msgstr "representa"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "solve"
-msgstr ""
+msgstr "resol"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "simulate"
-msgstr ""
+msgstr "simula"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "summarize"
-msgstr ""
+msgstr "sintetitza"
 
 #: src/js/lib/gui/dialogMetadataValues.js:28
 msgid "value"
@@ -1294,184 +1254,175 @@ msgstr "no"
 
 #: src/js/lib/gui/dialogMetadataValues.js:30
 msgid "propietary license"
-msgstr ""
+msgstr "llicència propietària"
 
 #: src/js/lib/gui/dialogMetadataValues.js:30
 msgid "free software license EUPL"
-msgstr ""
+msgstr "llicència de programari lliure EUPL"
 
 #: src/js/lib/gui/dialogMetadataValues.js:30
 msgid "free software license GPL"
-msgstr ""
+msgstr "llicència de programari lliure GPL"
 
 #: src/js/lib/gui/dialogMetadataValues.js:30
 msgid "dual free content license GPL and EUPL"
-msgstr ""
+msgstr "llicència dual de contingut lliure GPL i EUPL"
 
 #: src/js/lib/gui/dialogMetadataValues.js:31
 msgid "other free software licenses"
-msgstr ""
+msgstr "altres llicències de programari lliure"
 
 #: src/js/lib/gui/dialogMetadataValues.js:31
 msgid "public domain"
-msgstr ""
+msgstr "domini públic"
 
 #: src/js/lib/gui/dialogMetadataValues.js:31
 msgid "intellectual property license"
-msgstr ""
+msgstr "llicència propietària intel·lectual"
 
 #: src/js/lib/gui/dialogMetadataValues.js:31
 msgid "not appropriate"
-msgstr ""
+msgstr "no correspon"
 
 #: src/js/lib/gui/dialogMetadataValues.js:31
 msgid "creative commons: attribution"
-msgstr ""
+msgstr "creative commons: Reconeixement (attribution)"
 
 #: src/js/lib/gui/dialogMetadataValues.js:32
 msgid "creative commons: attribution - non derived work"
-msgstr ""
+msgstr "creative commons: Reconeixement - SenseObraDerivada (by-nd)"
 
 #: src/js/lib/gui/dialogMetadataValues.js:32
 msgid "creative commons: attribution - non derived work - non commercial"
 msgstr ""
+"creative commons: Reconeixement - SenseObraDerivada - NoComercial (by-nd-nc)"
 
 #: src/js/lib/gui/dialogMetadataValues.js:32
 msgid "creative commons: attribution - non commercial"
-msgstr ""
+msgstr "creative commons: Reconeixement - NoComercial (by-nc)"
 
 #: src/js/lib/gui/dialogMetadataValues.js:33
 msgid "creative commons: attribution - non commercial - share alike"
 msgstr ""
+"creative commons: Reconeixement - NoComercial - CompartirIgual (by-nc-sa)"
 
 #: src/js/lib/gui/dialogMetadataValues.js:33
 msgid "creative commons: attribution - share alike"
-msgstr ""
+msgstr "creative commons: Reconeixement - CompartirIgual (by-sa)"
 
 #: src/js/lib/gui/dialogMetadataValues.js:33
 msgid "license GFDL"
-msgstr ""
+msgstr "llicència GFDL"
 
 #: src/js/lib/gui/dialogMetadataValues.js:34
 msgid "universal"
-msgstr ""
+msgstr "universal"
 
 #: src/js/lib/gui/dialogMetadataValues.js:34
 msgid "non-universal"
-msgstr ""
+msgstr "no universal"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "ispartof"
-msgstr ""
+msgstr "és part de"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "haspart"
-msgstr ""
+msgstr "té una part de"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "isversionof"
-msgstr ""
+msgstr "és una versió de"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "hasversion"
-msgstr ""
+msgstr "té una versió"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "isformatof"
-msgstr ""
+msgstr "és un format de"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "hasformat"
-msgstr ""
+msgstr "té un format"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "references"
-msgstr ""
+msgstr "referències"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "isreferencedby"
-msgstr ""
+msgstr "està referenciat per"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "isbasedon"
-msgstr ""
+msgstr "està basat en"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "isbasisfor"
-msgstr ""
+msgstr "és una base per a"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "requires"
-msgstr ""
+msgstr "requerix"
 
 #: src/js/lib/gui/dialogMetadataValues.js:35
 msgid "isrequiredby"
-msgstr ""
+msgstr "requerit per"
 
 #: src/js/lib/gui/dialogMetadataValues.js:36
 msgid "discipline"
-msgstr ""
+msgstr "disciplina"
 
 #: src/js/lib/gui/dialogMetadataValues.js:36
 msgid "idea"
-msgstr ""
+msgstr "idea"
 
 #: src/js/lib/gui/dialogMetadataValues.js:36
 msgid "prerrequisite"
-msgstr ""
+msgstr "prerequisit"
 
 #: src/js/lib/gui/dialogMetadataValues.js:36
 msgid "educational objective"
-msgstr ""
+msgstr "objectiu educatiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:36
 msgid "accesibility restrictions"
-msgstr ""
+msgstr "restriccions d'accessibilitat"
 
 #: src/js/lib/gui/dialogMetadataValues.js:36
 msgid "educational level"
-msgstr ""
+msgstr "nivell educatiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:36
 msgid "skill level"
-msgstr ""
+msgstr "nivell de destresa"
 
 #: src/js/lib/gui/dialogMetadataValues.js:36
 msgid "security level"
-msgstr ""
+msgstr "nivell de seguretat"
 
 #: src/js/lib/gui/dialogMetadataValues.js:36
 msgid "competency"
-msgstr ""
+msgstr "competència"
 
 #: src/js/lib/gui/menu.js:50 src/templates/initialwizard.step1.hbs:2
-#, fuzzy
 msgid "New project"
 msgstr "Projecte nou"
 
-# #-#-#-#-#  openshot_qcv.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Projecte_Gnome_2.2 [glade.glade-gnome2-branch.ca.po]
-# #-#-#-#-#  OpenShot.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Projecte_Gnome_2.2 [glade.glade-gnome2-branch.ca.po]
 #: src/js/lib/gui/menu.js:55
-#, fuzzy
 msgid "Save Project"
 msgstr "Guarda el projecte"
 
 #: src/js/lib/gui/menu.js:67
 msgid "Save Project as ..."
-msgstr ""
+msgstr "Anomena i guarda el projecte..."
 
 #: src/js/lib/gui/menu.js:73
 msgid "Load Project"
-msgstr ""
+msgstr "Carrega el projecte"
 
-# #-#-#-#-#  xsane.po (xsane)  #-#-#-#-#
-#  MENU_ITEM_QUIT
 #: src/js/lib/gui/menu.js:84
-#, fuzzy
 msgid "Quit"
 msgstr "Ix"
 
@@ -1485,173 +1436,111 @@ msgstr "Importa"
 
 #: src/js/lib/gui/menu.js:151
 msgid "Import file ..."
-msgstr ""
+msgstr "Importa el fitxer"
 
 #: src/js/lib/gui/menu.js:156
 msgid "Import metadata"
-msgstr ""
+msgstr "Importa les metadades"
 
-# #-#-#-#-#  ca@valencia.po (rabbitvcs)  #-#-#-#-#
-# Translators: Menu item Verb/Channel/Export
-# #-#-#-#-#  solfege.po (solfege)  #-#-#-#-#
-#  Translators: Menu item Verb/Channel/Export
-# #-#-#-#-#  dia.po (1.0)  #-#-#-#-#
-#  Translators: Menu item Verb/Channel/Export
-# #-#-#-#-#  gnumeric.po (gnumeric)  #-#-#-#-#
-#  Translators: Menu item Verb/Channel/Export
-# #-#-#-#-#  remmina.po (1.0)  #-#-#-#-#
-#  Translators: Menu item Verb/Channel/Export
-# #-#-#-#-#  shotwell.po (1.0)  #-#-#-#-#
-#  Translators: Menu item Verb/Channel/Export
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-#  Translators: Menu item Verb/Channel/Export
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-#  Translators: Menu item Verb/Channel/Export
-#: src/js/lib/gui/menu.js:193
+#: src/js/lib/gui/menu.js:200
 msgid "Export"
 msgstr "Exporta"
 
-#: src/js/lib/gui/menu.js:197 src/templates/initialwizard.importprojects.hbs:3
+#: src/js/lib/gui/menu.js:204 src/templates/initialwizard.importprojects.hbs:3
 msgid "HTML5"
-msgstr ""
+msgstr "HTML5"
 
-#: src/js/lib/gui/menu.js:202
+#: src/js/lib/gui/menu.js:209
 msgid "pdf"
-msgstr ""
+msgstr "PDF"
 
-#: src/js/lib/gui/menu.js:208
+#: src/js/lib/gui/menu.js:215
 msgid "WebZip"
-msgstr ""
+msgstr "WebZip"
 
-# #-#-#-#-#  openshot_qcv.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  OpenShot.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  brasero.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  xchat-gnome.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  gnome-terminal.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  gtk30.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  gtk20.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  aptdaemon.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  deja-dup.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  mypaint.po (mypaint)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  glade3.po (glade3)  #-#-#-#-#
-#  FIXME: I'm not sure if we should translate the non-stock labels or not.
-# #-#-#-#-#  gnome-scan.po (gnome-scan)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  dia.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  xsane.po (xsane)  #-#-#-#-#
-#  MENU_FILE
-# #-#-#-#-#  gnumeric.po (gnumeric)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  remmina.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  empathy.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  gutenprint.po (gutenprint)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Netscape_4.7->Menu:TALKBACK.EXE
-#: src/js/lib/gui/menu.js:304
+#: src/js/lib/gui/menu.js:220
+msgid "EPUB"
+msgstr "EPUB"
+
+#: src/js/lib/gui/menu.js:317
 msgid "File"
 msgstr "Fitxer"
 
-#  create File menu
-#: src/js/lib/gui/menu.js:305
+#: src/js/lib/gui/menu.js:318
 msgid "Project"
 msgstr "Projecte"
 
-#: src/js/lib/gui/menu.js:306
-msgid "Insert"
-msgstr "Inserix"
-
 #: src/js/lib/gui/ui/proview/core.js:75
 msgid "Insert before"
-msgstr ""
+msgstr "Inserix abans"
 
 #: src/js/lib/gui/ui/proview/core.js:79
 msgid "Insert after"
-msgstr ""
+msgstr "Inserix després"
 
 #: src/js/lib/gui/ui/proview/core.js:83
 msgid "Insert subsection"
-msgstr ""
+msgstr "Inserix una subsecció"
 
-#: src/js/lib/gui/ui/proview/core.js:87
-#, fuzzy
-msgid "Delete"
-msgstr "Elimina"
-
-# #-#-#-#-#  gnome-terminal.po (1.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  software-center.po (1.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  gnome-panel-2.0.po (gnome-panel-2.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  mypaint.po (mypaint)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  gftp.po (1.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  dia.po (1.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  salasaga.po (salasaga)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  gnome-panel-3.0.po (gnome-panel 2.11.92)  #-#-#-#-#
-# #-#-#-#-#  dia.po (1.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  shotwell.po (1.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  gftp.po (1.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  salasaga.po (salasaga)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  pysdm.po (pysdm)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  gnome-panel-2.0.po (gnome-panel-2.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  software-center.po (1.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  gnome-terminal.po (1.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  mypaint.po (mypaint)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  shotwell.po (1.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  pysdm.po (pysdm)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Winrar 2.9->Menu:rarlng.dll
 #: src/js/lib/gui/ui/proview/core.js:96
-#, fuzzy
 msgid "Edit"
 msgstr "Edita"
 
+#: src/templates/exportEpubProject.wizard.hbs:1
+msgid "Title of de book:"
+msgstr "Títol del llibre:"
+
+#: src/templates/exportEpubProject.wizard.hbs:2
+msgid "Enter the title of the book"
+msgstr "Introduïu el títol del llibre"
+
+#: src/templates/exportEpubProject.wizard.hbs:3
+msgid "Author:"
+msgstr "Autor/a:"
+
+#: src/templates/exportEpubProject.wizard.hbs:4
+msgid "Enter the author of the book"
+msgstr "Introduïu l'autor/a del llibre"
+
+#: src/templates/exportEpubProject.wizard.hbs:5
+msgid "Publisher:"
+msgstr "Editor/a:"
+
+#: src/templates/exportEpubProject.wizard.hbs:6
+msgid "Enter the publisher of the book"
+msgstr "Introduïu l'editor/a del llibre"
+
+#: src/templates/exportEpubProject.wizard.hbs:7
+msgid "Path of the cover:"
+msgstr "Camí del fitxer de la coberta:"
+
+#: src/templates/exportEpubProject.wizard.hbs:8
+msgid "Path where save of epub file:"
+msgstr "Camí on es guarda el fitxer EPUB:"
+
+#: src/templates/exportEpubProject.wizard.hbs:10
+msgid "Generate EPUB"
+msgstr "Genera l'EPUB"
+
+#: src/templates/exportEpubProject.wizard.hbs:11
+msgid "EPUB Generation in progress. Please wait a moment..."
+msgstr "S'està generant l'EPUB. Espereu un moment..."
+
+#: src/templates/exportEpubProject.wizard.hbs:12
+msgid "There was an error generating EPUB file. Please cancel the process"
+msgstr "S'ha produït un error en la generació de l'EPUB. Cancel·leu el procés."
+
 #: src/templates/exportHtmlProject.wizard.hbs:1
 msgid "Path where save html project"
-msgstr ""
+msgstr "Camí on es guarda el projecte HTML"
 
 #: src/templates/exportHtmlProject.wizard.hbs:2
 msgid "Choose folder"
-msgstr "Trieu una carpeta"
+msgstr "Seleccioneu una carpeta"
 
 #: src/templates/exportHtmlProject.wizard.hbs:4
 msgid "Generate html"
-msgstr ""
+msgstr "Genera l'HTML"
 
 #: src/templates/exportPdfProject.wizard.hbs:1
 msgid "Page size:"
@@ -1659,191 +1548,109 @@ msgstr "Mida de la pàgina:"
 
 #: src/templates/exportPdfProject.wizard.hbs:2
 msgid "Page Orientation:"
-msgstr ""
+msgstr "Orientació de la pàgina:"
 
 #: src/templates/exportPdfProject.wizard.hbs:3
-#, fuzzy
 msgid "Portrait"
 msgstr "Vertical"
 
 #: src/templates/exportPdfProject.wizard.hbs:4
-#, fuzzy
 msgid "Landscape"
-msgstr "Apaïsat"
+msgstr "Horitzontal"
 
 #: src/templates/exportPdfProject.wizard.hbs:5
 msgid "Include page header:"
-msgstr ""
+msgstr "Inclou la capçalera de la pàgina"
 
-# #-#-#-#-#  openshot_qcv.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-#  For the time being
-# #-#-#-#-#  OpenShot.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-#  For the time being
-# #-#-#-#-#  gwget.po (gwget)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-#  For the time being
-# #-#-#-#-#  xarchiver.po (xarchiver)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-#  For the time being
-# #-#-#-#-#  PolicyKit-gnome.po (PolicyKit-gnome)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-#  For the time being
-# #-#-#-#-#  gnumeric.po (gnumeric)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-#  For the time being
-# #-#-#-#-#  openbox.po (openbox)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-#  For the time being
-# #-#-#-#-#  gutenprint.po (gutenprint)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-#  For the time being
 #: src/templates/exportPdfProject.wizard.hbs:6
 #: src/templates/exportPdfProject.wizard.hbs:14
 msgid "Yes"
 msgstr "Sí"
 
-# #-#-#-#-#  openshot_qcv.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  OpenShot.po (OpenShot Video Editor (version: 1.4.2~alpha1))
-# #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  gwget.po (gwget)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  xarchiver.po (xarchiver)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  PolicyKit-gnome.po (PolicyKit-gnome)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  openbox.po (openbox)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  gutenprint.po (gutenprint)  #-#-#-#-#
-# Winrar 2.9->Dialog Box Control:rarlng.dll
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Mozilla 1.3->groupByNone.label
 #: src/templates/exportPdfProject.wizard.hbs:7
 #: src/templates/exportPdfProject.wizard.hbs:15
 msgid "No"
 msgstr "No"
 
-# #-#-#-#-#  obconf.po (obconf)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  lxpanel.po (lxpanel)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  dia.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  inkscape.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  gnumeric.po (gnumeric)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  onboard.po (1.0)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  hplip_ca@valencia.po (PACKAGE VERSION)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
 #: src/templates/exportPdfProject.wizard.hbs:8
 #: src/templates/exportPdfProject.wizard.hbs:16
-#, fuzzy
 msgid "Left"
-msgstr "Esquerre"
+msgstr "Esquerra"
 
-# #-#-#-#-#  lxpanel.po (lxpanel)  #-#-#-#-#
-# Mozilla 1.3->general.label
-#  3
 #: src/templates/exportPdfProject.wizard.hbs:9
 #: src/templates/exportPdfProject.wizard.hbs:17
-#, fuzzy
 msgid "Center"
-msgstr "Centra"
+msgstr "Centre"
 
-# #-#-#-#-#  obconf.po (obconf)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  lxpanel.po (lxpanel)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  gimp20-std-plug-ins.po (gimp20-std-plug-ins)  #-#-#-#-#
-#
-# #-#-#-#-#  gnumeric.po (gnumeric)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
-# #-#-#-#-#  audacity.po (Audacity 2.0.0)  #-#-#-#-#
-# Netscape_4.7->Dialog Box Control:EDITOR32.DLL
 #: src/templates/exportPdfProject.wizard.hbs:10
 #: src/templates/exportPdfProject.wizard.hbs:18
-#, fuzzy
 msgid "Right"
-msgstr "Dret"
+msgstr "Dreta"
 
 #: src/templates/exportPdfProject.wizard.hbs:11
 msgid "Text to header page:"
-msgstr ""
+msgstr "Text de la capçalera de pàgina:"
 
 #: src/templates/exportPdfProject.wizard.hbs:12
 msgid "Enter header page text"
-msgstr ""
+msgstr "Introduïu el text de la capçalera"
 
 #: src/templates/exportPdfProject.wizard.hbs:13
 msgid "Include page numbers in foot page:"
-msgstr ""
+msgstr "Inclou els números de pàgina al peu:"
 
 #: src/templates/exportPdfProject.wizard.hbs:19
 msgid "Path where save of pdf file:"
-msgstr ""
+msgstr "Camí on es guarda el fitxer PDF:"
 
 #: src/templates/exportPdfProject.wizard.hbs:21
 msgid "Generate pdf"
-msgstr ""
+msgstr "Genera el PDF"
 
 #: src/templates/exportPdfProject.wizard.hbs:22
 msgid "PDF Generation in progress. Please wait a moment..."
-msgstr ""
+msgstr "S'està generant el PDF. Espereu un moment..."
 
 #: src/templates/exportPdfProject.wizard.hbs:23
 msgid "PDF Generation in progress. Copying interactive files..."
 msgstr ""
+"S'està generant el PDF. S'estan copiant els fitxers. Espereu un moment..."
 
 #: src/templates/exportPdfProject.wizard.hbs:24
 msgid "There was an error generating the PDF file. Please cancel de process"
-msgstr ""
+msgstr "S'ha produït un error en la generació del PDF. Cancel·leu el procés."
 
 #: src/templates/exportWebZipProject.wizard.hbs:1
 msgid "Path where save of zip file:"
-msgstr ""
+msgstr "Camí on es guarda el fitxer zip:"
 
 #: src/templates/exportWebZipProject.wizard.hbs:3
 msgid "Generate zip"
-msgstr ""
+msgstr "Genera el zip"
 
 #: src/templates/exportWebZipProject.wizard.hbs:4
 msgid "Zip Generation in progress. Please wait a moment..."
-msgstr ""
+msgstr "S'està generant el zip. Espereu un moment..."
 
 #: src/templates/exportWebZipProject.wizard.hbs:5
 msgid "There was an error generating WeZip file. Please cancel the process"
-msgstr ""
+msgstr "S'ha produït un error en la generació del WeZip. Cancel·leu el procés."
 
 #: src/templates/initialwizard.importprojects.hbs:1
 #: src/templates/initialwizard.step2.hbs:1
 msgid "Project name"
-msgstr ""
+msgstr "Nom del projecte"
 
 #: src/templates/initialwizard.importprojects.hbs:2
 #: src/templates/initialwizard.step2.hbs:2
 msgid "Enter project name"
-msgstr ""
+msgstr "Introduïu el nom del projecte"
 
 #: src/templates/initialwizard.importprojects.hbs:4
 msgid "SCORM"
-msgstr ""
+msgstr "SCORM"
 
 #: src/templates/initialwizard.step1.hbs:1
-#, fuzzy
 msgid "Open"
 msgstr "Obri"
 
@@ -1853,16 +1660,57 @@ msgstr "Obri un projecte"
 
 #: src/templates/initialwizard.step1.hbs:4
 msgid "Import project"
-msgstr ""
+msgstr "Importa el projecte"
 
 #: src/templates/initialwizard.step2.hbs:3
 msgid "Advanced Project"
-msgstr ""
+msgstr "Projecte avançat"
 
 #: src/templates/initialwizard.step2.hbs:4
 msgid "Simple Project"
-msgstr ""
+msgstr "Projecte simple"
 
 #: src/templates/updateSectionName.hbs:1
 msgid "Section name"
-msgstr ""
+msgstr "Nom de secció"
+
+#: src/components/core/fillinthegaps/toolbar.hbs:1
+#: src/components/core/text/toolbar.hbs:1
+msgid "Huge"
+msgstr "Gran"
+
+#: src/components/core/fillinthegaps/toolbar.hbs:2
+#: src/components/core/text/toolbar.hbs:2
+msgid "Normal"
+msgstr "Normal"
+
+#: src/components/core/fillinthegaps/toolbar.hbs:3
+#: src/components/core/text/toolbar.hbs:3
+msgid "Small"
+msgstr "Menuda"
+
+#: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:2
+#: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:2
+msgid "Add question"
+msgstr "Afig una pregunta"
+
+#: src/components/core/text/toolbar.hbs:4
+msgid "Rows:"
+msgstr "Files:"
+
+#: src/components/core/text/toolbar.hbs:5
+msgid "Cols:"
+msgstr "Columnes:"
+
+#: src/components/core/text/toolbar.hbs:6
+msgid "Full Size:"
+msgstr "Mida completa:"
+
+#: src/components/core/text/toolbar.hbs:7
+msgid "With Header:"
+msgstr "Amb capçaleres:"
+
+#: src/components/core/text/toolbar.hbs:8
+#: src/components/core/text/toolbar.hbs:9
+msgid "Add"
+msgstr "Afig"
