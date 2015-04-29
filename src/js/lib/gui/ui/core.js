@@ -41,7 +41,8 @@ UI.prototype.loadTheme = function loadTheme(){
  */
  UI.prototype.renderActionsButtons = function renderActionsButtons(){
 
-  if(!Cloudbook.UI.renderedActionsButtons){
+  try{
+    if(!Cloudbook.UI.renderedActionsButtons){
     var that = this;
     var backend = application.backend.core.getInstance();
     var userconfigmanager = application.config.user.getInstance();
@@ -74,6 +75,9 @@ UI.prototype.loadTheme = function loadTheme(){
    */
    Cloudbook.UI.renderedActionsButtons = true;
  }
+  }
+  catch(e){}
+  
 }
 
 UI.prototype.defaultToolbar = function defaultToolbar() {
