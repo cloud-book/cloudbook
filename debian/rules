@@ -20,10 +20,10 @@ override_dh_install: custom-files
 custom-files:
 
 ifeq ($(DEB_BUILD_ARCH), i386)
-        cp -r webkitbuilds/CloudBook/linux32/* ./install/usr/share/cloudbook/
+	cp -r webkitbuilds/CloudBook/linux32/* ./install/usr/share/cloudbook/
 endif
 
 ifeq ($(DEB_BUILD_ARCH), amd64)
-        cp -r webkitbuilds/CloudBook/linux64/* ./install/usr/share/cloudbook/
+	cp -r webkitbuilds/CloudBook/linux64/* ./install/usr/share/cloudbook/
 endif
 
