@@ -57,6 +57,7 @@ AudioBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;
 
   dialog.children(".content").append("<input id='audiopath' type='file'/>");
+  dialog.dialog("option","width",356);
   dialog.callbacks.push(function callbackEditButtonReplaceAudioBox(){
     updateAudioPath(dialog,that);
   })
@@ -73,6 +74,7 @@ AudioBox.prototype.clickButton = function clickButton(controllerClass) {
   dialog.dialog({
     dialogClass: "cbdialog",
     modal:true,
+    width: 356,
     close:function(){$(this).remove()}
   });
   $("#audiodialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});

@@ -141,7 +141,7 @@ PEMBox.prototype.editButton = function editButton(e) {
   dialog.children(".content").append(templatecompiled({'description':that.description,'questions':that.questions}));
   var questions = dialog.find("#listquestions");
   var addbutton = dialog.find("#addquestion");
-  var questiontemplate =  '<div data-pemidentifier="{{identifier}}"><input type="radio" name="question" value="" {{this.checked}}><textarea>{{this.text}}</textarea><button type="button" onclick="deleteQuestion(this)">{{gettext "Delete"}}</button></div>';
+  var questiontemplate =  '<div data-pemidentifier="{{identifier}}"><input type="radio" name="question" value="" {{this.checked}}><span class="radio"></span><textarea>{{this.text}}</textarea><button type="button" onclick="deleteQuestion(this)">{{gettext "Delete"}}</button></div>';
   var questiontemplatecompiled = application.util.template.compile(questiontemplate);
   addbutton.click(function(event) {
     var last = $("#listquestions").children().last();

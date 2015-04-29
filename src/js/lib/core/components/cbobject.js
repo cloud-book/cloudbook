@@ -146,7 +146,7 @@ CBObject.prototype.deleteButton = function deleteButton(e) {
 		dialog.dialog('close');
 	});
 	dialog.children('#cancel').click(function(){dialog.dialog('close');});
-	dialog.dialog({modal:true,close:function(){$(this).remove()}});
+	dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
 };
 
 

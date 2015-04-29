@@ -1,0 +1,21 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Cloudbook
+Name[es]=Cloudbook, creador de libros digitales
+Name[qcv]=Cloudbook, creador de llibres digitals
+Name[ca_ES.UTF-8@valencia]=Cloudbook, creador de llibres digitals
+Name[ca_ES]=Cloudbook, creador de llibres digitals
+GenericName=Cloudbook
+GenericName[es]=Cloudbook
+GenericName[qcv]=Cloudbook
+Comment=Create digital books
+Comment[es]=Crea libros digitales interactivos
+Comment[qcv]=Crea llibres digitals interactius
+Comment[ca_ES.UTF-8@valencia]=Crea llibres digitals interactius
+Comment[ca_ES]=Crea llibres digitals interactius
+Exec=/usr/bin/cloudbook
+TryExec=/usr/bin/cloudbook
+Icon=cloudbook
+Terminal=false
+Categories=ODE-Creation;
