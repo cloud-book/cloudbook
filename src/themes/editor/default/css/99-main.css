@@ -454,3 +454,33 @@ body{
     border-radius: 7px;
     color: #49a8de;
 }
+
+.cbdialog input[type=radio]:not(old),
+.cbdialog input[type=checkbox]:not(old){
+  width   : 20px;
+  margin  : 0;
+  padding : 0;
+  opacity : 0;
+  margin-bottom: 10px;
+}
+.cbdialog input[type=radio]:not(old) + span.radio {
+  display      : inline-block;
+  margin-left  : -28px;
+  padding-left : 28px;
+  background-image: url("../img/Cloudbook_Sprite.png");
+  line-height  : 24px;
+  background-position: -14px -85px;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.cbdialog input[type=radio]:checked + span.radio {
+    background-position: -14px -102px;
+}
+.cbdialog input[type=checkbox]:not(old) span.checkbox {
+  display      : inline-block;
+  margin-left  : -28px;
+  padding-left : 28px;
+  background-image: url("../img/Cloudbook_Sprite.png");
+  line-height  : 24px;
+}
