@@ -16,6 +16,12 @@ override_dh_install: custom-files
 
 	dh_install
 
+override_dh_shlibdeps: 
+	echo 'DONE'
+
+override_dh_strip:
+	echo 'goodbye'
+
 # Build architecture-dependent files here.
 custom-files:
 
