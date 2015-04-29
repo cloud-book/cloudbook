@@ -212,7 +212,7 @@ ProView.prototype.dialogUpdateSectionName = function dialogUpdateSectionName(cbs
         }
       }
   });
-  dialog.dialog({modal:true,dialogClass: "no-close",closeOnEscape: false});
+  dialog.dialog({modal:true,dialogClass: "cbdialog",closeOnEscape: false});
 
 }
 

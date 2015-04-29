@@ -99,6 +99,7 @@ CBObject.prototype.editButton = function editButton(e) {
 		dialogClass: "cbdialog",
 		modal:true,
 		close:function(){
+			$(this).dialog('destroy');
 		}
 	});
 	dialog.find('#save').click(function(){

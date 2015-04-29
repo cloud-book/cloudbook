@@ -8,21 +8,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-04-29 06:26+0000\n"
+"POT-Creation-Date: 2015-04-29 15:30+0000\n"
 
 #: src/components/core/audio/core.js:44
 #: src/components/core/whiteboard/core.js:61
 msgid "Click to listen a sound"
 msgstr ""
 
-#: src/components/core/audio/core.js:69
+#: src/components/core/audio/core.js:70
 #: src/components/core/flash/core.js:69
 #: src/components/core/images/core.js:94
 #: src/components/core/includesite/core.js:68
 #: src/components/core/interactivemultioption/core.js:47
 #: src/components/core/interactiveoneoption/core.js:50
 #: src/components/core/jclic/core.js:34
-#: src/components/core/video/core.js:67
+#: src/components/core/video/core.js:68
 #: src/components/core/youtube/core.js:72
 #: src/js/lib/gui/menu.js:319
 msgid "Insert"
@@ -52,8 +52,8 @@ msgstr ""
 msgid "Option "
 msgstr ""
 
-#: src/components/core/interactivemultioption/core.js:158
-#: src/components/core/interactiveoneoption/core.js:162
+#: src/components/core/interactivemultioption/core.js:159
+#: src/components/core/interactiveoneoption/core.js:164
 msgid "Option A"
 msgstr ""
 
@@ -121,6 +121,14 @@ msgstr ""
 msgid "Textbox"
 msgstr ""
 
+#: src/i18n/all.js:14
+msgid "activity"
+msgstr ""
+
+#: src/i18n/all.js:15
+msgid "embed object"
+msgstr ""
+
 #: src/js/lib/core/backend/core.js:433
 msgid "New version available :"
 msgstr ""
@@ -132,7 +140,7 @@ msgid "Save"
 msgstr ""
 
 #: src/js/lib/core/components/cbobject.js:96
-#: src/js/lib/core/components/cbobject.js:142
+#: src/js/lib/core/components/cbobject.js:143
 #: src/js/lib/gui/dialogMetadata.js:90
 #: src/templates/exportEpubProject.wizard.hbs:9
 #: src/templates/exportHtmlProject.wizard.hbs:3
@@ -143,7 +151,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/js/lib/core/components/cbobject.js:142
+#: src/js/lib/core/components/cbobject.js:143
 #: src/js/lib/gui/ui/proview/core.js:87
 #: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:1
 #: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:1
