@@ -98,7 +98,7 @@
  						}
  					}) 
  				}else{
- 					alert('Plugin Flash encontrado, todos los componentes estan disponibles')
+ 					//alert('Plugin Flash encontrado, todos los componentes estan disponibles')
  				}
  			})
  		}

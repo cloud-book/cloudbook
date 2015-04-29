@@ -68,7 +68,7 @@ VideoBox.prototype.clickButton = function clickButton(controllerClass) {
   dialog.children('#action').click(function(){
     updateVideoPath(dialog,that);
   });
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
   $("#videodialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 

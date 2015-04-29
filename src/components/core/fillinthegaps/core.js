@@ -114,6 +114,7 @@ FillGapBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquery
     jquerycbo.css('height',counter+"px");
     objectcbo.size[1] = counter;
   }
+  jquerycbo[0].addEventListener('input',function(){jquerycbo.height(jquerycbo.outerHeight(true));});
 };
 
 

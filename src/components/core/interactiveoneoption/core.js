@@ -48,7 +48,7 @@ PEMBox.prototype.pdfView = function pdfView() {
 PEMBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   var dialog = $("<div id='pemdialog'><input id='numberquestions' type='number' min='2' max='10' value='4'/><button id='action'>"+ CBI18n.gettext("Insert") +"</button></div>");
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
   
   $("#pemdialog button").on('click',function(){
     var counter = $("#numberquestions").val();

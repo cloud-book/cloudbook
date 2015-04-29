@@ -197,9 +197,12 @@ UI.prototype.emptyTargetContent = function emptyTargetContent() {
 
 UI.prototype.removeSelectElement = function removeSelectElement(event) {
   if (Cloudbook.UI.cbobjectselected !== null){
-    $("[data-cbobjectid='"+Cloudbook.UI.cbobjectselected+"']").removeClass('selected');
-    $("#cbobjecttoolbar").remove();
-    Cloudbook.UI.cbobjectselected = null;
+    if(document.getSelection().getRangeAt(0).toString().length === 0){
+      $("[data-cbobjectid='"+Cloudbook.UI.cbobjectselected+"']").removeClass('selected');
+      $("#cbobjecttoolbar").remove();
+      Cloudbook.UI.cbobjectselected = null;
+      
+    }
   }
 };
 
