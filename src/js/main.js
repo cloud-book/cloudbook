@@ -82,6 +82,7 @@
  			t=t.split('=');
  			t=t[1];
  			var fs = require('fs');
+ 			console.log(t);
  			fs.exists(t,function(exists){ 
  				if (! exists) { 
  					fs.exists('/opt/google/chrome/PepperFlash/libpepflashplayer.so',function(exists){
