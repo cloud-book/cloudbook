@@ -123,6 +123,19 @@ InitialWizard.prototype.showImportProject = function showImportProject(e) {
 	              });
 	    pathelement.trigger('click');
 	});
+
+	$("#importims").click(function(){
+		var pathelement = $(document.createElement('input')).attr('type','file').attr('accept', '.zip');
+	              pathelement.change(function(evt) {
+	                  var importation = application.importation.getInstance();
+	                  var projectname = $('#projectname').val();
+	                  importation.loadFile(projectname,$(this).val(), 'IMS');
+	                  $('#wizardnewopenproject').dialog('close');
+					  $('#wizardnewopenproject').remove();
+	              });
+	    pathelement.trigger('click');
+	});
+
 	$("#projectname").keyup(function(e){
 		var backend = application.backend.core.getInstance();
 		if(backend.checkProjectExists(this.value)){
