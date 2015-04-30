@@ -13,7 +13,7 @@ module.exports = function(grunt) {
       },
       jsxgettext:{
           test:{
-            files : [{src:["src/**/*.*js","src/templates/*.*hbs","!src/node_modules/**/*.js","!src/js/lib_external/**/*.js"],dest:'./po/cloudbook.pot'}]
+            files : [{src:["src/**/*.*js","src/templates/*.*hbs","src/**/*.hbs","!src/node_modules/**/*.js","!src/js/lib_external/**/*.js","!src/**/lib_external/**/*.hbs"],dest:'./po/cloudbook.pot'}]
           }
       },
       po2json:{
@@ -42,10 +42,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-node-webkit-builder');
 
   // Default task(s).
-  grunt.registerTask('default', ['jsdoc']);
+  //grunt.registerTask('default', ['jsdoc']);
   grunt.registerTask('xgettext', ['jsxgettext']);
   grunt.registerTask('po', ['po2json']);
   grunt.registerTask('production', ['jsdoc','po2json']);
-  grunt.registerTask('build', ['nodewebkit']);
+  //grunt.registerTask('build', ['nodewebkit']);
 
 };

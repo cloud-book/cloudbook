@@ -24,7 +24,9 @@ IncludeSite.prototype.editorView = function editorView() {
 
 IncludeSite.prototype.htmlView = function htmlView() {
   var aux = IncludeSite.super_.prototype.htmlView.call(this);
-  var iframeelement = $(window.document.createElement('iframe')).attr('src',this.url );
+  // Bug, Firefox flash don't support transform attribute
+  aux.css('transform','');
+  var iframeelement = $(window.document.createElement('iframe')).attr('src',"rsrc/"+this.url );
   iframeelement.css('height','100%');
   iframeelement.css('width','100%');
   aux.append(iframeelement);
@@ -63,8 +65,8 @@ IncludeSite.prototype.triggerAddEditorView = function triggerAddEditorView(jquer
 
 IncludeSite.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='includesitedialog'><input id='url' type='file'/><button id='save'>Insert</button></div>");
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  var dialog = $("<div id='includesitedialog'><input id='url' type='file'/><button id='save'>"+ CBI18n.gettext("Insert") +"</button></div>");
+  dialog.dialog({dialogClass: "cbdialog",width: 356,modal:true,close:function(){$(this).remove()}});
   dialog.find('#url').keypress(function(e){
       if (e.which==13){
         var seccion = $('#url').val();
@@ -84,9 +86,9 @@ IncludeSite.prototype.editButton = function editButton(e) {
   var dialog = IncludeSite.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
 
-  dialog.append("<input id='url' type='text' value='"+that.url+"'/>");
+  dialog.children(".content").append("<input id='url' type='file'/>");
+  dialog.dialog("option","width",356);
   dialog.callbacks.push(function(){
-    
     copySite($("#url").val(),that);
   });
 };

@@ -69,8 +69,8 @@ YoutubeBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquery
 
 YoutubeBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='imagedialog'><input id='url' type='text'/><button id='save'>Insert</button></div>");
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  var dialog = $("<div id='imagedialog'><input id='url' type='text'/><button id='save'>"+ CBI18n.gettext("Insert") +"</button></div>");
+  dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
   dialog.find('#url').keypress(function(e){
       if (e.which==13){
         var seccion = $('#url').val();
@@ -88,7 +88,7 @@ YoutubeBox.prototype.clickButton = function clickButton(controllerClass) {
 YoutubeBox.prototype.editButton = function editButton(e) {
   var dialog = YoutubeBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
-  dialog.append("<input id='url' type='text' value='"+that.url+"'/>");
+  dialog.children(".content").append("<input id='url' type='text' value='"+that.url+"'/>");
   dialog.callbacks.push(function(){
     that.url = parseYoutubeUrl($("#url").val());
   });

@@ -1,1 +1,4 @@
-src/* 	/usr/share/cloudbook/
+install/*	/
+rsrc/cloudbook.desktop /usr/share/applications/
+rsrc/cloudbook 	/usr/bin/
+rsrc/icons/*	/usr/share/icons/

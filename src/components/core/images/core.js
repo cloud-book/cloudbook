@@ -91,20 +91,27 @@ ImageBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
 
 ImageBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='imagedialog'><input id='imgpath' type='file'/><button id='action'>Insert</button></div>");
+  var dialog = $("<div id='imagedialog'><input id='imgpath' type='file'/><button id='action'>" + CBI18n.gettext("Insert") +"</button></div>");
   dialog.children('#action').click(function(){
     updateImagePath(dialog,that);
   });
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
-  $("#imagedialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
+  dialog.dialog({dialogClass: "cbdialog",
+    width: 356,
+    modal:true,close:function(){$(this).remove()}});
+  $("#imagedialog button").on('click',function(){that.calculateDimensions(that);controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
-
-
+ImageBox.prototype.calculateDimensions = function calculateDimensions(that) {
+  var sizeOf = require('image-size');
+  var dim = sizeOf(Project.Info.projectpath+'/rsrc/'+that.imgpath);
+  var newsize=(dim.height*this.size[0])/dim.width;
+  this.size=[this.size[0],newsize];
+};
 ImageBox.prototype.editButton = function editButton(e) {
   var dialog = ImageBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
 
-  dialog.append("<input id='imgpath' type='file'/>");
+  dialog.children(".content").append("<input id='imgpath' type='file'/>");
+  dialog.dialog("option","width",356);
   dialog.callbacks.push(function callbackEditButtonReplaceImageBox(){
     updateImagePath(dialog,that);
   })

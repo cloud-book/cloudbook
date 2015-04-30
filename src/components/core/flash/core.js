@@ -31,6 +31,8 @@ FlashBox.prototype.editorView = function editorView() {
 
 FlashBox.prototype.htmlView = function htmlView() {
   var aux = FlashBox.super_.prototype.editorView.call(this);
+  // Bug, Firefox flash don't support transform attribute
+  aux.css('transform','');
   var flashelement = $(window.document.createElement('object')).attr('type','application/x-shockwave-flash').attr('data',"rsrc/"+ this.resourcepath);
   var params = [];
   params.push($(window.document.createElement('param')).attr('name','movie').attr('value',this.resourcepath));
@@ -64,11 +66,14 @@ FlashBox.prototype.pdfView = function pdfView() {
 
 FlashBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='flashdialog'><input id='flashpath' type='file' accept='.swf,.flv' /><button id='action'>Insert</button></div>");
+  var dialog = $("<div id='flashdialog'><input id='flashpath' type='file' accept='.swf,.flv' /><button id='action'>"+ CBI18n.gettext("Insert") +"</button></div>");
   dialog.children('#action').click(function(){
     updateFlashPath(dialog,that);
   });
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  dialog.dialog({
+    dialogClass: "cbdialog",
+    width: 356,
+    modal:true,close:function(){$(this).remove()}});
   $("#flashdialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
@@ -113,6 +118,18 @@ FlashBox.prototype.importHTML = function importHTML(node, filePath){
 FlashBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
   FlashBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 };
+
+
+FlashBox.prototype.editButton = function editButton(e) {
+  var that = this;
+  var dialog = FlashBox.super_.prototype.editButton.call(this,e);
+  dialog.dialog("option","width",356);
+  dialog.children(".content").append("<div id='flashdialog'><input id='flashpath' type='file' accept='.swf,.flv' /></div>");
+  dialog.callbacks.push(function(){updateFlashPath(dialog,that)});
+};
+
+
+
 
 
 function updateFlashPath(dialog,that){

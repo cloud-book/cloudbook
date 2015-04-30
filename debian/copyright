@@ -3,7 +3,7 @@ Upstream-Name: cloudbook
 Source: https://github.com/cloud-book/cloudbook
 
 Files: *
-Copyright: 2015 Raul Rodrigo Segura <raurodse@gmail.com>
+Copyright: 2015 Angel Berlanas Vicente <angel.berlanas@gmail.com>
 License: GPL-3.0+
 
 License: GPL-3.0+
@@ -22,3 +22,22 @@ License: GPL-3.0+
  .
  On Debian systems, the complete text of the GNU General
  Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
+
+
+License: Flash Player
+ Information regarding the Adobe Flash Player can be found on this website:
+ http://www.adobe.com/
+
+License: FFMEG
+ FFmpeg License
+
+ FFmpeg is licensed under the GNU Lesser General Public License (LGPL) version 2.1 or later. However, FFmpeg incorporates several optional parts and optimizations that are covered by the GNU General Public License (GPL) version 2 or later. If those parts get used the GPL applies to all of FFmpeg.
+ 
+ Read the license texts to learn how this affects programs built on top of FFmpeg or reusing FFmpeg. You may also wish to have a look at the GPL FAQ.
+
+ Note that FFmpeg is not available under any other licensing terms, especially not proprietary/commercial ones, not even in exchange for payment.
+
+DISCLAIMER:
+
+ Due to the urgency about the next LliureX Release, binaries like ffmpeg and flash have been included on the package distribution. In near future libraries will be unchained from it.
+

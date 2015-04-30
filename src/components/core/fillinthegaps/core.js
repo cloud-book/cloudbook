@@ -8,7 +8,7 @@ function FillGapBox(objectdata){
   objectdata.idtype = metadata['idtype'];
   FillGapBox.super_.call(this,objectdata);
   this.fgpidentifier = typeof objectdata.fgpidentifier !== 'undefined' ? objectdata.fgpidentifier : "pem_" + this.uniqueid ; 
-  this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : "Description of your activity" ; 
+  this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : CBI18n.gettext("Description of your activity") ; 
   this.activitytext = typeof objectdata.activitytext !== 'undefined' ? objectdata.activitytext : 'En un lugar de la <span data-gap-fill="gap">Mancha</span>, de cuyo nombre no quiero acordarme,...' ;
   this.gaps = typeof objectdata.gaps !== 'undefined' ? objectdata.gaps : {
         "gap": {
@@ -114,6 +114,7 @@ FillGapBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquery
     jquerycbo.css('height',counter+"px");
     objectcbo.size[1] = counter;
   }
+  jquerycbo[0].addEventListener('input',function(){jquerycbo.height(jquerycbo.outerHeight(true));});
 };
 
 
@@ -150,7 +151,7 @@ FillGapBox.prototype.editButton = function editButton(e) {
   var toolbar = template({identifier:"#activitytext"});
   template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
-  dialog.append(templatecompiled({description:that.description,toolbar:toolbar,activitytext:that.activitytext}));
+  dialog.children(".content").append(templatecompiled({description:that.description,toolbar:toolbar,activitytext:that.activitytext}));
   dialog.find("#activitytext").wysiwyg({extracommandhandler:that.extracommandhandler});
   dialog.callbacks.push(function(){updateText(dialog,that);});
 }

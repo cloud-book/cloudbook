@@ -70,13 +70,7 @@ WhiteboardBox.prototype.pdfView = function pdfView() {
 }
 
 WhiteboardBox.prototype.editButton = function editButton(e) {
-  var dialog = WhiteboardBox.super_.prototype.editButton.call(this,e);
-  var that = e.data.that;
 
-  dialog.append("<input id='audiopath' type='file'/>");
-  dialog.callbacks.push(function callbackEditButtonReplaceWhiteboardBox(){
-    updateAudioPath(dialog,that);
-  })
 };
 
 

@@ -82,8 +82,8 @@ CBObject.prototype.pdfView = function pdfView() {
 CBObject.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
 	//var x = jquerycbo.get()[0];
 	//x.addEventListener('click',enableEditable);
-	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]} });
-	jquerycbo.rotatable({stop:function(event,ui){objectcbo.degree = ui.angle.current},angle:objectcbo.degree});
+	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]}});
+	jquerycbo.rotatable({stop:function(event,ui){ objectcbo.degree = ui.angle.current},angle:objectcbo.degree});
 };
 
 
@@ -93,32 +93,29 @@ CBObject.prototype.clickButton = function clickButton(controllerClass) {
 
 CBObject.prototype.editButton = function editButton(e) {
 	var that = e.data.that;
-	var dialog = $("<div></div>");
+	var dialog = $("<div><div class='content'></div><footer><div id='savedialog'><button id='save'>"+CBI18n.gettext("Save")+"</button><button id='cancel'>"+CBI18n.gettext("Cancel")+"</button></div></footer></div>");
 	dialog.callbacks = [];
 	dialog.dialog({
+		dialogClass: "cbdialog",
 		modal:true,
 		close:function(){
-			
-			var savedialog = $("<div id='savedialog'><button id='save'>Save</button><button id='cancel'>Cancel</button></div>");
-			savedialog.children('#save').click(function(){
-				dialog.callbacks.forEach(function lanzador(e){e()});
-				var viewobject = $("[data-cbobjectid='"+that.uniqueid+"']");
-				viewobject.replaceWith(that.editorView());
-				that.triggerAddEditorView($("[data-cbobjectid='"+that.uniqueid+"']"),that);
-				var CBStorage = application.storagemanager.getInstance();
-    			CBStorage.setCBObjectById(that,that.uniqueid);
-				dialog.remove() ;
-				$('#savedialog').dialog('destroy'); });
-			savedialog.children('#cancel').click(function(){dialog.remove() ; $('#savedialog').dialog('destroy');});
-			savedialog.dialog({
-				modal:true,
-				close:function(){
-					$(this).remove();
-					dialog.dialog('open')}
-			});
-			
 		}
 	});
+	dialog.find('#save').click(function(){
+		dialog.callbacks.forEach(function lanzador(e){e()});
+		var viewobject = $("[data-cbobjectid='"+that.uniqueid+"']");
+		viewobject.replaceWith(that.editorView());
+		that.triggerAddEditorView($("[data-cbobjectid='"+that.uniqueid+"']"),that);
+		var CBStorage = application.storagemanager.getInstance();
+    	CBStorage.setCBObjectById(that,that.uniqueid);
+		dialog.remove() ;
+		$('#savedialog').dialog('destroy'); 
+	});
+	dialog.find('#cancel').click(function(){
+		dialog.remove() ;
+		$('#savedialog').dialog('destroy');
+	});
+
 	return dialog;
 };
 
@@ -127,32 +124,29 @@ CBObject.prototype.forwardButton = function forwardButton(e) {
 	var that = e.data.that;
 	var controller = application.controller.getInstance();
 	controller.modifyObjectLevelLayer(that.uniqueid,that.levellayer + 1);
+	e.stopPropagation();
 };
 
 CBObject.prototype.backwardButton = function backwardButton(e) {
 	var that = e.data.that;
 	var controller = application.controller.getInstance();
 	controller.modifyObjectLevelLayer(that.uniqueid,that.levellayer - 1);
+	e.stopPropagation();
 };
 
-CBObject.prototype.rotateButton = function rotateButton(e) {
-	e.stopImmediatePropagation();
-	var that = e.data.that;
-	var controller = application.controller.getInstance();
-	controller.modifyObjectRotation(that.uniqueid,e);
-};
+
 
 
 CBObject.prototype.deleteButton = function deleteButton(e) {
 	var that = e.data.that;
-	var dialog = $('<div><button id="delete">Delete</button><button id="cancel">Cancel</button></div>');
+	var dialog = $('<div><button id="delete">'+ CBI18n.gettext("Delete") +'</button><button id="cancel">'+ CBI18n.gettext("Cancel") +'</button></div>');
 	dialog.children('#delete').click(function(){
 		var controller = application.controller.getInstance();
 		controller.deleteCBObjectById(Cloudbook.UI.selected.attr('data-cbsectionid'),that.uniqueid);
 		dialog.dialog('close');
 	});
 	dialog.children('#cancel').click(function(){dialog.dialog('close');});
-	dialog.dialog({modal:true,close:function(){$(this).remove()}});
+	dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
 };
 
 
@@ -198,45 +192,51 @@ CBObject.prototype.enableEditable = function enableEditable(e){
 		jquerycbo.addClass('selected');
 		var node = jquerycbo.get()[0];
 		var actualtop = (node.offsetTop - node.scrollTop + node.clientTop)
-		var toolbartop = actualtop - 30;
+		var toolbarheight = 24;
+		var toolbartop = actualtop - toolbarheight;
 		var top = true;
-		if(actualtop < 30){
+		if(actualtop < toolbarheight){
 			toolbartop = actualtop + jquerycbo.get()[0].clientHeight  ;
 			top = false;
 		}
-		var toolbarleft = (node.offsetLeft - node.scrollLeft + node.clientLeft);
+		var toolbarleft = (node.offsetLeft - node.scrollLeft + node.clientLeft - 1 );
 
 		var bar = $("<div id='cbobjecttoolbar'></div>");
-		var edit = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/edit.png');
-		var del = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/delete.png');
-		var forward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/forward.png');
-		var backward = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/backward.png');
-		var rotate = $(window.document.createElement('img')).attr('src',Cloudbook.UI.themeeditorpath + '/img/rotate.png');
+		var edit = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-edit cb-toolbar');
+		var del = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-delete cb-toolbar');
+		var forward = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-forward cb-toolbar');
+		var backward = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-backward cb-toolbar');
 
 		edit.click({that:that},that.editButton);
 		del.click({that:that},that.deleteButton);
 		forward.click({that:that},that.forwardButton);
 		backward.click({that:that},that.backwardButton);
-		rotate.on('mousedown',{that:that},that.rotateButton);
-		rotate.on('dragstart', function(event) { event.preventDefault(); });
-		//var jqcboffset = jquerycbo.offset();
-		//rotate.css('position',"fixed").css('top',jqcboffset.top + jquerycbo.get()[0].clientHeight - 15 + "px" ).css('left',jqcboffset.left - 15 +"px");
-		bar.append([edit,del,forward,backward]);	
-
+		bar.append([edit,del,forward,backward]);
+		$("#targetcontent").append(bar);
+		bar.css('padding-right','40px');
+		
 		bar.draggable({
 			drag:function(event,ui){
-				ui.position.left = ui.position.left < 0 ? 0 : ui.position.left;
-				ui.position.top = ui.position.top + 30 < 0 ? -30 : ui.position.top;
-				jquerycbo.css('left',ui.position.left+"px").css('top',ui.position.top + 30 +"px");
+				if(top){
+					ui.position.left = ui.position.left < 0 ? 0 : ui.position.left;
+					ui.position.top = ui.position.top + toolbarheight < 0 ? -toolbarheight : ui.position.top;
+					jquerycbo.css('left',ui.position.left +"px").css('top',ui.position.top + toolbarheight +"px");
+				}
+				else{
+					ui.position.left = ui.position.left < 0 ? 0 : ui.position.left;
+					ui.position.top = ui.position.top - jquerycbo.height() < 0 ? jquerycbo.height() : ui.position.top;
+					jquerycbo.css('left',ui.position.left +"px").css('top',ui.position.top - jquerycbo.height() +"px");
+				}
+				
 			},
 			stop: function(event,ui){
 				var objectcbo = storagemanager.getCBObjectById(Cloudbook.UI.cbobjectselected);
-				objectcbo.position = [ui.position.left,ui.position.top + 30 < 0 ? 0 : ui.position.top + 30 ]; 
+				objectcbo.position = [ui.position.left,ui.position.top + toolbarheight < 0 ? 0 : ui.position.top + toolbarheight ]; 
 				storagemanager.setCBObjectById(objectcbo,Cloudbook.UI.cbobjectselected);
 			}
 		});
 		bar.css('top', toolbartop +"px").css('left',toolbarleft+"px").css('position','absolute');
-		$("#targetcontent").append(bar);
+		
 
 	}
 }

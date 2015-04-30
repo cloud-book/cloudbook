@@ -56,7 +56,8 @@ AudioBox.prototype.editButton = function editButton(e) {
   var dialog = AudioBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
 
-  dialog.append("<input id='audiopath' type='file'/>");
+  dialog.children(".content").append("<input id='audiopath' type='file'/>");
+  dialog.dialog("option","width",356);
   dialog.callbacks.push(function callbackEditButtonReplaceAudioBox(){
     updateAudioPath(dialog,that);
   })
@@ -66,11 +67,16 @@ AudioBox.prototype.editButton = function editButton(e) {
 
 AudioBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
-  var dialog = $("<div id='audiodialog'><input id='audiopath' type='file' accept='.mp3,.ogg,.wav' /><button id='action'>Insert</button></div>");
+  var dialog = $("<div id='audiodialog'><input id='audiopath' type='file' accept='.mp3,.ogg,.wav' /><button id='action'>"+ CBI18n.gettext("Insert") +"</button></div>");
   dialog.children('#action').click(function(){
     updateAudioPath(dialog,that);
   });
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  dialog.dialog({
+    dialogClass: "cbdialog",
+    modal:true,
+    width: 356,
+    close:function(){$(this).remove()}
+  });
   $("#audiodialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
