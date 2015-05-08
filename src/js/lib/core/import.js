@@ -19,13 +19,13 @@ Import.prototype.loadFile = function loadFile(projectname,filePath, fileType) {
     {
     	case "HTML": processHTMLFile(filePath); break;
     	case "ODT_DOC_DOCX": processODTFile(filePath, fileType); break;
-    	case "SCORM": processSCORMFile(filePath); break;
+    	case "SCORM": processPackageFile(filePath, fileType); break;
     	case "EPUB": processEPUBFile(filePath); break;
+    	case "IMS": processPackageFile(filePath, fileType); break;
     }
   };
   
 };
-
 
 /**
  * This method is responsible for reading xml Metadata LOM-ES file
@@ -44,18 +44,19 @@ Import.prototype.importMetadata = function importMetadata(filePath)
 }
 
 /**
- * This method is responsible for reading SCORM file content
+ * This method is responsible for reading SCORM and IMS file content
  * First look into the file to check the content and then loads content and metadata information
  * and reads ims metadata to take the order of elements
  * @param  {String} path of the file
+ * @param  {String} type of the file
  */
-function processSCORMFile(filePath)
+function processPackageFile(filePath, fileType)
 {
 	var fs = require('fs');
 	fs.readFile(filePath, function(err, data) {
 		if (err) throw err;
-		var importSCORM = application.importscorm.getInstance();
-		importSCORM.processSCORM(data, filePath);
+		var importPackage = application.importpackage.getInstance();
+		importPackage.processPackage(data, filePath, fileType);
 	});
 
 };

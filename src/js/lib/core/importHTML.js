@@ -85,6 +85,26 @@ function processTextBlock(textValue, width, height, top, left, filePath, idsecti
 }
 
 /**
+ * This method is responsible for processing element blocks
+ * It searches the element and inserts it into a section
+ * @param  {Object} node to be processed
+ * @param  {String} path of the html element
+ * @param  {String} id of section selected
+ */
+function processElementBlock(node, filePath, idsectionselected)
+{
+	var candidates = getHTMLTags(node);
+	var backend = application.backend.core.getInstance();
+
+	if(candidates.length > 0)
+	{
+		element = new Cloudbook.Actions[candidates[0]]['component']();
+		element.importHTML(node, filePath);
+		backend.appendCBObjectIntoSection(element, idsectionselected);
+	}
+}
+
+/**
  * This method is responsible for reading block elements
  * It creates an element and inserts it into a section
  * @param  {String} content of the HTML file
@@ -129,17 +149,14 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 				default:
 					if( ($.inArray(node.tagName,that.textCandidates) > -1 )&& (blockName != null))
 					{
-						that.blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
+						if(node.children.length >0 && node.children[0].nodeName == "IMG")
+							processElementBlock(node.children[0], filePath, idsectionselected);
+						else
+							that.blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
 					}
 					else
 					{
-						candidates = getHTMLTags(node);
-						if(candidates.length > 0)
-						{
-							element = new Cloudbook.Actions[candidates[0]]['component']();
-							element.importHTML(node, filePath);
-							backend.appendCBObjectIntoSection(element, idsectionselected);
-						}
+						processElementBlock(node, filePath, idsectionselected);
 					}
 				break;
 			}
@@ -175,19 +192,20 @@ ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectio
 	var that = this;
 	var includeHTML = $(data);
 
-	var temp = $('<iframe id="tempImportHTML" width="100%" height="100%" ;/>');
-	temp.css("position", "fixed").css("z-index","-1000");
-	$("body").append(temp);
-	temp.contents().find("html").html(data);
-	$("body").append("<div id='layer' style='z-index:-500;background:#fff; position:fixed; top:0; width:100%;height:100%'></div>");
+	setTimeout(function(){
+		var temp = $('<iframe id="tempImportHTML" width="100%" height="100%" ;/>');
+		temp.css("position", "fixed").css("z-index","-1000");
+		$("body").append(temp);
+		temp.contents().find("html").html(data);
+		$("body").append("<div id='layer' style='z-index:-500;background:#fff; position:fixed; top:0; width:100%;height:100%'></div>");
 
-	processBlock($('#tempImportHTML').contents().find("body").length == 0? temp.contents().get()[0].children[0]:temp.contents().get()[0].children[0].childNodes[2],
-	 filePath, null,idsectionselected,that);
-
-	var ui = application.ui.core.getInstance();
-	$('#tempImportHTML').remove();
-	$('#layer').remove();
-	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
+		processBlock($('#tempImportHTML').contents().find("body").length == 0? temp.contents().get()[0].children[0]:temp.contents().get()[0].children[0].childNodes[2],
+		 filePath, null,idsectionselected,that);
+		var ui = application.ui.core.getInstance();
+		$('#tempImportHTML').remove();
+		$('#layer').remove();
+		ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
+	}, 500);
 }
 CBUtil.createNameSpace('application.importhtml');
 application.importhtml = CBUtil.singleton(ImportHTML);
