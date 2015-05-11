@@ -20,7 +20,7 @@ Import.prototype.loadFile = function loadFile(projectname,filePath, fileType) {
     	case "HTML": processHTMLFile(filePath); break;
     	case "ODT_DOC_DOCX": processODTFile(filePath, fileType); break;
     	case "SCORM": processPackageFile(filePath, fileType); break;
-    	case "EPUB": processEPUBFile(filePath); break;
+    	case "EPUB": processPackageFile(filePath, fileType); break;
     	case "IMS": processPackageFile(filePath, fileType); break;
     }
   };
@@ -95,26 +95,6 @@ function processODTFile(filePath, fileType)
 
 };
 
-/**
- * This method is responsible for reading epub files
- * @param  {String} path of the file
- */
-function processEPUBFile(filePath)
-{
-	var epub2html = require('epub2html');
-	var importationHTML = application.importhtml.getInstance();
-
-	epub2html.parse(filePath, function (err, epubData) {
-		var htmlData = epub2html.convertMetadata(epubData);
-		var tempWeb = "<html><body>" + htmlData.htmlNav + "</body></html>";
-		importationHTML.processHTML(tempWeb, filePath, Cloudbook.UI.selected.attr('data-cbsectionid'));
-
-		epub2html.getFiles().forEach(function(element){
-			console.log(element);
-		})
-	});
-
-};
 CBUtil.createNameSpace('application.importation');
 application.importation = CBUtil.singleton(Import);
 

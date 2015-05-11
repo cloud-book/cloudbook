@@ -44,17 +44,32 @@ function saveLanguage(element, childrenName, arrayName, elementName)
  * @param  {String} name of the array index
  * @param  {String} name of the element
  */
-function saveLanguageText(element, arrayName, elementName, i)
+function saveLanguageText(element, arrayName, elementName, i, epub)
 {
-	if(elementName != null)
+	if(epub == null)
 	{
-		Project.Info.LOM[arrayName+i] = {};
-		Project.Info.LOM[arrayName+i][elementName+i] = searchLanguage(element.text());
+		if(elementName != null)
+		{
+			Project.Info.LOM[arrayName+i] = {};
+			Project.Info.LOM[arrayName+i][elementName+i] = searchLanguage(element.text());
+		}
+	    else
+	    {
+			Project.Info.LOM[arrayName+i] = searchLanguage(element.text());
+	    }
 	}
-    else
-    {
-		Project.Info.LOM[arrayName+i] = searchLanguage(element.text());
-    }
+	else
+	{
+		if(elementName != null)
+		{
+			Project.Info.LOM[arrayName+i] = {};
+			Project.Info.LOM[arrayName+i][elementName+i] = searchLanguage(element);
+		}
+	    else
+	    {
+			Project.Info.LOM[arrayName+i] = searchLanguage(element);
+	    }
+	}
 }
 
 /**
@@ -188,6 +203,29 @@ function saveDataLanguageText(element, arrayName, elementName1, elementName2, no
   	}else{
 	        	Project.Info.LOM[elementName1+i] = element.innerHTML;
 	        	Project.Info.LOM[elementName2+i] = searchLanguage(element.outerHTML.split('"')[1]);
+  	}
+}
+
+/**
+ * This method is responsible for saving data and language information into namespace
+ * @param  {String[]} main element
+ * @param  {String} name of the childElement
+ * @param  {String} name of the array index
+ * @param  {String} name of the first element
+ * @param  {String} name of the second element
+ * @param  {String} indicates if the array is not cleared
+ */
+function saveDataLanguageEPUB(element1, element2, arrayName, elementName1, elementName2, notclear)
+{
+	if(arrayName != null)
+	{
+  			if(notclear == null)
+	  			Project.Info.LOM[arrayName] = {};
+	        	Project.Info.LOM[arrayName][elementName1] = element1;
+	        	Project.Info.LOM[arrayName][elementName2] = searchLanguage(element2);
+  	}else{
+	        	Project.Info.LOM[elementName1] = element1;
+	        	Project.Info.LOM[elementName2] = searchLanguage(element2);
   	}
 }
 
@@ -514,6 +552,44 @@ function saveDuration2(element, childrenName, arrayName, elementsName)
 }
 
 /**
+ * This method is responsible for clearing metadata
+ */
+function clearMetadata()
+{
+	Project.Info.DublinCore = {};
+	Project.Info.LOM = {};
+}
+/**
+ * This method is responsible for reading EPUB metadata content (Dublin Core)
+ * @param  {String} value of the file
+ */
+ImportMetadata.prototype.loadEPUBMetadata =  function loadEPUBMetadata(xml)
+{
+	var dictionary = CBUtil.req("js/lib/gui/dialogMetadataValues.js");
+	var titleEPUB = "", descriptionEPUB = "", dataIDElement = "", valueElement = "", subjectEPUB = "";
+	arrayHTML = xml.split("/>");
+	clearMetadata();
+
+	arrayHTML.forEach(function(element){
+		if(element.trim().length != 0)
+		{
+			var nameElement = element.split(" ")[1].replace('name="','').replace('"','').replace("DC.","");
+			switch(nameElement)
+			{
+				case "identifier": Project.Info.DublinCore[nameElement] = element.split(" ")[2].replace('content="',"").replace('"','');break;
+				case "title": case "description": case "subject":  case "date": case "creator": 
+				case "publisher": case "contributor": case "type": case "source": case "relation": 
+				case "coverage": case "rights":
+					Project.Info.DublinCore[nameElement] = element.split('"')[3]; 
+				break;
+				case "language": Project.Info.DublinCore[nameElement] = searchLanguage(element.split('"')[3]); break;
+				case "format": Project.Info.DublinCore['formatData'] = element.split('"')[3];  break;
+			}
+		}
+	});
+}
+
+/**
  * This method is responsible for reading IMS metadata content
  * @param  {String} path of the file
  */
@@ -523,6 +599,8 @@ ImportMetadata.prototype.loadIMSMetadata =  function loadIMSMetadata(xml)
 	xmlDoc = $.parseXML(xml);
 	var i = 1, j = 1, k = 1, l = 1, m = 1, n = 1, o = 1,p = 1, q = 1, r = 1;
 	var type = "", nameReq = "", maxVer = "", minVer = "", lang ="", langTaxon = "", nameTaxon = "", idTaxon = "";
+
+	clearMetadata();
 
 	$(xml).find("metadata").each(function(){
 		var metadata = $(this)[0].children[$(this)[0].children.length-1].children;
@@ -787,6 +865,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
 	var dictionary = CBUtil.req("js/lib/gui/dialogMetadataValues.js");
 	var i = 1;
   	
+  	clearMetadata();
   	$(xml).find("general").each(function(){	
   		$(this).children("identifier").each(function(){
 		  	saveDataArrayValues('cat_'+i, [['catalog_'+i, $(this).find("catalog").text()], ['entry_'+i, $(this).find("entry").text()]], 1);
