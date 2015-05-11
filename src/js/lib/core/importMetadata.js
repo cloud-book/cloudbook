@@ -38,6 +38,26 @@ function saveLanguage(element, childrenName, arrayName, elementName)
 }
 
 /**
+ * This method is responsible for saving language information into namespace
+ * @param  {String[]} main element
+ * @param  {String} name of the childElement
+ * @param  {String} name of the array index
+ * @param  {String} name of the element
+ */
+function saveLanguageText(element, arrayName, elementName, i)
+{
+	if(elementName != null)
+	{
+		Project.Info.LOM[arrayName+i] = {};
+		Project.Info.LOM[arrayName+i][elementName+i] = searchLanguage(element.text());
+	}
+    else
+    {
+		Project.Info.LOM[arrayName+i] = searchLanguage(element.text());
+    }
+}
+
+/**
  * This method is responsible for saving data information into array namespace
  * @param  {String[]} main element
  * @param  {String} name of the childElement
@@ -63,6 +83,27 @@ function saveDataText(element, childrenName, arrayName, elementName)
  * This method is responsible for saving data information into array namespace
  * @param  {String[]} main element
  * @param  {String} name of the childElement
+ * @param  {String} name of the array index
+ * @param  {String} name of the element
+ */
+function saveDataText2(element, childrenName, arrayName, elementName)
+{
+		if(elementName != null)
+		{
+			Project.Info.LOM[arrayName] = {};
+    		Project.Info.LOM[arrayName][elementName] = element.innerHTML;
+    	}
+	    else
+	    {
+    		Project.Info.LOM[arrayName] = element.innerHTML;
+	    }
+}
+
+
+/**
+ * This method is responsible for saving data information into array namespace
+ * @param  {String[]} main element
+ * @param  {String} name of the childElement
  * @param  {String} name of the array
  * @param  {String} name of the element
  */
@@ -76,6 +117,21 @@ function saveDataArrayText(element, childrenName, arrayName, elementName)
   	});
 
 }
+
+/**
+ * This method is responsible for saving data information into array namespace
+ * @param  {String[]} main element
+ * @param  {String} name of the childElement
+ * @param  {String} name of the array
+ * @param  {String} name of the element
+ */
+function saveDataArrayText2(element, arrayName, elementName, i)
+{
+		Project.Info.LOM[arrayName+i] = {};
+    	Project.Info.LOM[arrayName+i][elementName+i] = element[0].innerHTML;
+
+}
+
 /**
  * This method is responsible for saving data and language information into namespace
  * @param  {String[]} main element
@@ -113,6 +169,29 @@ function saveDataLanguage(element, childrenName, arrayName, elementName1, elemen
 }
 
 /**
+ * This method is responsible for saving data and language information into namespace
+ * @param  {String[]} main element
+ * @param  {String} name of the childElement
+ * @param  {String} name of the array index
+ * @param  {String} name of the first element
+ * @param  {String} name of the second element
+ * @param  {String} indicates if the array is not cleared
+ */
+function saveDataLanguageText(element, arrayName, elementName1, elementName2, notclear, i)
+{
+	if(arrayName != null)
+	{
+  			if(notclear == null)
+	  			Project.Info.LOM[arrayName+i] = {};
+	        	Project.Info.LOM[arrayName+i][elementName1+i] = element.innerHTML;
+	        	Project.Info.LOM[arrayName+i][elementName2+i] = searchLanguage(element.outerHTML.split('"')[1]);
+  	}else{
+	        	Project.Info.LOM[elementName1+i] = element.innerHTML;
+	        	Project.Info.LOM[elementName2+i] = searchLanguage(element.outerHTML.split('"')[1]);
+  	}
+}
+
+/**
  * This method is responsible for saving data into namespace
  * @param  {String[]} main element
  * @param  {String} name of the childElement
@@ -141,6 +220,28 @@ function saveDataValue(element, childrenName, arrayName, dictionaryName, index)
  * This method is responsible for saving data into namespace
  * @param  {String[]} main element
  * @param  {String} name of the childElement
+ * @param  {String} name of the array index
+ * @param  {String} name of the element of the dictionary with values
+ * @param  {String} index of the array
+ */
+function saveDataValueText(element, arrayName, dictionaryName, index)
+{
+	var dictionary = CBUtil.req("js/lib/gui/dialogMetadataValues.js");
+	var i = 1;
+		if(dictionaryName == null)
+        	Project.Info.LOM[arrayName] = 	$(element).children()[1].innerHTML;
+        else{
+        	if(index == null)
+        		Project.Info.LOM[arrayName] = CBI18n.gettext($(element).children()[1].innerHTML);
+        	else	
+	        	Project.Info.LOM[arrayName] = dictionary[dictionaryName][parseInt($(element).children()[1].innerHTML)-1];
+        	}
+}
+
+/**
+ * This method is responsible for saving data into namespace
+ * @param  {String[]} main element
+ * @param  {String} name of the childElement
  * @param  {String} name of the array 
  * @param  {String} name of the element 
  * @param  {String} indicates if the array is not cleared
@@ -161,6 +262,28 @@ function saveDataArray(element, childrenName, arrayName, elementName, notclear){
     	i++;
 	});
 }
+
+/**
+ * This method is responsible for saving data into namespace
+ * @param  {String[]} main element
+ * @param  {String} name of the childElement
+ * @param  {String} name of the array 
+ * @param  {String} name of the element 
+ * @param  {String} indicates if the array is not cleared
+ */
+function saveDataArray2(element, arrayName, elementName, notclear, i){
+
+	if(notclear == null)
+	{ 
+		Project.Info.LOM[arrayName+i] = {};
+    	Project.Info.LOM[arrayName+i][elementName+i] = CBI18n.gettext(element.children[1].innerHTML);
+	}
+	else
+	{
+    	Project.Info.LOM[arrayName][elementName] = CBI18n.gettext(element.children[1].innerHTML);
+	}
+}
+
 /**
  * This method is responsible for saving data into namespace with several elements
  * @param  {String} name of the array
@@ -252,6 +375,76 @@ function saveContribution(element, childrenName, arrayName, subArrayName, elemen
  * @param  {String} name of the array
  * @param  {String} name of the childElement
  * @param  {String} name of the array 
+ * @param  {String} name of the subarray  (if exists)
+ * @param  {String[]} array with element names and values
+ * @param  {String} indicates if there is role element or not
+ */
+function saveContributionText(element, childrenName, arrayName, subArrayName, elements, norole, i)
+{
+	var role, entity, name, email, organization, date, descAnn, langAnn;
+
+	$(element).children().each(function(){
+
+		if(this.nodeName == "LOM:ROLE")
+			role = this.children[1].innerHTML;
+		if(this.nodeName == "LOM:ENTITY"){
+			entity = this.innerHTML.replace("BEGIN:VCARD", "").replace("END:VCARD","");
+			name = entity.split("FN:")[1].split("EMAIL")[0];
+			email = entity.split("INTERNET:")[1].split(" ")[0];
+			organization = entity.split("ORG:")[1];
+		}
+		if(this.nodeName == "LOM:DATE")
+			date = this.children[0].innerHTML;
+		if(this.nodeName == "LOM:DESCRIPTION"){
+        	descAnn = this.children[0].innerHTML;
+        	langAnn = searchLanguage($(this).children()[0].attributes["language"].value);
+        }	
+	});
+
+	if(norole == null)
+		saveDataArrayValues(arrayName+i, [[elements[0]+i, CBI18n.gettext(role)], [elements[1]+i, name], [elements[2]+i, email], [elements[3]+i, organization], [elements[4]+i, date.split("T")[0]]], 1);
+	else{
+		saveDataArrayValues(arrayName+i, [[elements[0]+i, name], [elements[1]+i, email], [elements[2]+i, organization], [elements[3]+i, date.split("T")[0]]], 1);	
+		Project.Info.LOM[arrayName+i][elements[6]+i] = descAnn;
+		Project.Info.LOM[arrayName+i][elements[7]+i] = langAnn;
+	}
+	if(date != null && norole == null)
+	{
+		var j = 1;
+		$($(element).children()[2].children[1].children).each(function(){
+			if(norole == null){
+			  	Project.Info.LOM[arrayName+i][subArrayName+i+'_'+j] = {};
+			  	Project.Info.LOM[arrayName+i][subArrayName+i+'_'+j][elements[5]+i+'_'+j] =  this.innerHTML;
+			  	Project.Info.LOM[arrayName+i][subArrayName+i+'_'+j][elements[6]+i+'_'+j] = searchLanguage(this.outerHTML.split('"')[1]);
+			}else{
+				Project.Info.LOM[arrayName+i][elements[4]+i] =  this.innerHTML;
+				Project.Info.LOM[arrayName+i][elements[5]+i] = searchLanguage(this.outerHTML.split('"')[1]);
+			}
+			j++;
+		})
+	}
+	else
+	{
+		$($(element).children()[2]).children().each(function(){
+			if(norole == null){
+			  	Project.Info.LOM[arrayName+i][subArrayName+i+'_'+j] = {};
+			  	Project.Info.LOM[arrayName+i][subArrayName+i+'_'+j][elements[5]+i+'_'+j] =  this.innerHTML;
+			  	Project.Info.LOM[arrayName+i][subArrayName+i+'_'+j][elements[6]+i+'_'+j] = searchLanguage(this.outerHTML.split('"')[1]);
+			}else{
+				Project.Info.LOM[arrayName+i][elements[4]+i] =  this.innerHTML;
+				Project.Info.LOM[arrayName+i][elements[5]+i] = searchLanguage(this.outerHTML.split('"')[1]);
+			}
+			j++;
+		})
+	}
+}
+
+
+/**
+ * This method is responsible for saving contributions data
+ * @param  {String} name of the array
+ * @param  {String} name of the childElement
+ * @param  {String} name of the array 
  * @param  {String[]} array with element names and values
  */
 function saveDuration(element, childrenName, arrayName, elementsName)
@@ -284,6 +477,306 @@ function saveDuration(element, childrenName, arrayName, elementsName)
 	  			});
 	  		});
 	});
+}
+
+/**
+ * This method is responsible for saving contributions data
+ * @param  {String} name of the array
+ * @param  {String} name of the childElement
+ * @param  {String} name of the array 
+ * @param  {String[]} array with element names and values
+ */
+function saveDuration2(element, childrenName, arrayName, elementsName)
+{
+	var arrayDate = processDate(element[0].children[0].innerHTML.replace("P", ""));
+	var i = 1;
+
+	if(arrayDate['P'] != null)
+	{
+	  	Project.Info.LOM[elementsName[0]] = arrayDate['P']['Y'] == null ?  0 : arrayDate['P']['Y'];
+	  	Project.Info.LOM[elementsName[1]] = arrayDate['P']['M'] == null ?  0 : arrayDate['P']['M'];
+	  	Project.Info.LOM[elementsName[2]] = arrayDate['P']['D'] == null ?  0 : arrayDate['P']['D'];
+		}
+	if(arrayDate['T'] != null)
+	{
+	  	Project.Info.LOM[elementsName[3]] = arrayDate['T']['H'] == null ?  0 : arrayDate['T']['H'];
+	  	Project.Info.LOM[elementsName[4]] = arrayDate['T']['M'] == null ?  0 : arrayDate['T']['M'];
+	  	Project.Info.LOM[elementsName[5]] = arrayDate['T']['S'] == null ?  0 : arrayDate['T']['S'];
+	}
+
+	$(element[0].children[1]).children().each(function(){
+
+	  	Project.Info.LOM[arrayName+i] = {};
+  		Project.Info.LOM[arrayName+i][elementsName[6]+i] = this.innerHTML;
+	  	Project.Info.LOM[arrayName+i][elementsName[7]+i] = searchLanguage(this.attributes["language"].value);
+		i++;
+	});
+}
+
+/**
+ * This method is responsible for reading IMS metadata content
+ * @param  {String} path of the file
+ */
+ImportMetadata.prototype.loadIMSMetadata =  function loadIMSMetadata(xml)
+{
+	var dictionary = CBUtil.req("js/lib/gui/dialogMetadataValues.js");
+	xmlDoc = $.parseXML(xml);
+	var i = 1, j = 1, k = 1, l = 1, m = 1, n = 1, o = 1,p = 1, q = 1, r = 1;
+	var type = "", nameReq = "", maxVer = "", minVer = "", lang ="", langTaxon = "", nameTaxon = "", idTaxon = "";
+
+	$(xml).find("metadata").each(function(){
+		var metadata = $(this)[0].children[$(this)[0].children.length-1].children;
+		$.each(metadata, function(){
+			if(this.tagName =="LOM:GENERAL"){
+				$.each(this.children, function(){
+					if(this.tagName =="LOM:IDENTIFIER"){
+						saveDataArrayValues('cat_'+i, [['catalog_'+i, $(this)[0].children[0].textContent], ['entry_'+i, $(this)[0].children[1].textContent]], 1);
+						i++;
+					}
+					if(this.tagName =="LOM:TITLE"){
+						i = 1;
+						$.each(this.children, function(){
+							var lang = this.outerHTML.split("</lom:string>")[0].split('"')[1];
+							var nameTitle = this.outerHTML.split("</lom:string>")[0].split('"')[2].replace(">", "");
+							saveDataArrayValues('tit_'+i, [['title_'+i, nameTitle], ['titleLang_'+i, searchLanguage(lang)]], 1);		
+							i++;
+						});
+					}
+					if(this.tagName =="LOM:LANGUAGE"){
+						saveLanguageText($(this),'idiom_','mainLang_', j);
+						j++;
+					};	
+					if(this.tagName =="LOM:DESCRIPTION"){
+						saveDataLanguageText($(this).children()[0], 'descGeneral_','Description_','descGeneralLang_', null, k);
+						k++;
+					};
+					if(this.tagName =="LOM:KEYWORD"){
+						saveDataLanguageText($(this).children()[0], 'keywordGeneral_','keywordGeneral1_','keywordGeneralLang_', null, l);
+						l++;
+					};				
+					if(this.tagName =="LOM:COVERAGE"){
+						saveDataLanguageText($(this).children()[0],'coverage_','coverage1_','coverageLang_', null, m);
+						m++;
+					};				
+					if(this.tagName =="LOM:STRUCTURE"){
+						saveDataValueText($(this), 'structuresGeneral_1','Structures');
+					};				
+					if(this.tagName =="LOM:AGGREGATIONLEVEL"){
+						saveDataValueText($(this), 'aggregationLevels_1', 'Agregations', 1);
+					};				
+				});
+			};
+			i = 1, j = 1;
+			if(this.tagName =="LOM:LIFECYCLE"){
+				$.each(this.children, function(){
+					if(this.tagName =="LOM:VERSION"){
+						$.each(this.children, function(){
+							var lang = this.outerHTML.split("</lom:string>")[0].split('"')[1];
+							var nameVersion = this.outerHTML.split("</lom:string>")[0].split('"')[2].replace(">", "");
+							saveDataArrayValues('versionlifecycle_'+i, [['versionlifecycle1_'+i,nameVersion ], ['lifeCycleLang_'+i, searchLanguage(lang)]], 1);		
+							i++;
+						});
+					}
+					if(this.tagName =="LOM:STATUS"){
+						saveDataValueText($(this), 'statusLifeCycle_1_1', 'Status');
+					};				
+					if(this.tagName =="LOM:CONTRIBUTE"){
+				 		saveContributionText($(this), "contribute", 'contrLyfeCycle_', 'DIVdescContribLifeCycle_', ['rolesLifeCycle_','nameContribLifeCycle_', 'emailContribLifeCycle_',
+			 			'organContribLifeCycle_', 'dateContribLifeCycle_', 'DescriptionContribLifeCycle_', 'ContribLifeCycleLang_'], null, j);
+				 		j++;
+					};
+				});
+			};
+			i = 1, j = 1, k = 1;
+			if(this.tagName =="LOM:METAMETADATA"){
+				$.each(this.children, function(){
+					if(this.tagName =="LOM:IDENTIFIER"){
+						saveDataArrayValues('catMetadata_'+i, [['metametadataCatalog_'+i, $(this)[0].children[0].textContent], ['metametadataEntry_'+i, $(this)[0].children[1].textContent]], 1);
+						i++;
+					}
+					if(this.tagName =="LOM:METADATASCHEMA"){
+						saveDataText2($(this)[0], 'metadataSchema', 'schemaMetametadataValue_1');
+					}
+					if(this.tagName =="LOM:LANGUAGE"){
+						saveLanguageText($(this),'langMetametadataValue_', null, j);
+						j++;
+					};	
+					if(this.tagName =="LOM:CONTRIBUTE"){
+				 		saveContributionText($(this), "contribute", 'contrMetametadata_', 'DIVdescContribMetametadata_', ['rolesMetametadata_','nameContribMetametadata_', 'emailContribMetametadata_',
+			 			'organContribMetametadata_', 'dateContribMetametadata_', 'DescriptionContribMetametadata_', 'ContribMetametadataLang_'], null, k);
+				 		k++;
+					};
+				});
+			};
+			i = 1, j = 1, k = 1, l = 1, m = 1;
+			if(this.tagName =="LOM:TECHNICAL"){
+				$.each(this.children, function(){
+					if(this.tagName =="LOM:FORMAT"){
+						saveDataArrayText2($(this), 'formatTechnical_', 'formatTechnicalValue_', i);
+						i++;
+					};
+					if(this.tagName =="LOM:SIZE"){
+						saveDataText2($(this)[0],"size", 'sizeTechnicalValue_1');
+					}
+					if(this.tagName =="LOM:LOCATION"){
+						saveDataArrayText2($(this), 'locationTechnical_', 'locationTechnicalValue_', j);
+						j++;
+					}
+					if(this.tagName =="LOM:REQUIREMENT"){
+						$.each(this.children[0].children, function(){
+							if(this.tagName == "LOM:TYPE")
+								type = this.children[1].innerHTML;
+							if(this.tagName == "LOM:NAME")
+								nameReq = this.children[1].innerHTML;
+							if(this.tagName == "LOM:MINIMUMVERSION")	
+								minVer = this.innerHTML;
+							if(this.tagName == "LOM:MAXIMUMVERSION")	
+								maxVer = this.innerHTML;
+						});
+						saveDataArrayValues('requirementsTechnical_'+k,[['typeTechnicalReq_'+k, CBI18n.gettext(type)], ['nameTechnicalReq_'+k, 
+							CBI18n.gettext(nameReq)], ['minVerTechnicalReq_'+k, minVer], ['versmaxTechnicalReq_'+k, maxVer]] ,1);
+						k++;
+					};
+					if(this.tagName =="LOM:INSTALLATIONREMARKS"){
+						$.each(this.children, function(){
+							var lang = this.outerHTML.split("</lom:string>")[0].split('"')[1];
+							var nameRem = this.outerHTML.split("</lom:string>")[0].split('"')[2].replace(">", "");
+							saveDataArrayValues('installRemTech_'+l, [['installRemTechValue_'+l,nameRem ], ['LangRemTech_'+l, searchLanguage(lang)]], 1);		
+							l++;
+						});
+					};
+					if(this.tagName =="LOM:OTHERPLATFORMREQUIREMENTS"){
+						$.each(this.children, function(){
+							var lang = this.outerHTML.split("</lom:string>")[0].split('"')[1];
+							var nameRem = this.outerHTML.split("</lom:string>")[0].split('"')[2].replace(">", "");
+							saveDataArrayValues('requirementsRemTech_'+m, [['requirementsRemTechValue_'+m,nameRem ], ['LangOtherTech_'+m, searchLanguage(lang)]], 1);		
+							m++;
+						});
+					};
+					if(this.tagName =="LOM:DURATION"){
+						saveDuration2($(this), "duration", 'descdurationDurTech_', ['durationYearsDurTech_1', 'durationMonthsDurTech_1', 'durationDaysDurTech_1','durationHoursDurTech_1',
+						 'durationminutesDurTech_1', 'durationsecondsDurTech_1', 'DescriptionDurTech_', 'languageDescDurTech_']);
+					};
+				});
+			};
+			i = 1, j = 1, k = 1, l = 1, m = 1;
+			if(this.tagName =="LOM:EDUCATIONAL"){
+				$.each(this.children, function(){
+					if(this.tagName =="LOM:INTERACTIVITYTYPE")
+						saveDataValueText($(this), 'intTypeEducationalValue_1','InterType');
+					if(this.tagName =="LOM:LEARNINGRESOURCETYPE"){
+						saveDataArray2($(this)[0], 'resourceTypeEducational_', 'resourceTypeEducationalValue_', null, i);	
+						i++;
+					}
+					if(this.tagName =="LOM:INTERACTIVITYLEVEL")
+						saveDataValueText($(this), 'levelIntEducationalValue_1','InteractivityLevel');
+					if(this.tagName =="LOM:SEMANTICDENSITY")
+						saveDataValueText($(this), 'levelDensEducationalValue_1','SemanticDensity');
+					if(this.tagName =="LOM:INTENDEDENDUSERROLE"){
+						saveDataArray2($(this)[0], 'endUserEducational_', 'endUserEducationalValue_', null, j);	
+						j++;
+					};
+					if(this.tagName =="LOM:CONTEXT"){
+						saveDataArray2($(this)[0], 'contextEducational_', 'contextEducationalValue_', null, k);	
+						k++;
+					};
+					if(this.tagName =="LOM:TYPICALAGERANGE"){
+						saveDataLanguageText($(this).children()[0], 'rangeAgeEducational_','rangeAgeEducationalValue_','languageRangeEducational_', null, l);
+						l++;
+					}
+					if(this.tagName =="LOM:DIFFICULTY")
+						saveDataValueText($(this), 'difficultyEducationalValue_1','Difficulty');
+					if(this.tagName =="LOM:TYPICALLEARNINGTIME"){
+						saveDuration2($(this), "typicalLearningTime", 'descLearningTimeEducational_', ['durationYearsEducational_1', 'durationMonthsEducational_1', 'durationDaysEducational_1','durationHoursEducational_1',
+		 				'durationminutesEducational_1', 'durationsecondsEducational_1', 'DescriptionLearningEducational_', 'langDurationEducational_']);
+					};
+					if(this.tagName =="LOM:DESCRIPTION"){
+						saveDataLanguageText($(this).children()[0], 'descEducationUse_','descEducationUseValue_','langDescrEducational_', null, m);
+						m++;
+					};
+					if(this.tagName =="LOM:LANGUAGE"){
+						saveLanguageText($(this),'languageEducationalUse_','languageEducationalUseValue_', n);
+						n++;
+					}
+					if(this.tagName =="LOM:COGNITIVEPROCESS"){
+						saveDataArray2($(this)[0], 'processcogEducational_', 'processcogEducationalValue_', null, o);	
+						o++;
+					};
+				});
+			};
+			i = 1, j = 1;
+			if(this.tagName =="LOM:RIGHTS"){
+				$.each(this.children, function(){
+					if(this.tagName =="LOM:COST")
+						saveDataValueText($(this), 'costRightsValue_1','Cost');
+					if(this.tagName =="LOM:COPYRIGHTANDOTHERRESTRICTIONS")
+						saveDataValueText($(this), 'copyrightRightsValue_1','AuthorRights');
+					if(this.tagName =="LOM:COPYRIGHTANDOTHERRESTRICTIONS")
+						saveDataValueText($(this), 'copyrightRightsValue_1','AuthorRights');
+					if(this.tagName =="LOM:DESCRIPTION"){
+						saveDataLanguageText($(this).children()[0], 'descRights_','descRightsValue_','descRightsLang_', null, i);
+						i++;
+					};
+					if(this.tagName =="LOM:ACCESS"){
+						saveDataValueText($(this).children()[0], 'accessTypeRights_1', 'Accesstype');
+						saveDataLanguageText($($(this).children()[1]).children()[0], null, 'DescriptionAccessRights_', 'langAccessRights_', null, j);
+						j++
+					};
+				});
+			};
+			if(this.tagName =="LOM:RELATION"){
+				saveDataArrayValues('relationRelations_'+p,[['relationRelationsValue_'+p, CBI18n.gettext($($(this).children()[0]).children()[1].innerHTML)], ['catalogRelations_'+p, $($($(this).children()[1]).children()[0]).children()[0].innerHTML],
+					['entryRelations_'+p, $($($(this).children()[1]).children()[0]).children()[1].innerHTML], ['DescriptionRelationRelations_'+p, $($($(this).children()[1]).children()[1]).children()[0].innerHTML], 
+					['relationRelationsLang_'+p, searchLanguage($($($(this).children()[1]).children()[1]).children()[0].attributes["language"].value)]]  ,1);	  	
+			  	p++;
+			};
+			if(this.tagName =="LOM:ANNOTATION"){
+			 		saveContributionText($(this), "annotation", 'annotationAnnotations_', null, ['nameAnnotations_','emailAnnotations_', 'organAnnotations_','dateAnnotations_', 'DescriptionDateAnnotations_',
+					 'langDateAnnotations_', 'DescriptionAnnotations_', 'LangAnnotations_'], 1, q);
+				 		q++;
+
+			};
+			i = 1, j = 1, k = 1;
+			if(this.tagName =="LOM:CLASSIFICATION"){
+				$.each(this.children, function(){
+					if(this.tagName =="LOM:PURPOSE")
+						saveDataArray2($(this)[0], 'classificationsClassification_', 'typePurposeClassification_', null,r);
+					if(this.tagName =="LOM:DESCRIPTION")
+						saveDataLanguageText($(this).children()[0], 'classificationsClassification_', 'DescriptionTaxonClassification_', 'tituloLangTaxonClassification_', 1, r);	
+					if(this.tagName =="LOM:KEYWORD")
+					{
+						var langKey = this.outerHTML.split("</lom:string>")[0].split('"')[1];
+						var nameKey = this.outerHTML.split("</lom:string>")[0].split('"')[2].replace(">", "");
+						saveDataArrayValues('classificationsClassification_'+r, [['KeywordTaxonClassification_'+r+"_"+j, nameKey], 
+  						['titleLangKeywordTaxonClassification_'+r+"_"+j, searchLanguage(langKey)]], 1, 'DIVkeyClassification_'+r + "_" + j);
+			        	j++;
+			        }
+					if(this.tagName =="LOM:TAXONPATH")
+					{
+						$.each(this.children, function(){
+							if(this.tagName == "LOM:SOURCE")
+								source = this.innerText;
+							if(this.tagName == "LOM:TAXON"){
+								lang = this.innerHTML.split('"')[1];
+								nameTaxon = this.children[1].innerText;
+								idTaxon = this.children[0].innerHTML; 
+								langTaxon = this.children[1].innerHTML.split('"')[1];
+								saveDataArrayValues('classificationsClassification_'+r, [['sourceNameClassification_'+r+"_"+k, source], 
+									['langClassification_'+r+"_"+k, searchLanguage(lang)], 
+									['nameTaxonClassification_'+r+"_"+k, nameTaxon], 
+									['idTaxonClassification_'+r+"_"+k, idTaxon], 
+									['langClassificationTaxon_'+r+"_"+k, searchLanguage(langTaxon)]], 1, 'DIVpathClassification_'+r + "_" + k);
+									k++;
+							}
+						});
+
+					}
+				});
+				r++;
+			}
+		});
+
+	});	
 }
 /**
  * This method is responsible for reading metadata content
