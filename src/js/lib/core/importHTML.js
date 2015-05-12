@@ -134,7 +134,7 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 					if(node.parentElement.tagName =="HEADER" || node.parentElement.tagName =="FOOTER" ||
 						node.parentElement.nodeName == "BODY" || (node.parentElement.parentElement != null && 
 							node.parentElement.parentElement.nodeName == "BODY") || (node.parentElement.parentElement != null &&
-					    node.parentElement.parentNode.nodeName == "HTML"))
+					    node.parentElement.parentNode.nodeName == "HTML") || node.parentElement.tagName =="HTML")
 					{
 						if(text != ""){
 							processTextBlock(text, width, height, top, left, filePath, idsectionselected);
