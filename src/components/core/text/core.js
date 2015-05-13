@@ -57,6 +57,10 @@ TextBox.prototype.pdfView = function pdfView() {
   return aux;
 }
 
+TextBox.prototype.epubView = function epubView() {
+   return this.pdfView();
+}
+
 
 TextBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;

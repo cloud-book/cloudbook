@@ -52,6 +52,12 @@ AudioBox.prototype.pdfView = function pdfView() {
   return aux;
 }
 
+AudioBox.prototype.epubView = function epubView() {
+  return this.pdfView();
+}
+
+
+
 AudioBox.prototype.editButton = function editButton(e) {
   var dialog = AudioBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;

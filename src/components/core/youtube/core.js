@@ -63,6 +63,10 @@ YoutubeBox.prototype.pdfView = function pdfView() {
   return aux.append("<a href='"+this.url+"&autoplay=1'>"+stringtopdf+"</a>");
 }
 
+YoutubeBox.prototype.epubView =function epubView() {
+  return this.pdfView();
+}
+
 YoutubeBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
   YoutubeBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 };

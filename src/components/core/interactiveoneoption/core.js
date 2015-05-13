@@ -44,6 +44,18 @@ PEMBox.prototype.pdfView = function pdfView() {
   return aux;
 }
 
+PEMBox.prototype.epubView = function epubView() {
+  var aux = PEMBox.super_.prototype.htmlView.call(this);
+  var fs = require('fs');
+  var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityepub.hbs',{encoding:'utf8'});
+  var templatecompiled = application.util.template.compile(template);
+  options={"description":this.description,questions:this.questions};
+  aux.css("height","auto");
+  aux.children('.cbcontainer').append($(templatecompiled(options)));
+ return aux;
+  
+}
+
 
 PEMBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;

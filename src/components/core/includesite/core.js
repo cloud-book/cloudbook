@@ -50,6 +50,11 @@ IncludeSite.prototype.pdfView = function pdfView() {
   return aux.append("<a href='"+linktopdf+"'>"+stringtopdf+"</a>");
 }
 
+IncludeSite.prototype.epubView =function epubView(){
+   return this.pdfView();
+
+}
+
 IncludeSite.prototype.HTMLtags = function HTMLtags(node){
   var score = 0;
   var tagTypes = ['IFRAME'];

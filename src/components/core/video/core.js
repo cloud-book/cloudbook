@@ -51,6 +51,11 @@ VideoBox.prototype.pdfView = function pdfView() {
   return aux.append("<a href='"+linktopdf+"'>"+stringtopdf+"</a>");  
 }
 
+VideoBox.prototype.epubView=function epubView() {
+  return this.pdfView();
+}
+
+
 VideoBox.prototype.editButton = function editButton(e) {
   var dialog = VideoBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
