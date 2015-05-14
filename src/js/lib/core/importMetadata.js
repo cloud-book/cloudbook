@@ -577,13 +577,16 @@ ImportMetadata.prototype.loadEPUBMetadata =  function loadEPUBMetadata(xml)
 			switch(nameElement)
 			{
 				case "identifier": Project.Info.DublinCore[nameElement] = element.split(" ")[2].replace('content="',"").replace('"','');break;
-				case "title": case "description": case "subject":  case "date": case "creator": 
+				case "title": case "description": case "subject":  case "creator": 
 				case "publisher": case "contributor": case "type": case "source": case "relation": 
 				case "coverage": case "rights":
 					Project.Info.DublinCore[nameElement] = element.split('"')[3]; 
 				break;
 				case "language": Project.Info.DublinCore[nameElement] = searchLanguage(element.split('"')[3]); break;
 				case "format": Project.Info.DublinCore['formatData'] = element.split('"')[3];  break;
+				case "date": 
+					Project.Info.DublinCore[nameElement] = element.split('"')[3].split("T")[0]; 
+				break;
 			}
 		}
 	});
