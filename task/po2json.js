@@ -13,8 +13,8 @@ module.exports = function(cb){
 	allfiles = globule.find(src);
 	allfiles.forEach(function(filepath){
 		destpath = path.basename(filepath).slice(0,- 3) + ".js";
-		var result = po2json.parseFileSync(filepath,{format:"jed1.x",pretty:true,stringify:true,"fallback-to-msgid":true});
-		fs.writeFileSync(dest + destpath,"module.exports = "result,{encoding:'utf8'});
+		var result = po2json.parseFileSync(filepath,{format:"jed1.x",pretty:false,stringify:true,"fallback-to-msgid":true});
+		fs.writeFileSync(dest + destpath,"module.exports = " + result + ";",{encoding:'utf8'});
 	});
 	
 
