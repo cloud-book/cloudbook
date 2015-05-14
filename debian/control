@@ -9,6 +9,6 @@ Homepage: http://cloud-book.github.io/
 
 Package: cloudbook
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends},node-webkit, wkhtmltopdf, pepperflashplugin-nonfree
+Depends: ${shlibs:Depends}, ${misc:Depends},wkhtmltopdf, fonts-roboto
 Description: Book editor
  Books graphical editor

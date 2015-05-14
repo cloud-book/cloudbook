@@ -61,6 +61,7 @@ VideoBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;
 
   dialog.children(".content").append("<input id='videopath' type='file'/>");
+  dialog.dialog("option","width",356);
   dialog.callbacks.push(function callbackEditButtonReplaceVideoBox(){
     updateVideoPath(dialog,that);
   })
@@ -73,7 +74,7 @@ VideoBox.prototype.clickButton = function clickButton(controllerClass) {
   dialog.children('#action').click(function(){
     updateVideoPath(dialog,that);
   });
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  dialog.dialog({dialogClass: "cbdialog","width":356,modal:true,close:function(){$(this).remove()}});
   $("#videodialog button").on('click',function(){controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 

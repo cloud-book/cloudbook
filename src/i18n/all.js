@@ -1,0 +1,13 @@
+gettext("Url");
+gettext("Include site");
+gettext("PEM");
+gettext("Audio");
+gettext("Jclic");
+gettext("Video");
+gettext("Youtube");
+gettext("PMS");
+gettext("Flash");
+gettext("Imagen");
+gettext("Fill in the gaps");
+gettext("Whiteboard");
+gettext("Textbox");

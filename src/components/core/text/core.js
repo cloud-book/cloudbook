@@ -13,10 +13,12 @@ var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function TextBox(objectdata){
   var loremipsum = "En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. ";
-  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"text":loremipsum, "position" : [200,200],'size':[300,80]};
+  objectdata = typeof objectdata !== 'undefined' ? objectdata : {"text":loremipsum, "position" : [200,200],'size':[300,90]};
   objectdata.idtype = metadata['idtype'];
+
   TextBox.super_.call(this,objectdata);
   this.text = objectdata.text;
+  this.size[1] = this.size[1] + 10;
 }
 
 util.inherits(TextBox,CBobject);
@@ -27,7 +29,6 @@ TextBox.prototype.editorView = function editorView() {
   					.html(this.text)
   					.attr('data-textbox-id',this.uniqueid)
   					.addClass('cbtextbox')
-            .css('padding','5px')
   					// .css('height','100%')
   					// .css('width','100%')
             .dblclick({that:this},this.editButton);
@@ -94,12 +95,14 @@ TextBox.prototype.stopPropagation = function stopPropagation(event) {
 
 TextBox.prototype.disableEditMode = function(e) {
 	var that = e.data.that;
-	$('[data-textbox-id="'+that.uniqueid+'"]').removeAttr('contentEditable').unbind('click',that.stopPropagation);
-	$(".cbtextbox-toolbar").remove();
-	$('body').unbind('click',that.disableEditMode);
-	var CBStorage = application.storagemanager.getInstance();
-	var aux = CBStorage.getCBObjectById(that.uniqueid);
-	aux.text = $('[data-textbox-id="'+that.uniqueid+'"]').html();
+  if(document.getSelection().getRangeAt(0).toString().length === 0){
+  	$('[data-textbox-id="'+that.uniqueid+'"]').removeAttr('contentEditable').unbind('click',that.stopPropagation);
+  	$(".cbtextbox-toolbar").remove();
+  	$('body').unbind('click',that.disableEditMode);
+  	var CBStorage = application.storagemanager.getInstance();
+  	var aux = CBStorage.getCBObjectById(that.uniqueid);
+  	aux.text = $('[data-textbox-id="'+that.uniqueid+'"]').html();
+  }
 };
 
 TextBox.prototype.HTMLtags = function HTMLtags(node){
@@ -139,6 +142,8 @@ TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo
   jquerycbo.on("resize",function(event,ui){
     ui.size.height = jquerycbo.find('.cbtextbox').outerHeight(true);
   });
+  jquerycbo.find(".cbtextbox")[0].addEventListener('input',function(){jquerycbo.height(jquerycbo.find('.cbtextbox').outerHeight(true));});
+  jquerycbo.height(jquerycbo.find('.cbtextbox').outerHeight(true));
 };
 
 TextBox.prototype.handlerExtraCommands = function handlerExtraCommands(command) {

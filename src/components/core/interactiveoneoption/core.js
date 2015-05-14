@@ -60,7 +60,7 @@ PEMBox.prototype.epubView = function epubView() {
 PEMBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   var dialog = $("<div id='pemdialog'><input id='numberquestions' type='number' min='2' max='10' value='4'/><button id='action'>"+ CBI18n.gettext("Insert") +"</button></div>");
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
   
   $("#pemdialog button").on('click',function(){
     var counter = $("#numberquestions").val();
@@ -153,7 +153,7 @@ PEMBox.prototype.editButton = function editButton(e) {
   dialog.children(".content").append(templatecompiled({'description':that.description,'questions':that.questions}));
   var questions = dialog.find("#listquestions");
   var addbutton = dialog.find("#addquestion");
-  var questiontemplate =  '<div data-pemidentifier="{{identifier}}"><input type="radio" name="question" value="" {{this.checked}}><textarea>{{this.text}}</textarea><button type="button" onclick="deleteQuestion(this)">{{gettext "Delete"}}</button></div>';
+  var questiontemplate =  '<div data-pemidentifier="{{identifier}}"><input type="radio" name="question" value="" {{this.checked}}><span class="radio"></span><textarea>{{this.text}}</textarea><button type="button" onclick="deleteQuestion(this)">{{gettext "Delete"}}</button></div>';
   var questiontemplatecompiled = application.util.template.compile(questiontemplate);
   addbutton.click(function(event) {
     var last = $("#listquestions").children().last();

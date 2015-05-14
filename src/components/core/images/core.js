@@ -107,7 +107,9 @@ ImageBox.prototype.clickButton = function clickButton(controllerClass) {
   dialog.children('#action').click(function(){
     updateImagePath(dialog,that);
   });
-  dialog.dialog({modal:true,close:function(){$(this).remove()}});
+  dialog.dialog({dialogClass: "cbdialog",
+    width: 356,
+    modal:true,close:function(){$(this).remove()}});
   $("#imagedialog button").on('click',function(){that.calculateDimensions(that);controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 ImageBox.prototype.calculateDimensions = function calculateDimensions(that) {
@@ -121,6 +123,7 @@ ImageBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;
 
   dialog.children(".content").append("<input id='imgpath' type='file'/>");
+  dialog.dialog("option","width",356);
   dialog.callbacks.push(function callbackEditButtonReplaceImageBox(){
     updateImagePath(dialog,that);
   })

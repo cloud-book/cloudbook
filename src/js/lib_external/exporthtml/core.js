@@ -53,7 +53,7 @@ $(document).ready(
 						var articles = $('article');
 						for (var i=0; i<articles.length; i++){
 							var articleid=articles[i].id;
-							var current_id=$('article[style *= "visibility: initial"').attr('id');
+							var current_id=$("article[style*='visibility: initial']").attr('id');
 							if (articleid == current_id){
 								if (i>0){
 									var prev_id=articles[i-1].id;
@@ -87,7 +87,7 @@ $(document).ready(
 				    	var articles = $('article');
 						for (var i=0; i<articles.length; i++){
 							var articleid=articles[i].id;
-							var current_id=$('article[style *= "visibility: initial"').attr('id');
+							var current_id=$("article[style*='visibility: initial']").attr('id');
 							if (articleid == current_id){
 								if (i+1<articles.length){
 									var next_id=articles[i+1].id;
