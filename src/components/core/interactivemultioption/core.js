@@ -146,6 +146,7 @@ PMS.prototype.triggerHTMLView = function triggerHTMLView() {
 PMS.prototype.editButton = function editButton(e) {
   var that = e.data.that;
   var dialog = PMS.super_.prototype.editButton.call(this,e);
+  dialog.dialog('option','width',400);
   var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
   dialog.children(".content").append(templatecompiled({'description':that.description,'questions':that.questions}));

@@ -163,6 +163,7 @@ FillGapBox.prototype.editButton = function editButton(e) {
   var template = application.util.template.getTemplate(__module_path__+'/toolbar.hbs');  
   var toolbar = template({identifier:"#activitytext"});
   template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
+  dialog.dialog('option','width',500);
   var templatecompiled = application.util.template.compile(template);
   dialog.children(".content").append(templatecompiled({description:that.description,toolbar:toolbar,activitytext:that.activitytext}));
   dialog.find("#activitytext").wysiwyg({extracommandhandler:that.extracommandhandler});

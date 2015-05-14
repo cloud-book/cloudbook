@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cloudbok\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-29 06:26+0000\n"
+"POT-Creation-Date: 2015-04-29 15:30+0000\n"
 "PO-Revision-Date: 2015-04-29 12:19+0200\n"
 "Last-Translator: Pilar Embid Giner <embid_mar@gva.es>\n"
 "Language-Team: LliureX\n"
@@ -19,12 +19,12 @@ msgstr ""
 msgid "Click to listen a sound"
 msgstr "Feu clic per a escoltar un so"
 
-#: src/components/core/audio/core.js:69 src/components/core/flash/core.js:69
+#: src/components/core/audio/core.js:70 src/components/core/flash/core.js:69
 #: src/components/core/images/core.js:94
 #: src/components/core/includesite/core.js:68
 #: src/components/core/interactivemultioption/core.js:47
 #: src/components/core/interactiveoneoption/core.js:50
-#: src/components/core/jclic/core.js:34 src/components/core/video/core.js:67
+#: src/components/core/jclic/core.js:34 src/components/core/video/core.js:68
 #: src/components/core/youtube/core.js:72 src/js/lib/gui/menu.js:319
 msgid "Insert"
 msgstr "Inserix"
@@ -53,8 +53,8 @@ msgstr "Opció correcta"
 msgid "Option "
 msgstr "Opció"
 
-#: src/components/core/interactivemultioption/core.js:158
-#: src/components/core/interactiveoneoption/core.js:162
+#: src/components/core/interactivemultioption/core.js:159
+#: src/components/core/interactiveoneoption/core.js:164
 msgid "Option A"
 msgstr "Opció A"
 
@@ -122,6 +122,14 @@ msgstr "Pissarra"
 msgid "Textbox"
 msgstr "Quadre de text"
 
+#: src/i18n/all.js:14
+msgid "activity"
+msgstr "Activitats"
+
+#: src/i18n/all.js:15
+msgid "embed object"
+msgstr "Objectes incrustats"
+
 #: src/js/lib/core/backend/core.js:433
 msgid "New version available :"
 msgstr "Nova versió disponible:"
@@ -132,7 +140,7 @@ msgid "Save"
 msgstr "Guarda"
 
 #: src/js/lib/core/components/cbobject.js:96
-#: src/js/lib/core/components/cbobject.js:142
+#: src/js/lib/core/components/cbobject.js:143
 #: src/js/lib/gui/dialogMetadata.js:90
 #: src/templates/exportEpubProject.wizard.hbs:9
 #: src/templates/exportHtmlProject.wizard.hbs:3
@@ -143,7 +151,7 @@ msgstr "Guarda"
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: src/js/lib/core/components/cbobject.js:142
+#: src/js/lib/core/components/cbobject.js:143
 #: src/js/lib/gui/ui/proview/core.js:87
 #: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:1
 #: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:1
@@ -848,8 +856,8 @@ msgstr "ferramentes de suport de procediments / processaments"
 #: src/js/lib/gui/dialogMetadataValues.js:16
 msgid "individual/cooperative/collaborative learning/working management tool"
 msgstr ""
-"ferramenta de gestió d'aprenentatge / treball individual / "
-"col·laboratiu/cooperatiu"
+"ferramenta de gestió d'aprenentatge / treball individual / col·laboratiu/"
+"cooperatiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:17
 msgid "multimedia creation/edition service"
@@ -879,8 +887,8 @@ msgstr "servici de suport de procediments / processaments"
 msgid ""
 "individual/cooperative/collaborative learning/working management service"
 msgstr ""
-"servici de gestió d'aprenentatge / treball individual / "
-"col·laboratiu/cooperatiu"
+"servici de gestió d'aprenentatge / treball individual / col·laboratiu/"
+"cooperatiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:18
 msgid "master class"

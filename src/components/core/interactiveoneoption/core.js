@@ -148,6 +148,7 @@ PEMBox.prototype.triggerHTMLView = function triggerHTMLView() {
 PEMBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;
   var dialog = PEMBox.super_.prototype.editButton.call(this,e);
+  dialog.dialog('option','width',400);
   var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
   dialog.children(".content").append(templatecompiled({'description':that.description,'questions':that.questions}));
@@ -156,6 +157,7 @@ PEMBox.prototype.editButton = function editButton(e) {
   var questiontemplate =  '<div data-pemidentifier="{{identifier}}"><input type="radio" name="question" value="" {{this.checked}}><span class="radio"></span><textarea>{{this.text}}</textarea><button type="button" onclick="deleteQuestion(this)">{{gettext "Delete"}}</button></div>';
   var questiontemplatecompiled = application.util.template.compile(questiontemplate);
   addbutton.click(function(event) {
+    debugger;
     var last = $("#listquestions").children().last();
     var identifier = last.attr("data-pemidentifier");
     identifier = identifier.replace(/.$/,String.fromCharCode(identifier.charCodeAt(identifier.length - 1 ) + 1));
