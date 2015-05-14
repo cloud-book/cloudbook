@@ -52,6 +52,19 @@ FillGapBox.prototype.pdfView = function pdfView() {
   return this.htmlView();
 }
 
+FillGapBox.prototype.epubView = function epubView() {
+  var aux = FillGapBox.super_.prototype.htmlView.call(this);
+  var fs = require('fs');
+  var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityepub.hbs',{encoding:'utf8'});
+  var templatecompiled = application.util.template.compile(template);
+  options={"description":this.description,"activitytext":this.activitytext.replace(/data-gap-fill="gap"/g,'style="visibility:hidden"')};
+  aux.children('.cbcontainer').append($(templatecompiled(options)));
+  aux.css("height","auto");
+  aux.css("weight","auto");
+  //aux.addClass('FillGapBox');
+  return aux;
+}
+
 FillGapBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);

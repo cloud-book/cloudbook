@@ -249,6 +249,38 @@ ExportHTML.prototype.preExportHTMLToPDF = function preExportHTMLToPDF() {
 };
 
 
+ExportHTML.prototype.preExportHTMLToEPUB = function preExportHTMLToEPUB() {
+	var mktemp = require('mktemp')
+	var temppath = mktemp.createDirSync("/tmp/Epub_XXXX");
+	var that = this;
+	this.files_to_copy = [];
+	this.myhead = "";
+	var returnlistpaths = [];
+	this.htmlBasicHead();
+	var sections = this.getSections();
+	var all_types_used = this.allTypesObjects(sections);
+	this.getAllNeededFiles(all_types_used);
+	this.files_to_copy.push('js/lib_external/exporthtml/');
+	this.files_to_copy.push(Project.Info.projectpath + "/rsrc/");
+       
+	
+    var contenido=[];
+	var j=0;
+	sections.forEach(function(section,id){
+		var JQobj=section.exportView('data'+id,'epubView','triggerHTMLView');
+        var page =" "+JQobj[0].outerHTML;+" ";
+        contenido[j]={title:sections[j].name,data:page}
+        	                	
+		j=j+1;  
+    });
+       
+	
+	
+	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,temppath+"/")});
+	return contenido;
+};
+
+
 
 ExportHTML.prototype.copyFileFromDirToPath = function copyFileFromDirToPath(dir,path){
 	var fs = window.require('fs');

@@ -72,6 +72,14 @@ CBObject.prototype.pdfView = function pdfView() {
 	return aux;
 }
 
+CBObject.prototype.epubView = function epubView() {
+	var aux = this.getObject();
+	aux.removeClass('cbobject-editable');
+	
+	return aux;
+}
+
+
 
 /**
  * This string is return core to bind on button click event on editor view

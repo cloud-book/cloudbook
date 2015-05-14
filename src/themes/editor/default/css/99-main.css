@@ -228,6 +228,9 @@ body{
     display:none;
  }
 
+.exportepubwizard .ui-dialog-titlebar-close{
+    display:none;
+ }
 
 .ui-rotatable-handle {
   height: 20px;
