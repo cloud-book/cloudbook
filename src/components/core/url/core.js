@@ -66,6 +66,10 @@ ExternalIframe.prototype.pdfView = function pdfView() {
   return aux.append("<a href='"+this.url+"'>"+stringtopdf+"</a>");
 }
 
+ExternalIframe.prototype.epubView = function epubView(){
+  return this.pdfView();
+
+}
 
 ExternalIframe.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
   ExternalIframe.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);

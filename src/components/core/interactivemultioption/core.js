@@ -40,6 +40,20 @@ PMS.prototype.pdfView = function pdfView() {
   return this.htmlView();
 }
 
+PMS.prototype.epubView = function epubView() {
+  var aux = PMS.super_.prototype.htmlView.call(this);
+  var fs = require('fs');
+  var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityepub.hbs',{encoding:'utf8'});
+  var templatecompiled = application.util.template.compile(template);
+  options={"description":this.description,questions:this.questions};
+  aux.css("height","auto");
+  aux.children('.cbcontainer').append($(templatecompiled(options)));
+  //aux.addClass('pms');
+  return aux;
+  
+}
+
+
 
 
 PMS.prototype.clickButton = function clickButton(controllerClass) {
