@@ -52,6 +52,19 @@ FillGapBox.prototype.pdfView = function pdfView() {
   return this.htmlView();
 }
 
+FillGapBox.prototype.epubView = function epubView() {
+  var aux = FillGapBox.super_.prototype.htmlView.call(this);
+  var fs = require('fs');
+  var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityepub.hbs',{encoding:'utf8'});
+  var templatecompiled = application.util.template.compile(template);
+  options={"description":this.description,"activitytext":this.activitytext.replace(/data-gap-fill="gap"/g,'style="visibility:hidden"')};
+  aux.children('.cbcontainer').append($(templatecompiled(options)));
+  aux.css("height","auto");
+  aux.css("weight","auto");
+  //aux.addClass('FillGapBox');
+  return aux;
+}
+
 FillGapBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;
   controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);
@@ -150,6 +163,7 @@ FillGapBox.prototype.editButton = function editButton(e) {
   var template = application.util.template.getTemplate(__module_path__+'/toolbar.hbs');  
   var toolbar = template({identifier:"#activitytext"});
   template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
+  dialog.dialog('option','width',500);
   var templatecompiled = application.util.template.compile(template);
   dialog.children(".content").append(templatecompiled({description:that.description,toolbar:toolbar,activitytext:that.activitytext}));
   dialog.find("#activitytext").wysiwyg({extracommandhandler:that.extracommandhandler});

@@ -85,6 +85,18 @@ ImageBox.prototype.pdfView = function pdfView() {
   return aux;
 }
 
+ImageBox.prototype.epubView = function epubView() {
+  var aux = ImageBox.super_.prototype.epubView.call(this);
+  var projectpath=Project.Info.projectpath;
+  var imagepath = this.imgpath !== null ? "file://"+projectpath + "/rsrc/"+ this.imgpath : __module_path__ + "default.png";
+  alert(imagepath);
+  var imgelement = $(window.document.createElement('img')).attr('src', imagepath);
+  imgelement.css('height','100%');
+  imgelement.css('width','100%');
+  aux.children('.cbcontainer').append(imgelement);
+  return aux;
+}
+
 ImageBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
   ImageBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 };

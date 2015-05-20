@@ -40,6 +40,20 @@ PMS.prototype.pdfView = function pdfView() {
   return this.htmlView();
 }
 
+PMS.prototype.epubView = function epubView() {
+  var aux = PMS.super_.prototype.htmlView.call(this);
+  var fs = require('fs');
+  var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityepub.hbs',{encoding:'utf8'});
+  var templatecompiled = application.util.template.compile(template);
+  options={"description":this.description,questions:this.questions};
+  aux.css("height","auto");
+  aux.children('.cbcontainer').append($(templatecompiled(options)));
+  //aux.addClass('pms');
+  return aux;
+  
+}
+
+
 
 
 PMS.prototype.clickButton = function clickButton(controllerClass) {
@@ -132,6 +146,7 @@ PMS.prototype.triggerHTMLView = function triggerHTMLView() {
 PMS.prototype.editButton = function editButton(e) {
   var that = e.data.that;
   var dialog = PMS.super_.prototype.editButton.call(this,e);
+  dialog.dialog('option','width',400);
   var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
   dialog.children(".content").append(templatecompiled({'description':that.description,'questions':that.questions}));

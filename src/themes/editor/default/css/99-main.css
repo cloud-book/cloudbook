@@ -68,7 +68,8 @@ body{
 
 
 #navsections ul{
-    
+    margin-left: 0px;
+    padding-left: 10px;
 }
 
 #navsections > ul{
@@ -227,6 +228,9 @@ body{
     display:none;
  }
 
+.exportepubwizard .ui-dialog-titlebar-close{
+    display:none;
+ }
 
 .ui-rotatable-handle {
   height: 20px;
@@ -500,4 +504,28 @@ body{
 
 .cbdialog #listquestions {
     vertical-align: middle;
+}
+
+
+.cbdialog #listquestions textarea{
+    width: 60%;
+}
+
+
+.cbdialog footer{
+    text-align: right;
+}
+
+.cbdialog #activitydescription{
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.cbdialog #description{
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.cbdialog #url{
+    width: 70%;
 }
