@@ -151,18 +151,40 @@ function getMainFile(filePath)
 }
 
 /**
- * This method is responsible for getting version of an EPUB File
- * @param  {String} path of the EPUB File
- * @return {String} version of file
+ * This method is responsible for getting section Path without anchor
+ * @param  {String} path of the element
+ * @return {String} path without anchor
  */
-function getEPUBVersion(filePath)
+function getSectionPath(sectionPath)
 {
-	var fs = require('fs');
-	var mainFileName = getMainFile(filePath);
-	var dataMainFile = fs.readFileSync(filePath  + mainFileName,{encoding:'utf8'});
-	var version = $($(dataMainFile.toString())[2]).attr("version");
+	if(sectionPath.indexOf("#") != -1)
+		sectionPath = sectionPath.split("#")[0];
+	return sectionPath;
+}
 
-	return version;
+/**
+ * This method is responsible for removing comments and xml info of an HTML
+ * @param  {String} content of HTML
+ * @return {String} HTML with elements removed
+ */
+ function removeExtraElements(html){
+	
+	var foundXML = true, foundComment = true;
+
+	while(foundXML)
+	{
+		if(html.indexOf("<?xml") != -1)
+			html = html.substr(html.indexOf("?>")+2, html.length);
+		if(html.indexOf("<?xml") == -1) foundXML = false;
+	}
+
+	while(foundComment)
+	{
+		if(html.indexOf("<!--") != -1)
+			html = html.replace(html.substring(html.indexOf("<!--"), html.indexOf("-->")+3),"");
+		if(html.indexOf("<!--") == -1) foundComment = false;
+	}
+	return html;
 }
 
 /**
@@ -183,51 +205,70 @@ function processSectionEPUB(sectionPath, sectionName, filePath, mainDir, element
 	var idsection = "", idSectionAux = "";
 	var fs = require('fs');
 	var importationHTML = application.importhtml.getInstance();
+	var foundXML = true, foundComment = true;
 
-	if(sectionPath.indexOf("#") == -1)
+	sectionPath = getSectionPath(sectionPath);
+	var dataSectionFile = fs.readFileSync(decodeURIComponent(filePath + mainDir + sectionPath));
+	var html = dataSectionFile.toString();
+	html = removeExtraElements(html);
+
+	if(isFirst)
 	{
-		var dataSectionFile = fs.readFileSync(filePath + mainDir + sectionPath);
-		var html = dataSectionFile.toString();
+		controller.updateSectionName(sectionName,Cloudbook.UI.selected.attr('data-cbsectionid'));		
+		idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
+		isFirst = false;
+	}
+	else
+	{
+		idsection = controller.appendSection('root');
+		controller.updateSectionName(sectionName,idsection);	
+	}
+	idsectionAux = idsection;
+	importationHTML.processHTML(html, filePath + mainDir + sectionPath, idsection);
+	processSubSectionEPUB(filePath, mainDir, hasTOC, element, idsectionAux);
+	return isFirst;
+}
 
-		if(isFirst)
-		{
-			controller.updateSectionName(sectionName,Cloudbook.UI.selected.attr('data-cbsectionid'));		
-			idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
-			isFirst = false;
-		}
-		else
-		{
-			idsection = controller.appendSection('root');
-			controller.updateSectionName(sectionName,idsection);	
-		}
-		idsectionAux = idsection;
+/**
+ * This method is responsible for processing subsections of an EPUB file
+ * In case of not getting TOC, process elements of list
+ * @param  {String} path of section file
+ * @param  {String} name of section file
+ * @param  {String} temporary path
+ * @param  {String} dir of main files
+ * @param  {Object} element with data of section
+ * @param  {Boolean} indicates if it's first time to access
+ * @param  {Boolean} indicates if section is included in toc.ncx
+ * @return  {Boolean} indicates if it's first time to access
+ */
+function processSubSectionEPUB(filePath, mainDir, hasTOC, element, idsectionAux){
 
-		if(html.indexOf("<?xml") != -1)
-			html = html.substr(html.indexOf("?>")+2, html.length);
-		importationHTML.processHTML(html, filePath + mainDir + sectionPath, idsection);
-		var lengthNavPoints = hasTOC?$(element).children("navPoint").length:$(element).children("ol").length; 
-  		if(lengthNavPoints != 0)
-  		{
-  			var childrenNavPoints  = hasTOC?$(element).children("navPoint"):$(this).children("li");
-			childrenNavPoints.each(function()
-			{
+	var lengthNavPoints = hasTOC?$(element).children("navPoint").length:$(element).children("ol, li").length; 
+	var controller = application.controller.getInstance();
+	var importationHTML = application.importhtml.getInstance();
+	if(lengthNavPoints != 0)
+	{
+		var childrenNavPoints  = hasTOC?$(element).children("navPoint"):$(element).children("ol[hidden!=''], li");
+		childrenNavPoints.each(function()
+		{
+			var lengthNavPoints2 = hasTOC?$(element).children("navPoint").length:$(this).children("ol[hidden!=''], li").length; 
+			if(hasTOC || (!hasTOC && (this.tagName != "ol"))){
 				var sectionNameAux = hasTOC?$(this).find('navlabel')[0].textContent.trim():$(this).children("a").text();
 				var sectionPathAux = hasTOC?$($(this).find('content')[0]).attr("src"):$(this).children("a").attr("href");
-				if(sectionPathAux.indexOf("#") == -1)
-	  	  		{
-	  	  			var dataSubSectionFile = fs.readFileSync(filePath + mainDir + sectionPathAux);
-					var html2 = dataSubSectionFile.toString();
-
-	  					idsection = controller.appendSection(idsectionAux);
-		  				controller.updateSectionName(sectionNameAux,idsection);	
-		  				if(html2.indexOf("<?xml") != -1)
-		  					html2 = html2.substr(html2.indexOf("?>")+2, html2.length);
-						importationHTML.processHTML(html2, filePath + mainDir + sectionPathAux, idsection);
-  	  			}
-			})								  	  			
-  		}
+				sectionPathAux = getSectionPath(sectionPathAux);
+		  		var dataSubSectionFile = fs.readFileSync(decodeURIComponent(filePath + mainDir + sectionPathAux));
+				var html2 = dataSubSectionFile.toString();
+				html2 = removeExtraElements(html2);
+				idsection = controller.appendSection(idsectionAux);
+	  			controller.updateSectionName(sectionNameAux,idsection);	
+				importationHTML.processHTML(html2, filePath + mainDir + sectionPathAux, idsection);
+			}
+			if(!hasTOC && (this.tagName == "ol"))
+				idsection = idsectionAux;
+			if(lengthNavPoints2 != 0)
+				processSubSectionEPUB(filePath, mainDir, hasTOC, this, idsection);
+		})								  	  			
 	}
-	return isFirst;
 }
 /**
  * This method is responsible for reading EPUB data
@@ -242,33 +283,37 @@ function processPackageDataEPUB(filePath)
 	var ui = application.ui.core.getInstance();
 	var isFirst = true;
 	var fileIndex = getMainFile(filePath);
-	var mainDir = fileIndex.split("/")[0] + "/";
+	var mainDir = (fileIndex.indexOf("/") != -1)? fileIndex.split("/")[0] + "/" : ""
+	var hasAnchor = false;
+	var sectionsToProcess = [];
+	var counter = 0;
 
-	dataFile = fs.readFileSync(filePath+fileIndex,{encoding:'utf8'});
+	dataFile = fs.readFileSync(decodeURIComponent(filePath+fileIndex),{encoding:'utf8'});
 	$(dataFile.toString()).find("manifest").children("item").each(function(){
 		if($(this).attr("id") == "ncx") ncxFile =  $(this).attr("href");
 	});
 
 	if(ncxFile != "")
 	{
-		fs.readFile(filePath+ mainDir + ncxFile, function(err, data) {
-	  	  	$(data.toString()).find("navMap").children("navPoint").each(function(){
-		  	  	var sectionName = $(this).find('navlabel')[0].textContent.trim();
-		  	  	var sectionPath = $($(this).find('content')[0]).attr("src");
-				isFirst = processSectionEPUB(sectionPath, sectionName, filePath, mainDir, this, isFirst, true);
-			});
-		});
+		 fs.readFile(decodeURIComponent(filePath+ mainDir + ncxFile), function(err, data) {
+	   	  	$(data.toString()).find("navMap").children("navPoint").each(function(){
+		   	  	var sectionName = $(this).find('navlabel')[0].textContent.trim();
+		   	  	var sectionPath = $($(this).find('content')[0]).attr("src");
+		 		isFirst = processSectionEPUB(sectionPath, sectionName, filePath, mainDir, this, isFirst, true);
+		 	});
+		 });
 	}
 	else
 	{
-		fs.readFile(filePath + fileIndex, function(err, data) {
-			var tocFile = $(data.toString()).find("manifest").children("item#toc").attr("href");
-			fs.readFile(filePath+ mainDir + tocFile, function(err1, data1) {
-				var tocList = $(data1.toString()).find("nav#toc");
-				tocList.children("ol").find("li").each(function(){ 
+		fs.readFile(decodeURIComponent(filePath + fileIndex), function(err, data) {
+			tocFile = ($(data.toString()).find("manifest").children("item#toc").length != 0)?$(data.toString()).find("manifest").children("item#toc").attr("href"):$($(data.toString()).find("manifest").children("item#nav")).attr("href");
+			fs.readFile(decodeURIComponent(filePath+ mainDir + tocFile), function(err1, data1) {
+				$($.parseXML((data1.toString()))).find('nav').each(function(){if($(this).attr("epub:type") == "toc") tocList = $(this);});
+				tocList.children("ol").children("li").each(function(){ 
 					var sectionName = $(this).children("a").text();
 	  	  			var sectionPath = $(this).children("a").attr("href");
-					isFirst = processSectionEPUB(sectionPath, sectionName, filePath, mainDir, this, isFirst, false);
+					isFirst = processSectionEPUB(sectionPath, sectionName, filePath, 
+						mainDir + ((tocFile.indexOf("/") != 0)?tocFile.substring(0, tocFile.lastIndexOf("/"))+"/":""), this, isFirst, false);
 				});
 			});
 		});
