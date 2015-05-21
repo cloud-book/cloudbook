@@ -14,16 +14,16 @@ describe('Cloudbook', function() {
 
 	var nw, cri
 
-	it('Create new project', function(done) {
+	it('Create new project with name testdir', function(done) {
 		var requests = []
 
 		// enable network in cri
 		cri.Network.enable()
 
 		// listen to outgoing requests
-		cri.Network.requestWillBeSent(function(params) {
-			requests.push(params)
-		})
+		 cri.Network.requestWillBeSent(function(params) {
+		 	requests.push(params)
+		 })
 
 		// get the send button's position
 		getElementPosition(cri, '#newproject', function(err, pos) {
@@ -33,12 +33,8 @@ describe('Cloudbook', function() {
 			inputmanager.click(cri, pos.x + 5, pos.y + 5, function(err, result) {
 				if (err) return done(err)
 				inputmanager.sendtext(cri,"testdir",function(err,result){
-
 					getElementPosition(cri, '#advprojbtn', function(err, pos) {
-						if (err) 
-							return done(err);
-
-						// simulate the click
+						if (err) return done(err);
 						inputmanager.click(cri, pos.x + 5, pos.y + 5, function(err, result) {
 							setTimeout(function(){done()},1000);
 						});
@@ -48,6 +44,7 @@ describe('Cloudbook', function() {
 			});
 		});
 	});
+
 
 	// run nw.js and connect the remote interface before every test case
 	beforeEach(function(done) {
