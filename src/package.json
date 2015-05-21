@@ -24,10 +24,12 @@
   "chromium-args": "--ppapi-flash-path=/usr/share/cloudbook/plugins/libpepflashplayer.so --ppapi-flash-version=17.0.0.134",
   "dependencies": {
     "fs-extra": "~0.18.0",
+    "image-size": "~0.3.5",
     "jed": "~1.1.0",
+    "minimist": "^1.1.1",
     "mktemp": "~0.4.0",
     "zip-folder": "^1.0.0",
-    "image-size": "~0.3.5",
-    "epub-gen": "0.0.9"
+    "epub-gen": "0.0.9",
+    "epub3tohtml": "0.0.1"
   }
 }
