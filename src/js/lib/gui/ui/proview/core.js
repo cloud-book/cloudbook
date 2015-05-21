@@ -159,6 +159,20 @@ ProView.prototype.appendAfter = function appendAfter(e){
 
 ProView.prototype.selectSection = function selectSection(e){
   var that = e.data.that;
+  var changesectionevent = new Event('changesection',{
+    'bubbles':true,
+    'cancelable':true,
+    'data':{'bonita':'lorita'}
+  });
+
+  var canceled = false;
+  [].forEach.call(document.querySelectorAll(Cloudbook.UI.targetcontent + " .cbobject"),function(element){
+    var auxcanceled = element.dispatchEvent(changesectionevent);
+    if (!auxcanceled) canceled = true;
+  });
+
+  if (canceled) return;
+  
   if (Cloudbook.UI.selected !== undefined){
     $(Cloudbook.UI.selected.children('.displaysection')).removeClass('sectionselected');
   }
