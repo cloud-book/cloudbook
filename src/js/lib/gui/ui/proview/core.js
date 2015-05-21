@@ -161,10 +161,9 @@ ProView.prototype.selectSection = function selectSection(e){
   var that = e.data.that;
   var changesectionevent = new Event('changesection',{
     'bubbles':true,
-    'cancelable':true,
-    'data':{'bonita':'lorita'}
+    'cancelable':true
   });
-
+  changesectionevent.detail = {'element':this};
   var canceled = false;
   [].forEach.call(document.querySelectorAll(Cloudbook.UI.targetcontent + " .cbobject"),function(element){
     var auxcanceled = element.dispatchEvent(changesectionevent);
