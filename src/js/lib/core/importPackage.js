@@ -74,7 +74,7 @@ function processPackageMetaData(fileType, tempPath, filePath)
 {
 
 	var fs = require('fs');
-	var epub2html = require('epub2html');
+	var epub2html = require('epub3tohtml');
 	var htmlData;
 
 	switch(fileType)
