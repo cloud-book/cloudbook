@@ -66,10 +66,11 @@
  	
 
  	var gui = require('nw.gui');
-
- 	if (gui.App.argv.length > 0 ){
+ 	var minimist = require('minimist');
+	var options = minimist(gui.App.argv);
+ 	if (options['_'].length > 0 ){
  		var path = require('path');
- 		var auxprojectpath = path.resolve(gui.App.argv[0]);
+ 		var auxprojectpath = path.resolve(options['_'][0]);
  	}
  	else{
  		var fs = require('fs');
