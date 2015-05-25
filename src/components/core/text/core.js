@@ -144,6 +144,10 @@ TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo
   });
   jquerycbo.find(".cbtextbox")[0].addEventListener('input',function(){jquerycbo.height(jquerycbo.find('.cbtextbox').outerHeight(true));});
   jquerycbo.height(jquerycbo.find('.cbtextbox').outerHeight(true));
+  jquerycbo[0].addEventListener('cbobjectselected',function(e){
+    console.log(objectcbo.text); 
+    $(e.data.element).attr('cbobjectid')
+  });
 };
 
 TextBox.prototype.handlerExtraCommands = function handlerExtraCommands(command) {

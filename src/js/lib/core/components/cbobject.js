@@ -193,6 +193,20 @@ CBObject.prototype.cleardelay = function(e) {
 CBObject.prototype.enableEditable = function enableEditable(e){
 	var that = e.data.that;
 	var newid = this.dataset.cbobjectid;
+
+
+	var selectedevent = new CustomEvent('cbobjectselected',{
+	    'bubbles':true,
+	    'cancelable':true
+	 });
+	selectedevent.data = {'element':this};
+
+	 [].forEach.call( document.querySelectorAll(Cloudbook.UI.targetcontent + " .cbobject") ,function(element){
+	     element.dispatchEvent(selectedevent);
+	 });
+
+
+
 	e.stopPropagation();
 	
 	if(Cloudbook.UI.cbobjectselected !== newid ){
