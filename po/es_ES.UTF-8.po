@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloudbook\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-28 12:39+0000\n"
-"PO-Revision-Date: 2015-04-28 14:41+0100\n"
+"POT-Creation-Date: 2015-04-29 15:30+0000\n"
+"PO-Revision-Date: 2015-04-29 17:36+0100\n"
 "Last-Translator: kbut <raurodse@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,12 +18,12 @@ msgstr ""
 msgid "Click to listen a sound"
 msgstr "Presiona para escuchar un sonido"
 
-#: src/components/core/audio/core.js:69 src/components/core/flash/core.js:69
+#: src/components/core/audio/core.js:70 src/components/core/flash/core.js:69
 #: src/components/core/images/core.js:94
 #: src/components/core/includesite/core.js:68
 #: src/components/core/interactivemultioption/core.js:47
 #: src/components/core/interactiveoneoption/core.js:50
-#: src/components/core/jclic/core.js:34 src/components/core/video/core.js:67
+#: src/components/core/jclic/core.js:34 src/components/core/video/core.js:68
 #: src/components/core/youtube/core.js:72 src/js/lib/gui/menu.js:319
 msgid "Insert"
 msgstr "Insertar"
@@ -52,8 +52,8 @@ msgstr "Opción correcta"
 msgid "Option "
 msgstr "Opción"
 
-#: src/components/core/interactivemultioption/core.js:158
-#: src/components/core/interactiveoneoption/core.js:162
+#: src/components/core/interactivemultioption/core.js:159
+#: src/components/core/interactiveoneoption/core.js:164
 msgid "Option A"
 msgstr "Opción A"
 
@@ -69,6 +69,66 @@ msgstr "Presiona para ver el video"
 msgid "Click view youtube video"
 msgstr "Presiona para ver el vídeo de youtube"
 
+#: src/i18n/all.js:1
+msgid "Url"
+msgstr "Url"
+
+#: src/i18n/all.js:2
+msgid "Include site"
+msgstr "Incluir sitio"
+
+#: src/i18n/all.js:3
+msgid "PEM"
+msgstr "Preguntas eleccion multiple"
+
+#: src/i18n/all.js:4
+msgid "Audio"
+msgstr "Audio"
+
+#: src/i18n/all.js:5
+msgid "Jclic"
+msgstr "Jclic"
+
+#: src/i18n/all.js:6
+msgid "Video"
+msgstr "Vídeo"
+
+#: src/i18n/all.js:7
+msgid "Youtube"
+msgstr "Youtube"
+
+#: src/i18n/all.js:8
+msgid "PMS"
+msgstr "Preguntas de  selección multiple"
+
+#: src/i18n/all.js:9
+msgid "Flash"
+msgstr "Flash"
+
+#: src/i18n/all.js:10
+msgid "Imagen"
+msgstr "Imagen"
+
+#: src/i18n/all.js:11
+msgid "Fill in the gaps"
+msgstr "Rellena los huecos"
+
+#: src/i18n/all.js:12
+msgid "Whiteboard"
+msgstr "Pizarra blanca"
+
+#: src/i18n/all.js:13
+msgid "Textbox"
+msgstr "Caja de texto"
+
+#: src/i18n/all.js:14
+msgid "activity"
+msgstr "Actividad"
+
+#: src/i18n/all.js:15
+msgid "embed object"
+msgstr "Objeto incrustado"
+
 #: src/js/lib/core/backend/core.js:433
 msgid "New version available :"
 msgstr "Nueva versión disponible:"
@@ -79,7 +139,7 @@ msgid "Save"
 msgstr "Guardar"
 
 #: src/js/lib/core/components/cbobject.js:96
-#: src/js/lib/core/components/cbobject.js:146
+#: src/js/lib/core/components/cbobject.js:143
 #: src/js/lib/gui/dialogMetadata.js:90
 #: src/templates/exportEpubProject.wizard.hbs:9
 #: src/templates/exportHtmlProject.wizard.hbs:3
@@ -90,7 +150,7 @@ msgstr "Guardar"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/js/lib/core/components/cbobject.js:146
+#: src/js/lib/core/components/cbobject.js:143
 #: src/js/lib/gui/ui/proview/core.js:87
 #: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:1
 #: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:1
@@ -1624,29 +1684,44 @@ msgstr "Proyecto simple"
 msgid "Section name"
 msgstr "Nombre de seccion"
 
+#: src/components/core/fillinthegaps/toolbar.hbs:1
+#: src/components/core/text/toolbar.hbs:1
+msgid "Huge"
+msgstr "Enorme"
+
+#: src/components/core/fillinthegaps/toolbar.hbs:2
+#: src/components/core/text/toolbar.hbs:2
+msgid "Normal"
+msgstr "Normal"
+
+#: src/components/core/fillinthegaps/toolbar.hbs:3
+#: src/components/core/text/toolbar.hbs:3
+msgid "Small"
+msgstr "Pequeño"
+
 #: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:2
 #: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:2
 msgid "Add question"
 msgstr "Añadir pregunta"
 
-#: src/components/core/text/toolbar.hbs:1
+#: src/components/core/text/toolbar.hbs:4
 msgid "Rows:"
 msgstr "Filas:"
 
-#: src/components/core/text/toolbar.hbs:2
+#: src/components/core/text/toolbar.hbs:5
 msgid "Cols:"
 msgstr "Columnas:"
 
-#: src/components/core/text/toolbar.hbs:3
+#: src/components/core/text/toolbar.hbs:6
 msgid "Full Size:"
 msgstr "Tamaño completo:"
 
-#: src/components/core/text/toolbar.hbs:4
+#: src/components/core/text/toolbar.hbs:7
 msgid "With Header:"
 msgstr "Con cabeceras: "
 
-#: src/components/core/text/toolbar.hbs:5
-#: src/components/core/text/toolbar.hbs:6
+#: src/components/core/text/toolbar.hbs:8
+#: src/components/core/text/toolbar.hbs:9
 msgid "Add"
 msgstr "Añadir"
 

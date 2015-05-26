@@ -63,6 +63,9 @@ FlashBox.prototype.pdfView = function pdfView() {
   return aux;
 }
 
+FlashBox.prototype.epubView=function epubView(){
+  return this.pdfView();
+ }
 
 FlashBox.prototype.clickButton = function clickButton(controllerClass) {
   var that = this;

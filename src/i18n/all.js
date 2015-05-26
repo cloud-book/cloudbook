@@ -11,3 +11,5 @@ gettext("Imagen");
 gettext("Fill in the gaps");
 gettext("Whiteboard");
 gettext("Textbox");
+gettext("activity");
+gettext("embed object");
