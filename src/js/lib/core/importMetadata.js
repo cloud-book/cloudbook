@@ -1,7 +1,7 @@
 languages = [];
 /**
  * @class ImportMetadata
- * This class is created to load metadata data from SCORM file
+ * This class is created to load metadata data from SCORM/IMS/EPUB/EXE file
  */
 function ImportMetadata(){
 	  var fs = require('fs');

@@ -81,11 +81,23 @@ FillGapBox.prototype.clickButton = function clickButton(controllerClass) {
   //   );
 };
 
-FillGapBox.prototype.HTMLtags = function HTMLtags(){
+FillGapBox.prototype.HTMLtags = function HTMLtags(node){
   var tagTypes = ['FGP'];
   var score = 0;
+  if(tagTypes.indexOf(node.tagName) > -1)
+  {
+    score ++;
+  }
   return score;
+}
 
+FillGapBox.prototype.importHTML = function importHTML(node, filePath){
+  if(node.tagName != null)
+    {
+      this.description = node.attr("description");
+      this.activitytext =  node.attr("activitytext");
+      FillGapBox.super_.prototype.importHTML.call(this,node);
+    }
 }
 
 FillGapBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

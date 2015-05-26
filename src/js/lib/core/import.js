@@ -18,9 +18,9 @@ Import.prototype.loadFile = function loadFile(projectname,filePath, fileType) {
     switch(fileType)
     {
     	case "HTML": processHTMLFile(filePath); break;
-    	case "ODT_DOC_DOCX": processODTFile(filePath, fileType); break;
-    	case "SCORM": processPackageFile(filePath, fileType); break;
-    	case "EPUB": processPackageFile(filePath, fileType); break;
+    	case "ELP": 
+    	case "SCORM": 
+    	case "EPUB": 
     	case "IMS": processPackageFile(filePath, fileType); break;
     }
   };
