@@ -171,7 +171,7 @@ ProView.prototype.selectSection = function selectSection(e){
   });
 
   if (canceled) return;
-  
+  Cloudbook.UI.cbobjectselected = null;
   if (Cloudbook.UI.selected !== undefined){
     $(Cloudbook.UI.selected.children('.displaysection')).removeClass('sectionselected');
   }
