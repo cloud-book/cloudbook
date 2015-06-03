@@ -82,7 +82,7 @@ FillGapBox.prototype.clickButton = function clickButton(controllerClass) {
 };
 
 FillGapBox.prototype.HTMLtags = function HTMLtags(node){
-  var tagTypes = ['FGP'];
+  var tagTypes = ['FGP', 'DROP'];
   var score = 0;
   if(tagTypes.indexOf(node.tagName) > -1)
   {
@@ -92,10 +92,31 @@ FillGapBox.prototype.HTMLtags = function HTMLtags(node){
 }
 
 FillGapBox.prototype.importHTML = function importHTML(node, filePath){
+  var i = 0;
   if(node.tagName != null)
     {
-      this.description = node.attr("description");
-      this.activitytext =  node.attr("activitytext");
+      this.description = $(node).data("description");
+      this.activitytext =  $(node).data("activitytext");
+      var counter = $(node).data("fieldsnumber");
+      if(counter > 0){
+        delete(this.gaps["gap"]);
+        var newGap = {
+           "words": ($(node).data("words") != undefined)?$(node).data("words").split(","): [],
+           "showwords": false,
+           "casesensitive": $(node).data("caseSensitive") == "1"?true:false,
+           "placeholder": "?",
+           "autocomplete": "",
+           "adjustgaps": "",
+           "aria-label": "default",
+           "weight": 100
+        };
+        for(i = 0; i < counter; i++)
+        {
+         var name = "gap" + i
+         this.gaps["gap"+i] = newGap;
+        }
+      }
+
       FillGapBox.super_.prototype.importHTML.call(this,node);
     }
 }

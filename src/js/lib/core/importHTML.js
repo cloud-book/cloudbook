@@ -182,25 +182,48 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 /**
  * This method is responsible for reading HTML main block contents
  * It creates one div and one iframe to load content and process content, 
- * finally removes two elements and loads content of selected section
+ * finally removes two elements and loads content of selected section.
+ * Content depends on the anchor and if there is, takes the section
  * @param  {String} content of the HTML file
  * @param  {String} path of the html element
  * @param  {String} id of section selected
+ * @param  {Object} a JSON object with additional options
  */
-ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectionselected)
+ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectionselected,options)
 {
 	var that = this;
-	var includeHTML = $(data);
-
+	var opt = $.extend({},options);
+	
 	setTimeout(function(){
 		var temp = $('<iframe id="tempImportHTML" width="100%" height="100%" ;/>');
 		temp.css("position", "fixed").css("z-index","-1000");
 		$("body").append(temp);
 		temp.contents().find("html").html(data);
 		$("body").append("<div id='layer' style='z-index:-500;background:#fff; position:fixed; top:0; width:100%;height:100%'></div>");
-
-		processBlock($('#tempImportHTML').contents().find("body").length == 0? temp.contents().get()[0].children[0]:temp.contents().get()[0].children[0].childNodes[2],
-		 filePath, null,idsectionselected,that);
+		var contenttoprocess = "";
+		if (typeof options !== 'undefined'){
+			if(typeof options.idtoprocess !== 'undefined'){
+				if(temp.contents().find(options.idtoprocess)[0] == undefined){
+					if(data.indexOf(options.idtoprocess.replace("#", "")) != -1){
+						contenttoprocess = temp.contents().get()[0].children[0];
+					}
+				}else{
+					contenttoprocess = temp.contents().find(options.idtoprocess)[0];
+				}	
+			}
+			if(typeof options.isELP !== 'undefined'){
+				contenttoprocess = temp.contents().get()[0].children[0].childNodes[1];
+			}	
+		}
+		else{			
+			if ( $('#tempImportHTML').contents().find("body").length == 0 ) {
+				contenttoprocess = temp.contents().get()[0].children[0];
+			}
+			else{
+				contenttoprocess = temp.contents().get()[0].children[0].childNodes[2];
+			}
+		}
+		processBlock(contenttoprocess,filePath, null,idsectionselected,that);
 		var ui = application.ui.core.getInstance();
 		$('#tempImportHTML').remove();
 		$('#layer').remove();

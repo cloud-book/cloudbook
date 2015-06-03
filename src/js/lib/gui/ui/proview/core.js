@@ -244,7 +244,11 @@ ProView.prototype.dialogDeleteSection = function dialogDeleteSection(cbsectionid
 ProView.prototype.appendSectionToLastPosition = function(cbsectionid,parentid) {
   var that = this;
   var ui = application.ui.core.getInstance();
-  $("[data-cbsectionid='"+parentid+"'] > ul").children(".cbsection:last").append(that.createSectionView(cbsectionid));
+  var dest = $("[data-cbsectionid='"+parentid+"'] > ul").children(".cbsection:last");
+  if (dest.length > 0 )
+    dest.append(that.createSectionView(cbsectionid));
+  else
+    $("[data-cbsectionid='"+parentid+"'] > ul").append(that.createSectionView(cbsectionid));
   that.reloadSortable();
 };
 

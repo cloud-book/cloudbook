@@ -72,10 +72,26 @@ PEMBox.prototype.clickButton = function clickButton(controllerClass) {
     );
 };
 
-PEMBox.prototype.HTMLtags = function HTMLtags(){
-  var tagTypes = ['PEM'];
+PEMBox.prototype.HTMLtags = function HTMLtags(node){
+  var tagTypes = ['PEM', 'PVF'];
   var score = 0;
+  if(tagTypes.indexOf(node.tagName) > -1)
+  {
+    score ++;
+  }
   return score;
+}
+
+PEMBox.prototype.importHTML = function importHTML(node, filePath){
+  var that = this;
+  if(node.tagName != null)
+    {
+      var k = 0;
+      that.description = $(node).data("description");
+      that.questions =  $.parseJSON($(node).data("questions").replace(/'/g, '"'));
+      that.random=false;
+      PEMBox.super_.prototype.importHTML.call(that,node);
+    }
 }
 
 PEMBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

@@ -10,6 +10,7 @@ function PMS(objectdata){
   this.pemidentifier = typeof objectdata.pemidentifier !== 'undefined' ? objectdata.pemidentifier : "pem_" + this.uniqueid ; 
   this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : CBI18n.gettext("Description of your activity") ; 
   this.questions = typeof objectdata.questions !== 'undefined' ? objectdata.questions : [] ;
+  this.random = typeof objectdata.random !== 'undefined' ? objectdata.random : true ;
 }
 
 util.inherits(PMS,CBobject);
@@ -71,11 +72,26 @@ PMS.prototype.clickButton = function clickButton(controllerClass) {
     );
 };
 
-PMS.prototype.HTMLtags = function HTMLtags(){
-  var tagTypes = ['PEM'];
+PMS.prototype.HTMLtags = function HTMLtags(node){
+  var tagTypes = ['PSM'];
   var score = 0;
+  if(tagTypes.indexOf(node.tagName) > -1)
+  {
+    score ++;
+  }
   return score;
+}
 
+PMS.prototype.importHTML = function importHTML(node, filePath){
+  var that = this;
+  if(node.tagName != null)
+    {
+      var k = 0;
+      that.description = $(node).data("description");
+      that.questions =  $.parseJSON($(node).data("questions").replace(/'/g, '"'));
+      that.random=false;
+      PMS.super_.prototype.importHTML.call(that,node);
+    }
 }
 
 PMS.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
@@ -86,7 +102,7 @@ PMS.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,obj
    "opt": this.questions,
    "fieldset": true,
    "legend": "",
-   "random": true,
+   "random": this.random,
    "optsuccess": true,
    "weighting": 100,
    "lighting": 0,
@@ -98,13 +114,13 @@ PMS.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,obj
    "delstorage": false
   };
   jsGeork.Questions.Question(obj_myprefix_pem_identifier);
-  jquerycbo.on("resize",function(event,ui){
-    var counter = 0;
-    var listelements = jquerycbo.find('fieldset').children().each(function(index,element){
-      counter += $(element).outerHeight(true);
-    });
-    ui.size.height = counter;
-  });
+ jquerycbo.on("resize",function(event,ui){
+   var counter = 0;
+   var listelements = jquerycbo.find('fieldset').children().each(function(index,element){
+     counter += $(element).outerHeight(true);
+   });
+   ui.size.height = counter;
+ });
   var z = jquerycbo.find(".CSSActFieldset");  
   z.css('height','100%');
   z.css('width','100%');
