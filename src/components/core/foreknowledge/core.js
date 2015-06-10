@@ -12,19 +12,25 @@ var metadata = require( "./"+__module_path__ + 'metadata.json');
  */
 
 function ForeknowledgeBox(objectdata){
+  this.typessuported = ["target","custom"];
   var defaultvalues = {
     "text" : "Lorem Ipsum",
     "title" : "Foreknowledge",
     "position" : [200,200],
     "size" : [300,90],
-    "idtype" : metadata['idtype']
+    "idtype" : metadata['idtype'],
+    "typebox" : this.typessuported[0],
+    "customimage" : ""
   };
+  
   objectdata = $.extend({},defaultvalues,objectdata);
 
   ForeknowledgeBox.super_.call(this,objectdata);
   this.title = objectdata.title;
   this.text = objectdata.text;
   this.size[1] = this.size[1] + 10;
+  this.typebox = objectdata.typebox;
+  this.customimage = objectdata.customimage;
 }
 
 util.inherits(ForeknowledgeBox,CBobject);
@@ -38,7 +44,15 @@ ForeknowledgeBox.prototype.editorView = function editorView() {
                                                     .addClass('foreknowledgebox-text')
                                                     .addClass('field-editable');
   text.dblclick({that:this},this.editText);
-  var titleimage = $(window.document.createElement('img')).attr('src',Project.Info.projectpath +"/rsrc/noteimages/foreknowledge.png");
+  var titleimage = $(window.document.createElement('img'));
+  var pathimage = "";
+  if(that.typebox !== "custom"){
+    pathimage = `${Cloudbook.UI.themeeditorpath}/img/fkl_${that.typebox}.png` ;
+  }
+  else{
+    pathimage = `${Project.Info.projectpath}/rsrc/noteimages/${that.customimage}`;
+  }
+  titleimage.attr('src',pathimage);
   var title = $(window.document.createElement('span')).html(this.title)
                                                       .css('margin-left','15px')
                                                       .css('font-size','17px')
@@ -49,7 +63,6 @@ ForeknowledgeBox.prototype.editorView = function editorView() {
   var wrapper = $(window.document.createElement('div')).append([titleimage,title]).css('margin-top','5px');
   var fullbox = $(window.document.createElement('div')).attr('data-foreknowledgebox-id',that.uniqueid).append([wrapper,text]);
   aux.children('.cbcontainer').append(fullbox);
-  setTitleImage();
   return aux;
 };
 
@@ -118,28 +131,17 @@ ForeknowledgeBox.prototype.editField = function editField(e,selector) {
 
 
 ForeknowledgeBox.prototype.editButton = function editButton(e) {
+  var dialog = ForeknowledgeBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
-  var template = application.util.template.getTemplate(__module_path__+'/toolbar.hbs');
-  var toolbar = $(template({identifier:"[data-textbox-id='"+that.uniqueid+"']"}));
-  var textbox = $('[data-textbox-id="'+that.uniqueid+'"]');
-  $('body').append(toolbar);
-  toolbarposition(textbox.offset());
-  var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 
-            'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-            'Times New Roman', 'Verdana'],
-            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-  $.each(fonts, function (idx, fontName) {
-          fontTarget.append($('<li><a data-edit="fontName ' + fontName +'" style="font-family:\''+ fontName +'\'">'+fontName + '</a></li>'));
+  var image = $(document.createElement('img'));
+  var typefkl = $(document.createElement('select'));
+  that.typessuported.forEach(function(element){
+    var valtemplates = {};
+    valtemplates.value = element;
+    valtemplates.text = element.charAt(0).toUpperCase() + element.substring(1);
+    typefkl.append(`<option value="${valtemplates.value}">${valtemplates.text}</option>`);
   });
-  $('.dropdown-toggle').click(function(){$(this).siblings('.dropdown-menu').dropdown('toggle')})
-        .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
-        .keydown('esc', function () {this.value='';$(this).change();});
-  textbox.wysiwyg({extracommandhandler:that.handlerExtraCommands});
-  e.stopImmediatePropagation();
-  textbox.click(that.stopPropagation);
-  document.execCommand('selectAll');
-  toolbar.click(that.stopPropagation);
-  $('body').click({that:that},that.disableEditMode);
+  dialog.children(".content").append([image,typefkl]);
 };
 
 ForeknowledgeBox.prototype.stopPropagation = function stopPropagation(event) {
@@ -196,11 +198,11 @@ ForeknowledgeBox.prototype.importHTML = function importHTML(node, filePath){
 ForeknowledgeBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
 	ForeknowledgeBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 	jquerycbo.on('drag',function(event,ui){toolbarposition(ui.offset)});
- //  jquerycbo.on("resize",function(event,ui){
- //    ui.size.height = jquerycbo.find('.cbtextbox').outerHeight(true);
- //  });
- //  jquerycbo.find(".cbtextbox")[0].addEventListener('input',function(){jquerycbo.height(jquerycbo.find('.cbtextbox').outerHeight(true));});
- //  jquerycbo.height(jquerycbo.find('.cbtextbox').outerHeight(true));
+   jquerycbo.on("resize",function(event,ui){
+     ui.size.height = jquerycbo.find('.cbcontainer').outerHeight(true) + 10 ;
+   });
+  //jquerycbo.find(".cbtextbox")[0].addEventListener('input',function(){jquerycbo.height(jquerycbo.find('.cbtextbox').outerHeight(true));});
+  jquerycbo.height(jquerycbo.find('.cbcontainer').outerHeight(true) + 10 );
 };
 
 ForeknowledgeBox.prototype.handlerExtraCommands = function handlerExtraCommands(command) {
@@ -294,7 +296,7 @@ function createTable(row,col,tableclass,header){
 function toolbarposition(position){
 	var toolbar = $(".cbtextbox-toolbar");
 	toolbar.css('position','fixed')
-	       .css('top',position.top - 60 + "px")
+	       .css('top',position.top - 64 + "px")
 	       .css('left',position.left + "px");
   if(toolbar.height() > 40){
     toolbar.css('left','')

@@ -11,7 +11,7 @@ module.exports = function(cb) {
 	var nw = new NwBuilder(ninjaConfig);
 
 	nw.on('log', gutil.log);
-	
+	nw.on('log',console.log);
 	nw.run(cb);
 
 	return nw;
