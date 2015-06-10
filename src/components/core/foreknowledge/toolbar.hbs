@@ -1,0 +1,71 @@
+<div class="cbtextbox-toolbar content">
+<div class="btn-toolbar" data-role="editor-toolbar" data-target="{{identifier}}">
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
+          <ul class="dropdown-menu">
+          </ul>
+        </div>
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+          <li><a data-edit="fontSize 7"><font size="3">{{gettext "7"}}</font></a></li>
+          <li><a data-edit="fontSize 6"><font size="3">{{gettext "6"}}</font></a></li>
+          <li><a data-edit="fontSize 5"><font size="3">{{gettext "5"}}</font></a></li>
+          <li><a data-edit="fontSize 4"><font size="3">{{gettext "4"}}</font></a></li>
+          <li><a data-edit="fontSize 3"><font size="3">{{gettext "3"}}</font></a></li>
+          <li><a data-edit="fontSize 2"><font size="3">{{gettext "2"}}</font></a></li>
+          <li><a data-edit="fontSize 1"><font size="3">{{gettext "1"}}</font></a></li>
+          </ul>
+      </div>
+      <div class="btn-group">
+        <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
+        <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
+        <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
+        <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+      </div>
+      <div class="btn-group">
+        <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
+        <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
+        <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-indent-left"></i></a>
+        <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent-right"></i></a>
+      </div>
+      <div class="btn-group">
+        <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+        <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+        <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
+        <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+      </div>
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Insert Table" data-extracommand="marcar"><i class="fa fa-table"></i></a>
+        <div class="dropdown-menu" style="padding-left:10px;">
+            <span>{{gettext "Rows:"}}</span>
+            <span>
+            <ul id="tablemenuRow" class="pagination pagination-sm">
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+            </ul>
+            </span>
+            <li role="presentation" class="divider"></li>
+            <span>{{gettext "Cols:"}}</span>
+            <span>
+            <ul id="tablemenuCol" class="pagination pagination-sm">
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+            </ul>
+            </span>
+            <li role="presentation" class="divider"></li>
+            <input id="inputFullSize" type="checkbox" />{{gettext "Full Size:"}}
+            <br />
+            <input id="inputWithHeader" type="checkbox" />{{gettext "With Header:"}}
+            <li role="presentation" class="divider"></li>
+            <button id="tablemenuButton" class="btn" type="button">{{gettext "Add"}}</button>
+          </div>
+      </div>
+</div>
+</div>
