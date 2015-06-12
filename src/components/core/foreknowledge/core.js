@@ -12,7 +12,7 @@ var metadata = require( "./"+__module_path__ + 'metadata.json');
  */
 
 function ForeknowledgeBox(objectdata){
-  this.typessuported = ["target","custom"];
+  this.typessuported = ["target","note","custom"];
   var defaultvalues = {
     "text" : "Lorem Ipsum",
     "title" : "Foreknowledge",
@@ -104,23 +104,23 @@ ForeknowledgeBox.prototype.editText = function editText(e) {
 };
 
 ForeknowledgeBox.prototype.editField = function editField(e,selector) {
-  var that = e.data.that;
-  var template = application.util.template.getTemplate(__module_path__+'/toolbar.hbs');
-  var toolbar = $(template({identifier:selector}));
-  var foreknowledgebox = $("[data-foreknowledgebox-id='"+that.uniqueid+"']");
+  var that = e.data.that,
+      template = application.util.template.getTemplate(__module_path__+'/toolbar.hbs'),
+      toolbar = $(template({identifier:selector})),
+      foreknowledgebox = $("[data-foreknowledgebox-id='"+that.uniqueid+"']"),
+      fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier','Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times','Times New Roman', 'Verdana'],
+      fontTarget = $('[title=Font]').siblings('.dropdown-menu'),
+      field = $(selector);
+
   $('body').append(toolbar);
   toolbarposition(foreknowledgebox.offset());
-  var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 
-            'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-            'Times New Roman', 'Verdana'],
-            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
   $.each(fonts, function (idx, fontName) {
           fontTarget.append($('<li><a data-edit="fontName ' + fontName +'" style="font-family:\''+ fontName +'\'">'+fontName + '</a></li>'));
   });
   $('.dropdown-toggle').click(function(){$(this).siblings('.dropdown-menu').dropdown('toggle')})
         .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
         .keydown('esc', function () {this.value='';$(this).change();});
-  var field = $(selector);
+  
   field.wysiwyg({extracommandhandler:that.handlerExtraCommands});
   e.stopImmediatePropagation();
   foreknowledgebox.click(that.stopPropagation);
@@ -133,15 +133,27 @@ ForeknowledgeBox.prototype.editField = function editField(e,selector) {
 ForeknowledgeBox.prototype.editButton = function editButton(e) {
   var dialog = ForeknowledgeBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
-  var image = $(document.createElement('img'));
-  var typefkl = $(document.createElement('select'));
+  var image = $(document.createElement('img')).attr('id','imagetypefkl');
+  var typefkl = $(document.createElement('select')).attr('id','typefkl');
   that.typessuported.forEach(function(element){
     var valtemplates = {};
     valtemplates.value = element;
     valtemplates.text = element.charAt(0).toUpperCase() + element.substring(1);
     typefkl.append(`<option value="${valtemplates.value}">${valtemplates.text}</option>`);
   });
-  dialog.children(".content").append([image,typefkl]);
+  var inputfile = $(document.createElement('input')).attr('type','file').css('visibility','hidden').attr('id','custompath');
+  typefkl.on('change',function(){
+    if(this.value === 'custom'){
+      $("#custompath").css('visibility','visible');
+    }
+    else{
+      $("#custompath").css('visibility','hidden');
+    }
+  });
+  dialog.children(".content").append([image,typefkl,inputfile]);
+  dialog.callbacks.push(function(){
+    updateimage(dialog,that);
+  });
 };
 
 ForeknowledgeBox.prototype.stopPropagation = function stopPropagation(event) {
@@ -304,22 +316,31 @@ function toolbarposition(position){
   }
 }
 
-function setTitleImage(){
-    var fs = window.require('fs');
-    var fsextra = window.require('fs-extra');
-    var path = window.require('path');
-    var finalpath = Project.Info.projectpath +"/rsrc/noteimages/foreknowledge.png";
-    try{
-      fsextra.mkdirsSync(path.dirname(finalpath));
+function updateimage(dialog,reference){
+  var type = dialog.find('#typefkl')[0];
+  reference.typebox = type.value;
+  if(type.value === 'custom'){
+    var originalpath = dialog.find('#custompath')[0].value;
+    var path = require('path');
+    var fsextra = require('fs-extra');
+    var originalbasename = path.basename(originalpath);
+    fsextra.ensureDirSync(Project.Info.projectpath +"/rsrc/noteimages/");
+    var finalpath = Project.Info.projectpath +"/rsrc/noteimages/"+originalbasename;
+    while(true){
+      try{
+        fs.accessSync(finalpath);
+        originalbasename = "0"+originalbasename;
+        finalpath = Project.Info.projectpath + "/rsrc/noteimages/"+ originalbasename;
+      }
+      catch(e){
+        break;
+      }
     }
-    catch(e){
-    }
-    try{
-      fsextra.copySync("./"+__module_path__ + "/rsrc/titleimage.png",finalpath);
-    }
-    catch(e){
-    }
+    fsextra.copySync(originalpath,finalpath);
+    reference.customimage = originalbasename;
+  }
 }
+
 
 module.exports = ForeknowledgeBox;
 //@ sourceURL=text_core.js

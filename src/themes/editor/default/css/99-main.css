@@ -303,7 +303,7 @@ body{
 
 
 .cbobject.selected .cbcliclayer{
-    z-index: -1
+    z-index: -1;
 }
 
 .ui-dialog div#activitytext [data-gap-fill]{
@@ -528,4 +528,8 @@ body{
 
 .cbdialog #url{
     width: 70%;
+}
+
+#cbobjecttoolbar.ui-draggable-dragging{
+    opacity: 0.2;
 }
