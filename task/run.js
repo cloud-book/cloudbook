@@ -4,6 +4,7 @@ var gutil = require('gulp-util');
 
 module.exports = function(cb) {
 
+	console.log(process.argv);
 	if (!ninjaConfig.debug)
 		ninjaConfig.argv.push('--debug=true');
 
@@ -11,7 +12,10 @@ module.exports = function(cb) {
 	var nw = new NwBuilder(ninjaConfig);
 
 	nw.on('log', gutil.log);
-	nw.on('log',console.log);
+	nw.on('stdout',console.log);
+	nw.on('stderr',function(b){
+		console.log(b.toString('utf8'));
+	});
 	nw.run(cb);
 
 	return nw;
