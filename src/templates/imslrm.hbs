@@ -218,12 +218,12 @@
 
 {{#if educational}}
   <educational>
-  {{#if educational.interactivityType}}
+ 
     <interactivityType uniqueElementName="interactivityType">
       <source uniqueElementName="source">LOM-ESv1.0</source>
-      <value uniqueElementName="value">{{this.intTypeEducationalValue_1}}</value>
+      <value uniqueElementName="value">{{educational.interactivityType}}</value>
     </interactivityType>
-  {{/if}}
+
   
   {{#each educational.learningResourceType}}
     <learningResourceType>
@@ -232,19 +232,18 @@
     </learningResourceType>
   {{/each}}
 
-  {{#if educational.interactivityLevel}}
+  
     <interactivityLevel uniqueElementName="interactivityLevel">
       <source uniqueElementName="source">LOM-ESv1.0</source>
-      <value uniqueElementName="value">{{this.levelIntEducationalValue_1}}</value>
+      <value uniqueElementName="value">{{educational.levelIntEducational}}</value>
     </interactivityLevel>
-  {{/if}}
 
-  {{#if educational.semanticDensity}}
+
     <semanticDensity uniqueElementName="semanticDensity">
       <source uniqueElementName="source">LOM-ESv1.0</source>
-      <value uniqueElementName="value">{{this.levelDensEducationalValue_1}}</value>
+      <value uniqueElementName="value">{{educational.levelDensEducational}}</value>
     </semanticDensity>
-  {{/if}}
+
 
   {{#each educational.intendedEndUserRole}}
     <intendedEndUserRole>
@@ -266,27 +265,25 @@
    </typicalAgeRange>
   {{/each}}
 
-  {{#if educational.difficulty}}
     <difficulty uniqueElementName="difficulty">
       <source uniqueElementName="source">LOM-ESv1.0</source>
       <value uniqueElementName="value">{{this.difficultyEducationalValue_1}}</value>
     </difficulty>
-  {{/if}}
-
-  {{#if educational.typicalLearningTime}}
+ 
+  
     <typicalLearningTime uniqueElementName="typicalLearningTime">
-      {{#if educational.typicalLearningTime.duration}}
-        <duration uniqueElementName="duration">P{{this.durationYearsEducational_1}}Y{{this.durationMonthsEducational_1}}M{{this.durationDaysEducational_1}}DT{{this.durationHoursEducational_1}}H{{this.durationminutesEducational_1}}M{{this.durationsecondsEducational_1}}S</duration> 
-      {{/if}}
-      {{#if educational.typicalLearningTime.description}}
+      
+        <duration uniqueElementName="duration">P{{educational.typicalLearningTime.durationYearsEducational}}Y{{educational.typicalLearningTime.durationMonthsEducational}}M{{educational.typicalLearningTime.durationDaysEducational}}DT{{educational.typicalLearningTime.durationHoursEducational}}H{{educational.typicalLearningTime.durationMinutesEducational}}M{{educational.typicalLearningTime.durationSecondsEducational}}S</duration> 
+      
+     
         <description>
          {{#each educational.typicalLearningTime.description}} 
             <string language="{{this.langDurationEducational}}">{{this.DescriptionLearningEducational}}</string>
          {{/each}}
         </description>
-      {{/if}}
+      
     </typicalLearningTime>
-  {{/if}}
+
   
   {{#each educational.description}}
     <description>

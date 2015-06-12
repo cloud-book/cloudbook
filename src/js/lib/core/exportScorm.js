@@ -431,6 +431,176 @@ function parserImslrm() {
           
         }  
 
+    // Analizando Educational
+        
+        // Analizando Educational Interactivity Type
+        if(e.indexOf("intTypeEducationalValue_1") === 0 ){
+            ExportScorm.prototype.checkname(imslrm,"educational",{last:"list"});
+            imslrm.educational.interactivityType=Project.Info.LOM[e];
+       
+        } 
+
+        // Analizando Educational Resource Type
+        if(e.indexOf("resourceTypeEducational_") === 0 ){
+            
+            ExportScorm.prototype.checkname(imslrm,"educational.learningResourceType",{last:"array"});
+            var x = {"resourceTypeEducationalValue":""};
+            var aux = Project.Info.LOM[e]
+            for( var field in aux){
+                x[field.split("_")[0]] = aux[field];
+               
+            }
+            imslrm.educational.learningResourceType.push(x);
+        }  
+
+
+        // Analizando Interactivity Level
+        
+        if(e.indexOf("levelIntEducationalValue_1") === 0 ){
+            imslrm.educational.levelIntEducational=Project.Info.LOM[e];
+       
+        } 
+
+        // Analizando Semantic Level
+
+        if(e.indexOf("levelDensEducationalValue_1") === 0 ){
+            imslrm.educational.levelDensEducational=Project.Info.LOM[e];
+       
+        } 
+
+        // Analizando intendedEndUserRole
+        if(e.indexOf("endUserEducational_") === 0 ){
+            
+            ExportScorm.prototype.checkname(imslrm,"educational.intendedEndUserRole",{last:"array"});
+            var x = {"endUserEducationalValue":""};
+            var aux = Project.Info.LOM[e]
+            for( var field in aux){
+                x[field.split("_")[0]] = aux[field];
+               
+            }
+            imslrm.educational.intendedEndUserRole.push(x);
+        }  
+
+        // Analizando contextEducational_
+        if(e.indexOf("contextEducational_") === 0 ){
+            
+            ExportScorm.prototype.checkname(imslrm,"educational.context",{last:"array"});
+            var x = {"contextEducationalValue":""};
+            var aux = Project.Info.LOM[e]
+            for( var field in aux){
+                x[field.split("_")[0]] = aux[field];
+               
+            }
+            imslrm.educational.context.push(x);
+        }  
+
+        // Analizando rangeAgeEducational_
+        if(e.indexOf("rangeAgeEducational_") === 0 ){
+            
+            ExportScorm.prototype.checkname(imslrm,"educational.typicalAgeRange",{last:"array"});
+            var x = {"rangeAgeEducationalValue":"","languageRangeEducational":""};
+            var aux = Project.Info.LOM[e]
+            for( var field in aux){
+                x[field.split("_")[0]] = aux[field];
+               
+            }
+            imslrm.educational.typicalAgeRange.push(x);
+        }  
+
+        // Analizando difficulty
+
+        if(e.indexOf("difficultyEducationalValue_1") === 0 ){
+            imslrm.educational.difficulty=Project.Info.LOM[e];
+       
+        }
+
+
+        //Analizando dtypicalLearningTime
+
+        ExportScorm.prototype.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})
+
+        if (e.indexOf("durationYearsEducational_1")===0){
+                        
+            imslrm.educational.typicalLearningTime.durationYearsEducational=Project.Info.LOM[e];
+        }
+
+        if (e.indexOf("durationMonthsEducational_1")===0){
+                        
+            imslrm.educational.typicalLearningTime.durationMonthsEducational=Project.Info.LOM[e];
+        }
+
+        if (e.indexOf("durationDaysEducational_1")===0){
+                        
+            imslrm.educational.typicalLearningTime.durationDaysEducational=Project.Info.LOM[e];
+        }
+        
+        if (e.indexOf("durationHoursEducational_1")===0){
+                        
+            imslrm.educational.typicalLearningTime.durationHoursEducational=Project.Info.LOM[e];
+        }
+
+
+        if (e.indexOf("durationminutesEducational_1")===0){
+                        
+            imslrm.educational.typicalLearningTime.durationMinutesEducational=Project.Info.LOM[e];
+        }
+
+        if (e.indexOf("durationsecondsEducational_1")===0){
+                        
+            imslrm.educational.typicalLearningTime.durationSecondsEducational=Project.Info.LOM[e];
+        }
+
+
+        if(e.indexOf("descLearningTimeEducational_") === 0){
+            ExportScorm.prototype.checkname(imslrm,"educational.typicalLearningTime.description",{last:"array"})
+            var x = {"DescriptionLearningEducational":"","langDurationEducational":""};
+            var aux = Project.Info.LOM[e]
+            for( var field in aux){
+                x[field.split("_")[0]] = aux[field];
+              
+            }
+            imslrm.educational.typicalLearningTime.description.push(x);
+          
+        }  
+
+        // Analizando description
+        if(e.indexOf("descEducationUse_") === 0 ){
+            
+            ExportScorm.prototype.checkname(imslrm,"educational.description",{last:"array"});
+            var x = {"descEducationUseValue":"","langDescrEducational":""};
+            var aux = Project.Info.LOM[e]
+            for( var field in aux){
+                x[field.split("_")[0]] = aux[field];
+               
+            }
+            imslrm.educational.description.push(x);
+        }  
+
+        // Analizando language
+        if(e.indexOf("languageEducationalUse_") === 0 ){
+            
+            ExportScorm.prototype.checkname(imslrm,"educational.language",{last:"array"});
+            var x = {"languageEducationalUseValue":""};
+            var aux = Project.Info.LOM[e]
+            for( var field in aux){
+                x[field.split("_")[0]] = aux[field];
+               
+            }
+            imslrm.educational.language.push(x);
+        }  
+
+        // Analizando cognitiveProcess
+        if(e.indexOf("processcogEducational_") === 0 ){
+            
+            ExportScorm.prototype.checkname(imslrm,"educational.cognitiveProcess",{last:"array"});
+            var x = {"processcogEducationalValue":""};
+            var aux = Project.Info.LOM[e]
+            for( var field in aux){
+                x[field.split("_")[0]] = aux[field];
+               
+            }
+            imslrm.educational.cognitiveProcess.push(x);
+        }  
 
 
     });
