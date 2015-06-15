@@ -63,6 +63,7 @@
  	backend.loadComponents();
  	backend.checkUpstreamVersion();
  	ui.loadTheme();
+ 	ui.loadExportTheme('default');
  	
 
  	var gui = require('nw.gui');

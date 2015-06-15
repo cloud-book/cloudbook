@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-06-01 15:57+0000\n"
+"POT-Creation-Date: 2015-06-15 15:57+0000\n"
 
 #: src/components/core/foreknowledge/toolbar.hbs:7
 #: src/components/core/text/toolbar.hbs:7
@@ -74,11 +74,15 @@ msgid "Click to view interactive Flash resource"
 msgstr ""
 
 #: src/components/core/foreknowledge/core.js:16
-msgid "Lorem Ipsum"
+msgid "target"
 msgstr ""
 
-#: src/components/core/foreknowledge/core.js:17
-msgid "Foreknowledge"
+#: src/components/core/foreknowledge/core.js:16
+msgid "note"
+msgstr ""
+
+#: src/components/core/foreknowledge/core.js:16
+msgid "custom"
 msgstr ""
 
 #: src/components/core/includesite/core.js:43

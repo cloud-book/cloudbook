@@ -1,0 +1,6 @@
+# Changelog
+## 0.3.0
+### News features
+* Migrate to Gulp
+* Added foreknowledge component
+* Added export to ePub format

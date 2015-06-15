@@ -140,6 +140,21 @@ CBObject.prototype.forwardButton = function forwardButton(e) {
 	e.stopPropagation();
 };
 
+CBObject.prototype.clone = function clone(e) {
+	var that = e.data.that;
+	var storagemanager = application.storagemanager.getInstance();
+	var clone = JSON.parse(JSON.stringify(storagemanager.getCBObjectById(that.uniqueid)));
+	clone.uniqueid = CBUtil.uniqueid();
+	clone.position[0] = clone.position[0] + 20;
+	clone.position[1] = clone.position[1] + 20;
+	var cbclone = new Cloudbook.Actions[clone.idtype]['component'](clone);
+	storagemanager.setCBObjectById(cbclone,cbclone.uniqueid);
+	var section = storagemanager.getCBSectionById(Cloudbook.UI.selected.attr('data-cbsectionid'));
+	section.content.push(cbclone.uniqueid);
+	storagemanager.setCBSectionById(section,Cloudbook.UI.selected.attr('data-cbsectionid'));
+};
+
+
 CBObject.prototype.backwardButton = function backwardButton(e) {
 	var that = e.data.that;
 	var controller = application.controller.getInstance();
@@ -233,14 +248,16 @@ CBObject.prototype.enableEditable = function enableEditable(e){
 		var del = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-delete cb-toolbar');
 		var forward = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-forward cb-toolbar');
 		var backward = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-backward cb-toolbar');
+		var clone = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-edit cb-toolbar');
 
 		edit.click({that:that},that.editButton);
 		del.click({that:that},that.deleteButton);
 		forward.click({that:that},that.forwardButton);
 		backward.click({that:that},that.backwardButton);
-		bar.append([edit,del,forward,backward]);
+		clone.click({that:that},that.clone);
+		bar.append([edit,del,forward,backward,clone]);
 		$("#targetcontent").append(bar);
-		bar.css('padding-right','40px');
+		bar.css('padding-right','20px');
 		
 		bar.draggable({
 			drag:function(event,ui){

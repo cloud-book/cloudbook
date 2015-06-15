@@ -131,6 +131,12 @@ ExportHTML.prototype.do_html = function do_html(path){
 	fs.writeFileSync(path+"index.html", total);
 	var that = this;
 	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,path)});
+	var nodejspath = require('path') ;
+	var fsextra = require('fs-extra');
+	var themefolder = nodejspath.join(path,'theme');
+	fsextra.ensureDirSync(themefolder);
+	fsextra.copySync( Cloudbook.UI.exportthemepath , themefolder);
+
 	return total;
 }
 /*ExportHTML.prototype.rewriteSource = function rewriteSource(html){

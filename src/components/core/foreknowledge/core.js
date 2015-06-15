@@ -13,6 +13,7 @@ var metadata = require( "./"+__module_path__ + 'metadata.json');
 
 function ForeknowledgeBox(objectdata){
   this.typessuported = ["target","note","custom"];
+  [CBI18n.gettext("target"),CBI18n.gettext("note"),CBI18n.gettext("custom")];
   var defaultvalues = {
     "text" : "Lorem Ipsum",
     "title" : "Foreknowledge",
@@ -47,7 +48,7 @@ ForeknowledgeBox.prototype.editorView = function editorView() {
   var titleimage = $(window.document.createElement('img'));
   var pathimage = "";
   if(that.typebox !== "custom"){
-    pathimage = `${Cloudbook.UI.themeeditorpath}/img/fkl_${that.typebox}.png` ;
+    pathimage = `${Cloudbook.UI.exportthemepath}/img/fkl_${that.typebox}.png` ;
   }
   else{
     pathimage = `${Project.Info.projectpath}/rsrc/noteimages/${that.customimage}`;
@@ -66,14 +67,44 @@ ForeknowledgeBox.prototype.editorView = function editorView() {
   return aux;
 };
 
+
+ForeknowledgeBox.prototype.pathImage = function pathImage(typebox) {
+  if(typebox !== "custom"){
+    return `${Cloudbook.UI.exportthemepath}/img/fkl_${typebox}.png` ;
+  }
+  else{
+    return `${Project.Info.projectpath}/rsrc/noteimages/${this.customimage}`;
+  }
+};
+
+
+
 ForeknowledgeBox.prototype.htmlView = function htmlView() {
   var aux = ForeknowledgeBox.super_.prototype.htmlView.call(this);
-  var textboxcontent = $(window.document.createElement('div'))
-            .html(this.text)
-            .attr('data-textbox-id',this.uniqueid)
-            .addClass('cbtextbox')
-            .css('padding','5px');
-  aux.children('.cbcontainer').append(textboxcontent);
+  var text = $(window.document.createElement('div')).html(this.text)
+                                                    .css('background-color',"#EBE3CC")
+                                                    .css("padding","15px 15px")
+                                                    .addClass('foreknowledgebox-text')
+                                                    .addClass('field-editable');
+  var titleimage = $(window.document.createElement('img'));
+  var pathimage = "";
+
+  if(this.typebox !== "custom"){
+    pathimage = `theme/img/fkl_${this.typebox}.png` ;
+  }
+  else{
+    pathimage = `rsrc/noteimages/${this.customimage}`;
+  }
+  titleimage.attr('src',pathimage);
+  var title = $(window.document.createElement('span')).html(this.title)
+                                                      .css('margin-left','15px')
+                                                      .css('font-size','17px')
+                                                      .css('font-weight','bold')
+                                                      .addClass('field-editable')
+                                                      .addClass('foreknowledgebox-title');
+  var wrapper = $(window.document.createElement('div')).append([titleimage,title]).css('margin-top','5px');
+  var fullbox = $(window.document.createElement('div')).attr('data-foreknowledgebox-id',this.uniqueid).append([wrapper,text]);
+  aux.children('.cbcontainer').append(fullbox);
   return aux;
 }
 
@@ -133,22 +164,37 @@ ForeknowledgeBox.prototype.editField = function editField(e,selector) {
 ForeknowledgeBox.prototype.editButton = function editButton(e) {
   var dialog = ForeknowledgeBox.super_.prototype.editButton.call(this,e);
   var that = e.data.that;
-  var image = $(document.createElement('img')).attr('id','imagetypefkl');
+  var image = $(document.createElement('img')).attr('id','imagetypefkl').css('max-height','50px').css('width','auto');
   var typefkl = $(document.createElement('select')).attr('id','typefkl');
+  var inputfile = $(document.createElement('input')).attr('type','file').css('visibility','hidden').attr('id','custompath');
+  
+  image.attr('src',that.pathImage(that.typebox));
+
   that.typessuported.forEach(function(element){
     var valtemplates = {};
     valtemplates.value = element;
-    valtemplates.text = element.charAt(0).toUpperCase() + element.substring(1);
-    typefkl.append(`<option value="${valtemplates.value}">${valtemplates.text}</option>`);
+    var translatedelement = CBI18n.gettext(element);
+    console.log(translatedelement);
+    valtemplates.text = translatedelement.charAt(0).toUpperCase() + translatedelement.substring(1);
+    if (valtemplates.value === that.typebox){
+      typefkl.append(`<option value="${valtemplates.value}" selected>${valtemplates.text}</option>`);
+    }
+    else{
+      typefkl.append(`<option value="${valtemplates.value}">${valtemplates.text}</option>`);
+    }
   });
-  var inputfile = $(document.createElement('input')).attr('type','file').css('visibility','hidden').attr('id','custompath');
   typefkl.on('change',function(){
     if(this.value === 'custom'){
       $("#custompath").css('visibility','visible');
+      $("#imagetypefkl").attr('src',"file://" + $("#custompath")[0].value);
     }
     else{
       $("#custompath").css('visibility','hidden');
+      $("#imagetypefkl").attr('src',that.pathImage(this.value));
     }
+  });
+  inputfile.on('change',function(){
+    $("#imagetypefkl").attr('src',"file://" + $("#custompath")[0].value);
   });
   dialog.children(".content").append([image,typefkl,inputfile]);
   dialog.callbacks.push(function(){
@@ -234,13 +280,11 @@ ForeknowledgeBox.prototype.handlerExtraCommands = function handlerExtraCommands(
     });
     $('#inputFullSize').each(function(idx,o){
         $(o).click(function(e){
-//          debugger;
           e.stopPropagation();
         });
     });
     $('#inputWithHeader').each(function(idx,o){
         $(o).click(function(e){
-//          debugger;
           e.stopPropagation();
         });
     });

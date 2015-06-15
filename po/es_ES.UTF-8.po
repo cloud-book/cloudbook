@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloudbook\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-01 15:57+0000\n"
+"POT-Creation-Date: 2015-06-15 15:57+0000\n"
 "PO-Revision-Date: 2015-04-29 17:36+0100\n"
 "Last-Translator: kbut <raurodse@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -16,37 +16,37 @@ msgstr ""
 #: src/components/core/foreknowledge/toolbar.hbs:7
 #: src/components/core/text/toolbar.hbs:7
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: src/components/core/foreknowledge/toolbar.hbs:6
 #: src/components/core/text/toolbar.hbs:6
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: src/components/core/foreknowledge/toolbar.hbs:5
 #: src/components/core/text/toolbar.hbs:5
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: src/components/core/foreknowledge/toolbar.hbs:4
 #: src/components/core/text/toolbar.hbs:4
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: src/components/core/foreknowledge/toolbar.hbs:3
 #: src/components/core/text/toolbar.hbs:3
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: src/components/core/foreknowledge/toolbar.hbs:2
 #: src/components/core/text/toolbar.hbs:2
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: src/components/core/foreknowledge/toolbar.hbs:1
 #: src/components/core/text/toolbar.hbs:1
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: src/components/core/audio/core.js:44
 #: src/components/core/whiteboard/core.js:61
@@ -74,12 +74,16 @@ msgid "Click to view interactive Flash resource"
 msgstr "Presiona para ver el recurso interactivo Flash"
 
 #: src/components/core/foreknowledge/core.js:16
-msgid "Lorem Ipsum"
-msgstr ""
+msgid "target"
+msgstr "objetivo"
 
-#: src/components/core/foreknowledge/core.js:17
-msgid "Foreknowledge"
-msgstr ""
+#: src/components/core/foreknowledge/core.js:16
+msgid "note"
+msgstr "nota"
+
+#: src/components/core/foreknowledge/core.js:16
+msgid "custom"
+msgstr "personalizado"
 
 #: src/components/core/includesite/core.js:43
 msgid "Click to view resource"

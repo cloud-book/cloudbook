@@ -32,6 +32,16 @@ UI.prototype.loadTheme = function loadTheme(){
   }
 }
 
+
+UI.prototype.loadExportTheme = function loadExportTheme(themename) {
+  var path = require('path');
+  var fs = require('fs');
+  var auxpath = path.join('themes','export',themename);
+  Cloudbook.UI.exportthemepath = fs.existsSync(auxpath)?auxpath: path.join('themes','export','default');
+};
+
+
+
 /**
  * Create components buttons to append elements into selected section.
  * Here method call editorView and triggerAddEditorView methods of CBObjects.
