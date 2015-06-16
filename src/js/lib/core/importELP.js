@@ -53,7 +53,19 @@ function processElementELP(node, filePath, idsectionselected)
 }
 
 /**
+ * This method is responsible for renaming resources
+ * @param  {Object} node to be processed
+ * @return {String} node processed
+ */
+function renameResource(node)
+{
+	node.innerHTML = node.innerHTML.replace(/resources\//g, Project.Info.projectpath + "/rsrc/");//"cloudbook/");
+	return node;
+}
+
+/**
  * This method is responsible for processing Text and Generic iDevices
+ * It process references in content of iDevices
  * @param  {Object} node to be processed
  * @param  {String} path of the html element
  * @param  {String} id of section selected
@@ -61,26 +73,50 @@ function processElementELP(node, filePath, idsectionselected)
  */
 function processTextIdevice(node, filePath, idsection)
 {
-	var newNode = "";
+	var newNode = "", nodeAux = "";
 	var type = node.children().find("string[value='class_']").next().attr("value");
+	var title = "";
 
-	node.children().find("unicode").each(function(){
-		if($(this).prev().attr("value") == "content_w_resourcePaths")
+	if(node.attr("class") == "exe.engine.genericidevice.GenericIdevice" || node.attr("class") == "exe.engine.casestudyidevice.CasestudyIdevice" ||
+		"exe.engine.reflectionidevice.ReflectionIdevice"){
+		if($(node.children().find("unicode")[0]).prev().attr("value") == "_title")
 		{
-			newNode = (newNode == "")?$("<p></p>"):newNode;
-			newNode.tagName = "P";
+			newNode = (newNode == "")?$("<h1></h1>"):newNode;
 			newNode.innerHTML = (newNode.innerHTML == undefined)?"":newNode.innerHTML;
-			newNode.innerHTML += $(this).attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"");
+			newNode.innerHTML += "<h1>" + $(node.children().find("unicode")[0]).attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</h1>";
+			title = $(node.children().find("unicode")[0]).attr("value");
 		}
-		if(node.attr("class") == "exe.engine.genericidevice.GenericIdevice"){
-			if($(this).prev().attr("value") == "_title")
-			{
-				newNode = (newNode == "")?$("<h1></h1>"):newNode;
-				newNode.innerHTML = (newNode.innerHTML == undefined)?"":newNode.innerHTML;
-				newNode.innerHTML += "<h1>" + $(this).attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</h1>";
-			}
+	}
+	nodeAux = $(node.find("unicode[content='true']")[0]);
+	if(nodeAux.length == 0 && ($(node).children().find("string[value='fields']").next().children()[0].tagName == "REFERENCE")){
+		var refNumber = $($(node).children().find("string[value='fields']").next().children()[0]).attr("key");
+		nodeAux = $(node).parents().find("instance[reference='" +  refNumber + "']").children().find("string[value='content_w_resourcePaths']").next();
+	} 
+	if(node.attr("class") == "exe.engine.field.TextAreaField")
+	{
+		if($($($(node).children()[0]).children('unicode[content="true"]')[0]).parent().children("string[value='_name']").next().attr("value") != "Free Text"){
+			newNode = (newNode == "")?$("<h1></h1>"):newNode;
+			newNode.innerHTML = "<h1>" + $($($(node).children()[0]).children('unicode[content="true"]')[0]).parent().children("string[value='_name']").next().attr("value") + "</h1>"
 		}
-	});
+		nodeAux = $($($(node).children()[0]).children('unicode[content="true"]')[0]);
+	}
+	
+
+	newNode = (newNode == "")?$("<p></p>"):newNode;
+	newNode.tagName = "P";
+	newNode.innerHTML = (newNode.innerHTML == undefined)?"":newNode.innerHTML;
+	newNode.innerHTML += "<p>" + nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</p>";
+	if(($(node.children().find('string[value="class_"]')) != undefined) && ($(node.children().find('string[value="class_"]')).next().attr("value") == "reading"))
+	{
+		newNode.innerHTML +=  $(node.find("unicode[content='true']")[1]).attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</br>";
+	}
+
+	if($(node).attr("class") == "exe.engine.casestudyidevice.CasestudyIdevice")
+	{
+		newNode.innerHTML += $(node).children().find("string[value='storyTextArea']").next().children().find("unicode[content='true']").attr("value") + "<br>";
+	}	
+
+	renameResource(newNode);
 	return newNode;
 }
 
@@ -143,6 +179,7 @@ function processMultiIdevice(node, filePath, idsection)
 	}); 
 	newNode.innerHTML += ']" /> ';
 	newNode.innerHTML = newNode.innerHTML.replace(',]', ']')	
+	newNode.innerHTML = newNode.innerHTML.replace(/resources\//g, "")
 	newNode.data("questions", options);
 	return newNode;
 }
@@ -176,6 +213,7 @@ function processTrueFalseIdevice(node, filePath, idsection)
 	newNode.data("questions", options);
 	newNode.innerHTML += "{'text':'" + CBI18n.gettext("True") + "', 'answer':'opt0', 'select':" + correct + ", 'checked':true, 'weight': " + weightTrue +"},"
 	newNode.innerHTML += "{'text':'" + CBI18n.gettext("False") + "', 'answer':'opt1', 'select':" + !correct + ", 'checked':true, 'weight': " + weightFalse +'}]" />';
+	newNode.innerHTML = newNode.innerHTML.replace(/resources\//g, "")
 	return newNode;
 }
 
@@ -216,17 +254,39 @@ function processTrueFalseIdevice(node, filePath, idsection)
 		newNode.innerHTML += 'data-activitytext="' + auxValue + '" '; 
 	}
 	else{
-		 newNode.data("activitytext", auxNode.find("string[value='content_w_resourcePaths']").next().attr("value")
-		 	.replace(/<u>/g, "<span data-gap-fill='gap'>").replace(/u>/g,"span>"));
-		 newNode.innerHTML += 'data-activitytext="' + auxNode.find("string[value='content_w_resourcePaths']").next().attr("value")
-			.replace(/<u>/g, "<span data-gap-fill='gap'>").replace(/u>/g,"span>") + '" '; 
+		 newNode.data("activitytext", auxValue.replace(/<u>/g, "<span data-gap-fill='gap'>").replace(/u>/g,"span>"));
+		 newNode.innerHTML += 'data-activitytext="' + auxValue.replace(/<u>/g, "<span data-gap-fill='gap'>").replace(/u>/g,"span>") + '" '; 
 	}	
 	newNode.data("words", isCloze?[]: auxNode.find('string[value="otras"]').next().attr("value").split("|"));
 	newNode.data("fieldsNumber", cont);
 	newNode.innerHTML += 'data-words="' + newNode.data("words") + '" '; 
 	newNode.innerHTML += 'data-fieldsNumber="' + newNode.data("fieldsNumber") + '" '; 
 	newNode.innerHTML += isCloze?"></fgp>":"></drop>";
+	newNode.innerHTML = newNode.innerHTML.replace(/resources\//g, "")
 	return newNode;
+}
+
+/**
+ * This method is responsible for processing Quizz Tests
+ * @param  {Object} node to be processed
+ * @param  {String} path of the html element
+ * @param  {String} id of section selected
+ * @return {String} node content of iDevice
+ */
+ function processQuizTestIdevice(node, filePath, idsection)
+{
+	var title = $(node.children().find("unicode")[0]).attr("value");
+	var questionText = "";
+	var answer = "";
+	var isCorrect = "";
+	
+	node.children().find("string[value='questions']").next().children().each(function(){
+		questionText = $(this).children().find("unicode[content='true']").attr("value");
+		$(this).children().find("instance[class='exe.engine.quiztestidevice.AnswerOption']").each(function(){
+			answer = $(this).children().find("unicode[content='true']").attr("value");
+			isCorrect = $(this).children().find("string[value='isCorrect']").next().attr("value");
+		});
+	});
 }
 
 /**
@@ -243,6 +303,9 @@ function processTrueFalseIdevice(node, filePath, idsection)
 	{
 		case "exe.engine.freetextidevice.FreeTextIdevice":
 		case "exe.engine.genericidevice.GenericIdevice":
+		case "exe.engine.casestudyidevice.CasestudyIdevice":
+		case "exe.engine.reflectionidevice.ReflectionIdevice":
+		case "exe.engine.wikipediaidevice.WikipediaIdevice":
 			nodeContent = processTextIdevice(node, filePath, idsection);
 		break;
 		case "exe.engine.externalurlidevice.ExternalUrlIdevice":
@@ -258,6 +321,9 @@ function processTrueFalseIdevice(node, filePath, idsection)
 		break;
 		case "exe.engine.truefalseidevice.TrueFalseIdevice":
 			nodeContent = processTrueFalseIdevice(node, filePath, idsection);
+		break;
+		case "exe.engine.quiztestidevice.QuizTestIdevice":
+			nodeContent = processQuizTestIdevice(node, filePath, idsection);
 		break;
 	}
 	return nodeContent;
@@ -277,6 +343,9 @@ function processChildren(node, idsection, filePath)
 	var contentSection = "";
 	var temp = $('<iframe id="tempImportELP" width="100%" height="100%" ;/>');
 	var importationHTML = application.importhtml.getInstance();
+	var nodeToProcess = "", nodeReferenced = "";
+	var isProcessed = false;
+	var contentSection = "";
 
 	temp.css("position", "fixed").css("z-index","-1000");
 	$("body").append(temp);
@@ -284,10 +353,9 @@ function processChildren(node, idsection, filePath)
 
 	if(node.prop("tagName") == "LIST" && node.prev().attr("value") == "idevices"){
 	    node.children().each(function(){
-	    	//processELPNode($(this), filePath, idsection)
 	    	var contentSection = processELPNode($(this), filePath, idsection);
 	    	if(contentSection != undefined)
-				temp.contents().find("html").append(contentSection.innerHTML);
+				$("#tempImportELP").contents().find("html").append(contentSection.innerHTML);
 		});
 		var options = $.parseJSON('{"isELP":'+ true + '}');
 		importationHTML.processHTML($("#tempImportELP").contents().find("html").html(), filePath, idsection, options);
@@ -295,28 +363,59 @@ function processChildren(node, idsection, filePath)
 
 	if(node.prop("tagName") == "LIST" && node.prev().attr("value") == "children"){
 		node.children().each(function(){
-			$($(this).children()[0]).children().each(function(){
+			$("#tempImportELP").contents().find("html").html("");
+			if($(this).attr("key") != undefined)
+				nodeToProcess = $(this).parents().find('instance[reference="' + $(this).attr("key") + '"]');
+			else
+				nodeToProcess = $(this);
+
+			$(nodeToProcess.children()[0]).children().each(function(){
+				isProcessed = false;
 				if($(this).prop("tagName") == "UNICODE" && $(this).prev().attr("value") == "_title"){
 					sectionName = $(this).attr("value");
 					idsectionAux = controller.appendSection(idsection);
 					controller.updateSectionName(sectionName,idsectionAux);
 				}
 				if($(this).prop("tagName") == "LIST" && $(this).prev().attr("value") == "idevices"){
-					temp.contents().html("");
 				    $(this).children().each(function(){
-						//processELPNode($(this), filePath, idsectionAux);
-						var contentSection = processELPNode($(this), filePath, idsectionAux);
-						temp.contents().find("html").append(contentSection.innerHTML);					
+				    	isProcessed = false;
+				    	if(this.tagName == "REFERENCE"){
+				    		nodeReferenced = $($($(this).parents().find("unicode[value='" +  
+				    			$(this).attr("key") + "']").parent().children("string[value='top_anchors_linked_from_fields']").next().children()[0]).children().find("instance")[0]);
+				    		if(nodeReferenced.length == 0){
+				    			nodeReferenced = $(this).parents().find("instance[reference='" +  $(this).attr("key") + "']");
+				    		}
+				    		if(nodeReferenced.find($(this)).length != 0){
+				    			if(nodeReferenced.children().length != 0){
+				    				contentSection = processTextIdevice(nodeReferenced.children().parent().parent().parent(), filePath, idsectionAux);
+				    				isProcessed = true;
+				    			}
+				    		}
+				    	}
+				    	else
+				    		nodeReferenced = $(this);
+				    	if(!isProcessed){
+							contentSection = processELPNode(nodeReferenced, filePath, idsectionAux);
+						}
+						$("#tempImportELP").contents().find("html").append(contentSection.innerHTML);					
 					});
 					var options = $.parseJSON('{"isELP":'+ true + '}');
 					importationHTML.processHTML($("#tempImportELP").contents().find("html").html(), filePath, idsectionAux, options);
 				}
-				if($(this).prop("tagName") == "LIST" && $(this).prev().attr("value") == "children"){
+				if(($(this).prop("tagName") == "LIST") && ($(this).prev().attr("value") == "children") && ($(this).children().length != 0)){
+					var idSectionAuxPrevious = idsectionAux;
 					processChildren($(this), idsectionAux, filePath);
-				}									
+					idsectionAux = idSectionAuxPrevious;
+				}
+				if($(this).prop("tagName") == "INSTANCE"){
+					var contentSection = processELPNode($(this), filePath, idsectionAux);
+					$("#tempImportELP").contents().find("html").append(contentSection.innerHTML);	
+				}
+
 			});
 		});
 	}
+
 	$('#tempImportELP').remove();
 	$('#layer').remove();
 }
@@ -327,17 +426,23 @@ function processChildren(node, idsection, filePath)
  */
 ImportELP.prototype.processPackageDataELP = function processPackageDataELP(filePath)
 {
-	var fs = require('fs');
+	var fs = require('fs-extra');
+	var path = require('path');
 	var idsection = "", idsectionAux = "";
 	var ui = application.ui.core.getInstance();
 	var fileIndexv3 = "contentv3.xml"
 	var fileIndexv2 = "contentv2.xml"
 	var controller = application.controller.getInstance();
+	var destpath = path.join(Project.Info.projectpath, "rsrc");
 
 	if(fs.existsSync(decodeURIComponent(filePath+fileIndexv2),{encoding:'utf8'})) 
 		dataFile = fs.readFileSync(decodeURIComponent(filePath+fileIndexv2),{encoding:'utf8'});
 	else
 		dataFile = fs.readFileSync(decodeURIComponent(filePath+fileIndexv3),{encoding:'utf8'});
+
+	$($($(dataFile.toString()).children("dictionary")).children("dictionary")[0]).find("string[value='_storageName']").each(function(){
+		if(fs.existsSync(destpath)) fs.copySync(path.join(filePath, $(this).next().attr("value")),path.join(destpath, $(this).next().attr("value")));
+	});
 
 	$($($(dataFile.toString()).children("dictionary")).children("dictionary")[0]).children("instance").children().children().each(function(){
 		if($(this).prop("tagName") == "UNICODE" && $(this).prev().attr("value") == "_title"){
@@ -347,6 +452,10 @@ ImportELP.prototype.processPackageDataELP = function processPackageDataELP(fileP
 		}
 		processChildren($(this), idsection, filePath);
 	});
+	elpMetadata = $($($(dataFile.toString()).children("dictionary")).children("instance[class='exe.engine.package.DublinCore']")[0]);
+	if(elpMetadata != undefined)
+		application.importmetadata.getInstance().loadELPMetadata(elpMetadata);
+
 	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 }
 CBUtil.createNameSpace('application.importelp');

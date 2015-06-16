@@ -56,7 +56,7 @@ ImageBox.prototype.importHTML = function importHTML(node, filePath){
         imgpath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
       ImageBox.super_.prototype.importHTML.call(this,node);
 
-      var aux = this.copyresource(path.join(path.dirname(filePath),imgpath));
+      var aux = this.copyresource(path.join(filePath.substring(0, filePath.lastIndexOf('/')+1)/*path.dirname(filePath)*/,path.basename(imgpath)));
       this.imgpath = path.basename(aux);
     }
     catch (err) {

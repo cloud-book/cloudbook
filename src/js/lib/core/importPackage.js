@@ -39,7 +39,10 @@ ImportPackage.prototype.processPackage = function processPackage(data, filePath,
 		     if(zipEntry.name === "imsmanifest.xml") exists2 = true; 
 		}
 		if(fileType == "ELP"){     
-		     if(zipEntry.name === "contentv3.xml" || zipEntry.name ==="contentv2.xml") exists2 = true; 
+		     if(zipEntry.name === "contentv3.xml" || zipEntry.name ==="contentv2.xml") {
+		     	exists = true;
+		     	exists2 = true; 
+		     }
 		}
 		if (zipEntry.name.indexOf("/") != -1) 
 			if(!fs2.existsSync(tempPath + zipEntry.name.substring(0,zipEntry.name.lastIndexOf("/")))) 
@@ -84,9 +87,11 @@ function processPackageMetaData(fileType, tempPath, filePath)
 	{
 		case "SCORM":
 		case "ELP":
-			fs.readFile(tempPath+"imslrm.xml", function(err, data) {
-			  	application.importmetadata.getInstance().loadMetadata(data.toString());
-			});
+			if (fs.existsSync(tempPath+"imslrm.xml")){
+				fs.readFile(tempPath+"imslrm.xml", function(err, data) {
+				  	application.importmetadata.getInstance().loadMetadata(data.toString());
+				});
+			};
 		break;
 		case "IMS":
 			fs.readFile(tempPath+"imsmanifest.xml", function(err, data) {

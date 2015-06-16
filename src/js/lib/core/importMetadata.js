@@ -580,8 +580,8 @@ ImportMetadata.prototype.loadEPUBMetadata =  function loadEPUBMetadata(xml)
 				case "title": case "description": case "subject":  case "creator": 
 				case "publisher": case "contributor": case "type": case "source": case "relation": 
 				case "coverage": case "rights":
-					Project.Info.DublinCore[nameElement] = element.split('"')[3]; 
-				break;
+					Project.Info.DublinCore[nameElement] = element.split('"')[3];
+ 				break;
 				case "language": Project.Info.DublinCore[nameElement] = searchLanguage(element.split('"')[3]); break;
 				case "format": Project.Info.DublinCore['formatData'] = element.split('"')[3];  break;
 				case "date": 
@@ -590,6 +590,33 @@ ImportMetadata.prototype.loadEPUBMetadata =  function loadEPUBMetadata(xml)
 			}
 		}
 	});
+}
+
+/**
+ * This method is responsible for reading EPUB metadata content (Dublin Core)
+ * @param  {String} value of the file
+ */
+ImportMetadata.prototype.loadELPMetadata =  function loadELPMetadata(node)
+{
+	$(node.children()[0]).children("string").each(function(){
+		switch($(this).attr("value"))
+		{
+			case "identifier": case "title": case "description": case "creator": case "subject": 
+			case "publisher": case "type": case "source": case "relation": case "rights": case "coverage": 
+			case "date": 
+				Project.Info.DublinCore[$(this).attr("value")] = $(this).next().attr("value"); 
+			break;
+			case "format":
+				Project.Info.DublinCore['formatData'] = $(this).next().attr("value");
+ 			break;
+			case "contributors":
+				Project.Info.DublinCore['contributor'] = $(this).next().attr("value"); 
+			break;
+			case "language": 
+				Project.Info.DublinCore[$(this).attr("value")] = searchLanguage($(this).next().attr("value")); 
+			break;
+		}
+	})
 }
 
 /**

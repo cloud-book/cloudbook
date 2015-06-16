@@ -149,14 +149,17 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 				default:
 					if( ($.inArray(node.tagName,that.textCandidates) > -1 )&& (blockName != null))
 					{
-						if(node.children.length >0 && node.children[0].nodeName == "IMG")
+						if(node.children.length ==1 && node.children[0].nodeName == "IMG")
 							processElementBlock(node.children[0], filePath, idsectionselected);
 						else
 							that.blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
 					}
 					else
 					{
-						processElementBlock(node, filePath, idsectionselected);
+						if(node.children.length ==1 && node.children[0].nodeName == "IMG")
+							processElementBlock(node.children[0], filePath, idsectionselected);
+						else
+							processElementBlock(node, filePath, idsectionselected);
 					}
 				break;
 			}
