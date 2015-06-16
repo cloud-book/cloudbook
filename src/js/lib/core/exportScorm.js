@@ -602,7 +602,197 @@ function parserImslrm() {
             imslrm.educational.cognitiveProcess.push(x);
         }  
 
+      //Analizando  rigths
 
+
+        // Analizando rigths cost
+        if(e.indexOf("costRightsValue_1") === 0 ){
+            ExportScorm.prototype.checkname(imslrm,"rights",{last:"list"});
+            imslrm.rights.cost=Project.Info.LOM[e];
+       
+        } 
+
+        // Analizando rights copyrightAndOtherRestrictions
+
+        if(e.indexOf("copyrightRightsValue_1") === 0 ){
+            imslrm.rights.copyrightAndOtherRestrictions=Project.Info.LOM[e];
+       
+        }
+
+        // Analizando rights description
+
+        if(e.indexOf("descRights_") === 0 ){
+           
+            var aux = metadatos[e];
+            ExportScorm.prototype.checkname(imslrm,"rights.description",{last:"list"});
+            Object.keys(aux).forEach(function(field){
+                //field : key of aux
+                if( field.indexOf("descRightsValue_")===0){
+                    imslrm.rights.description.descRightsValue = aux[field];
+                }
+                if( field.indexOf("descRightsLang_")===0){
+                    imslrm.rights.description.descRightsLang = aux[field];
+                }
+                                          
+            });
+
+        }
+
+        // Analizando rights access
+
+        if(e.indexOf("accessTypeRights_1") === 0 ){
+             ExportScorm.prototype.checkname(imslrm,"rights.access",{last:"list"});
+             imslrm.rights.access.accessType=Project.Info.LOM[e];
+       
+        }
+
+        if(e.indexOf("DescriptionAccessRights_") === 0 ){
+             ExportScorm.prototype.checkname(imslrm,"rights.access.description",{last:"list"});
+             imslrm.rights.access.description.descRightsValue=Project.Info.LOM[e];
+       
+        }
+
+          if(e.indexOf("langAccessRights_") === 0 ){
+             ExportScorm.prototype.checkname(imslrm,"rights.access.description",{last:"list"});
+             imslrm.rights.access.description.descRightsLang=Project.Info.LOM[e];
+       
+        }
+
+    // Analizando  Relations
+        
+       if(e.indexOf("relationRelations_") === 0){
+            var aux = metadatos[e];
+            ExportScorm.prototype.checkname(imslrm,"relation",{last:"array"})
+            var relation = {};
+            Object.keys(aux).forEach(function(field){
+                //field : key of aux
+                if(field.indexOf("relationRelationsValue_")===0){
+                    relation.kind = aux[field];
+                }
+               
+                if(field.indexOf("catalogRelations_")===0){
+                  ExportScorm.prototype.checkname(relation,"resource",{last:"list"})  
+                  relation.resource.catalogRelations=aux[field];
+                }
+
+                if(field.indexOf("entryRelations_")===0){
+                  relation.resource.entryRelations=aux[field];
+                } 
+
+                if(field.indexOf("DescriptionRelationRelations_")===0){
+                  ExportScorm.prototype.checkname(relation,"resource.description",{last:"list"})  
+                  relation.resource.description.DescriptionRelationRelations=aux[field];
+                }     
+                if(field.indexOf("relationRelationsLang_")===0){
+                  relation.resource.description.relationRelationsLang=aux[field];
+                }     
+
+                          
+            });
+           imslrm.relation.push(relation);
+          
+        }     
+
+    // Analizando Annotation      
+
+        if(e.indexOf("annotationAnnotations_") === 0){
+            var aux = metadatos[e];
+            ExportScorm.prototype.checkname(imslrm,"annotation",{last:"array"})
+            var annotation = {};
+            Object.keys(aux).forEach(function(field){
+                //field : key of aux
+                if(field.indexOf("nameAnnotations_")===0){
+                  ExportScorm.prototype.checkname(annotation,"entity",{last:"list"})  
+                  annotation.entity.name = aux[field];
+                }
+               
+                if(field.indexOf("emailAnnotations_")===0){
+                  annotation.entity.email=aux[field];
+                }
+
+                if(field.indexOf("organAnnotations_")===0){
+                  annotation.entity.organization=aux[field];
+                } 
+
+                if(field.indexOf("dateAnnotations_")===0){
+                  ExportScorm.prototype.checkname(annotation,"date",{last:"list"})  
+                  annotation.date.dateTime=aux[field];
+                }     
+                
+                if(field.indexOf("DescriptionDateAnnotations_")===0){
+                   ExportScorm.prototype.checkname(annotation,"date.description",{last:"list"})
+                   annotation.date.description.DescriptionDateAnnotations=aux[field];
+                }    
+                
+                if(field.indexOf("langDateAnnotations_")===0){
+                   annotation.date.description.langDateAnnotations=aux[field];
+                }     
+ 
+                if(field.indexOf("DescriptionAnnotations_")===0){
+                   ExportScorm.prototype.checkname(annotation,"description",{last:"list"})
+                   annotation.description.DescriptionAnnotations=aux[field];
+                }
+                
+                if(field.indexOf("LangAnnotations_")===0){
+                   annotation.description.LangAnnotations=aux[field];
+                }
+                          
+            });
+           imslrm.annotation.push(annotation);
+          
+        }   
+
+    // Analizando classification 
+    
+        if(e.indexOf("classificationsClassification_") === 0){  
+            var aux = metadatos[e];
+            var that=this;
+            ExportScorm.prototype.checkname(imslrm,"classification",{last:"array"})
+            var classification = {};
+            Object.keys(aux).forEach(function(field){ 
+                if(field.indexOf("typePurposeClassification_")===0){
+                    classification.purpose = aux[field];
+                }
+
+                if(field.indexOf("DescriptionTaxonClassification_")===0){
+                  ExportScorm.prototype.checkname(classification,"description",{last:"list"})
+                  classification.description.DescriptionTaxonClassification = aux[field];
+                }
+
+                if(field.indexOf("tituloLangTaxonClassification_")===0){
+                   classification.description.LangTaxonClassification = aux[field];
+                }
+
+
+                if(field.indexOf("DIVkeyClassification_") === 0 ){
+                    ExportScorm.prototype.checkname(classification,"keywords",{last:"array"});
+                    var x = {"KeywordTaxonClassification":"", "titleLangKeywordTaxonClassification":""};
+                    var auxKey=aux[field];
+                    for(var fieldK in auxKey){
+                        x[fieldK.split("_")[0]] = auxKey[fieldK];
+               
+                    }
+                    classification.keywords.push(x);
+                 }  
+                
+
+                if(field.indexOf("DIVpathClassification_") === 0 ){
+                    ExportScorm.prototype.checkname(classification,"taxonPath",{last:"array"});
+                    var x = {"sourceNameClassification":"", "langClassification":"","nameTaxonClassification":"","idTaxonClassification":"","langClassificationTaxon":""};
+                    var auxKey=aux[field];
+                    for(var fieldK in auxKey){
+                        x[fieldK.split("_")[0]] = auxKey[fieldK];
+               
+                    }
+                    classification.taxonPath.push(x);
+                 } 
+
+            
+
+            });
+           imslrm.classification.push(classification);  
+        }
+             
     });
     return imslrm;
 };

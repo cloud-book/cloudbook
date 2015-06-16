@@ -306,134 +306,134 @@
 {{/if}}
 
   <rights uniqueElementName="rights">
-  {{#if rights.cost}}
+  
     <cost uniqueElementName="cost">
       <source uniqueElementName="source">LOM-ESv1.0</source>
-      <value uniqueElementName="value">{{this.costRightsValue_1}}</value>
+      <value uniqueElementName="value">{{rights.cost}}</value>
     </cost>
-  {{/if}}
 
-  {{#if rights.copyrightAndOtherRestrictions}}
+
+  
     <copyrightAndOtherRestrictions uniqueElementName="copyrightAndOtherRestrictions">
       <source uniqueElementName="source">LOM-ESv1.0</source>
-      <value uniqueElementName="value">{{this.copyrightRightsValue_1}}</value>
+      <value uniqueElementName="value">{{rights.copyrightAndOtherRestrictions}}</value>
     </copyrightAndOtherRestrictions>
-  {{/if}} 
 
-  {{#if rights.description}}
+
+  
     <description>
-      <string language="{{this.descRightsLang}}">{{this.descRightsValue}}</string>
+      <string language="{{rights.description.descRightsLang}}">{{rights.description.descRightsValue}}</string>
     </description>
-  {{/if}} 
+  
     <access uniqueElementName="access">
       <accessType uniqueElementName="accessType">
           <source uniqueElementName="source">LOM-ESv1.0</source>
-          <value uniqueElementName="value">{{this.accessTypeRights_1}}</value>
+          <value uniqueElementName="value">{{rights.access.accessType}}</value>
       </accessType>
       
       <description>
-          <string language="{{this.descRightsLang}}">{{this.descRightsValue}}</string>
+          <string language="{{rights.access.description.descRightsLang}}">{{rights.access.description.descRightsValue}}</string>
       </description>
     </access>
   </rights>  
   
 {{#each relation}}
   <relation>
-  {{#if relation.kind}}
+  
     <kind uniqueElementName="kind">
       <source uniqueElementName="source">LOM-ESv1.0</source>
-      <value uniqueElementName="value">{{this.relationRelationsValue}}</value>
+      <value uniqueElementName="value">{{this.kind}}</value>
     </kind>
-  {{/if}}
 
-  {{#if relation.resource}}
+
+  
     <resource uniqueElementName="resource">
-    {{#if relation.resource.identifier}}
+   
       <identifier>
-          <catalog uniqueElementName="catalog">{{this.catalogRelations}}</catalog>
-          <entry uniqueElementName="entry">{{this.entryRelations}}</entry>
+          <catalog uniqueElementName="catalog">{{this.resource.catalogRelations}}</catalog>
+          <entry uniqueElementName="entry">{{this.resource.entryRelations}}</entry>
       </identifier>
-    {{/if}}
+  
 
-    {{#if relation.resource.description}}
+   
       <description>
-          <string language="{{this.relationRelationsLang}}">{{this.DescriptionRelationRelations}}</string>
+          <string language="{{this.resource.description.relationRelationsLang}}">{{this.resource.description.DescriptionRelationRelations}}</string>
       </description>
-    {{/if}}
+   
     </resource>
-  {{/if}}
+  
   </relation>
 {{/each}}
 
 {{#each annotation}}
   <annotation>
-  {{#if annotation.entity}}
-    <entity>
-        BEGIN:VCARD VERSION:3.0 FN:{{this.nameAnnotations}}
-        EMAIL;TYPE=INTERNET:{{this.emailAnnotations}} ORG:{{this.organAnnotations}} END:VCARD
-    </entity>
-  {{/if}}
-
-  {{#if annotation.date}}
-    <date uniqueElementName="date">    
-    {{#if annotation.date.dateTime}}
-        <dateTime uniqueElementName="dateTime">{{this.dataTime}}</dateTime>
-    {{/if}}
-        
-     {{#if annotation.date.description}}
-        <description>
-          <string language="{{this.langDateAnnotations}}">{{this.DescriptionDateAnnotations}}</string>
-        </description>  
-     {{/if}}
-    </date> 
-  {{/if}}
   
-  {{#if annotation.description}}
+    <entity>
+        BEGIN:VCARD VERSION:3.0 FN:{{this.entity.name}}
+        EMAIL;TYPE=INTERNET:{{this.entity.email}} ORG:{{this.entity.organization}} END:VCARD
+    </entity>
+  
+
+  
+    <date uniqueElementName="date">    
+   
+        <dateTime uniqueElementName="dateTime">{{this.date.dateTime}}</dateTime>
+   
+        
+    
+        <description>
+          <string language="{{this.date.description.langDateAnnotations}}">{{this.date.description.DescriptionDateAnnotations}}</string>
+        </description>  
+     
+    </date> 
+
+  
+ 
     <description>
-        <string language="{{this.LangAnnotations}}">{{this.DescriptionAnnotations}}</string>
+        <string language="{{this.description.LangAnnotations}}">{{this.description.DescriptionAnnotations}}</string>
     </description>  
-  {{/if}}
+  
   </annotation>
 {{/each}}
 
 {{#each classification}}
   <classification>
-  {{#if classification.purpose}}
+  
     <purpose uniqueElementName="purpose">  
         <source uniqueElementName="source">LOM-ESv1.0</source>
-        <value uniqueElementName="value">{{this.typePurposeClassification}}</value>
+        <value uniqueElementName="value">{{this.purpose}}</value>
     </purpose>
-  {{/if}}
 
-  {{#each classification.taxonPath}}  
+
+  {{#each this.taxonPath}}  
     <taxonPath>
-    {{#if classification.taxonPath.source}}
+   
         <source uniqueElementName="source">
             <string>{{this.sourceNameClassification}}</string>
         </source>  
-    {{/if}}
-    {{#each classification.taxonPath.taxon}}
+ 
+   
         <taxon>
             <id>{{this.idTaxonClassification}}</id>
             <entry>
-                <string language="{{this.langClassificationTaxon_1}}">{{this.nameTaxonClassification_1}}</string>
+                <string language="{{this.langClassificationTaxon}}">{{this.nameTaxonClassification}}</string>
             </entry>
         </taxon>
-    {{/each}}
+  
     </taxonPath>
   {{/each}} 
   
-  {{#if classification.description}}
+ 
     <description>  
-       <string language="{{this.tituloLangTaxonClassification}}">{{this.DescriptionTaxonClassification}}</string>
+       <string language="{{this.description.LangTaxonClassification}}">{{this.description.DescriptionTaxonClassification}}</string>
     </description>
-  {{/if}}
+ 
 
-  {{#if classification.keyword}}
+  {{#each this.keywords}}  
     <keyword>  
        <string language="{{this.titleLangKeywordTaxonClassification}}">{{this.KeywordTaxonClassification}}</string>
     </keyword>
-  {{/if}}
+  {{/each}}   
   </classification>
 {{/each}}  
 
