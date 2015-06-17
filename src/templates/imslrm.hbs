@@ -14,7 +14,7 @@
     {{/each}}
     
       <title uniqueElementName="title">
-        {{#each general.title.title}}
+        {{#each general.title}}
           <string language="{{this.titleLang}}">{{this.title}}</string>
         {{/each}}
       </title>
@@ -33,28 +33,28 @@
 
     {{#each general.keyword}} 
       <keyword>
-         <string language="{{this.keywordGeneralLang}}">{{this.keywordGeneral}}</string> 
+         <string language="{{this.keywordGeneralLang}}">{{this.keywordGeneral1}}</string> 
       </keyword>
     {{/each}}   
 
     {{#each general.coverage}} 
       <coverage>
-         <string language="{{this.coverageLang}}">{{this.coverage}}</string> 
+         <string language="{{this.coverageLang}}">{{this.coverage1}}</string> 
       </coverage>
     {{/each}} 
 
-    {{#each general.structure}} 
+   
       <structure uniqueElementName="structure">
         <source uniqueElementName="source">LOM-ESv1.0</source>
-        <value uniqueElementName="value">{{this.structuresGeneral_1}}</value> 
+        <value uniqueElementName="value">{{general.structure}}</value> 
       </structure>
-    {{/each}} 
-     {{#each general.aggregationLevel}}
+   
+    
       <aggregationLevel uniqueElementName="aggregationLevel"> 
         <source uniqueElementName="source">LOM-ESv1.0</source>
-        <value uniqueElementName="value">{{this.aggregationLevels_1}}</value>
+        <value uniqueElementName="value">{{general.aggregationLevel}}</value>
       </aggregationLevel>
-     {{/each}} 
+     
   </general>      
 
 {{#if lifeCycle}}
@@ -67,12 +67,12 @@
       </version>
     {{/if}}
 
-    {{#each lifeCycle.status}}
+
       <status uniqueElementName="status">
         <source uniqueElementName="source">LOM-ESv1.0</source>
-        <value uniqueElementName="value">{{this.statusLifeCycle_1_1}}</value>
+        <value uniqueElementName="value">{{lifeCycle.status}}</value>
       </status>
-    {{/each}}  
+    
 
   {{#each lifeCycle.contribute}}
       <contribute>
@@ -105,7 +105,7 @@
 {{/if}}   
 
   <metaMetadata uniqueElementName="metaMetadata">
-      {{#each metaMetadata.indentifier}}
+      {{#each metaMetadata.identifier}}
       <identifier>
             <catalog uniqueElementName="catalog">{{this.metametadataCatalog}}</catalog>
             <entry uniqueElementName="entry">{{this.metametadataEntry}}</entry>
@@ -154,16 +154,18 @@
       <format>{{this.formatTechnicalValue}}</format>
     {{/each}}
     
-    {{#if technical.size}}
-      <size uniqueElementName="size">{{this.sizeTechnicalValue_1}}</size>
-    {{/if}}
+    
+      <size uniqueElementName="size">{{technical.size}}</size>
+  
     
     {{#each technical.location}}
       <location>{{this.locationTechnicalValue}}</location> 
     {{/each}}
-    
-    {{#each technical.requeriments}} 
-      <orComposite>
+      
+
+    {{#each technical.requirement}} 
+      <requirement>
+        <orComposite>
      
           <type uniqueElementName="type">        
             <source uniqueElementName="source">LOM-ESv1.0</source>
@@ -179,8 +181,9 @@
     
           <maximumVersion uniqueElementName="maximumVersion">{{this.maxVerTechnicalReq}}</maximumVersion>
    
-
-      </orComposite>
+      
+        </orComposite>
+      </requirement>  
     {{/each}}
 
     {{#if technical.installationRemarks}}      
@@ -267,7 +270,7 @@
 
     <difficulty uniqueElementName="difficulty">
       <source uniqueElementName="source">LOM-ESv1.0</source>
-      <value uniqueElementName="value">{{this.difficultyEducationalValue_1}}</value>
+      <value uniqueElementName="value">{{educational.difficulty}}</value>
     </difficulty>
  
   

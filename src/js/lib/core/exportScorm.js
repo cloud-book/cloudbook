@@ -9,49 +9,11 @@ function ExportScorm(){
 };
 
 
-ExportScorm.prototype.createTemppath=function createTemppath(){
-    var mktemp = require('mktemp');
-    var temppath = mktemp.createDirSync("/tmp/cloudbook_XXXX");
-    return temppath + "/";    
-
-};
-
-
-ExportScorm.prototype.renderImslrm=function renderImslrm(dest){
-    
-    var fs = require('fs');
-    var fileimslrm = "";
-  
-    var fullmetainfo = parserImslrm();
-    var template = fs.readFileSync('./templates/imslrm.hbs',{encoding:'utf8'});
-    var templatecompiled = application.util.template.compile(template);
-    fileimslrm = templatecompiled(fullmetainfo);
-
-    fs.writeFileSync(dest+"imslrm.xml", fileimslrm);
-
-    alert(fileimslrm);
-
-};    
-
-
 function parserImslrm() {
     var metadatos=Project.Info.LOM;
     var listaclaves = Object.keys(metadatos);
     var imslrm = {};
-    //imslrm["general"] = {};
-    //imslrm["general"]["identifier"]=[];
-    //imslrm["general"]["title"] = [];
-    //imslrm["general"]["language"]=[];
-    //imslrm["general"]["description"]=[];
-    //imslrm["general"]["keyword"]=[];
-    //imslrm["general"]["coverage"]=[];
-    //imslrm["general"]["structure"]=[];
-    //imslrm["general"]["aggregationLevel"]=[];
-    //imslrm["lifeCycle"]={};
-    //imslrm["lifeCycle"]["version"]=[];
-    //imslrm["lifeCycle"]["status"]=[];
-    //imslrm["lifeCycle"]["contribute"]={};
-   
+       
 
 
     listaclaves.forEach(function(e){
@@ -113,7 +75,7 @@ function parserImslrm() {
         if(e.indexOf("keywordGeneral_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"general.keyword",{last:"array"});
-            var x = {"keywordGeneralLang":"","keywordGeneral":""};
+            var x = {"keywordGeneralLang":"","keywordGeneral1":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 x[field.split("_")[0]] = aux[field];
@@ -126,7 +88,7 @@ function parserImslrm() {
         if(e.indexOf("coverage_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"general.coverage",{last:"array"});
-            var x = {"coverageLang":"","coverage":""};
+            var x = {"coverageLang":"","coverage1":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 x[field.split("_")[0]] = aux[field];
@@ -138,21 +100,16 @@ function parserImslrm() {
         //Analizando structure
                
         if(e.indexOf("structuresGeneral_1") === 0 ){
-            
-            ExportScorm.prototype.checkname(imslrm,"general.structure",{last:"array"});
-            var x = {"structuresGeneral_1":""};
-            x["structuresGeneral_1"]= Project.Info.LOM[e];
-            imslrm.general.structure.push(x);
+                      
+            imslrm.general.structure=Project.Info.LOM[e];
+      
         }
 
          //Analizando aggregationLevel
                
         if(e.indexOf("aggregationLevels_1") === 0 ){
-            
-            ExportScorm.prototype.checkname(imslrm,"general.aggregationLevel",{last:"array"});
-            var x = {"aggregationLevels_1":""};
-            x["aggregationLevels_1"]= Project.Info.LOM[e];
-            imslrm.general.aggregationLevel.push(x);
+            imslrm.general.aggregationLevel=Project.Info.LOM[e];
+        
         }
       
 
@@ -173,11 +130,8 @@ function parserImslrm() {
          //Analizando status
                
         if(e.indexOf("statusLifeCycle_1_1") === 0 ){
-            
-            ExportScorm.prototype.checkname(imslrm,"lifeCycle.status",{last:"array"});
-            var x = {"statusLifeCycle_1_1":""};
-            x["statusLifeCycle_1_1"]= Project.Info.LOM[e];
-            imslrm.lifeCycle.status.push(x);
+            imslrm.lifeCycle.status=Project.Info.LOM[e];
+    
         }
 
         //Analizando contribute
@@ -204,7 +158,7 @@ function parserImslrm() {
                     contribute.entity.organContribLifeCycle = aux[field];
                 }
                 if( field.indexOf("dateContribLifeCycle_")===0){
-               //     ExportScorm.prototype.checkname(contribute,"date");
+             
                     contribute.dateContribLifeCycle = aux[field];
                 }
                 if( field.indexOf("DIVdescContribLifeCycle_")===0){
@@ -333,25 +287,25 @@ function parserImslrm() {
 
        if(e.indexOf("requirementsTechnical_") === 0){
             var aux = metadatos[e];
-            ExportScorm.prototype.checkname(imslrm,"technical.requeriments",{last:"array"})
-            var requeriments = {};
+            ExportScorm.prototype.checkname(imslrm,"technical.requirement",{last:"array"})
+            var requirement = {};
             Object.keys(aux).forEach(function(field){
                 //field : key of aux
                 if( field.indexOf("typeTechnicalReq_")===0){
-                    requeriments.typeTechnicalReq = aux[field];
+                    requirement.typeTechnicalReq = aux[field];
                 }
                 if( field.indexOf("nameTechnicalReq_")===0){
-                    requeriments.nameTechnicalReq = aux[field];
+                    requirement.nameTechnicalReq = aux[field];
                 }
                 if( field.indexOf("minVerTechnicalReq_")===0){
-                    requeriments.minVerTechnicalReq = aux[field];
+                    requirement.minVerTechnicalReq = aux[field];
                 }
                 if( field.indexOf("versmaxTechnicalReq_")===0){
-                    requeriments.maxVerTechnicalReq = aux[field];
+                    requirement.maxVerTechnicalReq = aux[field];
                 }
                           
             });
-           imslrm.technical.requeriments.push(requeriments);
+           imslrm.technical.requirement.push(requirement);
           
         }  
 
@@ -798,6 +752,7 @@ function parserImslrm() {
 };
 
 
+
 ExportScorm.prototype.checkname=function checkname(dest,namespace,options){
     //var names = nameSpaceString.split(".");
     options = $.extend({},{last:"list"},options);
@@ -823,15 +778,93 @@ ExportScorm.prototype.checkname=function checkname(dest,namespace,options){
 };
 
 
+ExportScorm.prototype.createTemppath=function createTemppath(){
+    var mktemp = require('mktemp');
+    var temppath = mktemp.createDirSync("/tmp/cloudbook_XXXX");
+    return temppath + "/";    
 
-ExportScorm.prototype.paramScorm=function paramScorm(temp){
+};
+
+
+ExportScorm.prototype.renderImslrm=function renderImslrm(dest){
+    
+    var fs = require('fs');
+    var fileimslrm = "";
+  
+    var fullmetainfo = parserImslrm();
+    var template = fs.readFileSync('./templates/imslrm.hbs',{encoding:'utf8'});
+    var templatecompiled = application.util.template.compile(template);
+    fileimslrm = templatecompiled(fullmetainfo);
+
+    fs.writeFileSync(dest+"imslrm.xml", fileimslrm);
+
+   
+};    
+
+
+ExportScorm.prototype.copyScormfiles=function copyScormfiles(dest){
+   var fs = require('fs');
+   var files_to_copy = []; 
+   var dir='rsrc/scorm/scorm_2004_v4/'
+   
+   
+   var fs = window.require('fs');
+   var filenames=fs.readdirSync(dir);
+   for (var i=0; i<filenames.length; i++){
+        var file = filenames[i];
+        var fsextra = window.require('fs-extra');
+        fsextra.ensureDirSync(dest);
+        fsextra.copySync(dir+file,dest+file);
+      
+    }
+  
+};
+   
+
+ExportScorm.prototype.renderhtml=function renderhtml(dest){
+    var createhtml = application.exporthtml.core.getInstance();
+    createhtml.do_html(dest);
+
+};
+
+
+ExportScorm.prototype.paramScorm=function paramScorm(destino){
      
    var tempath = this.createTemppath();       
-   alert (tempath);
+   
+   this.renderImslrm(tempath);
+   this.copyScormfiles(tempath);
+   this.renderhtml(tempath);
+   this.createZip(tempath,destino);
 
-   this.renderImslrm(tempath)
 
-   $("#exportscormwizard").find('.waitingOK').css("display","inline");
+};
+
+
+
+ExportScorm.prototype.createZip=function createZip(directorio,destino){    
+    
+      var zipFolder = require('zip-folder');
+    
+      var zipFileName="" + destino + "";
+      
+      var directorioOrigen="" + directorio + "";
+      
+          
+      var that = this;
+
+      $("#exportscormwizard").find('.waitingOK').css("display","inline");
+      zipFolder(directorioOrigen, zipFileName, function(err) {
+            if(err) {
+                console.log('oh no!', err);
+            $("#exportscormwizard").find('.waitingOK').css("display","none");
+            $("#exportscormwizard").find('.waitingER').css("display","inline");
+            } else {
+                 console.log('EXCELLENT');
+            $("#exportscormwizard").dialog("destroy");
+                      
+        }
+    });
         
 };    
         
