@@ -19,6 +19,9 @@ ExportEpub.prototype.generateEpub = function generateEpub(parametrosEpub) {
 ExportEpub.prototype.renderEpub = function renderEpub(parametrosEpub,contenido) {
     
     var Epub = require("epub-gen")
+    var fsextra = require('fs-extra');
+    var fs = require('fs');
+    var path = require('path');
 
     var editor=parametrosEpub.publisher;
     
@@ -41,11 +44,19 @@ ExportEpub.prototype.renderEpub = function renderEpub(parametrosEpub,contenido) 
     var destino=parametrosEpub.path;
 
     new Epub(option, destino);
-    
+    var that = this;
     $("#exportepubwizard").find('.waitingOK').css("display", "inline");
     new Epub(option,destino).promise.then(function(){
-        $("#exportepubwizard").dialog("destroy");
-            console.log("Ebook Generated Successfully!")
+           $("#exportepubwizard").find('.waitingOK').css("display", "none");
+            $("#exportpdfwizard").find('.waitingFiles').css("display", "inline");
+            var extrafilesorig = Project.Info.projectpath + "/epubextrafiles/";
+            var destextrafiles = path.dirname(destino) + "/epubextrafiles";
+            if(fs.existsSync(extrafilesorig)){
+                fsextra.move(extrafilesorig,destextrafiles,function(err){console.log(err);$("#exportepubwizard").dialog("destroy");
+                console.log("Ebook Generated Successfully!")});
+            }
+
+           
         }, function(err){
             $("#exportepubwizard").find('.waitingOK').css("display", "none");
             $("#exportepubwizard").find('.waitingER').css("display", "inline");

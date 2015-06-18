@@ -64,7 +64,9 @@ YoutubeBox.prototype.pdfView = function pdfView() {
 }
 
 YoutubeBox.prototype.epubView =function epubView() {
-  return this.pdfView();
+  var aux = YoutubeBox.super_.prototype.epubView.call(this);
+  var stringtoepub = CBI18n.gettext("Youtube component is not compatible with EPUB 2 format");
+  return aux.append(stringtoepub);
 }
 
 YoutubeBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {

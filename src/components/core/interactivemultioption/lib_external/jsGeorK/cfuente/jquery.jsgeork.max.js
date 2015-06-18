@@ -392,12 +392,12 @@
             var iderr = false;
             var msg = "id error";
             if (id) {
-                if (!document.getElementById(id)) { msg = "error, id '" + id + "' not found in document"; iderr = true; }
+                //if (!document.getElementById(id)) { msg = "error, id '" + id + "' not found in document"; iderr = true; }
             } else {
                 msg = "error, nul or invalid id";
                 iderr = true;
             }
-            if (iderr) { throw new CustomException({ name: caller, message: msg }); } //
+            //if (iderr) { throw new CustomException({ name: caller, message: msg }); } //
             return iderr;
         }
 

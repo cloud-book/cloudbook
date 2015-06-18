@@ -51,7 +51,9 @@ IncludeSite.prototype.pdfView = function pdfView() {
 }
 
 IncludeSite.prototype.epubView =function epubView(){
-   return this.pdfView();
+  var aux = IncludeSite.super_.prototype.epubView.call(this);
+  var stringtoepub = CBI18n.gettext("Includesite component is not compatible with EPUB 2 format");
+  return aux.append(stringtoepub);
 
 }
 
