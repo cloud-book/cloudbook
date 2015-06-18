@@ -193,15 +193,24 @@
       exportwizard.initializeWizardDiv();
       exportwizard.showExportEpubProject({data:{that:exportwizard}});
 		   
+    };
+
+    function export_scorm(){
+      
+      var exportwizard = application.ui.exportscormwizard.core.getInstance();
+      exportwizard.initializeWizardDiv();
+      exportwizard.showExportScormProject({data:{that:exportwizard}});
    
     };
+
+
 
     var export_project={
       label:CBI18n.gettext('Export')
     };
 
     var export_html = {
-	label: CBI18n.gettext('HTML5'),
+	      label: CBI18n.gettext('HTML5'),
         click: export_html
     };
 
@@ -221,7 +230,11 @@
       click:export_epub
     };
    
-
+    var export_scorm={
+      label:CBI18n.gettext('SCORM 2004 4th'),
+      click:export_scorm
+    };
+    
     /**
      * Generate menubar
      */
@@ -239,6 +252,7 @@
     export_project_menu.append(new gui.MenuItem(export_pdf));
     export_project_menu.append(new gui.MenuItem(export_webzip));
     export_project_menu.append(new gui.MenuItem(export_epub));
+    export_project_menu.append(new gui.MenuItem(export_scorm)); 
     
     export_project.submenu=export_project_menu;
 
