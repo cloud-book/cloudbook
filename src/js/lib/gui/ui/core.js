@@ -176,11 +176,7 @@ UI.prototype.loadContent = function loadContent(id){
   $(Cloudbook.UI.targetcontent).html("");
   var section = CBStorage.getSectionById(id);
   if (section !== undefined ){
-    section.content.forEach(function (cbobjectid){
-      var objectcbo = CBStorage.getCBObjectById(cbobjectid);
-      var jquerycbo = objectcbo.editorView();
-      that.addCBObject(jquerycbo,objectcbo);
-    });
+    section.content.forEach(that.renderCBObject,that);
   }
 }
 
@@ -247,13 +243,18 @@ UI.prototype.removeCBObjectById = function removeCBObjectById(cbobjectid) {
   $(x).remove();
 };
 
-
-
-
 UI.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cbobjectid,level) {
   var targetcontent = $(Cloudbook.UI.targetcontent);
   var x = targetcontent.find('[data-cbobjectid="'+cbobjectid+'"]');
   $(x).css('z-index',level);
+};
+
+
+UI.prototype.renderCBObject = function renderCBObject(cbobjectid) {
+  var CBStorage = application.storagemanager.getInstance();
+  var objectcbo = CBStorage.getCBObjectById(cbobjectid);
+  var jquerycbo = objectcbo.editorView();
+  this.addCBObject(jquerycbo,objectcbo);
 };
 
 UI.prototype.modifyObjectRotation = function modifyObjectRotation(cbobjectid,callback,e) {

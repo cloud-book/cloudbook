@@ -26,6 +26,11 @@ function FillGapBox(objectdata){
 
 util.inherits(FillGapBox,CBobject);
 
+FillGapBox.prototype.cloneTrigger = function cloneTrigger() {
+  this.fgpidentifier = "pem_" + this.uniqueid ; 
+};
+
+
 FillGapBox.prototype.editorView = function editorView() {
   var aux = FillGapBox.super_.prototype.editorView.call(this);
   var fs = require('fs');

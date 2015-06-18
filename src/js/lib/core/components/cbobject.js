@@ -49,9 +49,6 @@ CBObject.prototype.getObject = function getObject(){
 	   .css('height',this.size[1].toString() + "px" );
 	aux.append([cbcontainer]);
 	aux.click({that:this},that.enableEditable);
-	aux[0].addEventListener('changesection', function(e){
-		console.log(e);
-	});
 	//aux.on('changesection',function(e){e.preventDefault(); console.log(e)});
 	//aux.mousedown({that:this},that.delaymove);
 	//aux.mouseup({that:this},that.cleardelay);
@@ -142,16 +139,9 @@ CBObject.prototype.forwardButton = function forwardButton(e) {
 
 CBObject.prototype.clone = function clone(e) {
 	var that = e.data.that;
-	var storagemanager = application.storagemanager.getInstance();
-	var clone = JSON.parse(JSON.stringify(storagemanager.getCBObjectById(that.uniqueid)));
-	clone.uniqueid = CBUtil.uniqueid();
-	clone.position[0] = clone.position[0] + 20;
-	clone.position[1] = clone.position[1] + 20;
-	var cbclone = new Cloudbook.Actions[clone.idtype]['component'](clone);
-	storagemanager.setCBObjectById(cbclone,cbclone.uniqueid);
-	var section = storagemanager.getCBSectionById(Cloudbook.UI.selected.attr('data-cbsectionid'));
-	section.content.push(cbclone.uniqueid);
-	storagemanager.setCBSectionById(section,Cloudbook.UI.selected.attr('data-cbsectionid'));
+	var controller = application.controller.getInstance();
+	controller.cloneCBObject(that.uniqueid);
+	e.stopPropagation();
 };
 
 
@@ -351,6 +341,9 @@ CBObject.prototype.copyresource = function(origpath) {
     return destpath;
 };
 
+CBObject.prototype.cloneTrigger = function cloneTrigger() {
+  this.uniqueid = CBUtil.uniqueId();
+};
 
 module.exports = CBObject;
 //@ sourceURL=/usr/share/cloudbook/src/js/lib/core/components/cbobject.js

@@ -142,8 +142,9 @@ PEMBox.prototype.triggerHTMLView = function triggerHTMLView() {
   });';
 };
 
-
-
+PEMBox.prototype.cloneTrigger = function cloneTrigger() {
+  this.pemidentifier = "pem_" + this.uniqueid ; 
+};
 
 PEMBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;
@@ -183,17 +184,6 @@ function updateQuestions(dialog,objectcbo){
   objectcbo.questions = newlist;
   objectcbo.description = description;
 }
-
-//PEMBox.triggerAddEditorView =  CBobject.triggerAddEditorView;
-/*
-exports.add = function add() {
-  return new PEMBox();
-};
-
-exports.restore = function restore(objectdata) {
-  return new PEMBox(objectdata);
-};
-*/
 
 module.exports = PEMBox;
 //@ sourceURL=interactiveoneoption_core.js

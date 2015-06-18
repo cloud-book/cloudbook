@@ -130,6 +130,30 @@ Controller.prototype.addCBObjectIntoSectionById = function addCBObjectIntoSectio
   	backend.appendCBObjectIntoSection(objectcbo,cbsectionid);
 };
 
+Controller.prototype.cloneCBObject = function cloneCBObject(cbobjectid,cbsectionid) {
+	if(!cbsectionid){
+		cbsectionid = Cloudbook.UI.selected.attr('data-cbsectionid');
+	}
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+	var newcbobjectid = backend.cloneCBObject(cbobjectid,cbsectionid);
+	if (cbsectionid === Cloudbook.UI.selected.attr('data-cbsectionid')){
+		ui.renderCBObject(newcbobjectid);
+	}
+};
+
+Controller.prototype.cloneSection = function cloneSection(cbsectionid,parentsection,needle) {
+	if(!parentsection){
+		parentsection = "root";
+	}
+	var backend = application.backend.core.getInstance();
+	var args = [cbsectionid,parentsection];
+	if (needle) {
+		args.push(needle);
+	}
+	var cbsectionid = backend.cloneSection.apply(backend,args);
+};
+
 
 /**
  * This namespace has singleton instance of Controller class

@@ -441,6 +441,25 @@ Backend.prototype.checkUpstreamVersion = function checkUpstreamVersion(){
   });
 };
 
+Backend.prototype.cloneCBObject = function(cbobjectid,cbsectionid) {
+  var storagemanager = application.storagemanager.getInstance();
+  var clone = JSON.parse(JSON.stringify(storagemanager.getCBObjectById(cbobjectid)));
+  var cbclone = new Cloudbook.Actions[clone.idtype]['component'](clone);
+  cbclone.cloneTrigger();
+  this.appendCBObjectIntoSection(cbclone,cbsectionid);
+  return cbclone.uniqueid;
+};
+
+Backend.prototype.cloneSection = function(cbsectionid,parentsection,needle) {
+  var storagemanager = application.storagemanager.getInstance();
+  var section = storagemanager.getSectionById(cbsectionid);
+  var args = [parentsection,section.idtype];
+  if (needle) {
+    args.push(needle);
+    args.push(1);
+  }
+
+};
 
 /**
  * This namespace has singleton instance of Backend class
