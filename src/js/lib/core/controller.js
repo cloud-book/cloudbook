@@ -147,11 +147,14 @@ Controller.prototype.cloneSection = function cloneSection(cbsectionid,parentsect
 		parentsection = "root";
 	}
 	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
 	var args = [cbsectionid,parentsection];
 	if (needle) {
 		args.push(needle);
 	}
 	var cbsectionid = backend.cloneSection.apply(backend,args);
+	
+
 };
 
 

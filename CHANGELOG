@@ -6,3 +6,5 @@
 * Added export to ePub format
 * Added Clone CBObjects feature
 
+### Developers
+* Add new devel mode. This mode refresh automatically cloudbook

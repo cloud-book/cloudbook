@@ -452,13 +452,24 @@ Backend.prototype.cloneCBObject = function(cbobjectid,cbsectionid) {
 
 Backend.prototype.cloneSection = function(cbsectionid,parentsection,needle) {
   var storagemanager = application.storagemanager.getInstance();
+  var controller = application.controller.getInstance();
   var section = storagemanager.getSectionById(cbsectionid);
+  var that = this;
   var args = [parentsection,section.idtype];
   if (needle) {
     args.push(needle);
     args.push(1);
   }
-
+  var newcbsectionid = this.appendNewSectionObjectByUID.apply(this,args);
+  section.content.forEach(function(auxcbobjectid){
+    controller.cloneCBObject(auxcbobjectid,newcbsectionid);
+  });
+  var listsections = section.sections.map(function(auxcbsectionid){
+    return that.cloneSection(auxcbsectionid,newcbsectionid);
+  });
+  var auxsection = storagemanager.getSectionById(newcbsectionid);
+  auxsection.sectsions = listsections;
+  storagemanager.setSectionById(auxsection,newcbsectionid);
 };
 
 /**

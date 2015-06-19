@@ -251,6 +251,12 @@ ProView.prototype.appendSectionToLastPosition = function(cbsectionid,parentid) {
   that.reloadSortable();
 };
 
+ProView.prototype.appendSection = function(cbsectionid,parentid,needle,position) {
+  var that = this;
+  var section = that.createSectionView(cbsectionid);
+  
+
+};
 
 module.exports = ProView;
 //@ sourceURL=file:///usr/share/cloudbook/src/js/lib/gui/proview/core.js
