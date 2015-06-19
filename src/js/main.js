@@ -69,6 +69,13 @@
  	var gui = require('nw.gui');
  	var minimist = require('minimist');
 	var options = minimist(gui.App.argv);
+	if(options.devel){
+		var cloudbookwindow = require('nw.gui').Window.get();
+		cloudbookwindow.moveTo(0,cloudbookwindow.y);
+		var devwindow = require('nw.gui').Window.get().showDevTools();
+		
+		devwindow.moveTo(cloudbookwindow.x + cloudbookwindow.width, cloudbookwindow.y);
+	}
  	if (options['_'].length > 0 ){
  		var path = require('path');
  		var auxprojectpath = path.resolve(options['_'][0]);

@@ -4,7 +4,9 @@ var gutil = require('gulp-util');
 
 module.exports = function(cb) {
 
-	console.log(process.argv);
+	if(process.argv.indexOf("--devel=true") >=0 ){
+		ninjaConfig.argv.push('--devel=true');
+	}
 	if (!ninjaConfig.debug)
 		ninjaConfig.argv.push('--debug=true');
 
@@ -17,6 +19,6 @@ module.exports = function(cb) {
 		console.log(b.toString('utf8'));
 	});
 	nw.run(cb);
-
 	return nw;
+
 }
