@@ -1,5 +1,6 @@
 <textarea name="" id="activitydescription">{{description}}</textarea>
-<div id="listquestions">
+{{gettext "Group:"}}<input id='group' type='number' min='1' max='10' value='{{group}}'/>
+<br/><div id="listquestions">
 	{{#each questions}}
 		<div data-pemidentifier="{{this.answer}}"><input type="radio" name="question" value="" {{this.checked}}><span class="radio"></span><textarea>{{this.text}}</textarea><button type="button" onclick="deleteQuestion(this)">{{gettext "Delete"}}</button></div>
 	{{/each}}

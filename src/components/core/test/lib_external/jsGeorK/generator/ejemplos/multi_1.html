@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos PMS</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+
+
+
+    <!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="multi_ej_1">
+       <em>Ejemplo con dos respuetas correctas y ayuda mostrando los aciertos sobre el total. Una vez acertado no se marcan las respuestas correctas
+           las siguientes veces que se carga la página.
+    </em>
+   <p>Año de publicación de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="multi_ej_1">
+           <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+           <span class="CSSMsgSuccess">OK</span>
+       </div>
+       <div data-info-ko="multi_ej_1">
+           <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">La primera parte se publica en 1605 por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+       <div data-opt="optc">En 1602 todavía no se había publicado.</div>
+       <div data-opt="optd">En 1627 ya se había publicado.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_multi_ej_1 = {
+        "id": "multi_ej_1",
+        "type": "multi",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "select": true
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "select": true
+            },
+            {
+                "text": "1602",
+                "answer": "optc",
+                "select": false
+            },
+            {
+                "text": "1627",
+                "answer": "optd",
+                "select": false
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta con respuestas multiselección - Ejemplo 1",
+        "optsuccess": true,
+        "hint": true,
+        "random": true,
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true
+    };
+    jsGeork.Questions.Question(obj_multi_ej_1);
+</script>
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="multi_ej_2">
+   <em>Ejemplo con muchas opciones y sin ayuda con los aciertos sobre el total.  Al comprobar la respuesta se lanza
+        el evento <code>oncheck</code> y se muestra la puntuación de la respuesta. Las puntuaciones no se usan en las actividades individuales, solamente cuando forman parte de un test, 
+        pero están disponible a través de la variable <code>jsGeork.Questions.Question.score</code>, o
+        <code>this.score</code> si se llama desde el evento. En este tipo de actividad la puntuación es un porcentaje entre el número de aciertos y el número de respuestas.
+    </em>
+   <p>Año de publicación de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-bottom="multi_ej_2">
+           <!-- El interior de este bloque se moverá al final de la actividad -->
+           <p>Marque <strong>todas</strong> las respuestas correctas.</p>
+       </div>
+       <div data-info-ok="multi_ej_2">
+           <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva bien -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="multi_ej_2">
+           <!-- El interior de este bloque se colocará detrás del botón cuando se resuelva mal -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">La primera parte se publica en 1605 por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+       <div data-opt="optc">En 1602 todavía no se había publicado.</div>
+       <div data-opt="optd">En 1627 ya se había publicado.</div>
+       <div data-opt="opte">Ya se había publicado hacía tiempo.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_multi_ej_2 = {
+        "id": "multi_ej_2",
+        "type": "multi",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "select": true
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "select": true
+            },
+            {
+                "text": "1602",
+                "answer": "optc",
+                "select": false
+            },
+            {
+                "text": "1627",
+                "answer": "optd",
+                "select": false
+            },
+            {
+                "text": "1705",
+                "answer": "opte",
+                "select": false
+            },
+            {
+                "text": "1815",
+                "answer": "opte",
+                "select": false
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta con respuestas multiselección - Ejemplo 2",
+        "name": "Ejemplo 2",
+        "button": "?",
+        "optsuccess": true,
+        "hint": false,
+        "random": true,
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true,
+        "oncheck": function () { alert("oncheck\n\nscore: " + this.score); }
+    };
+    jsGeork.Questions.Question(obj_multi_ej_2);
+</script>
+
+
+
+</body>
+</html>

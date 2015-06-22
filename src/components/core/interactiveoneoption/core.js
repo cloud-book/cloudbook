@@ -10,6 +10,8 @@ function PEMBox(objectdata){
   this.pemidentifier = typeof objectdata.pemidentifier !== 'undefined' ? objectdata.pemidentifier : "pem_" + this.uniqueid ; 
   this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : CBI18n.gettext("Description of your activity") ; 
   this.questions = typeof objectdata.questions !== 'undefined' ? objectdata.questions : [] ;
+  this.group = typeof objectdata.group !== 'undefined' ? objectdata.group : 1 ;
+  this.pemObject = typeof objectdata.pemObject !== 'undefined' ? objectdata.pemObject : [] ;
 }
 
 util.inherits(PEMBox,CBobject);
@@ -88,6 +90,7 @@ PEMBox.prototype.importHTML = function importHTML(node, filePath){
     {
       var k = 0;
       that.description = $(node).data("description");
+      that.group = ($(node).data("group") != undefined)?$(node).data("group"):1;
       that.questions =  $.parseJSON($(node).data("questions").replace(/'/g, '"'));
       that.random=false;
       PEMBox.super_.prototype.importHTML.call(that,node);
@@ -113,6 +116,7 @@ PEMBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,
    "fillfromstorage": false,
    "delstorage": false
   };
+  this.pemObject = obj_myprefix_pem_identifier;
   jsGeork.Questions.Question(obj_myprefix_pem_identifier);
   jquerycbo.on("resize",function(event,ui){
     var counter = 0;
@@ -167,7 +171,7 @@ PEMBox.prototype.editButton = function editButton(e) {
   dialog.dialog('option','width',400);
   var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
-  dialog.children(".content").append(templatecompiled({'description':that.description,'questions':that.questions}));
+  dialog.children(".content").append(templatecompiled({'description':that.description,'questions':that.questions, 'group':that.group}));
   var questions = dialog.find("#listquestions");
   var addbutton = dialog.find("#addquestion");
   var questiontemplate =  '<div data-pemidentifier="{{identifier}}"><input type="radio" name="question" value="" {{this.checked}}><span class="radio"></span><textarea>{{this.text}}</textarea><button type="button" onclick="deleteQuestion(this)">{{gettext "Delete"}}</button></div>';
@@ -187,6 +191,7 @@ PEMBox.prototype.editButton = function editButton(e) {
 function updateQuestions(dialog,objectcbo){
   var questions = dialog.find("#listquestions").children();
   var description = dialog.find("#activitydescription").val();
+  var group = dialog.find("#group").val();
   var newlist = [];
   for(var i = 0; i < questions.length; i++){
     var tempquestion = {"text": CBI18n.gettext("Option A"),"answer": "opta","weight": 0};
@@ -198,6 +203,7 @@ function updateQuestions(dialog,objectcbo){
   }
   objectcbo.questions = newlist;
   objectcbo.description = description;
+  objectcbo.group = group;
 }
 
 //PEMBox.triggerAddEditorView =  CBobject.triggerAddEditorView;

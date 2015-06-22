@@ -1,0 +1,10 @@
+{
+	"idtype" : "05696a9f-cc0e-4ef3-b243-0a6b20cefb8b",
+	"description":"Append TEST to content",
+	"label": "TEST",
+	"icon" : "icon.png",
+	"version" : "0.2.0",
+	"category": "activity",
+	"external_scripts" : ["lib_external/jsgeork/jquery.jsgeork.js"],
+  	"external_css" : ["lib_external/jsgeork/jquery.jsgeork.css"]
+}

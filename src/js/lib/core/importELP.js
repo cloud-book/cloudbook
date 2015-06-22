@@ -2,7 +2,9 @@
  * @class ImportELP
  * @classdesc This class is responsible to make import data of ELP files
  */
-function ImportELP(){}
+function ImportELP(){
+	var maxIdTest = 1;
+}
 
 /**
  * This method is responsible for getting tags for each component
@@ -81,10 +83,12 @@ function processTextIdevice(node, filePath, idsection)
 		"exe.engine.reflectionidevice.ReflectionIdevice"){
 		if($(node.children().find("unicode")[0]).prev().attr("value") == "_title")
 		{
-			newNode = (newNode == "")?$("<h1></h1>"):newNode;
-			newNode.innerHTML = (newNode.innerHTML == undefined)?"":newNode.innerHTML;
-			newNode.innerHTML += "<h1>" + $(node.children().find("unicode")[0]).attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</h1>";
-			title = $(node.children().find("unicode")[0]).attr("value");
+			if ($(node.children().find("unicode")[0]).attr("value") != "Free Text"){
+				newNode = (newNode == "")?$("<h1></h1>"):newNode;
+				newNode.innerHTML = (newNode.innerHTML == undefined)?"":newNode.innerHTML;
+				newNode.innerHTML += "<h1>" + $(node.children().find("unicode")[0]).attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</h1>";
+				title = $(node.children().find("unicode")[0]).attr("value");
+			}
 		}
 	}
 	nodeAux = $(node.find("unicode[content='true']")[0]);
@@ -147,15 +151,27 @@ function processExternalUrlIdevice(node, filePath, idsection)
 function processMultiIdevice(node, filePath, idsection)
 {
 	var tagName = (node.attr("class") == "exe.engine.multiselectidevice.MultiSelectIdevice")?"PSM":"PEM";
+	// var childrenClass = (node.attr("class") == "exe.engine.multiselectidevice.MultiSelectIdevice")?"instance[class='exe.engine.field.SelectOptionField']":
+	// "instance[class='exe.engine.field.QuizOptionField']";
+	var isTest = (node.attr("class") == "exe.engine.quiztestidevice.TestQuestion");
+
 	var childrenClass = (node.attr("class") == "exe.engine.multiselectidevice.MultiSelectIdevice")?"instance[class='exe.engine.field.SelectOptionField']":
-	"instance[class='exe.engine.field.QuizOptionField']";
+	isTest?"instance[class='exe.engine.quiztestidevice.AnswerOption']":"instance[class='exe.engine.field.QuizOptionField']";
 	var newNode = "", auxNode = "";
 	var options = [];
-	var i = 0;
+	var i = 0, group = "";
 
-	auxNode = node.children().find("string[value='block question']").next().next();
 	newNode = (tagName == "PSM")?$("<psm />"):$("<pem />");
 	newNode.innerHTML = (tagName == "PSM")?"<psm ":"<pem ";
+
+	if(!isTest)
+		auxNode = node.children().find("string[value='block question']").next().next();
+	else{
+		auxNode = $(node.children().find("string[value='content_w_resourcePaths']")[0]).next();
+		group = arguments[3];
+		newNode.data("group", group);
+		newNode.innerHTML += "data-group=" + group + " "; 
+	}
 	newNode.data("description", auxNode.attr("value").replace("<p>","").replace("</p>", ""));
 	newNode.innerHTML += "data-description='" + newNode.data("description") + "' "; 
 	newNode.tagName = tagName;			
@@ -276,17 +292,33 @@ function processTrueFalseIdevice(node, filePath, idsection)
  function processQuizTestIdevice(node, filePath, idsection)
 {
 	var title = $(node.children().find("unicode")[0]).attr("value");
-	var questionText = "";
-	var answer = "";
-	var isCorrect = "";
-	
+	var newNode = "", tagName = "TEST";
+
+	newNode = $("<test />");
+	newNode.innerHTML = "";
+
+	maxIdTest = 1;
+
 	node.children().find("string[value='questions']").next().children().each(function(){
-		questionText = $(this).children().find("unicode[content='true']").attr("value");
-		$(this).children().find("instance[class='exe.engine.quiztestidevice.AnswerOption']").each(function(){
-			answer = $(this).children().find("unicode[content='true']").attr("value");
-			isCorrect = $(this).children().find("string[value='isCorrect']").next().attr("value");
-		});
+		auxContent = processMultiIdevice($(this), filePath, idsection, maxIdTest +1);
+		newNode.innerHTML += auxContent.innerHTML;
 	});
+
+	newNode.innerHTML += "<test ";
+	newNode.tagName = tagName;			
+	newNode.data("description", "");
+	newNode.innerHTML += "data-description='' "; 
+
+	newNode.data("legend", node.children().find("string[value='_title']").next().attr("value"));
+	newNode.innerHTML += "data-legend='" + newNode.data("legend") + "' "; 
+
+	newNode.data("group", maxIdTest +1);
+	newNode.innerHTML += 'data-group="' + (maxIdTest +1) + '" />';
+
+//	newNode.data("options", questions);
+//	newNode.innerHTML += 'data-options="' + JSON.stringify(questions).replace(/"/g, "'") + '" />';
+
+	return newNode;
 }
 
 /**

@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Generador de actividades educativas para la biblioteca jsGeork</title>
+    <meta name="author" content="Jordi cavallé" />
+	<meta name="abstract" content="Generador de ejercicios, actividades y test para la educación" />
+	<meta name="copyright" content="© 2014 Jordi Cavallé" />
+	<link rel="canonical" href="http://jsgeork.geork.com/" />
+    <meta name="Description" content="Utilidad para generar actividades educativas y tests para la web en formato html5" />
+    <meta name="Keywords" content="generador crear actividades ejercicios test educativos evaluar generar plugin jquery javascript" />
+    
+    <script src="../js/jquery.js"></script>
+    <link href="../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <link href="../styles/generator.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="goindex">
+    [ <a href="../index.html">Inicio</a> ]
+    </div>
+    <div style="margin-left: auto; margin-right: auto; text-align: center;">
+    <h1>jsGeork</h1>
+        <h2>Biblioteca jQuery para generar actividades educativas</h2>
+    </div>
+    <form id="frmopt">
+        <fieldset>
+            <legend>Generador de actividades para la biblioteca jsGeork</legend>
+            <div id="infoact">
+            <p>
+                Utilizando el motor jsGeork pueden crearse con relativa facilidad actividades interactivas de distinto tipo utilizando muy poco código 
+                HTML y JAVASCRIPT. La biblioteca se encargará de crear el Html y el código JavaScript necesario para obtener un resultado responsible a diferentes
+                tamaños de pantalla y a diferentes tipos de navegadores utilizando cuando sea posible funciones avanzadas de html5 como por ejemplo el Web Storage. 
+                Puede obtener más ayuda sobre el funcionamiento de la biblioteca <a href="#helplib">en esta sección de la página</a>.
+            </p>
+            </div>
+        <div class="campogen">
+            <p><em><a href="generator_single.html">Actividades de preguntas con respuestas de elección múltiple</a></em> (PEM)</p>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Este tipo de actividades permite introducir un número ilimitado de opciones de las que el usuario debe seleccionar una y solo una. 
+                    Utiliza, por tanto, controles del tipo botones de radio.
+                </span>
+            </div>
+        </div>
+
+        <div class="campogen">
+            <p><em><a href="generator_multi.html">Actividades de preguntas con respuestas multiselección</a></em> (PMS)</p>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Este tipo de actividades permite introducir un número ilimitado de opciones de las que el usuario puede seleccionar tantas como crea conveniente o no seleccionar ninguna. 
+                    Utiliza, por tanto, controles del tipo casilla de verificación.
+                </span>
+            </div>
+        </div>
+
+        <div class="campogen">
+            <p><em><a href="generator_input.html">Actividades de preguntas con respuestas  en cuadros de entrada</a></em> (PIB)</p>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Este tipo de actividades permite introducir uno (o más) cuadros de texto en los que el usuario debe introducir la respuesta correcta. 
+                    Existen dos tipos de cuadros de entrada, los que esperan una cadena de texto del usuario y los que esperan una entrada numérica.
+                    Utiliza, por tanto, controles del tipo cuadros de texto (inputbox).
+                </span>
+            </div>
+        </div>
+
+        <div class="campogen">
+            <p><em><a href="generator_gapfill.html">Actividades de rellenar huecos</a></em> (PGF)</p>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                Este tipo de actividades permite introducir un texto en el que se crearán huecos en los lugares seleccionados para que el usuario los rellene con la respuesta correcta. 
+                    Existen dos tipos de huecos, los tipo cuadro de entrada y los tipo lista desplegable. En estos últimos se ofrece al usuario una lista con las posibles soluciones, mientras
+                    que en el primer tipo se enfrenta a un cuadro de texto vacío, aunque para este tipo existe la opción de ofrecer ayuda al usuario.
+                    Utiliza, por tanto, controles del tipo cuadros de texto (inputbox).
+                </span>
+            </div>
+        </div>
+
+        <div class="campogen">
+            <p><em><a href="generator_eval.html">Generador de tablas evaluadoras de actividades</a></em> (TEA)</p>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    Permite crear fácilmente para las actividades anteriores tablas que las evaluan conjuntamente dándoles una puntuación.
+                </span>
+            </div>
+        </div>
+
+        <div class="campogen">
+            <p><em><a href="generator_test.html">Generador de pruebas tipo test</a></em> (PTT)</p>
+            <div class="divhelp">
+                <span class="btnhelp"></span>
+                <span class="spanhelp">
+                    Permite crear con las actividades anteriores pruebas de tipo test calificadas con una nota.
+                </span>
+            </div>
+        </div>
+
+        </fieldset>
+        </form>
+
+        <div id="helplib">
+            <h1>Funcionamiento de la biblioteca jsGeork</h1>
+
+            <p>jsGeork utiliza la biblioteca jQuery para funcionar, por tanto, en un documento antes de cargar la biblioteca jsGeork deberemos cargar la jQuery.
+                La forma de cargar la biblioteca será añadir en el HEAD del documento el enlace a las bibliotecas. Por ejemplo:
+            </p>
+            <code>
+                    &lt;script src="js/jquery.js"&gt;&lt;/script&gt;<br />
+                    &lt;script src="js/jquery.jsgeork.js"&gt;&lt;/script&gt;
+            </code>
+            <p>Deberá modificar la ruta de las bibliotecas si es distinta.</p>
+            <p>Si las utiliza dentro de uno de los programas software <sup>[<a href="#infosoft">1</a>]</sup> deberá
+                incluir las instrucciones en forma de comentario html que le indican al programa que debe añadir las bibliotecas. Las instrucciones son
+            </p>
+            <code>
+                    &lt;!-- $addjqueryhead$ --&gt;<br />
+                    &lt;!-- $addjsgeorkhead$ --&gt;
+            </code>
+            <p>para añadir los enlaces en el HEAD del documento. También puede utilizar los siguientes comentarios para que sean reemplazados por los enlaces
+                en el primer sitio en que sean encontrados dentro del documento.
+            </p>
+            <code>
+                    &lt;!-- $addjquery$ --&gt;<br />
+                    &lt;!-- $addjsgeork$ --&gt;
+            </code>
+            <p>Deberá incluir también un enlace a los estilos CSS que utiliza la biblioteca o crear sus propios estilos. <a href="../jsgeork/jquery.jsgeork.css" target="_blank">Aquí puede ver los estilos
+                utilizados de forma predeterminada</a> por los generadores de actividades. El enlace en el HEAD deberá ser, modificando la ruta y el nombre por los reales, del tipo siguiente:</p>
+            <code>
+                    &lt;link href="jsgeork/jquery.jsgeork.css" rel="stylesheet" /&gt;<br />
+            </code>
+            <p>Si utiliza el software puede utilizar uno de los siguientes comentarios html para que sea reemplazado por el enlace al archivo css:
+            </p>
+            <code>
+                    &lt;!-- $addjsgeorkcsshead$ --&gt; o &lt;!-- $addjsgeorkcss$ --&gt;
+            </code>
+            <p>Con el código javascript de las bibliotecas y los estilos css que utilizan cargados en el documento, solamente falta incluir
+                el código html y el código JavaScript de la actividad. Este último consiste en un objeto JavaScript con las propiedades que
+                configuran la actividad y una línea que llama a la biblioteca jsGeork con este objeto como parámetro. Por ejemplo:
+            </p>
+            <pre>
+            &lt;script&gt;
+                var obj1 = {
+                    propiedad1: valor1,
+                    propiedad2: valor2,
+                    propiedadn: valorn,
+                    //...
+                    propiedadz: valorz
+                };
+                jsGeork.Questions.Question(obj1);
+            &lt;/script&gt;
+            </pre>
+            <p>Comprender este código JavaScript no es complicado, solo necesita saber:</p>
+            <ul>
+                <li>El código JavaScript debe estar dentro de las etiquetas &lt;script&gt;&lt;/script&gt;.</li>
+                <li>Pueden añadirse comentarios añadiendo dos barras inclinadas // delante de una fila, como vemos que se comentan los puntos suspensivos.
+                     También pueden comentarse varias líneas si se colocan dentro de /* y */.</li>
+                <li>Cada instrucción de JavaScript debe terminar con un punto y coma ;. Normalmente se coloca una instrucción por línea.</li>
+                <li>Un objeto en JavaScript se define con llaves. Por ejemplo var obj1 = {}; define una variable obj1 que contiene un objeto vacío. A esta forma
+                    de definir un objeto se le llama <em>notación literal de objeto</em>.
+                </li>
+                <li>Los objetos están formados por pares propiedad/valor. Primero se coloca el nombre de la propiedad y separado por dos puntos su valor.</li>
+                <li>Los pares propiedad/valor deben terminar con coma, excepto el último par que no debe incluir la coma (en las versiones modernas la coma es optativa pero
+                    si la incluimos provocará error en algunos navegadores antiguos).</li>
+                <li>Los nombres de las propiedades son cadenas de texto. Si contiene espacios o nombres reservados deben introducirse dentro de comillas (simples o dobles). 
+                    Por tanto no es obligatorio pero lo recomendable es que pongamos los nombres siempre dentro de comillas.</li>
+                <li>Los valores pueden ser cualquiera de los tipos de variables en JavaScript. En consecuencia, las cadenas de texto deberán ir entre comillas, los números y booleanos sin comillas.</li>
+            </ul>
+            <p>Veamos un ejemplo de objeto con pares propiedad/valor de distinto tipo:</p>
+            <pre>
+&lt;script&gt;
+var obj2 = {
+    "propiedad1": "valor1",     //el valor es una cadena, string en JS
+    'propiedad2': 'valor2',     //la propiedad siempre es un string y los strings deben ir dentro de comillas simples o dobles
+     propiedad3 : "valor3",     //no es obligatorio el uso de comillas en la propiedad, pero sí recomendable
+    'propiedad 4': "valor4",    //el espacio en el nombre de la propiedad obliga a colocarlo entre comillas
+    "propiedad5": true,         //el valor es un booleano, boolean en JS
+    "propiedad6": false,        //los valores boolean pueden ser true o false
+    "propiedad7": 10,           //el valor es un número, number en JS
+    "propiedad8": [],           //el valor es una matriz, array en JS
+    "propiedad9": {},           //el valor de una propiedad puede ser otro objeto
+    "propiedad10": function(){}, //también puede ser una función
+    "propiedady": valory,       //Si no colocamos el valor entre comillas será tomado por una variable y deberá estar definida en alguna parte
+    "propiedadz": valorz        //no hay que olvidar quitar la última coma.
+};                              //ni el punto y coma de final de instrucción
+jsGeork.Questions.Question(obj2);
+&lt;/script&gt;
+            </pre>
+            <p>El anterior es un ejemplo genérico de objeto JavaScript. Veamos ahora un ejemplo de un objeto de una actividad 
+                de respuestas de elección múltiple con algunas propiedades:</p>
+<pre>
+&lt;script&gt;
+var obj_act = {
+    "id": "actividad1",     //identificador de la actividad
+    "type": "single",       //define el tipo de actividad
+    "opt": [                //matriz de objetos con las opciones de respuesta
+       {
+           "text": "Option A",
+           "answer": "opta",
+           "weight": 100
+       },
+       {
+           "text": "Option B",
+           "answer": "optb",
+           "weight": 0
+       }
+        ],
+   "random": true       //indica que deben ordenarse aleatoriamente las opciones
+jsGeork.Questions.Question(obj_act);
+&lt;/script&gt;
+            </pre>
+            <p>Seguramente la propiedad más importante de los objetos que definen actividades es la propiedad "id". Esta propiedad contiene una cadena
+                que se usa tanto para crear variables internas como para enlazar el bloque de la actividad con el código html. Efectivamente, el valor de la propiedad <code>id</code>
+                debe coincidir con el valor del atributo <code>id</code> del bloque html de la actividad. Es importante que para escoger las cadenas de los <code>id</code> siga las 
+                siguientes reglas:
+            </p>
+            <ul>
+                <li>que contengan solamente caracteres del alfabeto inglés o dígitos [a-zA-Z0-9]</li>
+                <li>también pueden contener el guion normal (-) y el bajo (_), pero <strong>no espacios en blanco</strong></li>
+                <li>no deben empezar con un dígito, ni con un guion seguido de un dígito ni de dos guiones seguidos </li>
+            </ul>
+            <p>Además del código JS cada actividad contendrá código html con las preguntas y explicaciones de cada actividad. El código HTML, en general estará compuesto por bloques creados con etiquetas DIV (contenedor con salto de línea) o SPAN (contenedor sin salto de línea) con ciertos atributos. En principio
+                cada actividad tendrá un bloque con el atributo <code>id</code> de la actividad. Además existirán otros bloques con atributos específicos que funcionarán como instrucciones para la biblioteca. Por ejemplo, en
+                el siguiente código el atributo <code>data-opt=""</code> indica a la biblioteca qué bloque debe mostrarse según la respuesta seleccionada enlazando su valor con
+                la propiedad <code>answer</code> del objeto JavaScript de la actividad.
+            </p>
+            <pre>
+&lt;div id="actividad1"&gt;
+   &lt;p&gt;Seleccione la respuesta correcta&lt;/p&gt;
+   &lt;div style="display: none;"&gt;;
+       &lt;div data-opt="opta"&gt;Respuesta A&lt;/div&gt;
+       &lt;div data-opt="optb"&gt;Respuesta B&lt;/div&gt;
+   &lt;/div>
+&lt;/div>
+            </pre>
+            <p>Hay opciones comunes para todas las actividades pero cada tipo de actividad tiene sus propias opciones que se expresan mediante propiedades del objeto JS y/o mediante
+                atributos HTML. En los generadores de actividades se explican estas opciones.</p>
+            
+            <p>Sin embargo no se explica la posibilidad de cambiar de idioma. De forma predeterminada el 
+                idioma es el castellano pero puede cambiarse a otros idiomas añadiendo al objeto de una actividad o de un test la propiedad <code>lang</code>. Por ejemplo 
+                <code>"lang": "ct",</code> para el catalán o  <code>"lang": "es",</code> para el castellano, aunque en este caso no es necesario ya que como se ha dicho es el idioma predeterminado.
+            </p>
+            <br /><br />
+            <p>Con los conocimientos anteriores puede editar manualmente los valores de configuración de las propiedades de los objetos JavaScript. Para evitar errores puede contrastar su código
+                JS utilizando páginas como <a href="http://www.jshint.com/" target="_blank">www.jshint.com</a>.
+            </p>
+            <p>Respecto al código HTML puede editarlo fácilmente, pero si cree que necesita validarlo utilice la página <a href="http://validator.w3.org/check" target="_blank">Markup Validation Service</a> 
+                con el tipo de documento html5.
+            </p>
+            <p>Aunque en un principio puede parecer complicado, con un poco de práctica y la ayuda de los generadores de actividades verá que no lo es tanto y que puede crear
+                actividades interesantes sin excesivo trabajo y comprenderá las ventajas de comprender y editar directamente el código después de una primera ayuda utilizando los
+                generadores.</p>
+
+            <br /><br />
+            <p><strong>NOTA:</strong> Algunas de las funciones de la biblioteca utilizan la tecnología html5 llamada <a href="http://en.wikipedia.org/wiki/Web_storage" target="_blank">Web Storage</a>. Los navegadores antiguos 
+                y algunos navegadores modernos funcionando en modo local (p.e. IE) no soportan esta tecnología. <span id="haywebsto"></span>
+            </p>
+            <p id="delwebsto" style="display: none;">
+                La utilización del Web Storage con los generadores puede hacer que el almacenamiento se vaya llenando con entradas que después no sean usadas 
+                ya que se utiliza los ids de las acividades como claves para guardar los datos. El siguiente botón le permite borrar completamente el Web Storage
+                del sitio web. <button id="btndelsto">Borrar Web Storage</button> <span id="localfile" style="display: none;"></span>
+            </p>
+            <p>Tenga en cuenta que el generador puede no funcionar en algunos navegadores en <em>navegación privada</em>, por ejemplo en Safari.</p>
+            
+            <br /><br />
+            <p id="infosoft">1. Los programas software se refiere a los programas de ordenador publicados en <a href="http://www.geork.com" target="_blank">www.geork.com</a>. Estos programas incluyen un editor para que el profesor
+                pueda modificar las páginas en formato html. Cuando se introduce en una página las instrucciones en forma de comentario html el programa se encarga de incluir
+                el enlace a las bibliotecas una sola vez por página, de esta forma pueden reutilizarse bloques de código creados por varios autores. Finalmente los programas permiten
+                extraer las páginas para su publicación o distribución con los enlaces correctos a las bibliotecas.
+            </p>
+        </div>
+    <script>
+        jQuery(function ($) {
+            var stosupport = true;
+            if (localStorage) {
+                $("#haywebsto").text("El navegador que está utilizando, ahora mismo sí soporta el localStorage.").css("color", "green");
+                $("#delwebsto").show();
+            } else {
+                $("#haywebsto").text("El navegador que está utilizando, ahora mismo NO soporta el localStorage.").css("color", "red");
+                stosupport = false;
+            }
+            switch (window.location.protocol) {
+                case 'http:':
+                case 'https:':
+                    $("#btndelsto").text("Borrar Web Storage de " + window.location.hostname);
+                    break;
+                case 'file:':
+                    $("#localfile").text("Atención, si está viendo la página en modo local borrará todas las entradas del sitio file:\// y algunas entradas pueden pertenecer a otras apps.").css("color", "red");
+                    $("#localfile").show();
+                    break;
+            }
+            $("#btndelsto").on("click", function () {
+                var r = confirm("¿Eliminar localStorage?");
+                if (r == true) {
+                    localStorage.clear();
+                    alert("Hecho");
+                }
+            });
+        });
+    </script>
+    <div class="goindex">
+    [ <a href="../index.html">Inicio</a> ]
+    </div>
+</body>
+</html>

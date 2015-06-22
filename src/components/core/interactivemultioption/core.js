@@ -11,6 +11,8 @@ function PMS(objectdata){
   this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : CBI18n.gettext("Description of your activity") ; 
   this.questions = typeof objectdata.questions !== 'undefined' ? objectdata.questions : [] ;
   this.random = typeof objectdata.random !== 'undefined' ? objectdata.random : true ;
+  this.group = typeof objectdata.group !== 'undefined' ? objectdata.group : 1 ;
+  this.pemObject = typeof objectdata.pemObject !== 'undefined' ? objectdata.pemObject : [] ;
 }
 
 util.inherits(PMS,CBobject);
@@ -113,6 +115,7 @@ PMS.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,obj
    "fillfromstorage": false,
    "delstorage": false
   };
+  this.pemObject = obj_myprefix_pem_identifier;
   jsGeork.Questions.Question(obj_myprefix_pem_identifier);
  jquerycbo.on("resize",function(event,ui){
    var counter = 0;
@@ -165,7 +168,7 @@ PMS.prototype.editButton = function editButton(e) {
   dialog.dialog('option','width',400);
   var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   var templatecompiled = application.util.template.compile(template);
-  dialog.children(".content").append(templatecompiled({'description':that.description,'questions':that.questions}));
+  dialog.children(".content").append(templatecompiled({'description':that.description,'questions':that.questions, 'group':that.group}));
   var questions = dialog.find("#listquestions");
   var addbutton = dialog.find("#addquestion");
   var questiontemplate =  '<div data-pemidentifier="{{identifier}}"><input type="checkbox" name="question" value="" {{this.checked}}><span class="checkbox"></span><textarea>{{this.text}}</textarea><button type="button" onclick="deleteQuestion(this)">{{gettext "Delete"}}</button></div>';
@@ -184,6 +187,7 @@ PMS.prototype.editButton = function editButton(e) {
 function updateQuestions(dialog,objectcbo){
   var questions = dialog.find("#listquestions").children();
   var description = dialog.find("#activitydescription").val();
+  var group = dialog.find("#group").val();
   var newlist = [];
   for(var i = 0; i < questions.length; i++){
     var tempquestion = {"text": CBI18n.gettext("Option A"),"answer": "opta","select": false};
@@ -195,6 +199,7 @@ function updateQuestions(dialog,objectcbo){
   }
   objectcbo.questions = newlist;
   objectcbo.description = description;
+  objectcbo.group = group;
 }
 
 //PMS.triggerAddEditorView =  CBobject.triggerAddEditorView;
