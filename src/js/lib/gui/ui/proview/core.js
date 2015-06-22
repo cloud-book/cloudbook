@@ -254,8 +254,13 @@ ProView.prototype.appendSectionToLastPosition = function(cbsectionid,parentid) {
 ProView.prototype.appendSection = function(cbsectionid,parentid,needle,position) {
   var that = this;
   var section = that.createSectionView(cbsectionid);
-  
-
+  if(needle){
+    $("[data-cbsectionid='"+needle+"']").after(section);
+  }
+  else{
+    $("[data-cbsectionid='"+parentid+"'] > ul").append(section);
+  }
+  that.reloadSortable();
 };
 
 module.exports = ProView;

@@ -153,7 +153,8 @@ Controller.prototype.cloneSection = function cloneSection(cbsectionid,parentsect
 		args.push(needle);
 	}
 	var cbsectionid = backend.cloneSection.apply(backend,args);
-	
+	ui.sectionmanager.appendSection(cbsectionid,parentsection,needle);
+	return cbsectionid;
 
 };
 
