@@ -241,7 +241,7 @@ CBObject.prototype.enableEditable = function enableEditable(e){
 		var del = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-delete cb-toolbar');
 		var forward = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-forward cb-toolbar');
 		var backward = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-backward cb-toolbar');
-		var clone = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-edit cb-toolbar');
+		var clone = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-clone cb-toolbar');
 
 		edit.click({that:that},that.editButton);
 		del.click({that:that},that.deleteButton);
