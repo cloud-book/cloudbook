@@ -7,6 +7,9 @@
 * Added Clone CBObjects feature
 * Added Clone CBSection feature
 * Added Epub export
+* Added more sizes to font on cbtextbox
+* Firsts steps to theme support
+* When draw cbobject, bar now has opacity.
 
 ### News features for developers
 
@@ -18,3 +21,10 @@
 	 ```
 
 * Added variable window.debugMode. If this variable is true, all cbobjects show her unique id
+* News events : 
+	* changesection
+	* 
+
+### Bugs
+* Al seleccionar un elemento `alpha` en la seccion `x`, cambiar a la `z` y volver a la seccion `x` no se puede seleccionar el objeto `alpha`
+* La barra de tipografia del textbox no desaparecia si se seleccionaba otro componente.
