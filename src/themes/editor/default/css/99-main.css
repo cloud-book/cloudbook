@@ -288,7 +288,9 @@ body{
 .cb-ui-backward{
     background-position: -122px -203px;
 }
-
+.cb-ui-clone{
+    background-position: -230px -203px;
+}
 
 
 
