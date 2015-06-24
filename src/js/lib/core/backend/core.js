@@ -441,6 +441,38 @@ Backend.prototype.checkUpstreamVersion = function checkUpstreamVersion(){
   });
 };
 
+Backend.prototype.cloneCBObject = function(cbobjectid,cbsectionid) {
+  var storagemanager = application.storagemanager.getInstance();
+  var clone = JSON.parse(JSON.stringify(storagemanager.getCBObjectById(cbobjectid)));
+  var cbclone = new Cloudbook.Actions[clone.idtype]['component'](clone);
+  cbclone.cloneTrigger();
+  this.appendCBObjectIntoSection(cbclone,cbsectionid);
+  return cbclone.uniqueid;
+};
+
+Backend.prototype.cloneSection = function(cbsectionid,parentsection,needle) {
+  var storagemanager = application.storagemanager.getInstance();
+  var controller = application.controller.getInstance();
+  var section = storagemanager.getSectionById(cbsectionid);
+  var that = this;
+  var args = [parentsection,section.idtype];
+  if (needle) {
+    args.push(needle);
+    args.push(1);
+  }
+  var newcbsectionid = this.appendNewSectionObjectByUID.apply(this,args);
+  section.content.forEach(function(auxcbobjectid){
+    controller.cloneCBObject(auxcbobjectid,newcbsectionid);
+  });
+  var listsections = section.sections.map(function(auxcbsectionid){
+    return that.cloneSection(auxcbsectionid,newcbsectionid);
+  });
+  var auxsection = storagemanager.getSectionById(newcbsectionid);
+  auxsection.sectsions = listsections;
+  auxsection.name = section.name;
+  storagemanager.setSectionById(auxsection,newcbsectionid);
+  return newcbsectionid;
+};
 
 /**
  * This namespace has singleton instance of Backend class

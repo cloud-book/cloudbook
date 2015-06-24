@@ -24,6 +24,7 @@ function TextBox(objectdata){
 util.inherits(TextBox,CBobject);
 
 TextBox.prototype.editorView = function editorView() {
+  var that = this;
   var aux = TextBox.super_.prototype.editorView.call(this);
   var textboxcontent = $(window.document.createElement('div'))
   					.html(this.text)
@@ -33,6 +34,12 @@ TextBox.prototype.editorView = function editorView() {
   					// .css('width','100%')
             .dblclick({that:this},this.editButton);
   aux.children('.cbcontainer').append(textboxcontent);
+  aux[0].addEventListener('cbobjectselected',function(e){
+    if($(e.data.element).attr('data-cbobjectid') !== that.uniqueid){
+      e.data.that = that;
+      that.disableEditMode(e);
+    }
+  });
   return aux;
 };
 
@@ -239,6 +246,10 @@ function toolbarposition(position){
 	toolbar.css('position','fixed')
 	       .css('top',position.top - 60 + "px")
 	       .css('left',position.left + "px");
+  if(toolbar.height() > 40){
+    toolbar.css('left','')
+           .css('right','0px');
+  }
 }
 
 module.exports = TextBox;

@@ -1,0 +1,10 @@
+{
+  "idtype" : "160d9b05-72f5-4df5-a4fa-4ed5a136d524",
+  "description":"Append foreknowledge",
+  "label": "Foreknowledge",
+  "icon" : "icon.png",
+  "version" : "0.2.0",
+  "external_scripts" : ["lib_external/bootstrap-wysiwyg/bootstrap-wysiwyg.js"],
+  "external_css" : [],
+  "category":"root"
+}

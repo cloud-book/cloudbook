@@ -83,11 +83,18 @@ ProView.prototype.createMenu = function createMenu(e) {
 		name:CBI18n.gettext('Insert subsection'),
 		fun:function(){that.appendSubsection(e)}
 	},
+  {
+    name:CBI18n.gettext('Duplicate section'),
+    fun:function(){
+      var section = $(element).closest('[data-cbsectionid]').get();
+      that.duplicateSection(section);
+    }
+  },
 	{
 		name:CBI18n.gettext('Delete'),
 		fun: function(){
       var section = $(element).closest('[data-cbsectionid]');
-      var parentid = $(section).parent().closest('[data-cbsectionid]').attr('data-cbsectionid')
+      var parentid = $(section).parent().closest('[data-cbsectionid]').attr('data-cbsectionid');
       var sectionid = section.attr('data-cbsectionid');
 			that.dialogDeleteSection(sectionid,parentid);
 		}
@@ -161,10 +168,9 @@ ProView.prototype.selectSection = function selectSection(e){
   var that = e.data.that;
   var changesectionevent = new Event('changesection',{
     'bubbles':true,
-    'cancelable':true,
-    'data':{'bonita':'lorita'}
+    'cancelable':true
   });
-
+  changesectionevent.detail = {'element':this};
   var canceled = false;
   [].forEach.call(document.querySelectorAll(Cloudbook.UI.targetcontent + " .cbobject"),function(element){
     var auxcanceled = element.dispatchEvent(changesectionevent);
@@ -172,7 +178,7 @@ ProView.prototype.selectSection = function selectSection(e){
   });
 
   if (canceled) return;
-  
+  Cloudbook.UI.cbobjectselected = null;
   if (Cloudbook.UI.selected !== undefined){
     $(Cloudbook.UI.selected.children('.displaysection')).removeClass('sectionselected');
   }
@@ -244,10 +250,38 @@ ProView.prototype.dialogDeleteSection = function dialogDeleteSection(cbsectionid
 ProView.prototype.appendSectionToLastPosition = function(cbsectionid,parentid) {
   var that = this;
   var ui = application.ui.core.getInstance();
-  $("[data-cbsectionid='"+parentid+"'] > ul").children(".cbsection:last").append(that.createSectionView(cbsectionid));
+  var dest = $("[data-cbsectionid='"+parentid+"'] > ul").children(".cbsection:last");
+  if (dest.length > 0 )
+    dest.append(that.createSectionView(cbsectionid));
+  else
+    $("[data-cbsectionid='"+parentid+"'] > ul").append(that.createSectionView(cbsectionid));
   that.reloadSortable();
 };
 
+ProView.prototype.duplicateSection = function(htmlsectionelement) {
+  var controller = application.controller.getInstance();
+  var tempsection  = $(htmlsectionelement);
+  var sectionid = tempsection.attr('data-cbsectionid');
+  var parentsectionid = tempsection.parent().closest('[data-cbsectionid]').attr('data-cbsectionid');
+  controller.cloneSection(sectionid,parentsectionid,sectionid);
+};
+
+ProView.prototype.appendSection = function(cbsectionid,parentid,needle,position) {
+  var that = this;
+  var section = that.createSectionView(cbsectionid);
+  var CBStorage = application.storagemanager.getInstance();
+  if(needle){
+    $("[data-cbsectionid='"+needle+"']").after(section);
+  }
+  else{
+    $("[data-cbsectionid='"+parentid+"'] > ul").append(section);
+  }
+  var cbsection = CBStorage.getSectionById(cbsectionid);
+  cbsection.sections.forEach(function(subsectionid){
+    that.appendSection(subsectionid,cbsectionid);
+  });
+  that.reloadSortable();
+};
 
 module.exports = ProView;
-// @sourceURL=
+//@ sourceURL=file:///usr/share/cloudbook/src/js/lib/gui/proview/core.js

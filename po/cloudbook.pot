@@ -8,22 +8,57 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-04-29 15:30+0000\n"
+"POT-Creation-Date: 2015-06-15 15:57+0000\n"
+
+#: src/components/core/foreknowledge/toolbar.hbs:7
+#: src/components/core/text/toolbar.hbs:7
+msgid "1"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:6
+#: src/components/core/text/toolbar.hbs:6
+msgid "2"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:5
+#: src/components/core/text/toolbar.hbs:5
+msgid "3"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:4
+#: src/components/core/text/toolbar.hbs:4
+msgid "4"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:3
+#: src/components/core/text/toolbar.hbs:3
+msgid "5"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:2
+#: src/components/core/text/toolbar.hbs:2
+msgid "6"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:1
+#: src/components/core/text/toolbar.hbs:1
+msgid "7"
+msgstr ""
 
 #: src/components/core/audio/core.js:44
 #: src/components/core/whiteboard/core.js:61
 msgid "Click to listen a sound"
 msgstr ""
 
-#: src/components/core/audio/core.js:70
-#: src/components/core/flash/core.js:69
-#: src/components/core/images/core.js:94
-#: src/components/core/includesite/core.js:68
-#: src/components/core/interactivemultioption/core.js:47
-#: src/components/core/interactiveoneoption/core.js:50
+#: src/components/core/audio/core.js:76
+#: src/components/core/flash/core.js:72
+#: src/components/core/images/core.js:106
+#: src/components/core/includesite/core.js:73
+#: src/components/core/interactivemultioption/core.js:61
+#: src/components/core/interactiveoneoption/core.js:62
 #: src/components/core/jclic/core.js:34
-#: src/components/core/video/core.js:68
-#: src/components/core/youtube/core.js:72
+#: src/components/core/video/core.js:73
+#: src/components/core/youtube/core.js:76
 #: src/js/lib/gui/menu.js:319
 msgid "Insert"
 msgstr ""
@@ -38,22 +73,34 @@ msgstr ""
 msgid "Click to view interactive Flash resource"
 msgstr ""
 
+#: src/components/core/foreknowledge/core.js:16
+msgid "target"
+msgstr ""
+
+#: src/components/core/foreknowledge/core.js:16
+msgid "note"
+msgstr ""
+
+#: src/components/core/foreknowledge/core.js:16
+msgid "custom"
+msgstr ""
+
 #: src/components/core/includesite/core.js:43
 msgid "Click to view resource"
 msgstr ""
 
-#: src/components/core/interactivemultioption/core.js:52
-#: src/components/core/interactiveoneoption/core.js:55
+#: src/components/core/interactivemultioption/core.js:66
+#: src/components/core/interactiveoneoption/core.js:67
 msgid "Correct option"
 msgstr ""
 
-#: src/components/core/interactivemultioption/core.js:54
-#: src/components/core/interactiveoneoption/core.js:57
+#: src/components/core/interactivemultioption/core.js:68
+#: src/components/core/interactiveoneoption/core.js:69
 msgid "Option "
 msgstr ""
 
-#: src/components/core/interactivemultioption/core.js:159
-#: src/components/core/interactiveoneoption/core.js:164
+#: src/components/core/interactivemultioption/core.js:173
+#: src/components/core/interactiveoneoption/core.js:176
 msgid "Option A"
 msgstr ""
 
@@ -133,25 +180,25 @@ msgstr ""
 msgid "New version available :"
 msgstr ""
 
-#: src/js/lib/core/components/cbobject.js:96
+#: src/js/lib/core/components/cbobject.js:108
 #: src/js/lib/gui/dialogMetadata.js:85
 #: src/templates/updateSectionName.hbs:2
 msgid "Save"
 msgstr ""
 
-#: src/js/lib/core/components/cbobject.js:96
-#: src/js/lib/core/components/cbobject.js:143
+#: src/js/lib/core/components/cbobject.js:108
+#: src/js/lib/core/components/cbobject.js:155
 #: src/js/lib/gui/dialogMetadata.js:90
 #: src/templates/exportEpubProject.wizard.hbs:9
 #: src/templates/exportHtmlProject.wizard.hbs:3
 #: src/templates/exportPdfProject.wizard.hbs:20
 #: src/templates/exportWebZipProject.wizard.hbs:2
-#: src/templates/initialwizard.importprojects.hbs:5
+#: src/templates/initialwizard.importprojects.hbs:7
 #: src/templates/initialwizard.step2.hbs:5
 msgid "Cancel"
 msgstr ""
 
-#: src/js/lib/core/components/cbobject.js:143
+#: src/js/lib/core/components/cbobject.js:155
 #: src/js/lib/gui/ui/proview/core.js:87
 #: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:1
 #: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:1
@@ -1466,6 +1513,7 @@ msgid "WebZip"
 msgstr ""
 
 #: src/js/lib/gui/menu.js:220
+#: src/templates/initialwizard.importprojects.hbs:6
 msgid "EPUB"
 msgstr ""
 
@@ -1656,6 +1704,10 @@ msgstr ""
 msgid "SCORM"
 msgstr ""
 
+#: src/templates/initialwizard.importprojects.hbs:5
+msgid "IMS"
+msgstr ""
+
 #: src/templates/initialwizard.step1.hbs:1
 msgid "Open"
 msgstr ""
@@ -1681,42 +1733,43 @@ msgid "Section name"
 msgstr ""
 
 #: src/components/core/fillinthegaps/toolbar.hbs:1
-#: src/components/core/text/toolbar.hbs:1
 msgid "Huge"
 msgstr ""
 
 #: src/components/core/fillinthegaps/toolbar.hbs:2
-#: src/components/core/text/toolbar.hbs:2
 msgid "Normal"
 msgstr ""
 
 #: src/components/core/fillinthegaps/toolbar.hbs:3
-#: src/components/core/text/toolbar.hbs:3
 msgid "Small"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:8
+#: src/components/core/text/toolbar.hbs:8
+msgid "Rows:"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:9
+#: src/components/core/text/toolbar.hbs:9
+msgid "Cols:"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:10
+#: src/components/core/text/toolbar.hbs:10
+msgid "Full Size:"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:11
+#: src/components/core/text/toolbar.hbs:11
+msgid "With Header:"
+msgstr ""
+
+#: src/components/core/foreknowledge/toolbar.hbs:12
+#: src/components/core/text/toolbar.hbs:12
+msgid "Add"
 msgstr ""
 
 #: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:2
 #: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:2
 msgid "Add question"
-msgstr ""
-
-#: src/components/core/text/toolbar.hbs:4
-msgid "Rows:"
-msgstr ""
-
-#: src/components/core/text/toolbar.hbs:5
-msgid "Cols:"
-msgstr ""
-
-#: src/components/core/text/toolbar.hbs:6
-msgid "Full Size:"
-msgstr ""
-
-#: src/components/core/text/toolbar.hbs:7
-msgid "With Header:"
-msgstr ""
-
-#: src/components/core/text/toolbar.hbs:8
-#: src/components/core/text/toolbar.hbs:9
-msgid "Add"
 msgstr ""

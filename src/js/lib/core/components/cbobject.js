@@ -47,9 +47,11 @@ CBObject.prototype.getObject = function getObject(){
 	   .css('-o-transform',"rotate("+this.degree+"rad)")
 	   .css('width',this.size[0].toString() + "px")
 	   .css('height',this.size[1].toString() + "px" );
+	if(window.debugMode){
+		aux.append("<div>"+this.uniqueid+"</div>");
+	}
 	aux.append([cbcontainer]);
 	aux.click({that:this},that.enableEditable);
-
 	//aux.on('changesection',function(e){e.preventDefault(); console.log(e)});
 	//aux.mousedown({that:this},that.delaymove);
 	//aux.mouseup({that:this},that.cleardelay);
@@ -138,6 +140,14 @@ CBObject.prototype.forwardButton = function forwardButton(e) {
 	e.stopPropagation();
 };
 
+CBObject.prototype.clone = function clone(e) {
+	var that = e.data.that;
+	var controller = application.controller.getInstance();
+	controller.cloneCBObject(that.uniqueid);
+	e.stopPropagation();
+};
+
+
 CBObject.prototype.backwardButton = function backwardButton(e) {
 	var that = e.data.that;
 	var controller = application.controller.getInstance();
@@ -191,6 +201,20 @@ CBObject.prototype.cleardelay = function(e) {
 CBObject.prototype.enableEditable = function enableEditable(e){
 	var that = e.data.that;
 	var newid = this.dataset.cbobjectid;
+
+
+	var selectedevent = new CustomEvent('cbobjectselected',{
+	    'bubbles':true,
+	    'cancelable':true
+	 });
+	selectedevent.data = {'element':this};
+
+	 [].forEach.call( document.querySelectorAll(Cloudbook.UI.targetcontent + " .cbobject") ,function(element){
+	     element.dispatchEvent(selectedevent);
+	 });
+
+
+
 	e.stopPropagation();
 	
 	if(Cloudbook.UI.cbobjectselected !== newid ){
@@ -217,14 +241,16 @@ CBObject.prototype.enableEditable = function enableEditable(e){
 		var del = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-delete cb-toolbar');
 		var forward = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-forward cb-toolbar');
 		var backward = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-backward cb-toolbar');
+		var clone = $(window.document.createElement('div')).addClass('cb-ui-icons cb-ui-clone cb-toolbar');
 
 		edit.click({that:that},that.editButton);
 		del.click({that:that},that.deleteButton);
 		forward.click({that:that},that.forwardButton);
 		backward.click({that:that},that.backwardButton);
-		bar.append([edit,del,forward,backward]);
+		clone.click({that:that},that.clone);
+		bar.append([edit,del,forward,backward,clone]);
 		$("#targetcontent").append(bar);
-		bar.css('padding-right','40px');
+		bar.css('padding-right','20px');
 		
 		bar.draggable({
 			drag:function(event,ui){
@@ -318,6 +344,9 @@ CBObject.prototype.copyresource = function(origpath) {
     return destpath;
 };
 
+CBObject.prototype.cloneTrigger = function cloneTrigger() {
+  this.uniqueid = CBUtil.uniqueId();
+};
 
 module.exports = CBObject;
 //@ sourceURL=/usr/share/cloudbook/src/js/lib/core/components/cbobject.js
