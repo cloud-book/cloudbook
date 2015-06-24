@@ -469,6 +469,7 @@ Backend.prototype.cloneSection = function(cbsectionid,parentsection,needle) {
   });
   var auxsection = storagemanager.getSectionById(newcbsectionid);
   auxsection.sectsions = listsections;
+  auxsection.name = section.name;
   storagemanager.setSectionById(auxsection,newcbsectionid);
   return newcbsectionid;
 };

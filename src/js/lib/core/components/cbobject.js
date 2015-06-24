@@ -47,6 +47,9 @@ CBObject.prototype.getObject = function getObject(){
 	   .css('-o-transform',"rotate("+this.degree+"rad)")
 	   .css('width',this.size[0].toString() + "px")
 	   .css('height',this.size[1].toString() + "px" );
+	if(window.debugMode){
+		aux.append("<div>"+this.uniqueid+"</div>");
+	}
 	aux.append([cbcontainer]);
 	aux.click({that:this},that.enableEditable);
 	//aux.on('changesection',function(e){e.preventDefault(); console.log(e)});

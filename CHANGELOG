@@ -1,10 +1,20 @@
 # Changelog
 ## 0.3.0
 ### News features
-* Migrate to Gulp
+
 * Added foreknowledge component
 * Added export to ePub format
 * Added Clone CBObjects feature
+* Added Clone CBSection feature
+* Added Epub export
 
-### Developers
-* Add new devel mode. This mode refresh automatically cloudbook
+### News features for developers
+
+* Migrate to Gulp
+* Add new devel mode. This mode refresh automatically cloudbook. 
+
+	```sh
+	 gulp devel 
+	 ```
+
+* Added variable window.debugMode. If this variable is true, all cbobjects show her unique id
