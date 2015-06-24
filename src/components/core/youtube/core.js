@@ -65,7 +65,7 @@ YoutubeBox.prototype.pdfView = function pdfView() {
 
 YoutubeBox.prototype.epubView =function epubView() {
   var aux = YoutubeBox.super_.prototype.epubView.call(this);
-  var stringtoepub = CBI18n.gettext("Youtube component is not compatible with EPUB 2 format");
+  var stringtoepub = CBI18n.gettext("You can view the video in:"+this.url);
   return aux.append(stringtoepub);
 }
 

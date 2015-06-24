@@ -48,13 +48,9 @@ ExportEpub.prototype.renderEpub = function renderEpub(parametrosEpub,contenido) 
     $("#exportepubwizard").find('.waitingOK').css("display", "inline");
     new Epub(option,destino).promise.then(function(){
            $("#exportepubwizard").find('.waitingOK').css("display", "none");
-            $("#exportpdfwizard").find('.waitingFiles').css("display", "inline");
-            var extrafilesorig = Project.Info.projectpath + "/epubextrafiles/";
-            var destextrafiles = path.dirname(destino) + "/epubextrafiles";
-            if(fs.existsSync(extrafilesorig)){
-                fsextra.move(extrafilesorig,destextrafiles,function(err){console.log(err);$("#exportepubwizard").dialog("destroy");
-                console.log("Ebook Generated Successfully!")});
-            }
+           $("#exportepubwizard").dialog("destroy");
+            console.log("Ebook Generated Successfully!")
+            
 
            
         }, function(err){

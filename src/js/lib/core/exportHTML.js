@@ -238,7 +238,7 @@ ExportHTML.prototype.preExportHTMLToPDF = function preExportHTMLToPDF() {
 	this.files_to_copy.push(Project.Info.projectpath + "/rsrc/");
 	sections.forEach(function(section,id){
 		var JQobj=section.exportView('data'+id,'pdfView','triggerHTMLView');
-		var page = '<!DOCTYPE html><html><meta charset="UTF-8"> '+that.myhead[0].outerHTML+'<body>'+JQobj[0].outerHTML;+'</body></html>';
+		var page = '<!DOCTYPE html><html><meta charset="UTF-8"> '+that.myhead[0].outerHTML+'<body>'+JQobj[0].outerHTML+'</body></html>';
 		var fs = window.require('fs');
 		var dest = temppath+"/index"+id+".html";
 		fs.writeFileSync(dest, page);
@@ -250,18 +250,18 @@ ExportHTML.prototype.preExportHTMLToPDF = function preExportHTMLToPDF() {
 
 
 ExportHTML.prototype.preExportHTMLToEPUB = function preExportHTMLToEPUB() {
-	var mktemp = require('mktemp')
-	var temppath = mktemp.createDirSync("/tmp/Epub_XXXX");
+	/*var mktemp = require('mktemp')
+	var temppath = mktemp.createDirSync("/tmp/Epub_XXXX");*/
 	var that = this;
-	this.files_to_copy = [];
+//	this.files_to_copy = [];
 	this.myhead = "";
-	var returnlistpaths = [];
+//	var returnlistpaths = [];
 	this.htmlBasicHead();
 	var sections = this.getSections();
 	var all_types_used = this.allTypesObjects(sections);
-	this.getAllNeededFiles(all_types_used);
-	this.files_to_copy.push('js/lib_external/exporthtml/');
-	this.files_to_copy.push(Project.Info.projectpath + "/rsrc/");
+//	this.getAllNeededFiles(all_types_used);
+//	this.files_to_copy.push('js/lib_external/exporthtml/');
+//	this.files_to_copy.push(Project.Info.projectpath + "/rsrc/");
        
 	
     var contenido=[];
@@ -276,7 +276,7 @@ ExportHTML.prototype.preExportHTMLToEPUB = function preExportHTMLToEPUB() {
        
 	
 	
-	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,temppath+"/")});
+//	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,temppath+"/")});
 	return contenido;
 };
 

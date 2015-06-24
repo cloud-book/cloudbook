@@ -68,7 +68,7 @@ ExternalIframe.prototype.pdfView = function pdfView() {
 
 ExternalIframe.prototype.epubView = function epubView(){
   var aux = ExternalIframe.super_.prototype.epubView.call(this);
-  var stringtoepub = CBI18n.gettext("Url component is not compatible with EPUB 2 format");
+  var stringtoepub = CBI18n.gettext("You can view the site in:" + this.url);
   return aux.append(stringtoepub);
 
 }
