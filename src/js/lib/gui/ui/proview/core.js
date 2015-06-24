@@ -84,7 +84,7 @@ ProView.prototype.createMenu = function createMenu(e) {
 		fun:function(){that.appendSubsection(e)}
 	},
   {
-    name:CBI18n.gettext('Duplicate subsection'),
+    name:CBI18n.gettext('Duplicate section'),
     fun:function(){
       var section = $(element).closest('[data-cbsectionid]').get();
       that.duplicateSection(section);
