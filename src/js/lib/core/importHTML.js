@@ -156,7 +156,7 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 					}
 					else
 					{
-						if(node.children.length ==1 && node.children[0].nodeName == "IMG")
+						if(node.children.length ==1 && node.children[0].nodeName == "IMG" && node.childNodes.length == 1)
 							processElementBlock(node.children[0], filePath, idsectionselected);
 						else
 							processElementBlock(node, filePath, idsectionselected);

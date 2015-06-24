@@ -64,7 +64,7 @@ ImportPackage.prototype.processPackage = function processPackage(data, filePath,
 		{
 			case "EPUB": application.importepub.getInstance().processPackageDataEPUB(tempPath); break;
 			case "ELP": application.importelp.getInstance().processPackageDataELP(tempPath); break;
-			default: processPackageData(tempPath); break;
+			default: processPackageData(tempPath, fileType); break;
 		}
 	}
 }
@@ -107,39 +107,105 @@ function processPackageMetaData(fileType, tempPath, filePath)
 	}
 }
 
+
+/**
+ * This method is responsible for processing content of a section
+ * It builds the name and the content of a section
+ * @param  {Object} node to be processed
+ * @param  {String} id of resource
+ * @param  {String} id of section processed
+ * @param  {String} path of the elements
+ */
+ function processSection(element, resourceID, idsection, filePath)
+{
+
+	var href = element.parents().find("resource[identifier='" + resourceID + "']").attr("href");
+	application.controller.getInstance().updateSectionName(href.split(".")[0],idsection);	
+	var html = $.parseHTML(fs.readFileSync(filePath + href).toString());
+	application.importhtml.getInstance().processHTML(html, filePath + href, idsection);
+}
+
+/**
+ * This method is responsible for processing children sections
+ * It reads section and if there isn't id process subsections
+ * @param  {String} id of section processed
+ * @param  {Object} node to be processed
+ * @param  {String} path of the elements
+ */
+ function processChildrenData(idsection, element, filePath, fileType)
+{
+	var idSectionParent = "", html = "", href = "", idSectionPreParent = "";
+	var importationHTML = application.importhtml.getInstance();
+	var controller = application.controller.getInstance();
+
+	idSectionPreParent = idsection;
+	idsection = controller.appendSection(idsection);
+	idSectionParent = idsection;
+	processSection(element, $(element.children("item")[0]).attr("identifierref"), idSectionParent, filePath);
+
+	element.children("item:gt(0)").each(function(){
+		if( this.attributes['identifierref'] != undefined){
+			if(fileType == "SCORM")
+				idsection = controller.appendSection(idSectionParent);
+			else
+				idsection = controller.appendSection(idSectionPreParent);
+			processSection($(this), this.attributes['identifierref'].value, idsection, filePath);
+			if(fileType == "IMS" && $(this).children("item").length > 0)
+			{
+				processChildrenData(idsection, $(this), filePath, fileType);
+			}
+		}
+		else
+		{
+			processChildrenData(idSectionParent, $(this), filePath, fileType);
+		}
+	})
+}
+
 /**
  * This method is responsible for reading SCORM/IMS data
  * It reads files to be included and creates sections for each one
  * @param  {String} path of the unzipped elements
  */
-function processPackageData(filePath)
+function processPackageData(filePath, fileType)
 {
 	var fs = require('fs');
-	var backend = application.backend.core.getInstance();
 	var controller = application.controller.getInstance();
-	var idsection = "";
+	var idsection = "", idSectionAux = "", idSectionRoot = "";
 	var ui = application.ui.core.getInstance();
+	var children = "";
 
 	var importationHTML = application.importhtml.getInstance();
 	fs.readFile(filePath+"imsmanifest.xml", function(err, data) {
-	  	  	$(data.toString()).find("resource").each(function(){
-		  		$.each(this.attributes, function(i, attrib){
-		  			if(attrib.name == "href"){
-						$.get(filePath + attrib.value, function(html) {
-			  				if(attrib.value =="index.html")
-			  				{
-			  					controller.updateSectionName(attrib.value.split(".")[0],Cloudbook.UI.selected.attr('data-cbsectionid'));		
-			  					idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
-			  				}
-			  				else
-			  				{
-			  					idsection = controller.appendSection('root')
-				  				controller.updateSectionName(attrib.value.split(".")[0],idsection);	
-			  				}
-							importationHTML.processHTML(html, filePath + attrib.value, idsection);
-						}); 
+			if(fileType == "IMS"){
+				idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
+				processSection($($(data.toString()).children()[0]), $(data.toString()).find("item:first").attr("identifierref"), idsection, filePath);
+				idSectionRoot = idsection;
+	  	  	}
+			$(data.toString()).find("item:first").children("item").each(function(){
+				if($(this).attr("identifierref") != undefined){
+		  	  		var href = $(this).parents().find("resource[identifier='" + this.attributes['identifierref'].value + "']").attr("href");
+		  	  		html = $.parseHTML(fs.readFileSync(filePath + href).toString());
+		  	  		if(href =="index.html"){
+	  					idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
+	  					idSectionRoot = idsection;
+	  				}else{
+	  					idsection = controller.appendSection(idSectionRoot);
+	  				}
+  					controller.updateSectionName(href.split(".")[0],idsection);		
+					importationHTML.processHTML(html, filePath + href, idsection);
+					if(fileType == "IMS" && $(this).children("item").length > 0)
+					{
+						processChildrenData(idsection, $(this), filePath, fileType);
 					}
-		  		});
+				}
+				else
+				{
+					idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
+					idSectionAux = idsection;
+					processChildrenData(idsection, $(this), filePath, fileType);
+					idsection = idSectionAux;
+				}
 			});
 	});
 	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
