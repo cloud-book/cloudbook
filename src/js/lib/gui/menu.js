@@ -193,15 +193,17 @@
       exportwizard.initializeWizardDiv();
       exportwizard.showExportEpubProject({data:{that:exportwizard}});
 		   
-   
     };
+
+  
+
 
     var export_project={
       label:CBI18n.gettext('Export')
     };
 
     var export_html = {
-	label: CBI18n.gettext('HTML5'),
+	      label: CBI18n.gettext('HTML5'),
         click: export_html
     };
 
@@ -221,7 +223,8 @@
       click:export_epub
     };
    
-
+  
+    
     /**
      * Generate menubar
      */
@@ -239,7 +242,7 @@
     export_project_menu.append(new gui.MenuItem(export_pdf));
     export_project_menu.append(new gui.MenuItem(export_webzip));
     export_project_menu.append(new gui.MenuItem(export_epub));
-    
+  
     export_project.submenu=export_project_menu;
 
     file.append(new gui.MenuItem(new_project));

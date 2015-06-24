@@ -53,7 +53,10 @@ AudioBox.prototype.pdfView = function pdfView() {
 }
 
 AudioBox.prototype.epubView = function epubView() {
-  return this.pdfView();
+  var aux = AudioBox.super_.prototype.epubView.call(this);
+  var stringtoepub = CBI18n.gettext("Audio component is not compatible with EPUB 2 format");
+  aux.append(stringtoepub);
+  return aux;
 }
 
 
