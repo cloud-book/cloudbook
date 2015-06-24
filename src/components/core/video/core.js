@@ -52,7 +52,13 @@ VideoBox.prototype.pdfView = function pdfView() {
 }
 
 VideoBox.prototype.epubView=function epubView() {
-  return this.pdfView();
+  var aux = VideoBox.super_.prototype.epubView.call(this);
+  var stringtoepub = CBI18n.gettext("Video component is not compatible with EPUB 2 format");
+  /**
+   * Create folder to resources and copy inside these
+   */
+   
+  return aux.append(stringtoepub);  
 }
 
 
