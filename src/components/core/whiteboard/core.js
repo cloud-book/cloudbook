@@ -7,22 +7,44 @@ function WhiteboardBox(objectdata){
   objectdata = typeof objectdata !== 'undefined' ? objectdata : {"position" : [200,200], "size":[600,400]};
   objectdata.idtype = metadata['idtype'];
   WhiteboardBox.super_.call(this,objectdata);
+  
+  // Setting canvas content if exists
+  if (typeof(objectdata.canvas)!=="undefined") this.canvas=objectdata.canvas;
+  else this.canvas="";
 }
 
 util.inherits(WhiteboardBox,CBobject);
 
 WhiteboardBox.prototype.editorView = function editorView() {
+  var self=this;
+  
   var aux = WhiteboardBox.super_.prototype.editorView.call(this);
-  var whiteboardelement = $(window.document.createElement('canvas')).addClass('whiteboard').attr('id','whiteboard'+this.uniqueid);
+  var element_id='whiteboard'+this.uniqueid;
+  var whiteboardelement = $(window.document.createElement('canvas')).addClass('whiteboard').attr('id',element_id);
   var template = fs.readFileSync("./"+__module_path__ + 'toolbar.hbs',{encoding:'utf8'});
   var toolbar = application.util.template.compile(template)();
   aux.children('.cbcontainer').append([toolbar,whiteboardelement]);
+  
+  // Getting canvas content when change section
+  aux.on('changesection',function(e){
+    var handler = new WhiteBoardHelper('whiteboard'+this.uniqueid);
+    self.canvas=handler.getCanvas(handler, element_id);
+    console.log(self.canvas);
+  });
+  
   return aux;
+  
 };
 
 WhiteboardBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
+  var self=this;  
   WhiteboardBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
-  var handler = new WhiteBoardHelper('whiteboard'+this.uniqueid);
+  
+  var id='whiteboard'+this.uniqueid;
+  var handler = new WhiteBoardHelper(id);
+  // Setting canvas
+  handler.setCanvas(handler, id, self.canvas);
+  
   handler.canvas.setWidth(objectcbo.size[0]);
   handler.canvas.setHeight(objectcbo.size[1]) - jquerycbo.find(".whiteboardtoolbar").height() ;
   jquerycbo.on('resizestop',function(event,ui){
@@ -37,9 +59,15 @@ WhiteboardBox.prototype.triggerAddEditorView = function triggerAddEditorView(jqu
   buttons.each(function(idx,button){
     $(button).click(function(){
       var aux = $(button).attr('data-command');
-      handler[aux](handler);
+      handler[aux](handler,id);
     });
   });
+  
+  jquerycbo.on('changesection', function(e) {
+    content=handler.getCanvas(handler, id);
+    self.canvas=content;
+  });
+  
 };
 
 WhiteboardBox.prototype.htmlView = function htmlView() {

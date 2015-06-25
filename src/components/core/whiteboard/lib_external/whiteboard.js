@@ -1,6 +1,9 @@
 (function(win) {
     function WhiteBoardHelper(whiteboard) {
+        var that=this;
+        
         this.canvas = new fabric.Canvas(whiteboard);
+        
     }
     WhiteBoardHelper.prototype.textInput = function textInput(that) {
         that.canvas.isDrawingMode = false;
@@ -31,13 +34,24 @@
             that.canvas.calcOffset();
         });
     };
+    
+    WhiteBoardHelper.prototype.select = function(that) {
+        that.canvas.off('mouse:down');
+        that.canvas.isDrawingMode = false;
+        that.canvas.renderAll();
+        that.canvas.calcOffset();
+    };
+    
     WhiteBoardHelper.prototype.draw = function(that) {
+        that.canvas.off('mouse:down');
         that.canvas.isDrawingMode = true;
         that.canvas.freeDrawingLineWidth = 5;
         that.canvas.renderAll();
         that.canvas.calcOffset();
     };
     WhiteBoardHelper.prototype.rect = function(that) {
+        that.canvas.off('mouse:down');
+        
         var mouse_pos = {
             x: 0,
             y: 0
@@ -59,6 +73,8 @@
         });
     };
     WhiteBoardHelper.prototype.circle = function(that) {
+        that.canvas.off('mouse:down');
+        
         var mouse_pos = {
             x: 0,
             y: 0
@@ -78,6 +94,8 @@
         });
     };
     WhiteBoardHelper.prototype.ellipse = function(that) {
+        that.canvas.off('mouse:down');
+        
         var mouse_pos = {
             x: 0,
             y: 0
@@ -98,6 +116,8 @@
         });
     };
     WhiteBoardHelper.prototype.line = function(that) {
+        that.canvas.off('mouse:down');
+        
         that.canvas.isDrawingMode = false;
         if (that.canvas.getContext) {
             var context = that.canvas.getContext('2d');
@@ -144,7 +164,33 @@
             }
         }
     };
-    WhiteBoardHelper.prototype.save = function(that) {
+    
+    WhiteBoardHelper.prototype.getCanvas = function(that, id) {
+        that.canvas.off('mouse:down');
+        that.canvas.isDrawingMode = false;
+        
+        // Getting content
+        var json = JSON.stringify(that.canvas);
+        return json;
+
+    }
+    
+    WhiteBoardHelper.prototype.setCanvas = function(that, id, content) {
+        that.canvas.off('mouse:down');
+        that.canvas.isDrawingMode = false;
+        
+        that.canvas.clear();
+        
+        if (typeof(content)==="undefined") content={};
+        
+        that.canvas.loadFromJSON(content);
+
+        that.canvas.renderAll();
+        that.canvas.calcOffset();
+        
+    }
+    
+       WhiteBoardHelper.prototype.save = function(that) {
         that.canvas.isDrawingMode = false;
         if (!window.localStorage) {
             alert("This function is not supported by your browser.");
@@ -180,12 +226,15 @@
         }
     };
     WhiteBoardHelper.prototype.clear = function(that) {
+        that.canvas.off('mouse:down');
         that.canvas.isDrawingMode = false;
         if (confirm('Are you sure?')) {
             that.canvas.clear();
         }
     };
     WhiteBoardHelper.prototype.remove = function(that) {
+        that.canvas.off('mouse:down');
+        
         that.canvas.isDrawingMode = false;
         var activeObject = that.canvas.getActiveObject(),
             activeGroup = that.canvas.getActiveGroup();
@@ -204,6 +253,8 @@
         }
     };
     WhiteBoardHelper.prototype.run = function(that) {
+        that.canvas.off('mouse:down');
+        
         that.canvas.calcOffset();
         document.onkeyup = function(e) {
             that.canvas.renderAll();
