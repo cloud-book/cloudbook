@@ -89,7 +89,6 @@ ImageBox.prototype.epubView = function epubView() {
   var aux = ImageBox.super_.prototype.epubView.call(this);
   var projectpath=Project.Info.projectpath;
   var imagepath = this.imgpath !== null ? "file://"+projectpath + "/rsrc/"+ this.imgpath : __module_path__ + "default.png";
-  alert(imagepath);
   var imgelement = $(window.document.createElement('img')).attr('src', imagepath);
   imgelement.css('height','100%');
   imgelement.css('width','100%');

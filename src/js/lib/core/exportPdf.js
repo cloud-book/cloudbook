@@ -28,9 +28,11 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrosPdf, origen) {
     /*Ruta donde se guardará el fichero pdf */
     var pdfFileName = " '" + parametrosPdf.path + "' ";
     var ficheroOrigen = "";
+  
     if (origen instanceof Array) {
         origen.forEach(function(path) {
             ficheroOrigen += " '" + path + "' ";
+            
         });
     } else {
         ficheroOrigen = " '" + origen + "' ";

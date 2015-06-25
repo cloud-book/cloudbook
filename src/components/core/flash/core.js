@@ -64,7 +64,10 @@ FlashBox.prototype.pdfView = function pdfView() {
 }
 
 FlashBox.prototype.epubView=function epubView(){
-  return this.pdfView();
+  var aux = FlashBox.super_.prototype.epubView.call(this);
+  var stringtoepub = CBI18n.gettext("Flash component is not compatible with EPUB 2 format");
+  aux.append(stringtoepub);
+  return aux;
  }
 
 FlashBox.prototype.clickButton = function clickButton(controllerClass) {

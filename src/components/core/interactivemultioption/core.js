@@ -161,6 +161,12 @@ PMS.prototype.triggerHTMLView = function triggerHTMLView() {
   });';
 };
 
+PMS.prototype.cloneTrigger = function cloneTrigger() {
+  PMS.super_.prototype.cloneTrigger.call(this);
+  this.pemidentifier = "pem_" + this.uniqueid ; 
+};
+
+
 
 PMS.prototype.editButton = function editButton(e) {
   var that = e.data.that;
@@ -201,6 +207,8 @@ function updateQuestions(dialog,objectcbo){
   objectcbo.description = description;
   objectcbo.group = group;
 }
+
+
 
 //PMS.triggerAddEditorView =  CBobject.triggerAddEditorView;
 /*

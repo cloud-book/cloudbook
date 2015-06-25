@@ -32,6 +32,16 @@ UI.prototype.loadTheme = function loadTheme(){
   }
 }
 
+
+UI.prototype.loadExportTheme = function loadExportTheme(themename) {
+  var path = require('path');
+  var fs = require('fs');
+  var auxpath = path.join('themes','export',themename);
+  Cloudbook.UI.exportthemepath = fs.existsSync(auxpath)?auxpath: path.join('themes','export','default');
+};
+
+
+
 /**
  * Create components buttons to append elements into selected section.
  * Here method call editorView and triggerAddEditorView methods of CBObjects.
@@ -167,11 +177,7 @@ UI.prototype.loadContent = function loadContent(id){
   $(Cloudbook.UI.targetcontent).html("");
   var section = CBStorage.getSectionById(id);
   if (section !== undefined ){
-    section.content.forEach(function (cbobjectid){
-      var objectcbo = CBStorage.getCBObjectById(cbobjectid);
-      var jquerycbo = objectcbo.editorView();
-      that.addCBObject(jquerycbo,objectcbo);
-    });
+    section.content.forEach(that.renderCBObject,that);
   }
 }
 
@@ -238,13 +244,18 @@ UI.prototype.removeCBObjectById = function removeCBObjectById(cbobjectid) {
   $(x).remove();
 };
 
-
-
-
 UI.prototype.modifyObjectLevelLayer = function modifyObjectLevelLayer(cbobjectid,level) {
   var targetcontent = $(Cloudbook.UI.targetcontent);
   var x = targetcontent.find('[data-cbobjectid="'+cbobjectid+'"]');
   $(x).css('z-index',level);
+};
+
+
+UI.prototype.renderCBObject = function renderCBObject(cbobjectid) {
+  var CBStorage = application.storagemanager.getInstance();
+  var objectcbo = CBStorage.getCBObjectById(cbobjectid);
+  var jquerycbo = objectcbo.editorView();
+  this.addCBObject(jquerycbo,objectcbo);
 };
 
 UI.prototype.modifyObjectRotation = function modifyObjectRotation(cbobjectid,callback,e) {
