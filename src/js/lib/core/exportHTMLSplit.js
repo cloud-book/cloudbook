@@ -15,6 +15,7 @@ ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,sect
 	var section = storagemanager.getSectionById(sectiontorender);
 	var fs = require('fs');
 	var path = require('path');
+	var pd = require('pretty-data').pd;
 	var filepath = sectiontorender + ".html";
 	var template = fs.readFileSync('./templates/exporthtmlsplit/section.hbs',{encoding:'utf8'});
 	var templatecompiled = application.util.template.compile(template);
@@ -26,9 +27,10 @@ ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,sect
 		var cbobject = storagemanager.getCBObjectById(cbobjectid);
 		content += cbobject.htmlView()[0].outerHTML;
 	});
-	var salida = templatecompiled({content:content});
+	var salida = pd.xml(templatecompiled({content:content}));
+
 	fs.writeFileSync(path.join(destpath,filepath),salida);
 	section.sections.forEach(function(cbsectionid){
 		that.renderSection(destpath,cbsectionid,htmlinfo);
-	})
+	});
 };
