@@ -12,6 +12,15 @@
 		<label for="publisherbook">{{gettext "Publisher:"}}</label><input name="publisherbook" class="form-control" placeholder="{{gettext "Enter the publisher of the book"}}" value="{{publisherbook}}"</input> 
 	 </div>
 	 <p><p>
+	 <div>
+	 	<label for="lang">{{gettext "Language:"}}</label>
+	 		<select class="form-group" name="lang"> 
+			{{#each languages}}
+				<option value="{{this.code}}">{{this.name}}</option>
+			{{/each}}
+			</select>
+ 	</div>
+	 <p><p>
 	<div>
 		<label for="coverbook">{{gettext "Path of the cover:"}}</label><input name="coverbook" type="file"</label> 
 	 </div>

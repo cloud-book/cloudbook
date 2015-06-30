@@ -24,11 +24,13 @@ ExportEpubWizard.prototype.initializeWizardDiv = function() {
 ExportEpubWizard.prototype.showExportEpubProject = function showExportEpubProject(e) {
 	var that = e.data.that;
 	var fs = require('fs');
+	var languages=JSON.parse(fs.readFileSync('js/lib/gui/languages.json', 'utf8'));
 	
 	$("#exportepubwizard").empty();
 	var template = fs.readFileSync('./templates/exportEpubProject.wizard.hbs',{encoding:'utf8'});
 	var templatecompiled = application.util.template.compile(template);
-	$("#exportepubwizard").append(templatecompiled());
+	
+	$("#exportepubwizard").append(templatecompiled({languages:languages}));
        
  	        
       
@@ -76,6 +78,7 @@ ExportEpubWizard.prototype.showExportEpubProject = function showExportEpubProjec
     	  parametrosEpub['publisher']=$("input[name='publisherbook']").val();
     	  parametrosEpub['cover']=$("input[name='coverbook']").val();
     	  parametrosEpub['path']=$("input[name='path']").val();
+    	  parametrosEpub['lang']=$("[name='lang']").val();  
           	    
 
 	 var exportepub = application.core.exports.exportEpub.core.getInstance();
