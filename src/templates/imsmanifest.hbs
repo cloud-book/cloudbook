@@ -1,0 +1,53 @@
+<?xml version="1.0" standalone="no" ?>
+<manifest identifier="com.scorm.manifesttemplates.scorm2004.4thEd" version="1"
+                  xmlns = "http://www.imsglobal.org/xsd/imscp_v1p1"
+                  xmlns:adlcp = "http://www.adlnet.org/xsd/adlcp_v1p3"
+                  xmlns:adlseq = "http://www.adlnet.org/xsd/adlseq_v1p3"
+                  xmlns:adlnav = "http://www.adlnet.org/xsd/adlnav_v1p3"
+                  xmlns:imsss = "http://www.imsglobal.org/xsd/imsss"
+                  xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:lom="http://ltsc.ieee.org/xsd/LOM"
+                  xsi:schemaLocation = "http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd
+                                       http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd
+                                       http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd
+                                       http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd
+                                       http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd
+                                       http://ltsc.ieee.org/xsd/LOM lom.xsd" >
+
+	<metadata>
+    	<schema>ADL SCORM</schema>
+    	<schemaversion>2004 4th Edition</schemaversion>
+   		<adlcp:location>imslrm.xml</adlcp:location>
+
+   	    <lom:lom>
+       	    <lom:general>
+ 	       		 <lom:description>
+    	         	<lom:string language="es">{{Titulo_Proyecto}}</lom:string>
+    	    	</lom:description>
+        	</lom:general>
+    	</lom:lom>
+	</metadata>
+
+
+	<organizations default="1000">
+    	<organization identifier="1000"  structure="hierarchical">
+      		<title>Proyecto de Prueba</title>
+				{{#each items}}
+					{{> scormitem}}
+				{{/each}}
+    	</organization>
+	</organizations>	
+
+	<resources>
+		{{#each items}}
+			{{> resourceitem}}
+		{{/each}}
+		{{#if depends}}
+		<resource identifier="COMMON_FILES" type="webcontent" adlcp:scormType="asset">
+		{{#each depends}}
+			<file href="{{this}}"/>
+		{{/each}}	
+		</resource>
+		{{/if}}
+	</resources>
+</manifest>	

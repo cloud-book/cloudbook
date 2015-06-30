@@ -1,0 +1,23 @@
+{{#if sections}}
+   <resource identifier="{{resourcecode}}" type="webcontent" adlcp:scormType="sco" href="{{filename}}">
+		<file href="{{filename}}"/>
+		{{#each content}}
+		<file href="{{this}}"/>
+		{{/each}}
+ 		<dependency identifierref="COMMON_FILES"/>
+ 	</resource>
+    {{#each sections.items}}
+    {{> resourceitem}} 
+	{{/each}}
+ {{else}}
+ 	<resource identifier="{{resourcecode}}" type="webcontent" adlcp:scormType="sco" href="{{filename}}">
+		<file href="{{filename}}"/>
+		{{#each content}}
+		<file href="{{this}}"/>
+		{{/each}}
+ 	
+ 		<dependency identifierref="COMMON_FILES"/>
+
+ 	</resource>
+ {{/if}}			
+	

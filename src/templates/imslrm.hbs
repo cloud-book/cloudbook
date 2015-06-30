@@ -4,7 +4,6 @@
   xmlns="http://ltsc.ieee.org/xsd/LOM" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM lomCustom.xsd">
-  
   <general uniqueElementName="general">
     {{#each general.identifier}}
       <identifier>
@@ -12,52 +11,39 @@
         <entry uniqueElementName="entry">{{this.entry}}</entry>
       </identifier>
     {{/each}}
-    
-      <title uniqueElementName="title">
+       <title uniqueElementName="title">
         {{#each general.title}}
           <string language="{{this.titleLang}}">{{this.title}}</string>
         {{/each}}
       </title>
-  
-  
-    {{#each general.language}}
+     {{#each general.language}}
       <language>{{this.mainLang}}</language>
     {{/each}}
-
-
     {{#each general.description}}
-    
       <description>
         <string language="{{this.descGeneralLang}}">{{this.Description}}</string>
       </description>
- 
     {{/each}}  
-  
-
     {{#each general.keyword}} 
       <keyword>
          <string language="{{this.keywordGeneralLang}}">{{this.keywordGeneral1}}</string> 
       </keyword>
     {{/each}}   
-
     {{#each general.coverage}} 
       <coverage>
          <string language="{{this.coverageLang}}">{{this.coverage1}}</string> 
       </coverage>
     {{/each}} 
-
     {{#if general.structure}}
       <structure uniqueElementName="structure">
         <source uniqueElementName="source">LOM-ESv1.0</source>
         <value uniqueElementName="value">{{general.structure}}</value> 
       </structure>
     {{/if}}
-    
       <aggregationLevel uniqueElementName="aggregationLevel"> 
         <source uniqueElementName="source">LOM-ESv1.0</source>
         <value uniqueElementName="value">{{general.aggregationLevel}}</value>
       </aggregationLevel>
-     
   </general>      
 
   <lifeCycle uniqueElementName="lifeCycle">

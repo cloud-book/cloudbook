@@ -48,7 +48,7 @@ function parserImslrm() {
             for( var field in aux){
                 if (field.split("_")[0]==="titleLang"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -65,7 +65,7 @@ function parserImslrm() {
             var x = {"mainLang":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
-                x[field.split("_")[0]] =searchLanguage(aux[field]);
+                x[field.split("_")[0]] =searchCodelanguage(aux[field]);
                
             }
             imslrm.general.language.push(x);
@@ -82,7 +82,7 @@ function parserImslrm() {
 
                 if (field.split("_")[0]==="descGeneralLang"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -103,7 +103,7 @@ function parserImslrm() {
             for( var field in aux){
                 if (field.split("_")[0]==="keywordGeneralLang"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -124,7 +124,7 @@ function parserImslrm() {
             for( var field in aux){
                 if (field.split("_")[0]==="coverageLang"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -146,7 +146,7 @@ function parserImslrm() {
          //Analizando aggregationLevel
                
         if(e.indexOf("aggregationLevels_1") === 0 ){
-            imslrm.general.aggregationLevel=Project.Info.LOM[e];
+            imslrm.general.aggregationLevel=searchCodeAggregation(Project.Info.LOM[e]);;
         
         }
       
@@ -162,7 +162,7 @@ function parserImslrm() {
             for( var field in aux){
                 if (field.split("_")[0]==="lifeCycleLang"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -212,7 +212,7 @@ function parserImslrm() {
                     for( var info in aux[field]){
                        if (info.split("_")[0]==="ContribLifeCycleLang"){
    
-                            x[info.split("_")[0]] = searchLanguage(aux[field][info]);
+                            x[info.split("_")[0]] = searchCodelanguage(aux[field][info]);
                         }else{
                             x[info.split("_")[0]] = aux[field][info];
                         }
@@ -256,7 +256,7 @@ function parserImslrm() {
 
         if (e.indexOf("langMetametadataValue_")===0){
               
-            imslrm.metaMetadata.langMetametada=searchLanguage(Project.Info.LOM[e]);
+            imslrm.metaMetadata.langMetametada=searchCodelanguage(Project.Info.LOM[e]);
         }
 
        // Analizando MetaMetada contribute
@@ -293,7 +293,7 @@ function parserImslrm() {
                     for( var info in aux[field]){
                         if (info.split("_")[0]==="ContribMetametadataLang"){
    
-                            x[info.split("_")[0]] = searchLanguage(aux[field][info]);
+                            x[info.split("_")[0]] = searchCodelanguage(aux[field][info]);
                         }else{
                             x[info.split("_")[0]] = aux[field][info];
                         }
@@ -381,7 +381,7 @@ function parserImslrm() {
                 
                 if (field.split("_")[0]==="LangRemTech"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -403,7 +403,7 @@ function parserImslrm() {
             for( var field in aux){
                 if (field.split("_")[0]==="LangOtherTech"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -457,7 +457,7 @@ function parserImslrm() {
             for( var field in aux){
                 if (field.split("_")[0]==="languageDescDurTech"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -541,7 +541,7 @@ function parserImslrm() {
             for( var field in aux){
                 if (field.split("_")[0]==="languageRangeEducational"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -604,7 +604,7 @@ function parserImslrm() {
             for( var field in aux){
                 if (field.split("_")[0]==="langDurationEducational"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -624,7 +624,7 @@ function parserImslrm() {
             for( var field in aux){
                 if (field.split("_")[0]==="langDescrEducational"){
    
-                    x[field.split("_")[0]] = searchLanguage(aux[field]);
+                    x[field.split("_")[0]] = searchCodelanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -642,7 +642,7 @@ function parserImslrm() {
             var x = {"languageEducationalUseValue":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
-                x[field.split("_")[0]] =searchLanguage(aux[field]);
+                x[field.split("_")[0]] =searchCodelanguage(aux[field]);
                
             }
             imslrm.educational.language.push(x);
@@ -691,7 +691,7 @@ function parserImslrm() {
                     imslrm.rights.description.descRightsValue = aux[field];
                 }
                 if( field.indexOf("descRightsLang_")===0){
-                    var lang=searchLanguage(aux[field]);
+                    var lang=searchCodelanguage(aux[field]);
                     imslrm.rights.description.descRightsLang =lang;
                 }
             });
@@ -717,7 +717,7 @@ function parserImslrm() {
 
           if(e.indexOf("langAccessRights_") === 0 ){
              ExportScorm.prototype.checkname(imslrm,"rights.access.description",{last:"list"});
-             imslrm.rights.access.description.descRightsLang=searchLanguage(Project.Info.LOM[e]);
+             imslrm.rights.access.description.descRightsLang=searchCodelanguage(Project.Info.LOM[e]);
        
         }
 
@@ -747,7 +747,7 @@ function parserImslrm() {
                   relation.resource.description.DescriptionRelationRelations=aux[field];
                 }     
                 if(field.indexOf("relationRelationsLang_")===0){
-                  relation.resource.description.relationRelationsLang=searchLanguage(aux[field]);
+                  relation.resource.description.relationRelationsLang=searchCodelanguage(aux[field]);
                 }     
 
                 
@@ -792,7 +792,7 @@ function parserImslrm() {
                 }    
                 
                 if(field.indexOf("langDateAnnotations_")===0){
-                   annotation.date.description.langDateAnnotations=searchLanguage(aux[field]);
+                   annotation.date.description.langDateAnnotations=searchCodelanguage(aux[field]);
                 }     
  
                 if(field.indexOf("DescriptionAnnotations_")===0){
@@ -801,8 +801,8 @@ function parserImslrm() {
                 }
                 
                 if(field.indexOf("LangAnnotations_")===0){
-                   var x=searchLanguage(aux[field]);
-                   annotation.description.LangAnnotations=searchLanguage(aux[field]);
+                   var x=searchCodelanguage(aux[field]);
+                   annotation.description.LangAnnotations=searchCodelanguage(aux[field]);
                 }
                           
             });
@@ -837,7 +837,7 @@ function parserImslrm() {
                 }
 
                 if(field.indexOf("tituloLangTaxonClassification_")===0){
-                   classification.description.LangTaxonClassification = searchLanguage(aux[field]);
+                   classification.description.LangTaxonClassification = searchCodelanguage(aux[field]);
                 }
                 
                 
@@ -848,7 +848,7 @@ function parserImslrm() {
                     for(var fieldK in auxKey){
                        if (fieldK.split("_")[0]==="titleLangKeywordTaxonClassification"){
    
-                            x[fieldK.split("_")[0]] = searchLanguage(auxKey[fieldK]);
+                            x[fieldK.split("_")[0]] = searchCodelanguage(auxKey[fieldK]);
                         }else{
                             x[fieldK.split("_")[0]] = auxKey[fieldK];
                         }
@@ -868,7 +868,7 @@ function parserImslrm() {
                     for(var fieldK in auxKey){
                         if ((fieldK.split("_")[0]==="langClassification") || (fieldK.split("_")[0]==="langClassificationTaxon")){
    
-                            x[fieldK.split("_")[0]] = searchLanguage(auxKey[fieldK]);
+                            x[fieldK.split("_")[0]] = searchCodelanguage(auxKey[fieldK]);
                         }else{
                             x[fieldK.split("_")[0]] = auxKey[fieldK];
                         }
@@ -896,7 +896,7 @@ function parserImslrm() {
     return imslrm;
 };
 
-function searchLanguage(language)
+function searchCodelanguage(language)
 {
     var result = "";
     listlang.forEach(function(element){
@@ -907,6 +907,35 @@ function searchLanguage(language)
 
     return result;
 };    
+
+function searchCodeAggregation(agregationLevel)
+{
+    var result="";
+    var dictionary = CBUtil.req("js/lib/gui/dialogMetadataValues.js");
+    var i=1;
+    dictionary.Agregations.forEach(function(element){
+        if (element==agregationLevel){
+            result=i;
+        }
+        i++;
+   }); 
+   return result;
+}    
+
+
+
+  /*  element.children(childrenName).each(function(){
+        if(dictionaryName == null)
+            Project.Info.LOM[arrayName] = $(this).find("value").text();
+        else{
+            if(index == null)
+                Project.Info.LOM[arrayName] = CBI18n.gettext($(this).find("value").text());
+            else    
+                Project.Info.LOM[arrayName] = dictionary[dictionaryName][parseInt($(this).find("value").text())-1];
+            }
+        i++;
+    });
+}*/
 
 ExportScorm.prototype.checkname=function checkname(dest,namespace,options){
     //var names = nameSpaceString.split(".");
@@ -956,6 +985,67 @@ ExportScorm.prototype.renderImslrm=function renderImslrm(dest){
    
 };    
 
+ExportScorm.prototype.renderImsmanifest=function renderImsmanifest(dest){
+    var fs = require('fs');
+    var pretty = require('pretty-data').pd;
+    var filemanifest="";
+
+    var itemstemplate = fs.readFileSync('./templates/itemscorm.hbs',{encoding:"utf8"});
+    var manifestemplate=fs.readFileSync('./templates/imsmanifest.hbs', {encoding:"utf8"});
+    var resourcetemplate=fs.readFileSync('./templates/resourcescorm.hbs', {encoding:"utf8"});
+
+    application.util.template.registerPartial("scormitem",itemstemplate);
+    application.util.template.registerPartial("resourceitem",resourcetemplate);
+
+    var imsmanifest = application.util.template.compile(manifestemplate);
+
+    //var objeto = require('./netadmin/Escriptori/handlebars/manifest_Scorm.json');
+
+    var objeto={
+    "depends" : ["/js/bootstrap-wysiwyg.js",
+                    "/js/core.js",
+                    "/js/jquery.js",
+                    "js/jquery.layout.js",
+                    "/js/jquery-ui.min.js",
+                    "/js/jquery.jsgeork.js",
+                    "/js/3149e68d-a1ec-451f-a94c-21a8bff13f2e.js",
+                    "/js/4130ef2e-70f2-4162-b2f5-81b9ded0052b.js",
+                    "/css/estilo.css",
+                    "/css/jquery-ui.min.css",
+                    "/css/jquery.jsgeork.css"
+
+    ],
+    
+    "items" :{
+        "I-1001":{
+            "title" : "Section",
+            "filename" : "index0.html",
+            "resourcecode": "R-1001",
+        },
+        "I-1002":{
+            "title" : "Secció 2",
+            "filename" : "index1.html",
+            "content" : ["/rsrc/00Imagen.png"],
+            "resourcecode": "R-1002"
+
+        },
+
+        "I-1003":{
+            "title" : "Secció 3",
+            "filename" : "index2.html",
+            "resourcecode": "R-1003"
+
+        }
+    }
+    
+};
+
+    filemanifest=imsmanifest(objeto);
+    fs.writeFileSync(dest+"imsmanifest.xml", filemanifest);
+
+
+};
+
 
 ExportScorm.prototype.copyScormfiles=function copyScormfiles(dest){
    var fs = require('fs');
@@ -990,6 +1080,7 @@ ExportScorm.prototype.paramScorm=function paramScorm(destino){
    this.renderImslrm(tempath);
    this.copyScormfiles(tempath);
    this.renderhtml(tempath);
+   this.renderImsmanifest(tempath);
    this.createZip(tempath,destino);
 
 
