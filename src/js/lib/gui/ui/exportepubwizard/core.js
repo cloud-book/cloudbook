@@ -6,6 +6,7 @@ function ExportEpubWizard(){}
 ExportEpubWizard.prototype.showIntro = function showIntro() {
 	this.initializeWizardDiv();
 	
+	
 };
 
 ExportEpubWizard.prototype.initializeWizardDiv = function() {
@@ -17,9 +18,25 @@ ExportEpubWizard.prototype.initializeWizardDiv = function() {
   		resizable:false,
   		width:850
   	});
+    
+  	
 };
 
+function requirefields(){
+	$("#titlecontainer").removeClass("has-success").addClass("has-error");
+    $("#titlebookindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
 
+    $("#authorcontainer").removeClass("has-success").addClass("has-error");
+   	$("#authorbookindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+
+   	$("#langcontainer").removeClass("has-success").addClass("has-error");
+   	$("#langindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+
+   	$("#pathcontainer").removeClass("has-success").addClass("has-error");
+   	$("#pathindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+		
+
+}
 
 function checkform() {
 
@@ -44,12 +61,16 @@ ExportEpubWizard.prototype.showExportEpubProject = function showExportEpubProjec
 	var that = e.data.that;
 	var fs = require('fs');
 	var languages=JSON.parse(fs.readFileSync('js/lib/gui/languages.json', 'utf8'));
+
+
 	
 	$("#exportepubwizard").empty();
 	var template = fs.readFileSync('./templates/exportEpubProject.wizard.hbs',{encoding:'utf8'});
 	var templatecompiled = application.util.template.compile(template);
 	
 	$("#exportepubwizard").append(templatecompiled({languages:languages}));
+
+	requirefields();
        
  	       
     
