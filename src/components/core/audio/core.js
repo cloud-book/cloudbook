@@ -139,6 +139,11 @@ AudioBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
   AudioBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 };
 
+AudioBox.prototype.getResourcesFiles = function getResourcesFiles() {
+  return [this.audiopath];
+};
+
+
 
 function updateAudioPath(dialog,that){
     var fs = window.require('fs');
