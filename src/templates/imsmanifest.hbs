@@ -45,12 +45,12 @@
 		{{#each items}}
 			{{> resourceitem}}
 		{{/each}}
-		{{#if depends}}
-		<resource identifier="COMMON_FILES" type="webcontent" adlcp:scormType="asset">
-		{{#each depends}}
-			<file href="{{this}}"/>
-		{{/each}}	
-		</resource>
-		{{/if}}
+	  {{#each depends}}
+		  <resource identifier="{{@key}}" type="webcontent" adlcp:scormType="asset">
+    {{#each this}}
+			   <file href="{{this}}"/>
+		{{/each}}	 
+		  </resource>
+    {{/each}}
 	</resources>
 </manifest>	

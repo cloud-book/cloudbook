@@ -1002,25 +1002,20 @@ ExportScorm.prototype.renderImsmanifest=function renderImsmanifest(dest){
     //var objeto = require('./netadmin/Escriptori/handlebars/manifest_Scorm.json');
 
     var objeto={
-    "depends" : ["/js/bootstrap-wysiwyg.js",
-                    "/js/core.js",
-                    "/js/jquery.js",
-                    "js/jquery.layout.js",
-                    "/js/jquery-ui.min.js",
-                    "/js/jquery.jsgeork.js",
-                    "/js/3149e68d-a1ec-451f-a94c-21a8bff13f2e.js",
-                    "/js/4130ef2e-70f2-4162-b2f5-81b9ded0052b.js",
-                    "/css/estilo.css",
-                    "/css/jquery-ui.min.css",
-                    "/css/jquery.jsgeork.css"
+    "depends" : {
+        "INTERACTIVEMULTIOPTIONS": ["rsrc/jsgeork.js","rsrc/jsgeork.css"],
+        "INTERACTIVEONEOPTIONS": ["rsrc/jsgeork.js","rsrc/jsgeork.css"],
+        "INTERACTIVEFILLINGAPS": ["rsrc/jsgeork.js","rsrc/jsgeork.css"]
 
-    ],
+    },
     
     "items" :{
         "I-1001":{
             "title" : "Section",
             "filename" : "index0.html",
-            "resourcecode": "R-1001",
+            "depends": ["INTERACTIVEMULTIOPTIONS", "INTERACTIVEONEOPTIONS"],
+            "resourcecode": "R-1001"
+
         },
         "I-1002":{
             "title" : "Secció 2",
@@ -1033,6 +1028,7 @@ ExportScorm.prototype.renderImsmanifest=function renderImsmanifest(dest){
         "I-1003":{
             "title" : "Secció 3",
             "filename" : "index2.html",
+            "depends": ["INTERACTIVEFILLINGAPS"],
             "resourcecode": "R-1003"
 
         }
