@@ -12,13 +12,16 @@ ExportHTMLSplited.prototype.createSkel = function(listpaths) {
 ExportHTMLSplited.prototype.copyCommonScripts = function copyCommonScripts(destpath) {
 	var fsextra = require('fs-extra'),
 		fs = require('fs'),
-		path = require('path');
+		path = require('path'),
+		listcommonscripts = [];
 	this.listscripts.forEach(function(rsrc){
 		listfiles = fs.readdirSync(rsrc);
 		listfiles.forEach(function(element){
 			fsextra.copySync(path.join(rsrc,element),path.join(destpath,'js','lib_external',element));
+			listcommonscripts.push(path.join('js','lib_external',element));
 		});
 	});
+	return listcommonscripts;
 };
 
 ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
@@ -29,14 +32,11 @@ ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
 
 	skel = [destpath,path.join(destpath,'js'),path.join(destpath,'js','lib'),path.join(destpath,'js','lib_external'),path.join(destpath,'css'),path.join(destpath,'img'),path.join(destpath,'rsrc')];
 	this.createSkel(skel);
-	this.copyCommonScripts(destpath);
 
 	htmlinfo.items.root = {};
 	this.renderSection(destpath,'root',htmlinfo.items.root,htmlinfo.depends);
 
-	// copy files from rsrc
 	fsextra.copySync(path.join(Project.Info.projectpath,'rsrc'),path.join(destpath,'rsrc'));
-	// copy files from components
 	Object.keys(htmlinfo.depends).forEach(function(component){
 		var filestocopy = [];
 		if(Cloudbook.Actions[component].metadata.external_scripts){
@@ -60,11 +60,10 @@ ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
 		}
 	});
 	
-	// añadir CommonResources a depends
-
+	htmlinfo.depends['CommonResource']= this.copyCommonScripts(destpath);
 
 	htmlinfo.items = htmlinfo.items.root.sections.items;
-	// delete root.html
+	fsextra.deleteSync(path.join(destpath,'root.html'));
 	return htmlinfo;
 }
 
