@@ -1012,52 +1012,9 @@ ExportScorm.prototype.renderImsmanifest=function renderImsmanifest(dest){
 
     var imsmanifest = application.util.template.compile(manifestemplate);
 
-   
-    var objeto={
-    "depends" : {
-        "INTERACTIVEMULTIOPTIONS": ["rsrc/jsgeork.js","rsrc/jsgeork.css"],
-        "INTERACTIVEONEOPTIONS": ["rsrc/jsgeork.js","rsrc/jsgeork.css"],
-        "INTERACTIVEFILLINGAPS": ["rsrc/jsgeork.js","rsrc/jsgeork.css"]
-
-    },
-    
-    "items" :{
-        "I-1001":{
-            "title" : "Section",
-            "filename" : "index0.html",
-            "depends": ["INTERACTIVEMULTIOPTIONS", "INTERACTIVEONEOPTIONS"],
-            "resourcecode": "R-1001",
-            "sections":{
-                "code" : "II-1001",
-                "items" : {
-                    "I1012":{
-                        "title" : "Titulo SubSeccion",
-                        "filename" : "rsrc/index12.html",
-                        "resourcecode":"R-1012"
-                              
-                    }
-                }
-             }   
-
-        },
-        "I-1002":{
-            "title" : "Secció 2",
-            "filename" : "index1.html",
-            "content" : ["/rsrc/00Imagen.png"],
-            "resourcecode": "R-1002"
-
-        },
-
-        "I-1003":{
-            "title" : "Secció 3",
-            "filename" : "index2.html",
-            "depends": ["INTERACTIVEFILLINGAPS"],
-            "resourcecode": "R-1003"
-
-        }
-    }
-    
-};
+    var ehs = new ExportHTMLSplited();
+    var objeto = ehs.exportHTML(dest);
+    window.cosa = objeto;
 
     filemanifest=imsmanifest(objeto);
     fs.writeFileSync(dest+"imsmanifest.xml", filemanifest);
