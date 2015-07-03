@@ -195,7 +195,14 @@
 		   
     };
 
-  
+    function export_scorm(){
+      
+      var exportwizard = application.ui.exportscormwizard.core.getInstance();
+      exportwizard.initializeWizardDiv();
+      exportwizard.showExportScormProject({data:{that:exportwizard}});
+   
+    };
+
 
 
     var export_project={
@@ -223,7 +230,10 @@
       click:export_epub
     };
    
-  
+    var export_scorm={
+      label:CBI18n.gettext('SCORM 2004 4th'),
+      click:export_scorm
+    };
     
     /**
      * Generate menubar
@@ -242,7 +252,8 @@
     export_project_menu.append(new gui.MenuItem(export_pdf));
     export_project_menu.append(new gui.MenuItem(export_webzip));
     export_project_menu.append(new gui.MenuItem(export_epub));
-  
+    export_project_menu.append(new gui.MenuItem(export_scorm)); 
+    
     export_project.submenu=export_project_menu;
 
     file.append(new gui.MenuItem(new_project));

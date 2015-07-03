@@ -505,7 +505,7 @@ function saveDuration(element, childrenName, arrayName, elementsName)
 	   		$(this).children("description").each(function(){
 	  			var arrayElements = $(this).html().split("</string>");
 	  			arrayElements.forEach(function(element){
-	  				if(element != "")
+	  				if(element.trim() != "")
 	  				{
 					  	Project.Info.LOM[arrayName+i] = {};
 				  		Project.Info.LOM[arrayName+i][elementsName[6]+i] = element.split('"')[2].replace('>', '');
@@ -877,7 +877,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
   		i = 1;
   		$(this).children("title").each(function(){
   			$(this).text().split("</string>").forEach(function(element){
-  				if(element != ""){
+  				if(element.trim() != ""){
   					saveDataArrayValues('tit_'+i, [['title_'+i, element.split('"')[2].replace('>', '')], ['titleLang_'+i, searchLanguage(element.split('"')[1])]], 1);
 	  				i++;
   				}
@@ -894,7 +894,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
   		i = 1;
    		$(this).children("version").each(function(){
   			$(this).html().split("</string>").forEach(function(element){
-  				if(element != "")
+  				if(element.trim() != "")
   				{
   					saveDataArrayValues('versionlifecycle_'+i, [['versionlifecycle1_'+i, element.split('"')[2].replace('>', '')], ['lifeCycleLang_'+i, searchLanguage(element.split('"')[1])]], 1)
 	  				i++;
@@ -931,7 +931,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
    		$(this).children("installationRemarks").each(function(){
   			var arrayElements = $(this).html().split("</string>");
   			arrayElements.forEach(function(element){
-  				if(element != "")
+  				if(element.trim() != "")
   				{
   					saveDataArrayValues('installRemTech_'+i, [['installRemTechValue_'+i, element.split('"')[2].replace('>', '')], ['LangRemTech_'+i, searchLanguage(element.split('"')[1])]], 1);
 	  				i++;
@@ -942,7 +942,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
    		$(this).children("otherPlatformRequirements").each(function(){
   			var arrayElements = $(this).html().split("</string>");
   			arrayElements.forEach(function(element){
-  				if(element != "")
+  				if(element.trim() != "")
   				{
 					saveDataArrayValues('requirementsRemTech_'+i, [['requirementsRemTechValue_'+i, element.split('"')[2].replace('>', '')], ['LangOtherTech_'+i, searchLanguage(element.split('"')[1])]], 1);				  	
 	  				i++;
