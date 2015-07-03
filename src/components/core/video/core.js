@@ -138,6 +138,9 @@ VideoBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
   VideoBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
 };
 
+VideoBox.prototype.getResourcesFiles = function getResourcesFiles() {
+  return [this.videopath];
+};
 
 function updateVideoPath(dialog,that){
     var fs = window.require('fs');

@@ -263,6 +263,14 @@ ForeknowledgeBox.prototype.triggerAddEditorView = function triggerAddEditorView(
   jquerycbo.height(jquerycbo.find('.cbcontainer').outerHeight(true) + 10 );
 };
 
+ForeknowledgeBox.prototype.getResourcesFiles = function getResourcesFiles() {
+  if(this.typebox === 'custom'){
+    return [this.customimage];
+  }
+  return [];
+};
+
+
 ForeknowledgeBox.prototype.handlerExtraCommands = function handlerExtraCommands(command) {
   var tablevalues=[];
   var fullSize=0;

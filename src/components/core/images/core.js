@@ -128,6 +128,9 @@ ImageBox.prototype.editButton = function editButton(e) {
   })
 };
 
+ImageBox.prototype.getResourcesFiles = function getResourcesFiles() {
+  return [this.imgpath];
+};
 
 function updateImagePath(dialog,that){
     var fs = window.require('fs');
