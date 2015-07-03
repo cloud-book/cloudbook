@@ -88,6 +88,13 @@ IncludeSite.prototype.clickButton = function clickButton(controllerClass) {
     controllerClass.addCBObjectIntoSelectedSection(that.editorView(),that);dialog.dialog('close')});
 };
 
+IncludeSite.prototype.getResourcesFiles = function getResourcesFiles() {
+  var path = require('path');
+  var folder = path.dirname(this.url);
+  return getAllFiles(path.join(Project.Info.projectpath,"/rsrc/",folder),path.join(Project.Info.projectpath,"/rsrc/"));
+};
+
+
 
 IncludeSite.prototype.editButton = function editButton(e) {
   var dialog = IncludeSite.super_.prototype.editButton.call(this,e);
@@ -99,6 +106,23 @@ IncludeSite.prototype.editButton = function editButton(e) {
     copySite($("#url").val(),that);
   });
 };
+
+function getAllFiles(orig,toremove){
+        var listfiles = [];
+        var finallist = [];
+        var path = require('path');
+        var fs = require('fs');
+        listfiles = fs.readdirSync(orig).map(function(file){ return path.join(orig,file)});
+        listfiles.forEach(function(file){
+                var stat = fs.statSync(file);
+                if (stat.isDirectory()){
+                        finallist = finallist.concat(getAllFiles(file,toremove));
+                }
+                finallist.push(file.replace(toremove,''));
+        });
+        return finallist;
+}
+
 
 function copySite(orig,that){
     var fs = window.require('fs');

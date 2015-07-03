@@ -93,7 +93,7 @@ ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,cbse
 		htmlinfo.sections = {code:"II" + cbsectionid ,items:{}};
 	}
 
-	debugger;
+	
 	var commonfiles = fs.readdirSync(path.join(destpath,'js','lib_external'));
 	commonfiles.forEach(function(element){
 		templateinfo.scripts.push(path.join('js','lib_external',element));

@@ -135,10 +135,8 @@ FlashBox.prototype.editButton = function editButton(e) {
 };
 
 FlashBox.prototype.getResourcesFiles = function getResourcesFiles() {
-  this.resourcepath;
+  return [this.resourcepath];
 };
-
-
 
 
 function updateFlashPath(dialog,that){
