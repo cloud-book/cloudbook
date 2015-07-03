@@ -2,11 +2,14 @@
 	<item identifier="{{@key}}" isvisible="true">
 		<title>{{title}}</title>
 		<item identifier="{{sections.code}}" isvisible="true" identifierref="{{resourcecode}}">
-			<title>""</title>
+			<title>>&lt;-</title>
 		</item>
 		{{#each sections.items}}
 		{{> scormitem}}
 		{{/each}}
+		<imsss:sequencing>
+          	<imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"/>
+        </imsss:sequencing>
 	</item>
 {{else}}
 	<item identifier="{{@key}}" isvisible="true" identifierref="{{resourcecode}}">

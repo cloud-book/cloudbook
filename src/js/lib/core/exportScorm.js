@@ -16,6 +16,10 @@ function ExportScorm(){
 };
 
 
+/**
+ * Auxiliary function to generate the necessary json
+    to get the imslrm
+ */
 function parserImslrm() {
     var metadatos=Project.Info.LOM;
     var listaclaves = Object.keys(metadatos);
@@ -27,7 +31,7 @@ function parserImslrm() {
       
     // General
         
-        // Analizando categorias
+        // Analyzing categories
         if(e.indexOf("cat_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"general.identifier",{last:"array"});
@@ -39,7 +43,7 @@ function parserImslrm() {
             }
             imslrm.general.identifier.push(x);
         }
-       //Analizando titulos
+       //analyzing titles
         if(e.indexOf("tit_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"general.title",{last:"array"});
@@ -58,7 +62,7 @@ function parserImslrm() {
             }    
         }    
         
-        //Analizando idiomas
+        //Analyzingo languages
         if(e.indexOf("idiom_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"general.language",{last:"array"});
@@ -71,7 +75,7 @@ function parserImslrm() {
             imslrm.general.language.push(x);
         }    
 
-        //Analizando descriptions
+        //Analyzing descriptions
         if(e.indexOf("descGeneral_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"general.description",{last:"array"});
@@ -94,7 +98,7 @@ function parserImslrm() {
             }    
         }    
 
-         //Analizando keywords
+         //Analyzing keywords
         if(e.indexOf("keywordGeneral_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"general.keyword",{last:"array"});
@@ -115,7 +119,7 @@ function parserImslrm() {
             }    
         }    
 
-        //Analizando coverage
+        //Analyzing coverage
         if(e.indexOf("coverage_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"general.coverage",{last:"array"});
@@ -135,7 +139,7 @@ function parserImslrm() {
             }    
         }    
 
-        //Analizando structure
+        //Analyzing structure
                
         if(e.indexOf("structuresGeneral_1") === 0 ){
                       
@@ -143,7 +147,7 @@ function parserImslrm() {
       
         }
 
-         //Analizando aggregationLevel
+         //Analyzing aggregationLevel
                
         if(e.indexOf("aggregationLevels_1") === 0 ){
             imslrm.general.aggregationLevel=searchCodeAggregation(Project.Info.LOM[e]);;
@@ -153,7 +157,7 @@ function parserImslrm() {
 
     //lifeCycle
         
-         //Analizando versionlifeCycle
+         //Analyzing versionlifeCycle
         if(e.indexOf("versionlifecycle_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"lifeCycle.version",{last:"array"});
@@ -172,14 +176,14 @@ function parserImslrm() {
                 imslrm.lifeCycle.version.push(x);
             }
         }    
-         //Analizando status
+         //Analyzing status
                
         if(e.indexOf("statusLifeCycle_1_1") === 0 ){
             imslrm.lifeCycle.status=Project.Info.LOM[e];
     
         }
 
-        //Analizando contribute
+        //Analyzing contribute
                
         if(e.indexOf("contrLyfeCycle_") === 0){
             var aux = metadatos[e];
@@ -232,7 +236,7 @@ function parserImslrm() {
         
     //Metametada
 
-        //Analizando Identifier
+        //Analyzing Identifier
         if(e.indexOf("catMetadata_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"metaMetadata.identifier",{last:"array"});
@@ -245,21 +249,21 @@ function parserImslrm() {
             imslrm.metaMetadata.identifier.push(x);
         }
 
-        //Analizando MetaMetadata Schema
+        //Analyzing MetaMetadata Schema
 
         if (e.indexOf("schemaMetametadataValue_1")===0){
                         
             imslrm.metaMetadata.metadataSchema=Project.Info.LOM[e];
         }
        
-       //Analizando MetaMetadata Language
+       //Analyzing MetaMetadata Language
 
         if (e.indexOf("langMetametadataValue_")===0){
               
             imslrm.metaMetadata.langMetametada=searchCodelanguage(Project.Info.LOM[e]);
         }
 
-       // Analizando MetaMetada contribute
+       // Analyzing MetaMetada contribute
 
                       
         if(e.indexOf("contrMetametadata_") === 0){
@@ -310,7 +314,7 @@ function parserImslrm() {
         }    
 
     // Technical
-        //Analizando format Technical
+        //Analyzing format Technical
         if(e.indexOf("formatTechnical_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"technical.format",{last:"array"});
@@ -323,13 +327,13 @@ function parserImslrm() {
             imslrm.technical.format.push(x);
         }        
 
-        //Analizando size Technical
+        //Analyzing size Technical
         if(e.indexOf("sizeTechnicalValue_1") === 0 ){
             imslrm.technical.size=Project.Info.LOM[e];
            
         }     
 
-        //Analizando  location Technical
+        //Analyzing  location Technical
         if(e.indexOf("locationTechnical_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"technical.location",{last:"array"});
@@ -344,7 +348,7 @@ function parserImslrm() {
             }    
         }   
 
-        // Analizando requeriments Technical
+        // Analyzing requeriments Technical
 
        if(e.indexOf("requirementsTechnical_") === 0){
             var aux = metadatos[e];
@@ -370,7 +374,7 @@ function parserImslrm() {
           
         }  
 
-       // Analizando installRemarks Technical
+       // Analyzing installRemarks Technical
           
         if(e.indexOf("installRemTech_") === 0 ){
             
@@ -393,7 +397,7 @@ function parserImslrm() {
 
         }      
 
-       // Analizando otherPlatformRequirements Technical
+       // Analyzing otherPlatformRequirements Technical
 
         if(e.indexOf("requirementsRemTech_") === 0 ){
             
@@ -469,16 +473,16 @@ function parserImslrm() {
           
         }  
 
-    // Analizando Educational
+    // Analyzing Educational
         
-        // Analizando Educational Interactivity Type
+        // Analyzing Educational Interactivity Type
         if(e.indexOf("intTypeEducationalValue_1") === 0 ){
             ExportScorm.prototype.checkname(imslrm,"educational",{last:"list"});
             imslrm.educational.interactivityType=Project.Info.LOM[e];
        
         } 
 
-        // Analizando Educational Resource Type
+        // Analyzing Educational Resource Type
         if(e.indexOf("resourceTypeEducational_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"educational.learningResourceType",{last:"array"});
@@ -492,21 +496,21 @@ function parserImslrm() {
         }  
 
 
-        // Analizando Interactivity Level
+        // Analyzing Interactivity Level
         
         if(e.indexOf("levelIntEducationalValue_1") === 0 ){
             imslrm.educational.levelIntEducational=Project.Info.LOM[e];
        
         } 
 
-        // Analizando Semantic Level
+        // Analyzing Semantic Level
 
         if(e.indexOf("levelDensEducationalValue_1") === 0 ){
             imslrm.educational.levelDensEducational=Project.Info.LOM[e];
        
         } 
 
-        // Analizando intendedEndUserRole
+        // Analyzing intendedEndUserRole
         if(e.indexOf("endUserEducational_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"educational.intendedEndUserRole",{last:"array"});
@@ -519,7 +523,7 @@ function parserImslrm() {
             imslrm.educational.intendedEndUserRole.push(x);
         }  
 
-        // Analizando contextEducational_
+        // Analyzing contextEducational_
         if(e.indexOf("contextEducational_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"educational.context",{last:"array"});
@@ -532,7 +536,7 @@ function parserImslrm() {
             imslrm.educational.context.push(x);
         }  
 
-        // Analizando rangeAgeEducational_
+        // Analyzing rangeAgeEducational_
         if(e.indexOf("rangeAgeEducational_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"educational.typicalAgeRange",{last:"array"});
@@ -553,7 +557,7 @@ function parserImslrm() {
             }    
         }  
 
-        // Analizando difficulty
+        // Analyzing difficulty
 
         if(e.indexOf("difficultyEducationalValue_1") === 0 ){
             imslrm.educational.difficulty=Project.Info.LOM[e];
@@ -561,7 +565,7 @@ function parserImslrm() {
         }
 
 
-        //Analizando dtypicalLearningTime
+        //Analyzing dtypicalLearningTime
 
         ExportScorm.prototype.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})
 
@@ -615,7 +619,7 @@ function parserImslrm() {
             }
         }  
 
-        // Analizando description
+        // Analyzing description
         if(e.indexOf("descEducationUse_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"educational.description",{last:"array"});
@@ -635,7 +639,7 @@ function parserImslrm() {
             }    
         }  
 
-        // Analizando language
+        // Analyzing language
         if(e.indexOf("languageEducationalUse_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"educational.language",{last:"array"});
@@ -648,7 +652,7 @@ function parserImslrm() {
             imslrm.educational.language.push(x);
         }  
 
-        // Analizando cognitiveProcess
+        // Analyzing cognitiveProcess
         if(e.indexOf("processcogEducational_") === 0 ){
             
             ExportScorm.prototype.checkname(imslrm,"educational.cognitiveProcess",{last:"array"});
@@ -661,24 +665,24 @@ function parserImslrm() {
             imslrm.educational.cognitiveProcess.push(x);
         }  
 
-      //Analizando  rigths
+      //Analyzing  rigths
 
 
-        // Analizando rigths cost
+        // Analyzing rigths cost
         if(e.indexOf("costRightsValue_1") === 0 ){
             ExportScorm.prototype.checkname(imslrm,"rights",{last:"list"});
             imslrm.rights.cost=Project.Info.LOM[e];
        
         } 
 
-        // Analizando rights copyrightAndOtherRestrictions
+        // Analyzing rights copyrightAndOtherRestrictions
 
         if(e.indexOf("copyrightRightsValue_1") === 0 ){
             imslrm.rights.copyrightAndOtherRestrictions=Project.Info.LOM[e];
        
         }
 
-        // Analizando rights description
+        // Analyzing rights description
 
         if(e.indexOf("descRights_") === 0 ){
            
@@ -701,7 +705,7 @@ function parserImslrm() {
 
         }
 
-        // Analizando rights access
+        // Analyzing rights access
 
         if(e.indexOf("accessTypeRights_1") === 0 ){
              ExportScorm.prototype.checkname(imslrm,"rights.access",{last:"list"});
@@ -721,7 +725,7 @@ function parserImslrm() {
        
         }
 
-    // Analizando  Relations
+    // Analyzing  Relations
         
        if(e.indexOf("relationRelations_") === 0){
             var aux = metadatos[e];
@@ -760,7 +764,7 @@ function parserImslrm() {
           
         }     
 
-    // Analizando Annotation      
+    // Analyzing Annotation      
 
         if(e.indexOf("annotationAnnotations_") === 0){
             var aux = metadatos[e];
@@ -819,7 +823,7 @@ function parserImslrm() {
           
         }   
 
-    // Analizando classification 
+    // Analyzing classification 
     
         if(e.indexOf("classificationsClassification_") === 0){  
             var aux = metadatos[e];
@@ -896,6 +900,10 @@ function parserImslrm() {
     return imslrm;
 };
 
+/**
+ * Auxiliary function to get the code for metadata language
+ */
+
 function searchCodelanguage(language)
 {
     var result = "";
@@ -908,6 +916,9 @@ function searchCodelanguage(language)
     return result;
 };    
 
+/**
+ * Auxiliary function to get the code for metadata aggregation level
+ */
 function searchCodeAggregation(agregationLevel)
 {
     var result="";
@@ -923,19 +934,10 @@ function searchCodeAggregation(agregationLevel)
 }    
 
 
-
-  /*  element.children(childrenName).each(function(){
-        if(dictionaryName == null)
-            Project.Info.LOM[arrayName] = $(this).find("value").text();
-        else{
-            if(index == null)
-                Project.Info.LOM[arrayName] = CBI18n.gettext($(this).find("value").text());
-            else    
-                Project.Info.LOM[arrayName] = dictionary[dictionaryName][parseInt($(this).find("value").text())-1];
-            }
-        i++;
-    });
-}*/
+/**
+ * Auxiliary function to check and / or generate json structure necessary 
+   for parsing metadata project during the generation of imslrm.xml file
+ */  
 
 ExportScorm.prototype.checkname=function checkname(dest,namespace,options){
     //var names = nameSpaceString.split(".");
@@ -961,6 +963,10 @@ ExportScorm.prototype.checkname=function checkname(dest,namespace,options){
     }
 };
 
+/**
+ * Function to create a temp folder with copy all the files needed to
+   generate a scorm project
+ */  
 
 ExportScorm.prototype.createTemppath=function createTemppath(){
     var mktemp = require('mktemp');
@@ -970,6 +976,9 @@ ExportScorm.prototype.createTemppath=function createTemppath(){
 };
 
 
+/**
+ * Function to generate the imslrm.xml file
+ */
 ExportScorm.prototype.renderImslrm=function renderImslrm(dest){
     
     var fs = require('fs');
@@ -985,6 +994,10 @@ ExportScorm.prototype.renderImslrm=function renderImslrm(dest){
    
 };    
 
+/** 
+ * Function to get the html files of the project
+ * Generating the imsmanifest.xml
+ */
 ExportScorm.prototype.renderImsmanifest=function renderImsmanifest(dest){
     var fs = require('fs');
     var pretty = require('pretty-data').pd;
@@ -999,8 +1012,7 @@ ExportScorm.prototype.renderImsmanifest=function renderImsmanifest(dest){
 
     var imsmanifest = application.util.template.compile(manifestemplate);
 
-    //var objeto = require('./netadmin/Escriptori/handlebars/manifest_Scorm.json');
-
+   
     var objeto={
     "depends" : {
         "INTERACTIVEMULTIOPTIONS": ["rsrc/jsgeork.js","rsrc/jsgeork.css"],
@@ -1014,7 +1026,18 @@ ExportScorm.prototype.renderImsmanifest=function renderImsmanifest(dest){
             "title" : "Section",
             "filename" : "index0.html",
             "depends": ["INTERACTIVEMULTIOPTIONS", "INTERACTIVEONEOPTIONS"],
-            "resourcecode": "R-1001"
+            "resourcecode": "R-1001",
+            "sections":{
+                "code" : "II-1001",
+                "items" : {
+                    "I1012":{
+                        "title" : "Titulo SubSeccion",
+                        "filename" : "rsrc/index12.html",
+                        "resourcecode":"R-1012"
+                              
+                    }
+                }
+             }   
 
         },
         "I-1002":{
@@ -1042,6 +1065,9 @@ ExportScorm.prototype.renderImsmanifest=function renderImsmanifest(dest){
 
 };
 
+/**
+ * Function to copy the extra files (xsd) indicates by the standar scorm
+ */
 
 ExportScorm.prototype.copyScormfiles=function copyScormfiles(dest){
    var fs = require('fs');
@@ -1062,20 +1088,16 @@ ExportScorm.prototype.copyScormfiles=function copyScormfiles(dest){
 };
    
 
-ExportScorm.prototype.renderhtml=function renderhtml(dest){
-    var createhtml = application.exporthtml.core.getInstance();
-    createhtml.do_html(dest);
 
-};
-
-
+/**
+ * Function to manage the scorm generation
+ */
 ExportScorm.prototype.paramScorm=function paramScorm(destino){
      
    var tempath = this.createTemppath();       
    
    this.renderImslrm(tempath);
    this.copyScormfiles(tempath);
-   this.renderhtml(tempath);
    this.renderImsmanifest(tempath);
    this.createZip(tempath,destino);
 
@@ -1083,7 +1105,9 @@ ExportScorm.prototype.paramScorm=function paramScorm(destino){
 };
 
 
-
+/** 
+ * Function to create a zip with the files that make up the scorm project
+ */
 ExportScorm.prototype.createZip=function createZip(directorio,destino){    
     
       var zipFolder = require('zip-folder');
