@@ -1014,7 +1014,7 @@ ExportScorm.prototype.renderImsmanifest=function renderImsmanifest(dest){
 
     var ehs = new ExportHTMLSplited();
     var objeto = ehs.exportHTML(dest);
-    window.cosa = objeto;
+   
 
     filemanifest=imsmanifest(objeto);
     fs.writeFileSync(dest+"imsmanifest.xml", filemanifest);
