@@ -27,14 +27,19 @@ ExportHTMLSplited.prototype.copyCommonScripts = function copyCommonScripts(destp
 ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
 	var fsextra = require('fs-extra'),
 		path = require('path'),
-		skel = [];
+		skel = [],
+		listcommonscripts = [],
 		htmlinfo = {depends:{},items:{}};
 
 	skel = [destpath,path.join(destpath,'js'),path.join(destpath,'js','lib'),path.join(destpath,'js','lib_external'),path.join(destpath,'css'),path.join(destpath,'img'),path.join(destpath,'rsrc')];
 	this.createSkel(skel);
-
+	listcommonscripts = this.copyCommonScripts(destpath);
 	htmlinfo.items.root = {};
 	this.renderSection(destpath,'root',htmlinfo.items.root,htmlinfo.depends);
+
+
+	// Hay que meter el titulo del proyecto en el htmlinfo titleproyect
+
 
 	fsextra.copySync(path.join(Project.Info.projectpath,'rsrc'),path.join(destpath,'rsrc'));
 	Object.keys(htmlinfo.depends).forEach(function(component){
@@ -60,7 +65,7 @@ ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
 		}
 	});
 	
-	htmlinfo.depends['CommonResource']= this.copyCommonScripts(destpath);
+	htmlinfo.depends['CommonResource'] = listcommonscripts;
 
 	htmlinfo.items = htmlinfo.items.root.sections.items;
 	fsextra.deleteSync(path.join(destpath,'root.html'));
@@ -88,7 +93,7 @@ ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,cbse
 		htmlinfo.sections = {code:"II" + cbsectionid ,items:{}};
 	}
 
-
+	debugger;
 	var commonfiles = fs.readdirSync(path.join(destpath,'js','lib_external'));
 	commonfiles.forEach(function(element){
 		templateinfo.scripts.push(path.join('js','lib_external',element));
