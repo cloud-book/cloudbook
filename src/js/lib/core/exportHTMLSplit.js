@@ -75,6 +75,7 @@ ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
 	else{
 		htmlinfo["Title_Proyect"] = "Cloudbook project";
 	}
+	htmlinfo['OrganizationID'] = 'Cloudbook-'+CBUtil.uniqueId();
 	return htmlinfo;
 }
 
