@@ -10,5 +10,6 @@ module.exports = rc('cloudbook-dev', {
     buildDir: './webkitbuilds',
     buildType: 'default',
     version: 'v0.12.0',
+    extraffmpegpath:'/usr/lib/chromium-browser/libffmpegsumo.so' //This ffmpeg must support aac/ac3/mpeg4audio/h264/mov/mp3
     argv: process.argv.slice(2)
 })
