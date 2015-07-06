@@ -69,7 +69,7 @@ ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
 
 	htmlinfo.items = htmlinfo.items.root.sections.items;
 	fsextra.deleteSync(path.join(destpath,'root.html'));
-	htmlinfo.["Title_Proyect"] = Project.Info.DublinCore.title;
+	htmlinfo["Title_Proyect"] = Project.Info.DublinCore.title;
 	return htmlinfo;
 }
 
