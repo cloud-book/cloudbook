@@ -69,7 +69,12 @@ ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
 
 	htmlinfo.items = htmlinfo.items.root.sections.items;
 	fsextra.deleteSync(path.join(destpath,'root.html'));
-	htmlinfo["Title_Proyect"] = Project.Info.DublinCore.title;
+	if(Project.Info.LOM.tit_1.title_1){
+		htmlinfo["Title_Proyect"] = Project.Info.LOM.tit_1.title_1;
+	}
+	else{
+		htmlinfo["Title_Proyect"] = "Cloudbook project";
+	}
 	return htmlinfo;
 }
 
