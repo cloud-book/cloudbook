@@ -22,7 +22,7 @@
    	    <lom:lom>
        	    <lom:general>
  	       		 <lom:description>
-    	         	<lom:string language="es">{{Titulo_Proyecto}}</lom:string>
+    	         	<lom:string language="es">{{Title_Proyect}}</lom:string>
     	    	</lom:description>
         	</lom:general>
     	</lom:lom>
@@ -31,7 +31,7 @@
 
 	<organizations default="1000">
     	<organization identifier="1000"  structure="hierarchical">
-      		<title>Proyecto de Prueba</title>
+      		<title>{{Title_Proyect}}</title>
 				{{#each items}}
 					{{> scormitem}}
 				{{/each}}
@@ -45,12 +45,12 @@
 		{{#each items}}
 			{{> resourceitem}}
 		{{/each}}
-		{{#if depends}}
-		<resource identifier="COMMON_FILES" type="webcontent" adlcp:scormType="asset">
-		{{#each depends}}
-			<file href="{{this}}"/>
-		{{/each}}	
-		</resource>
-		{{/if}}
+	  {{#each depends}}
+		  <resource identifier="{{@key}}" type="webcontent" adlcp:scormType="asset">
+    {{#each this}}
+			   <file href="{{this}}"/>
+		{{/each}}	 
+		  </resource>
+    {{/each}}
 	</resources>
 </manifest>	
