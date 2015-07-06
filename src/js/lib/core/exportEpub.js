@@ -37,7 +37,7 @@ ExportEpub.prototype.renderEpub = function renderEpub(parametrosEpub,contenido) 
         author: parametrosEpub.author, // *Required, name of the author. 
         publisher:publisher, // optional 
         cover: parametrosEpub.cover, // Url or File path both ok. 
-        lang:"es",
+        lang:parametrosEpub.lang,
         content:contenido 
      };
 
