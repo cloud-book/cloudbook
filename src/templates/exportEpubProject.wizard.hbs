@@ -1,29 +1,47 @@
-<div id="exportEpubProject"class="form-group has-feedback ">
+<div id="exportEpubProject"class="form-group has-feedback">
       
-          <div>
-		<label for="titlebook">{{gettext "Title of de book:"}}</label><input name="titlebook" class="form-control" placeholder="{{gettext "Enter the title of the book"}}" value="{{titlebook}}"</input> 
+     <div id="titlecontainer" class="form-group has-feedback">
+		<label for="titlebook">{{gettext "Title of de book:"}}</label><input name="titlebook" class="form-control" data-required="true" placeholder="{{gettext "Enter the title of the book"}}" value="{{titlebook}}" aria-describedby="titlebookSuccess2Status"></input> 
+			<span id="titlebookindicator" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			<span id="titlebookSuccess2Status" class="sr-only">(success)</span>
 	 </div>
 	 <p><p>
-	 <div>
-		<label for="authorbook">{{gettext "Author:"}}</label><input name="authorbook" class="form-control" placeholder="{{gettext "Enter the author of the book"}}" value="{{authorbook}}"</input> 
+	 <div id="authorcontainer" class="form-group has-feedback">
+		<label for="authorbook">{{gettext "Author:"}}</label><input name="authorbook" class="form-control" data-required="true" placeholder="{{gettext "Enter the author of the book"}}" value="{{authorbook}}" aria-describedby="authorSuccess2Status"></input> 
+		<span id="authorbookindicator" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		<span id="authorSuccess2Status" class="sr-only">(success)</span>
 	 </div>
 	 <p><p>
 	 <div>
 		<label for="publisherbook">{{gettext "Publisher:"}}</label><input name="publisherbook" class="form-control" placeholder="{{gettext "Enter the publisher of the book"}}" value="{{publisherbook}}"</input> 
 	 </div>
 	 <p><p>
+	 <div id="langcontainer" class="form-group has-feedback">
+	 	<label for="lang">{{gettext "Language:"}} </label>
+	 		<select name="lang" class="form-control" aria-describedby="langSuccess2Status"> 
+				<option value="0" selected="selected">{{gettext "Choice a language"}}</option>
+			{{#each languages}}
+				<option value="{{this.code}}">{{this.name}}</option>
+			{{/each}}
+			</select> 
+			<span id="langindicator" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			<span id="langSuccess2Status" class="sr-only">(success)</span>
+ 	</div>
+	<p><p>
 	<div>
-		<label for="coverbook">{{gettext "Path of the cover:"}}</label><input name="coverbook" type="file"</label> 
+		<label for="coverbook">{{gettext "Path of the cover:"}}</label><input name="coverbook" type="file"></input> 
 	 </div>
 	<p><p>
-     <div>
-		<label>{{gettext "Path where save of epub file:"}}</label><input name="path" type="file" nwsaveas="project.epub" disabled="disabled"</label> 
+     <div id="pathcontainer" class="form-group has-feedback">
+		<label>{{gettext "Path where save of epub file:"}}</label><input name="path" type="file" nwsaveas="project.epub" aria-describedby="pathSuccess2Status"></input> 
+		<span id="pathindicator" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		<span id="pathSuccess2Status" class="sr-only">(success)</span>
      </div>
 </div>
 <p><p>
 <div> 
-<button id="exportepubback">{{gettext "Cancel"}}</button>
-<button id="exportepubbtn" disabled="disabled">{{gettext "Generate EPUB"}}</button>
+<button id="exportepubback" class="btn" >{{gettext "Cancel"}}</button>
+<button id="exportepubbtn" class="btn" disabled="disabled">{{gettext "Generate EPUB"}}</button>
 </div>
 <p><p>
 <div class="waitingOK" style="display:none"><font color="#FC0202"><strong>{{gettext "EPUB Generation in progress. Please wait a moment..."}}</strong></font></div>

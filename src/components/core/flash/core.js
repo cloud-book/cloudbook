@@ -134,8 +134,9 @@ FlashBox.prototype.editButton = function editButton(e) {
   dialog.callbacks.push(function(){updateFlashPath(dialog,that)});
 };
 
-
-
+FlashBox.prototype.getResourcesFiles = function getResourcesFiles() {
+  return [this.resourcepath];
+};
 
 
 function updateFlashPath(dialog,that){

@@ -358,5 +358,9 @@ CBObject.prototype.cloneTrigger = function cloneTrigger() {
   this.uniqueid = CBUtil.uniqueId();
 };
 
+CBObject.prototype.getResourcesFiles = function getResourcesFiles() {
+	return [];
+};
+
 module.exports = CBObject;
 //@ sourceURL=/usr/share/cloudbook/src/js/lib/core/components/cbobject.js
