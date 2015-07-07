@@ -115,7 +115,7 @@ TextBox.prototype.disableEditMode = function(e) {
 TextBox.prototype.HTMLtags = function HTMLtags(node){
   var score = 0;
   var tagTypes = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
-  'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA', 'EM','B', 'I', 'U'];
+  'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA', 'EM','B', 'I', 'U', 'FONT'];
   
   if(tagTypes.indexOf(node.tagName) > -1) score ++;
 
@@ -124,7 +124,7 @@ TextBox.prototype.HTMLtags = function HTMLtags(node){
 
 TextBox.prototype.HTMLtagNames = function HTMLtagNames(){
   return ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
-  'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA', 'EM','B', 'I', 'U'];
+  'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA', 'EM','B', 'I', 'U', 'FONT'];
 }
 TextBox.prototype.importHTML = function importHTML(node, filePath){
   if(node.tagName != null)

@@ -224,8 +224,7 @@ ForeknowledgeBox.prototype.disableEditMode = function(e) {
 
 ForeknowledgeBox.prototype.HTMLtags = function HTMLtags(node){
   var score = 0;
-  var tagTypes = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
-  'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA'];
+  var tagTypes = [];
   
   if(tagTypes.indexOf(node.tagName) > -1) score ++;
 
@@ -233,8 +232,7 @@ ForeknowledgeBox.prototype.HTMLtags = function HTMLtags(node){
 };
 
 ForeknowledgeBox.prototype.HTMLtagNames = function HTMLtagNames(){
-  return ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'UL', 'OL', 'A', 'SPAN', 'LABEL', 'BUTTON', 'INPUT', 'ADDRESS', 'BLOCKQUOTE', 'DL', 'TABLE',
-  'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA'];
+  return [];
 }
 ForeknowledgeBox.prototype.importHTML = function importHTML(node, filePath){
   if(node.tagName != null)

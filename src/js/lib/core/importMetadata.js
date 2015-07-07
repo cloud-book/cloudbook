@@ -903,7 +903,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
   		});
   		i = 1;
   		$(this).children("title").each(function(){
-  			$(this).text().split("</string>").forEach(function(element){
+  			$(this).text().trim().split("</string>").forEach(function(element){
   				if(element != ""){
   					saveDataArrayValues('tit_'+i, [['title_'+i, element.split('"')[2].replace('>', '')], ['titleLang_'+i, searchLanguage(element.split('"')[1])]], 1);
 	  				i++;
@@ -920,7 +920,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
 	$(xml).find("lifecycle").each(function(){
   		i = 1;
    		$(this).children("version").each(function(){
-  			$(this).html().split("</string>").forEach(function(element){
+  			$(this).html().trim().split("</string>").forEach(function(element){
   				if(element != "")
   				{
   					saveDataArrayValues('versionlifecycle_'+i, [['versionlifecycle1_'+i, element.split('"')[2].replace('>', '')], ['lifeCycleLang_'+i, searchLanguage(element.split('"')[1])]], 1)
@@ -956,7 +956,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
 		});
 		i = 1;
    		$(this).children("installationRemarks").each(function(){
-  			var arrayElements = $(this).html().split("</string>");
+  			var arrayElements = $(this).html().trim().split("</string>");
   			arrayElements.forEach(function(element){
   				if(element != "")
   				{
@@ -967,7 +967,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
   		});
 		i = 1;
    		$(this).children("otherPlatformRequirements").each(function(){
-  			var arrayElements = $(this).html().split("</string>");
+  			var arrayElements = $(this).html().trim().split("</string>");
   			arrayElements.forEach(function(element){
   				if(element != "")
   				{

@@ -284,7 +284,12 @@ CBObject.prototype.importHTML = function importHTML(node) {
 	  var width = this.size[0];
 	  if(node.hasOwnProperty("clientWidth")){
 		  if ( node.clientWidth !== null && node.clientWidth !== undefined ){
-		  	width = (node.clientWidth!=0)?node.clientWidth:this.size[0];
+		  	if(node.clientWidth==0){
+		  		if(node.hasAttributes() && node.attributes['width'] != undefined)
+		  			width = node.attributes['width'].nodeValue
+		  	}else{
+		  		width = (node.clientWidth!=0)?node.clientWidth:this.size[0];
+		  	}
 		  }
 		  else{
 		  	if(node.hasAttributes()){
@@ -296,7 +301,12 @@ CBObject.prototype.importHTML = function importHTML(node) {
 	  var height = this.size[1];
 	  if(node.hasOwnProperty("clientHeight")){
 		  if ( node.clientHeight !== null && node.clientHeight !== undefined){
-		  	height = (node.clientHeight!=0)?node.clientHeight:this.size[1];
+		  	if(node.clientHeight==0){
+		  		if(node.hasAttributes() && node.attributes['height'] != undefined)
+		  			height = node.attributes['height'].nodeValue
+		  	}else{
+		  		height = (node.clientHeight!=0)?node.clientHeight:this.size[1];
+		  	}
 		  }
 		  else{
 		  	if(node.hasAttributes()){

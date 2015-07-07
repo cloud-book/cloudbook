@@ -57,8 +57,43 @@ function getTextTags()
 }
 
 /**
+ * This method is responsible for extracting non-Text elements and processing them
+ * It searches elements, process them and removes them from the code
+ * @param  {Object} text to be processed
+ * @param  {String} path of the element
+ * @param  {String} id of section selected
+ * @result  {String} text processed
+
+ */
+function extractElements(element, filePath, idsectionselected){
+
+	$(element).find("img, iframe, video, audio, object").each(function(){
+	  	processElementBlock($(this)[0], filePath, idsectionselected);
+	  	this.outerHTML = "";
+	});
+
+	while(element.indexOf("<img") != -1)
+		element = element.replace(element.substring(element.indexOf("<img"), element.indexOf(">", element.indexOf("<img"))+1), "");
+
+	while(element.indexOf("<iframe") != -1)
+		element = element.replace(element.substring(element.indexOf("<iframe"), element.indexOf("</iframe>")+9), "");
+
+	while(element.indexOf("<video") != -1)
+		element = element.replace(element.substring(element.indexOf("<video"), element.indexOf("</video>")+8), "");
+
+	while(element.indexOf("<audio") != -1)
+		element = element.replace(element.substring(element.indexOf("<audio"), element.indexOf("</audio>")+8), "");
+
+	while(element.indexOf("<object") != -1)
+		element = element.replace(element.substring(element.indexOf("<object"), element.indexOf("</object>")+9), "");
+
+	return element;
+}
+
+/**
  * This method is responsible for processing Text blocks
  * It creates an span element and insert it into a section
+ * Before it process and delete images inside the text
  * @param  {String} content of the element
  * @param  {String} width of the element
  * @param  {String} height of the element
@@ -71,6 +106,7 @@ function processTextBlock(textValue, width, height, top, left, filePath, idsecti
 
 	var backend = application.backend.core.getInstance();
 
+	textValue = extractElements(textValue, filePath, idsectionselected);
 	var auxNode = $('<SPAN></SPAN>');
 	auxNode.innerHTML = textValue;
 	auxNode.tagName = 'SPAN';
@@ -78,10 +114,7 @@ function processTextBlock(textValue, width, height, top, left, filePath, idsecti
 	auxNode.clientHeight = height;
 	auxNode.offsetTop = top;
 	auxNode.offsetLeft = left;
-	candidates = getHTMLTags(auxNode);
-	element = new Cloudbook.Actions[candidates[0]]['component']();
-	element.importHTML(auxNode, filePath);
-	backend.appendCBObjectIntoSection(element, idsectionselected);
+	processElementBlock(auxNode, filePath, idsectionselected)
 }
 
 /**
@@ -149,7 +182,7 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 				default:
 					if( ($.inArray(node.tagName,that.textCandidates) > -1 )&& (blockName != null))
 					{
-						if(node.children.length ==1 && node.children[0].nodeName == "IMG")
+						if(node.children.length ==1 && node.children[0].nodeName == "IMG" && node.childNodes.length == 1)
 							processElementBlock(node.children[0], filePath, idsectionselected);
 						else
 							that.blockText  += "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
@@ -166,7 +199,7 @@ function processBlock(element, filePath, blockName, idsectionselected,that)
 		}
 		else
 		{
-			if(node.nodeValue.trim().length > 0)
+			if(node.nodeType != 8 && node.nodeValue.trim().length > 0)
 			{
 				if(blockName != null)
 					that.blockText  += "<SPAN>" + node.nodeValue + "</SPAN><br>";
