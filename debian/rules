@@ -23,16 +23,16 @@ override_dh_strip:
 	echo 'goodbye'
 
 # Build architecture-dependent files here.
-custom-files:
+#custom-files:
 
-ifeq ($(DEB_BUILD_ARCH), i386)
-	cp -r webkitbuilds/CloudBook/linux32/* ./install/usr/share/cloudbook/
-	rm ./install/usr/share/cloudbook/libffmpegsumo.so
-
-endif
-
-ifeq ($(DEB_BUILD_ARCH), amd64)
-	cp -r webkitbuilds/CloudBook/linux64/* ./install/usr/share/cloudbook/
-	rm ./install/usr/share/cloudbook/libffmpegsumo.so
-endif
+#ifeq ($(DEB_BUILD_ARCH), i386)
+#	cp -r webkitbuilds/CloudBook/linux32/* ./install/usr/share/cloudbook/
+#	rm ./install/usr/share/cloudbook/libffmpegsumo.so
+#
+#endif
+#
+#ifeq ($(DEB_BUILD_ARCH), amd64)
+#	cp -r webkitbuilds/CloudBook/linux64/* ./install/usr/share/cloudbook/
+#	rm ./install/usr/share/cloudbook/libffmpegsumo.so
+#endif
 

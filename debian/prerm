@@ -19,9 +19,6 @@ set -e
 
 case "$1" in
     remove|upgrade|deconfigure)
-	if [ -e "/usr/share/cloudbook/libffmpegsumo.so" ]; then
-		rm /usr/share/cloudbook/libffmpegsumo.so || true
-	fi
     ;;
 
     failed-upgrade)

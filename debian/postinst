@@ -20,9 +20,6 @@ set -e
 
 case "$1" in
     configure)
-	if [ ! -L "/usr/share/cloudbook/libffmpegsumo.so" ]; then
-		ln -s /usr/lib/chromium-browser/libffmpegsumo.so /usr/share/cloudbook/libffmpegsumo.so
-	fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
