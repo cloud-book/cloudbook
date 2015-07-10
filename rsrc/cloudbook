@@ -1,3 +1,2 @@
 #!/bin/bash
-cd /usr/share/cloudbook
-./CloudBook
+nw0.12 /usr/share/cloudbook
