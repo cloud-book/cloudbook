@@ -1,5 +1,0 @@
-install/*	/
-rsrc/cloudbook.desktop /usr/share/applications/
-rsrc/cloudbook 	/usr/bin/
-rsrc/icons/*	/usr/share/icons/
-src/*	/usr/share/cloudbook/
