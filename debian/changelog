@@ -1,4 +1,4 @@
-cloudbook (0.2.3-lliurex1) trusty; urgency=high
+cloudbook (0.2.4) trusty; urgency=high
 
   * Added depends with chromium-codecs and adobe-flash
 
