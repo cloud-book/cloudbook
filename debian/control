@@ -9,6 +9,6 @@ Homepage: http://cloud-book.github.io/
 
 Package: cloudbook
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends},wkhtmltox, fonts-roboto, adobe-flashplugin
+Depends: ${shlibs:Depends}, ${misc:Depends},wkhtmltox, fonts-roboto, adobe-flashplugin, chromium-codecs-ffmpeg-extra, nwjs0.12 (>=0.12+lliurex3)
 Description: Book editor
  Books graphical editor
