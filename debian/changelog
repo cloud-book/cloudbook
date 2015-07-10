@@ -1,12 +1,7 @@
-cloudbook (0.2.4) trusty; urgency=high
-
-  * Added depends with chromium-codecs and adobe-flash
-
- -- Raul Rodrigo Segura <raurodse@gmail.com>  Mon, 06 Jul 2015 13:51:57 +0200
-
 cloudbook (0.2.3) trusty; urgency=high
 
-  * First version with all files needed
+  * First version without flash and other codecs
+  * Added depends with chromium-codecs and adobe-flash
 
  -- Raul Rodrigo Segura <raurodse@gmail.com>  Thu, 30 Apr 2015 19:54:48 +0200
 
