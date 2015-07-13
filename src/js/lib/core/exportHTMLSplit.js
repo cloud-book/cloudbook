@@ -1,6 +1,6 @@
 function ExportHTMLSplited(){
 	this.listscripts = ['js/lib_external/jquery','js/lib_external/jquery-hotkeys','js/lib_external/jquery-ui'];
-//	this.fileshtmltopdf=[]
+	
 }
 
 ExportHTMLSplited.prototype.createSkel = function(listpaths) {
@@ -38,10 +38,7 @@ ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
 	htmlinfo.items.root = {};
 	this.renderSection(destpath,'root',htmlinfo.items.root,htmlinfo.depends);
 
-/**	
-/*Cambio a realizar si se trata de una exportación a pdf
-/*var x=this.renderSection(destpath,'root',htmlinfo.items.root,htmlinfo.depends);
-*/
+
 
 	// Hay que meter el titulo del proyecto en el htmlinfo titleproyect
 
@@ -88,7 +85,7 @@ ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
     }		
    
 
-	// Aqui si se exporta a pdf habría que devolver  return fileshtmltopdf
+	
 
 	return htmlinfo;
 }
@@ -114,9 +111,7 @@ ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,cbse
 		htmlinfo.sections = {code:"II" + cbsectionid ,items:{}};
 	}
 
-    //Lista de ficheros para exportar a pdf
-   // this.fileshtmltopdf.push(filepath);
-
+  
 	
 	var commonfiles = fs.readdirSync(path.join(destpath,'js','lib_external'));
 	commonfiles.forEach(function(element){
@@ -127,7 +122,7 @@ ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,cbse
 		var cbobject = storagemanager.getCBObjectById(cbobjectid);
 
 		templateinfo.content += cbobject.htmlView()[0].outerHTML;
-	//	templateinfo.content += cbobject.pdfView()[0].outerHTML
+	
 
 		htmlinfo.content = htmlinfo.content.concat(cbobject.getResourcesFiles().map(function(element){return path.join('rsrc',element)}));
 		
