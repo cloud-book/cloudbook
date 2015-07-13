@@ -1,9 +1,8 @@
 function ExportHTMLSplited(){
 	this.listscripts = ['js/lib_external/jquery','js/lib_external/jquery-hotkeys','js/lib_external/jquery-ui'];
-	
 }
 
-ExportHTMLSplited.prototype.createSkel = function(listpaths) {
+ExportHTMLSplited.prototype.createSkel = function createSkel(listpaths) {
 	var fsextra = require('fs-extra');
 	listpaths.forEach(function(temppath){
 		fsextra.ensureDirSync(temppath);
@@ -15,7 +14,7 @@ ExportHTMLSplited.prototype.copyCommonScripts = function copyCommonScripts(destp
 		fs = require('fs'),
 		path = require('path'),
 		listcommonscripts = [];
-	this.listscripts.forEach(function(rsrc){
+	    this.listscripts.forEach(function(rsrc){
 		listfiles = fs.readdirSync(rsrc);
 		listfiles.forEach(function(element){
 			fsextra.copySync(path.join(rsrc,element),path.join(destpath,'js','lib_external',element));
@@ -26,25 +25,29 @@ ExportHTMLSplited.prototype.copyCommonScripts = function copyCommonScripts(destp
 };
 
 ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
-	var fsextra = require('fs-extra'),
-		path = require('path'),
-		skel = [],
-		listcommonscripts = [],
-		htmlinfo = {depends:{},items:{}};
+	
+	return this.exportProject(destpath,'html');
+}
 
-	skel = [destpath,path.join(destpath,'js'),path.join(destpath,'js','lib'),path.join(destpath,'js','lib_external'),path.join(destpath,'css'),path.join(destpath,'img'),path.join(destpath,'rsrc')];
-	this.createSkel(skel);
-	listcommonscripts = this.copyCommonScripts(destpath);
-	htmlinfo.items.root = {};
-	this.renderSection(destpath,'root',htmlinfo.items.root,htmlinfo.depends);
+ExportHTMLSplited.prototype.exportPDF = function exportPDF(destpath){
+	var htmlinfo = this.exportProject(destpath,'pdf');
+	return htmlinfo;
+}
 
 
 
-	// Hay que meter el titulo del proyecto en el htmlinfo titleproyect
+ExportHTMLSplited.prototype.getSkelList = function(rendermethod,destpath) {
+	debugger;
+	var path = require("path");
+	if(rendermethod === "html" || rendermethod === "pdf"){
+		return [destpath,path.join(destpath,'js'),path.join(destpath,'js','lib'),path.join(destpath,'js','lib_external'),path.join(destpath,'css'),path.join(destpath,'img'),path.join(destpath,'rsrc')];
+	}
+};
 
-
-	fsextra.copySync(path.join(Project.Info.projectpath,'rsrc'),path.join(destpath,'rsrc'));
-	Object.keys(htmlinfo.depends).forEach(function(component){
+ExportHTMLSplited.prototype.copyComponentesResources = function(depends,destpath) {
+	var fsextra = require("fs-extra"),
+		path = require("path");
+	Object.keys(depends).forEach(function(component){
 		var filestocopy = [];
 		if(Cloudbook.Actions[component].metadata.external_scripts){
 			Cloudbook.Actions[component].metadata.external_scripts.forEach(function(element){
@@ -66,31 +69,45 @@ ExportHTMLSplited.prototype.exportHTML = function exportHTML(destpath){
 			);
 		}
 	});
+};
+
+ExportHTMLSplited.prototype.exportProject = function(dest,rendermethod) {
+	
+	var fsextra = require('fs-extra'),
+		path = require('path'),
+		listcommonscripts = [],
+		htmlinfo = {depends:{},items:{},orderedsections:[]};
+
+	this.createSkel(this.getSkelList(rendermethod,dest));
+	listcommonscripts = this.copyCommonScripts(dest);
+	htmlinfo.items.root = {};
+	this.renderSection(dest,'root',htmlinfo.items.root,htmlinfo,rendermethod);
+
+	//Sync rsrc to dest
+	fsextra.copySync(path.join(Project.Info.projectpath,'rsrc'),path.join(dest,'rsrc'));
+	this.copyComponentesResources(htmlinfo.depends,dest);
 	
 	htmlinfo.depends['CommonResource'] = listcommonscripts;
 
+	// Remove root item
 	htmlinfo.items = htmlinfo.items.root.sections.items;
-	fsextra.deleteSync(path.join(destpath,'root.html'));
+	htmlinfo.orderedsections = htmlinfo.orderedsections.slice(1);
+	fsextra.deleteSync(path.join(dest,'root.html'));
 	
-	if ( typeof Project.Info.LOM.tit_1 !=="undefined"){
-   		if( Project.Info.LOM.tit_1.title_1){
+	if ( typeof Project.Info.LOM.tit_1 !=="undefined" && Project.Info.LOM.tit_1.title_1 ){
 			htmlinfo["Title_Proyect"] = Project.Info.LOM.tit_1.title_1;
-		}
-		else{
+	}
+	else{
 			htmlinfo["Title_Proyect"] = "Cloudbook project";
-		}
-	
-	}else{
-    	htmlinfo["Title_Proyect"] = "Cloudbook project";
-    }		
-   
-
-	
-
+	}
+	htmlinfo['OrganizationID'] = 'Cloudbook-'+CBUtil.uniqueId();
 	return htmlinfo;
-}
+};
 
-ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,cbsectionid,htmlinfo,htmlinforesources) {
+/**
+	rendermethod : [html,pdf,...]
+*/
+ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,cbsectionid,htmlinfo,globalhtmlinfo,rendermethod) {
 	var storagemanager = application.storagemanager.getInstance(),
 		fs = require('fs'),
 		fsextra = require('fs-extra'),
@@ -111,7 +128,9 @@ ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,cbse
 		htmlinfo.sections = {code:"II" + cbsectionid ,items:{}};
 	}
 
-  
+    //Lista de ficheros para exportar a pdf
+   globalhtmlinfo.orderedsections.push(htmlinfo);
+
 	
 	var commonfiles = fs.readdirSync(path.join(destpath,'js','lib_external'));
 	commonfiles.forEach(function(element){
@@ -121,16 +140,21 @@ ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,cbse
 	section.content.forEach(function(cbobjectid){
 		var cbobject = storagemanager.getCBObjectById(cbobjectid);
 
-		templateinfo.content += cbobject.htmlView()[0].outerHTML;
+	 templateinfo.content += cbobject[rendermethod+"View"]()[0].outerHTML;
+
+	//	templateinfo.content += cbobject.htmlView()[0].outerHTML;
 	
 
 		htmlinfo.content = htmlinfo.content.concat(cbobject.getResourcesFiles().map(function(element){return path.join('rsrc',element)}));
 		
-		if (cbobject.triggerHTMLView){
-			var auxpath = path.join('js',cbobject.uniqueid + ".js");
-			htmlinfo.content.push(auxpath);
-			fs.writeFileSync(path.join(destpath,auxpath),cbobject.triggerHTMLView());
-			templateinfo.scripts.push(auxpath);
+		if(rendermethod === "html" || rendermethod==="pdf"){
+
+			if (cbobject.triggerHTMLView){
+				var auxpath = path.join('js',cbobject.uniqueid + ".js");
+				htmlinfo.content.push(auxpath);
+				fs.writeFileSync(path.join(destpath,auxpath),cbobject.triggerHTMLView());
+				templateinfo.scripts.push(auxpath);
+			}
 		}
 
 		htmlinfo.depends.push(cbobject.idtype);
@@ -154,19 +178,23 @@ ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,cbse
 			found = true;
 		}
 		if(found){
-			htmlinforesources[componentcode] = listdepends;
+			globalhtmlinfo.depends[componentcode] = listdepends;
 			return found;
 		}
 	});
 	htmlinfo.depends.push("CommonResource");
-
+	if(templateinfo.content === ""){
+		templateinfo.content = "&nbsp;";
+	}
 	var salida = pd.xml(templatecompiled(templateinfo));
 	fs.writeFileSync(path.join(destpath,filepath),salida);
 
 	section.sections.forEach(function(tempcbsectionid){
 		htmlinfo.sections.items["I" + tempcbsectionid] = {};
-		that.renderSection(destpath,tempcbsectionid,htmlinfo.sections.items["I" + tempcbsectionid],htmlinforesources);
+		that.renderSection(destpath,tempcbsectionid,htmlinfo.sections.items["I" + tempcbsectionid],globalhtmlinfo,rendermethod);
 	});
 	
 	
 };
+CBUtil.createNameSpace('application.exports.exportHtml.split');
+application.exports.exportHtml.split = CBUtil.singleton(ExportHTMLSplited);
