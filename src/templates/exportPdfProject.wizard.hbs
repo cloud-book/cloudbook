@@ -8,13 +8,13 @@
 				<option value="Letter">Letter</option>
 			</select>
       	</div>
-	<p><p>        
+	
 	<div>
       		<label for="orientationpage">{{gettext "Page Orientation:"}}</label>
 			<label class="radio-inline"><input type="radio" name="orientation" value="Portrait" checked="checked">{{gettext "Portrait"}}</label>
 			<label class="radio-inline"><input type="radio" name="orientation" value="Landscape">{{gettext "Landscape"}}</label>
         </div>
-        <p><p>
+     
         
        <div>
       		<label for="headerpage">{{gettext "Include page header:"}}</label>
@@ -26,34 +26,39 @@
 			<label class="radio-inline"><input type="radio" name="posicionH" value="headerCenter" disabled="disabled" checked="checked">{{gettext "Center"}}</label>
 			<label class="radio-inline"><input type="radio" name="posicionH" value="headerRight" disabled="disabled">{{gettext "Right"}}</label>
      </div>	
-     <p><p>
-     <div>
+     
+     <div id="headertextcontainer" class="form-group has-feedback">
 		<label for="headertext">{{gettext "Text to header page:"}}</label>
-			<input name="headertext" class="form-control" placeholder="{{gettext "Enter header page text"}}" value="{{headertext}}"disabled="disabled"</input> 
+		<input type="text" name="headertext" class="form-control" placeholder="{{gettext "Enter header page text"}}" value="{{headertext}}"disabled="disabled" aria-describedby="headertextSuccess2Status"></input>
+			<span id="headertextindicator" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			<span id="headertextSuccess2Status" class="sr-only">(success)</span>
      </div>
-     <p><p>
+    
      <div>
       		<label for="numerationpage">{{gettext "Include page numbers in foot page:"}}</label>
 			<label class="radio-inline"><input type="radio" name="numeracion" value="1">{{gettext "Yes"}}</label>
 			<label class="radio-inline"><input type="radio" name="numeracion" value="0" checked="checked">{{gettext "No"}}</label>
                   
-                <label for="positionnumber"></label>
+            <label for="positionnumber"></label>
 			<label class="radio-inline"><input type="radio" name="posicionN" value="footerLeft" disabled="disabled">{{gettext "Left"}}</label>
 			<label class="radio-inline"><input type="radio" name="posicionN" value="footerCenter" disabled="disabled" checked="checked">{{gettext "Center"}}</label>
 			<label class="radio-inline"><input type="radio" name="posicionN" value="footerRight" disabled="disabled">{{gettext "Right"}}</label>
        </div>
-    <p><p>
+    
 
-	<div>
-		<label>{{gettext "Path where save of pdf file:"}}</label><input name="path" type="file" nwsaveas="project.pdf" disabled="disabled"</label> 
+	<div id="pathcontainer" class="form-group has-feedback">
+		<label>{{gettext "Path where save of pdf file:"}}</label><input name="path" type="file" nwsaveas="project.pdf" aria-describedby="pathSuccess2Status"></input>
+		<span id="pathindicator" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		<span id="pathSuccess2Status" class="sr-only">(success)</span>
+
      </div>
 </div>
-<p><p>
+
 <div> 
-<button id="exportpdfback">{{gettext "Cancel"}}</button>
-<button id="exportpdfbtn" disabled="disabled">{{gettext "Generate pdf"}}</button>
+<button id="exportpdfback" class="btn" >{{gettext "Cancel"}}</button>
+<button id="exportpdfbtn" class="btn" disabled="disabled">{{gettext "Generate pdf"}}</button>
 </div>
-<p><p>
+
 <div class="waitingOK" style="display:none"><font color="#FC0202"><strong>{{gettext "PDF Generation in progress. Please wait a moment..."}}</strong></font></div>
 <div class="waitingFiles" style="display:none"><font color="#FC0202"><strong>{{gettext "PDF Generation in progress. Copying interactive files..."}}</strong></font></div>
 <div class="waitingER" style="display:none"><font color="#FC0202"><strong>{{gettext "There was an error generating the PDF file. Please cancel de process"}}</strong></font></div>

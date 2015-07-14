@@ -19,6 +19,41 @@ ExportPdfWizard.prototype.initializeWizardDiv = function() {
   });
 };
 
+function requirefieldsPdf(){
+	
+   	$("#pathcontainer").removeClass("has-success").addClass("has-error");
+   	$("#pathindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+		
+
+};
+
+function checkformPdf() {
+
+	var headerB=$("input[name='header']:checked").val();
+	var headertextB=$("input[name='headertext']").val();
+   
+    var pathB=$("input[name='path']").val();
+    
+    if (pathB!==''){
+    	if (headerB==='0'){
+   		 	$("[id='exportpdfbtn']").removeAttr('disabled');
+	 	}else{
+    		if (headertextB!==''){
+    			$("[id='exportpdfbtn']").removeAttr('disabled');
+
+    		}else{
+				$("[id='exportpdfbtn']").attr('disabled','disabled');
+   			}
+
+   		}
+
+  	 }else{
+    	$("[id='exportpdfbtn']").attr('disabled','disabled');
+
+    }
+   
+
+};
 
 
 ExportPdfWizard.prototype.showExportPdfProject = function showExportPdfProject(e) {
@@ -29,7 +64,8 @@ ExportPdfWizard.prototype.showExportPdfProject = function showExportPdfProject(e
 	var templatecompiled = application.util.template.compile(template);
 	$("#exportpdfwizard").append(templatecompiled());
        
- 	        
+ 	requirefieldsPdf();
+
        $("input[name='numeracion']").change(function(e){
 				
 			if(e.currentTarget.value === "0"){
@@ -50,49 +86,64 @@ ExportPdfWizard.prototype.showExportPdfProject = function showExportPdfProject(e
 							
 				$("[name='posicionH']").attr('disabled','disabled');
 				$("[name='headertext']").attr('disabled','disabled');
-                                $("[name='headertext']").val('');
-                                $("[name='path']").removeAttr('disabled');
+                $("[name='headertext']").val('');
+                $("#headertextcontainer").removeClass("has-success").removeClass("has-error");
+                $("#headertextindicator").removeClass("glyphicon-ok").removeClass("glyphicon-remove");
+             
 			}
 			else{
 				$("[name='posicionH']").removeAttr('disabled');
 				$("[name='headertext']").removeAttr('disabled');
-				$("[name='path']").attr('disabled','disabled');
+                $("#headertextcontainer").removeClass("has-success").addClass("has-error");
+      			$("#headertextindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+
+		
+
 				$("input[name='headertext']").keyup(function(e){
-						if (e.currentTarget.value!==""){
-							$("[name='path']").removeAttr('disabled');						
-						}else{
-													
-							$("[name='path']").attr('disabled','disabled');
-						}
+					if (e.currentTarget.value!==""){
+						$("#headertextcontainer").addClass("has-success").removeClass("has-error");
+						$("#headertextindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");					
+					}else{
+						$("#headertextcontainer").removeClass("has-success").addClass("has-error");
+      					$("#headertextindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+
+
+				
+					}
+					checkformPdf();		
 				});	
 			
-                       }			
-        
+            }
+
+        	checkformPdf();
        });
 	
-      var encabezado= $("input[name='header']:checked").val();
-	if (encabezado==='0'){
-		$("[name='path']").removeAttr('disabled');
-        }
-
+  
 
        $("input[name='path']").change(function(e){
          	
 			
       		if (e.currentTarget.value===''){
-		             $("[id='exportpdfbtn']").attr('disabled','disabled');
+		        $("#pathcontainer").removeClass("has-success").addClass("has-error");
+      			$("#pathindicator").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+		      
 			     
 			}else{
-			    $("[id='exportpdfbtn']").removeAttr('disabled');
+			  
 					
-              		}                   
+            	$("#pathcontainer").addClass("has-success").removeClass("has-error");
+				$("#pathindicator").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+
+            }   
+
+             checkformPdf();                
           }); 
         
 		
 	$("[id='exportpdfbtn']").click(function(){
 	    var page= $("[name='pagesize']").val();  
-            var orientacion=$("[name='orientation']:checked").val(); 
-            var path=$("input[name='path']").val();
+        var orientacion=$("[name='orientation']:checked").val(); 
+        var path=$("input[name='path']").val();
 	    var numeracion=$("input[name='numeracion']:checked").val();
 
 	    if (numeracion==="1"){
@@ -105,14 +156,14 @@ ExportPdfWizard.prototype.showExportPdfProject = function showExportPdfProject(e
 
 	    var encabezado= $("input[name='header']:checked").val();
 	    if (encabezado==="1"){
-		var posicionH=$("[name='posicionH']:checked").val();
-		var textoH=$("input[name='headertext']").val();
+			var posicionH=$("[name='posicionH']:checked").val();
+			var textoH=$("input[name='headertext']").val();
                        
-            }else{
+        }else{
 	        var posicionH="";
-		var textoH="";
+			var textoH="";
 			
-             }	
+        }	
           
           var parametrosPdf={};
           parametrosPdf['page']=page;
@@ -123,14 +174,13 @@ ExportPdfWizard.prototype.showExportPdfProject = function showExportPdfProject(e
           parametrosPdf['textoH']=textoH;
    
           var exportpdf = application.core.exports.exportPdf.core.getInstance();
-	//  exportpdf.generatePdf(page,orientacion,path,posicionN,posicionH,textoH);
-	  exportpdf.generatePdf(parametrosPdf);	
+		  exportpdf.generatePdf(parametrosPdf);	
 
 	});
 
       $("[id='exportpdfback']").click(function(){
 	       $('#exportpdfwizard').dialog('close');
-               $('#exportpdfwizard').remove();
+           $('#exportpdfwizard').remove();
 	});
 
 };
