@@ -77,10 +77,7 @@ ForeknowledgeBox.prototype.pathImage = function pathImage(typebox) {
   }
 };
 
-
-
-ForeknowledgeBox.prototype.htmlView = function htmlView() {
-  var aux = ForeknowledgeBox.super_.prototype.htmlView.call(this);
+ForeknowledgeBox.prototype.renderContent = function renderContent() {
   var text = $(window.document.createElement('div')).html(this.text)
                                                     .css('background-color',"#EBE3CC")
                                                     .css("padding","15px 15px")
@@ -104,18 +101,22 @@ ForeknowledgeBox.prototype.htmlView = function htmlView() {
                                                       .addClass('foreknowledgebox-title');
   var wrapper = $(window.document.createElement('div')).append([titleimage,title]).css('margin-top','5px');
   var fullbox = $(window.document.createElement('div')).attr('data-foreknowledgebox-id',this.uniqueid).append([wrapper,text]);
+  return fullbox;
+};
+
+
+
+ForeknowledgeBox.prototype.htmlView = function htmlView() {
+  var aux = ForeknowledgeBox.super_.prototype.htmlView.call(this);
+  var fullbox = this.renderContent();
   aux.children('.cbcontainer').append(fullbox);
   return aux;
 }
 
 ForeknowledgeBox.prototype.pdfView = function pdfView() {
   var aux = ForeknowledgeBox.super_.prototype.pdfView.call(this);
-  var textboxcontent = $(window.document.createElement('div'))
-            .html(this.text)
-            .attr('data-textbox-id',this.uniqueid)
-            .addClass('cbtextbox')
-            .css('padding','5px');
-  aux.children('.cbcontainer').append(textboxcontent);
+  var fullbox = this.renderContent();
+  aux.children('.cbcontainer').append(fullbox);
   return aux;
 }
 
