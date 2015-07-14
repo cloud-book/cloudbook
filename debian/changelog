@@ -11,7 +11,8 @@ cloudbook (0.3) trusty; urgency=high
   * When draw cbobject, bar now has opacity.
   * Migrate to Gulp
   * Add new devel mode. This mode refresh automatically cloudbook. 
-  * Added variable window.debugMode. If this variable is true, all cbobjects show her unique id
+  * Added variable window.debugMode. If this variable is true, all cbobjects 
+    show her unique id
   * News events : changesection , 
 
  -- Raul Rodrigo Segura <raurodse@gmail.com>  Thu, 30 Apr 2015 19:54:48 +0200
