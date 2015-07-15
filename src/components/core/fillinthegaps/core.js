@@ -27,6 +27,7 @@ function FillGapBox(objectdata){
 util.inherits(FillGapBox,CBobject);
 
 FillGapBox.prototype.cloneTrigger = function cloneTrigger() {
+  FillGapBox.super_.prototype.cloneTrigger.call(this);
   this.fgpidentifier = "pem_" + this.uniqueid ; 
 };
 

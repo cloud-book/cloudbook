@@ -143,6 +143,7 @@ PEMBox.prototype.triggerHTMLView = function triggerHTMLView() {
 };
 
 PEMBox.prototype.cloneTrigger = function cloneTrigger() {
+  PEMBox.super_.prototype.cloneTrigger.call(this);
   this.pemidentifier = "pem_" + this.uniqueid ; 
 };
 
