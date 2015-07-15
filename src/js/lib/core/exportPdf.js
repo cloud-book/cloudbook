@@ -108,7 +108,10 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrosPdf, origen) {
             var destextrafiles = path.dirname(parametrosPdf.path) + "/pdfextrafiles";
             if(fs.existsSync(extrafilesorig)){
             	fsextra.move(extrafilesorig,destextrafiles,function(err){console.log(err);$("#exportpdfwizard").dialog("destroy");});
+            }else{
+                $("#exportpdfwizard").dialog("destroy");
             }
+
             //that.borrarHtml(origen);
         } else {
             $("#exportpdfwizard").find('.waitingOK').css("display", "none");

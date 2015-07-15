@@ -238,6 +238,7 @@ ProView.prototype.dialogUpdateSectionName = function dialogUpdateSectionName(cbs
 
 ProView.prototype.deleteSection = function deleteSection(cbsectionid) {
 	$('[data-cbsectionid="'+cbsectionid+'"]').remove();
+  $(Cloudbook.UI.targetcontent).html("");
 };
 
 
