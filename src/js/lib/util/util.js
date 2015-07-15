@@ -42,6 +42,28 @@ Util.prototype.readOnlyDirectories = function readOnlyDirectories(directorypath)
 	return listfolders;
 };
 
+Util.prototype.readdirRecursively = function readdirRecursively(orig) {
+	return _readdirRecursively(orig);
+};
+
+function _readdirRecursively(orig){
+	var listfiles = [];
+    var finallist = [];
+    var path = require('path');
+    var fs = require('fs');
+    listfiles = fs.readdirSync(orig).map(function(file){ return path.join(orig,file)});
+    listfiles.forEach(function(file){
+            var stat = fs.statSync(file);
+            if (stat.isDirectory()){
+                    finallist = finallist.concat(_readdirRecursively(file));
+            }
+            finallist.push(file);
+    });
+    return finallist;
+}
+
+
+
 /**
  * Get object from namespace by string
  * @param  {String} namespace String namespace 

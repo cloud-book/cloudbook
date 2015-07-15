@@ -34,10 +34,7 @@ ExportHTMLSplited.prototype.exportPDF = function exportPDF(destpath){
 	return htmlinfo;
 }
 
-
-
 ExportHTMLSplited.prototype.getSkelList = function(rendermethod,destpath) {
-	debugger;
 	var path = require("path");
 	if(rendermethod === "html" || rendermethod === "pdf"){
 		return [destpath,path.join(destpath,'js'),path.join(destpath,'js','lib'),path.join(destpath,'js','lib_external'),path.join(destpath,'css'),path.join(destpath,'img'),path.join(destpath,'rsrc')];
@@ -70,16 +67,27 @@ ExportHTMLSplited.prototype.copyComponentesResources = function(depends,destpath
 		}
 	});
 };
-
+ExportHTMLSplited.prototype.copyThemeFiles = function copyThemeFiles(dest) {
+	var fsextra = require('fs-extra'),
+		path = require('path');
+	fsextra.copySync(Cloudbook.UI.exportthemepath,path.join(dest,'theme'));
+	return CBUtil.readdirRecursively(path.join(dest,'theme')).map(
+		function(element)
+		{
+    		return element.replace(dest,"");
+    	});
+};
 ExportHTMLSplited.prototype.exportProject = function(dest,rendermethod) {
 	
 	var fsextra = require('fs-extra'),
 		path = require('path'),
 		listcommonscripts = [],
+		listthemefiles = [],
 		htmlinfo = {depends:{},items:{},orderedsections:[]};
 
 	this.createSkel(this.getSkelList(rendermethod,dest));
 	listcommonscripts = this.copyCommonScripts(dest);
+	listthemefiles = this.copyThemeFiles(dest);
 	htmlinfo.items.root = {};
 	this.renderSection(dest,'root',htmlinfo.items.root,htmlinfo,rendermethod);
 
@@ -88,7 +96,7 @@ ExportHTMLSplited.prototype.exportProject = function(dest,rendermethod) {
 	this.copyComponentesResources(htmlinfo.depends,dest);
 	
 	htmlinfo.depends['CommonResource'] = listcommonscripts;
-
+	htmlinfo.depends['CommonResource'] = htmlinfo.depends['CommonResource'].concat(listthemefiles);
 	// Remove root item
 	htmlinfo.items = htmlinfo.items.root.sections.items;
 	htmlinfo.orderedsections = htmlinfo.orderedsections.slice(1);
@@ -183,9 +191,6 @@ ExportHTMLSplited.prototype.renderSection = function renderSection(destpath,cbse
 		}
 	});
 	htmlinfo.depends.push("CommonResource");
-	if(templateinfo.content === ""){
-		templateinfo.content = "&nbsp;";
-	}
 	var salida = pd.xml(templatecompiled(templateinfo));
 	fs.writeFileSync(path.join(destpath,filepath),salida);
 
