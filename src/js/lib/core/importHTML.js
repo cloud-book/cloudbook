@@ -67,26 +67,27 @@ function getTextTags()
  */
 function extractElements(element, filePath, idsectionselected){
 
-	$(element).find("img, iframe, video, audio, object").each(function(){
-	  	processElementBlock($(this)[0], filePath, idsectionselected);
-	  	this.outerHTML = "";
-	});
+	try{
+		$(element).find("img, iframe, video, audio, object").each(function(){
+		  	processElementBlock($(this)[0], filePath, idsectionselected);
+		  	this.outerHTML = "";
+		});
 
-	while(element.indexOf("<img") != -1)
-		element = element.replace(element.substring(element.indexOf("<img"), element.indexOf(">", element.indexOf("<img"))+1), "");
+		while(element.indexOf("<img") != -1)
+			element = element.replace(element.substring(element.indexOf("<img"), element.indexOf(">", element.indexOf("<img"))+1), "");
 
-	while(element.indexOf("<iframe") != -1)
-		element = element.replace(element.substring(element.indexOf("<iframe"), element.indexOf("</iframe>")+9), "");
+		while(element.indexOf("<iframe") != -1)
+			element = element.replace(element.substring(element.indexOf("<iframe"), element.indexOf("</iframe>")+9), "");
 
-	while(element.indexOf("<video") != -1)
-		element = element.replace(element.substring(element.indexOf("<video"), element.indexOf("</video>")+8), "");
+		while(element.indexOf("<video") != -1)
+			element = element.replace(element.substring(element.indexOf("<video"), element.indexOf("</video>")+8), "");
 
-	while(element.indexOf("<audio") != -1)
-		element = element.replace(element.substring(element.indexOf("<audio"), element.indexOf("</audio>")+8), "");
+		while(element.indexOf("<audio") != -1)
+			element = element.replace(element.substring(element.indexOf("<audio"), element.indexOf("</audio>")+8), "");
 
-	while(element.indexOf("<object") != -1)
-		element = element.replace(element.substring(element.indexOf("<object"), element.indexOf("</object>")+9), "");
-
+		while(element.indexOf("<object") != -1)
+			element = element.replace(element.substring(element.indexOf("<object"), element.indexOf("</object>")+9), "");
+	}catch(e){}
 	return element;
 }
 
@@ -263,6 +264,7 @@ ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectio
 		var ui = application.ui.core.getInstance();
 		$('#tempImportHTML').remove();
 		$('#layer').remove();
+		debugger;
 		ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 	}, 500);
 }

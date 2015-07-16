@@ -76,49 +76,102 @@ function renameResource(node)
 function processTextIdevice(node, filePath, idsection)
 {
 	var newNode = "", nodeAux = "";
-	var type = node.children().find("string[value='class_']").next().attr("value");
+	var type = node.attr("class");
 	var title = "";
 
-	if(node.attr("class") == "exe.engine.genericidevice.GenericIdevice" || node.attr("class") == "exe.engine.casestudyidevice.CasestudyIdevice" ||
-		"exe.engine.reflectionidevice.ReflectionIdevice"){
+	if(type == "exe.engine.genericidevice.GenericIdevice" || type == "exe.engine.casestudyidevice.CasestudyIdevice" ||
+		type == "exe.engine.reflectionidevice.ReflectionIdevice" || type == "exe.engine.notaidevice.NotaIdevice"){
 		if($(node.children().find("unicode")[0]).prev().attr("value") == "_title")
-		{
-			if ($(node.children().find("unicode")[0]).attr("value") != "Free Text"){
-				newNode = (newNode == "")?$("<h1></h1>"):newNode;
-				newNode.innerHTML = (newNode.innerHTML == undefined)?"":newNode.innerHTML;
-				newNode.innerHTML += "<h1>" + $(node.children().find("unicode")[0]).attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</h1>";
-				title = $(node.children().find("unicode")[0]).attr("value");
-			}
-		}
+			if ($(node.children().find("unicode")[0]).attr("value") != "Free Text")//{
+				title = $(node.children().find("unicode")[0]).attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"");
 	}
+	else
+		title = "";
+
 	nodeAux = $(node.find("unicode[content='true']")[0]);
 	if(nodeAux.length == 0 && ($(node).children().find("string[value='fields']").next().children()[0].tagName == "REFERENCE")){
 		var refNumber = $($(node).children().find("string[value='fields']").next().children()[0]).attr("key");
 		nodeAux = $(node).parents().find("instance[reference='" +  refNumber + "']").children().find("string[value='content_w_resourcePaths']").next();
 	} 
-	if(node.attr("class") == "exe.engine.field.TextAreaField")
+	if(type == "exe.engine.field.TextAreaField")
 	{
-		if($($($(node).children()[0]).children('unicode[content="true"]')[0]).parent().children("string[value='_name']").next().attr("value") != "Free Text"){
-			newNode = (newNode == "")?$("<h1></h1>"):newNode;
-			newNode.innerHTML = "<h1>" + $($($(node).children()[0]).children('unicode[content="true"]')[0]).parent().children("string[value='_name']").next().attr("value") + "</h1>"
-		}
+		if($($($(node).children()[0]).children('unicode[content="true"]')[0]).parent().children("string[value='_name']").next().attr("value") != "Free Text")
+			title = $($($(node).children()[0]).children('unicode[content="true"]')[0]).parent().children("string[value='_name']").next().attr("value");
 		nodeAux = $($($(node).children()[0]).children('unicode[content="true"]')[0]);
 	}
 	
+	if(type == "exe.engine.freetextidevice.FreeTextIdevice" ){
+		 newNode = (newNode == "")?$("<p></p>"):newNode;
+		 newNode.tagName = "P";
+		 newNode.innerHTML = (newNode.innerHTML == undefined)?"":newNode.innerHTML;
+		 if(nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"").indexOf("<p") == 0)
+		 	newNode.innerHTML += nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"");
+		 else
+		 	newNode.innerHTML += "<P>" + nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</P>";
+	}else{
+		newNode = (newNode == "")?$("<FKN></FKN>"):newNode;
+		newNode.tagName = "FKN";
+		newNode.innerHTML = "<fkn ";
+		newNode.data("title", title);
+		newNode.innerHTML += "data-title='" + title + "' "; 
+		if($(node).attr("class") != "exe.engine.casestudyidevice.CasestudyIdevice"){
+			newNode.data("text", nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"").replace(/\'/g,'"'));
+			newNode.innerHTML += "data-text='" + nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"").replace(/\'/g,'"'); 
+		}
+		if(($(node.children().find('string[value="class_"]')) != undefined) && ($(node.children().find('string[value="class_"]')).next().attr("value") == "reading"))
+		{
+			newNode.innerHTML +=  $(node.find("unicode[content='true']")[1]).attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"").replace(/\'/g,'"') + "</br>";
+			newNode.data("text", newNode.data("text") + nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"").replace(/\'/g,'"'));
+		}
 
-	newNode = (newNode == "")?$("<p></p>"):newNode;
-	newNode.tagName = "P";
-	newNode.innerHTML = (newNode.innerHTML == undefined)?"":newNode.innerHTML;
-	newNode.innerHTML += "<p>" + nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</p>";
-	if(($(node.children().find('string[value="class_"]')) != undefined) && ($(node.children().find('string[value="class_"]')).next().attr("value") == "reading"))
-	{
-		newNode.innerHTML +=  $(node.find("unicode[content='true']")[1]).attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</br>";
+		if(type == "exe.engine.casestudyidevice.CasestudyIdevice")
+		{
+			newNode.innerHTML += "data-text='" + $(node).children().find("string[value='storyTextArea']").next().children().find("unicode[content='true']").attr("value") + "<br>";
+			newNode.data("text",  $(node).children().find("string[value='storyTextArea']").next().children().find("unicode[content='true']").attr("value") + "<br>");
+			newNode.data("text", newNode.data("text") + nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,""));
+			newNode.innerHTML += nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") ; 
+		}	
+
+		newNode.innerHTML += "' ";
+		switch(type)
+		{
+			case "exe.engine.notaidevice.NotaIdevice":
+				typebox = "note";
+			break;
+			case "exe.engine.casestudyidevice.CasestudyIdevice":
+				typebox = "case";
+			break;
+			case "exe.engine.reflectionidevice.ReflectionIdevice":
+				typebox = "reflection";
+			break;
+//			case "exe.engine.wikipediaidevice.WikipediaIdevice":
+//				typebox = "custom";
+//			break;
+			case "exe.engine.genericidevice.GenericIdevice":
+				switch($(node).children().find("string[value='class_']").next().attr("value"))
+				{
+					case "preknowledge":
+						typebox = "preknowledge";
+					break;
+					case "objectives":
+						typebox = "target";
+					break;
+					case "activity":
+						typebox = "activity";
+					break;
+					case "reading":
+						typebox = "reading";
+					break;
+					default:
+						typebox = "target";
+					break;
+				}
+			break;
+		}
+
+		newNode.data("typebox", typebox);
+		newNode.innerHTML += "data-typebox= '" + typebox + "' />"
 	}
-
-	if($(node).attr("class") == "exe.engine.casestudyidevice.CasestudyIdevice")
-	{
-		newNode.innerHTML += $(node).children().find("string[value='storyTextArea']").next().children().find("unicode[content='true']").attr("value") + "<br>";
-	}	
 
 	renameResource(newNode);
 	return newNode;
@@ -151,8 +204,6 @@ function processExternalUrlIdevice(node, filePath, idsection)
 function processMultiIdevice(node, filePath, idsection)
 {
 	var tagName = (node.attr("class") == "exe.engine.multiselectidevice.MultiSelectIdevice")?"PSM":"PEM";
-	// var childrenClass = (node.attr("class") == "exe.engine.multiselectidevice.MultiSelectIdevice")?"instance[class='exe.engine.field.SelectOptionField']":
-	// "instance[class='exe.engine.field.QuizOptionField']";
 	var isTest = (node.attr("class") == "exe.engine.quiztestidevice.TestQuestion");
 
 	var childrenClass = (node.attr("class") == "exe.engine.multiselectidevice.MultiSelectIdevice")?"instance[class='exe.engine.field.SelectOptionField']":
@@ -338,6 +389,7 @@ function processTrueFalseIdevice(node, filePath, idsection)
 		case "exe.engine.casestudyidevice.CasestudyIdevice":
 		case "exe.engine.reflectionidevice.ReflectionIdevice":
 		case "exe.engine.wikipediaidevice.WikipediaIdevice":
+		case "exe.engine.notaidevice.NotaIdevice":
 			nodeContent = processTextIdevice(node, filePath, idsection);
 		break;
 		case "exe.engine.externalurlidevice.ExternalUrlIdevice":
@@ -386,7 +438,7 @@ function processChildren(node, idsection, filePath)
 	if(node.prop("tagName") == "LIST" && node.prev().attr("value") == "idevices"){
 	    node.children().each(function(){
 	    	var contentSection = processELPNode($(this), filePath, idsection);
-	    	if(contentSection != undefined)
+	    	if(contentSection != undefined && contentSection.innerHTML != "<P></P>")
 				$("#tempImportELP").contents().find("html").append(contentSection.innerHTML);
 		});
 		var options = $.parseJSON('{"isELP":'+ true + '}');
@@ -429,7 +481,8 @@ function processChildren(node, idsection, filePath)
 				    	if(!isProcessed){
 							contentSection = processELPNode(nodeReferenced, filePath, idsectionAux);
 						}
-						$("#tempImportELP").contents().find("html").append(contentSection.innerHTML);					
+						if(contentSection.innerHTML != "<P></P>")
+							$("#tempImportELP").contents().find("html").append(contentSection.innerHTML);					
 					});
 					var options = $.parseJSON('{"isELP":'+ true + '}');
 					importationHTML.processHTML($("#tempImportELP").contents().find("html").html(), filePath, idsectionAux, options);
@@ -484,10 +537,14 @@ ImportELP.prototype.processPackageDataELP = function processPackageDataELP(fileP
 		}
 		processChildren($(this), idsection, filePath);
 	});
-	elpMetadata = $($($(dataFile.toString()).children("dictionary")).children("instance[class='exe.engine.package.DublinCore']")[0]);
+	var elpMetadata = $($($(dataFile.toString()).children("dictionary")).children("instance[class='exe.engine.package.DublinCore']")[0]);
 	if(elpMetadata != undefined)
 		application.importmetadata.getInstance().loadELPMetadata(elpMetadata);
 
+	var elpLOMMetadata = $($($(dataFile.toString()).children("dictionary")).children("string[value='lomEs']")).next("instance[class='exe.engine.lom.lomsubs.lomSub']");
+	if(elpLOMMetadata != undefined)
+		application.importmetadata.getInstance().loadELPLOMMetadata(elpLOMMetadata);
+	debugger;
 	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 }
 CBUtil.createNameSpace('application.importelp');

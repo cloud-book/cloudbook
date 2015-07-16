@@ -100,7 +100,7 @@ function processPackageMetaData(fileType, tempPath, filePath, metadataFileName)
 	{
 		case "SCORM":
 		case "IMS":
-		case "ELP":
+		//case "ELP":
 			if (fs.existsSync(tempPath+metadataFileName)){
 				fs.readFile(tempPath+metadataFileName, function(err, data) {
 				  	application.importmetadata.getInstance().loadMetadata(data.toString());
@@ -165,7 +165,7 @@ function loadElementResources(element, filter)
 {
 
 	var href = element.parents().find("resource[identifier='" + resourceID + "']").attr("href");
-	application.controller.getInstance().updateSectionName(href.split(".")[0],idsection);	
+	application.controller.getInstance().updateSectionName(element.children()[0].innerText,idsection);	
 	var html = $.parseHTML(fs.readFileSync(filePath + href).toString());
 	changeImagePath(html);
 	loadElementResources(element, resourceID);
@@ -262,7 +262,10 @@ function processPackageData(filePath, fileType)
 	  					else
 	  						idsection = controller.appendSection('root');
 	  				}
-  					controller.updateSectionName(href.split(".")[0],idsection);
+	  				if($(this).children("title")[0].innerText == "<-")
+	  					controller.updateSectionName($(this).prev()[0].innerText,idsection);
+	  				else
+  					controller.updateSectionName($(this).children("title")[0].innerText,idsection);
 					changeImagePath(html, path.dirname(href));
 					importationHTML.processHTML(html, filePath + href, idsection);
 					if($(this).children("item").length > 0)

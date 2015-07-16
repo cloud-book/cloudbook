@@ -12,8 +12,11 @@ var metadata = require( "./"+__module_path__ + 'metadata.json');
  */
 
 function ForeknowledgeBox(objectdata){
-  this.typessuported = ["target","note","custom"];
-  [CBI18n.gettext("target"),CBI18n.gettext("note"),CBI18n.gettext("custom")];
+  this.typessuported = ["target","note","preknowledge", "case", "reflection", 
+  "reading", "reflection", "activity","custom"];
+  [CBI18n.gettext("target"),CBI18n.gettext("note"),CBI18n.gettext("custom"),
+   CBI18n.gettext("preknowledge"), CBI18n.gettext("case"),CBI18n.gettext("reading"), 
+   CBI18n.gettext("reflection"), CBI18n.gettext("activity")];
   var defaultvalues = {
     "text" : "Lorem Ipsum",
     "title" : "Foreknowledge",
@@ -224,7 +227,7 @@ ForeknowledgeBox.prototype.disableEditMode = function(e) {
 
 ForeknowledgeBox.prototype.HTMLtags = function HTMLtags(node){
   var score = 0;
-  var tagTypes = [];
+  var tagTypes = ['FKN'];
   
   if(tagTypes.indexOf(node.tagName) > -1) score ++;
 
@@ -232,14 +235,17 @@ ForeknowledgeBox.prototype.HTMLtags = function HTMLtags(node){
 };
 
 ForeknowledgeBox.prototype.HTMLtagNames = function HTMLtagNames(){
-  return [];
+  return ['FKN'];
 }
 ForeknowledgeBox.prototype.importHTML = function importHTML(node, filePath){
   if(node.tagName != null)
     {
-      var text = "<" + node.tagName + ">" + node.innerHTML + "</" + node.tagName + ">";
+      this.text = $(node).data("text");
+      this.title = $(node).data("title");
+      this.typebox = $(node).data("typebox");
       ForeknowledgeBox.super_.prototype.importHTML.call(this,node);
-      this.text = text;
+      this.size = [800, 300];
+      this.position = [0, top];
     }
     else
     {

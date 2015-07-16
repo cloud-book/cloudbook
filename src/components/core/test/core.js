@@ -107,7 +107,7 @@ TestBox.prototype.HTMLtags = function HTMLtags(node){
 
 TestBox.prototype.importHTML = function importHTML(node, filePath){
   var that = this;
-
+  debugger;
   if(node.tagName != null)
     {
       var k = 0;
