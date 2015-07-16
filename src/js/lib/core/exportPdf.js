@@ -3,11 +3,28 @@
  * @classdesc This class is responsible to export project to pdf file
  */
 function ExportPdf() {}
+
 ExportPdf.prototype.htmltoPdf = function htmltoPdf() {
     /*funcion que se lanzará para generar el html temporal necesario para el obtener el pdf */
-    var exporthtml = application.exporthtml.core.getInstance();
-    return exporthtml.preExportHTMLToPDF();
+    var mktemp = require('mktemp');
+    var temppath = mktemp.createDirSync("/tmp/cloudbook_XXXX");
+    var fileshtmltopdf=[];
+
+    var htmltopdf = new ExportHTMLSplited();
+    var infohtml = htmltopdf.exportPDF(temppath);
+
+    
+   
+
+    infohtml.orderedsections.forEach(function(elemento){
+        fileshtmltopdf.push(temppath + "/" + elemento.filename);
+        
+    });
+
+   return fileshtmltopdf
+
 };
+
 ExportPdf.prototype.borrarHtml = function borrarHtml(origen) {
     var fsextra = require('fs-extra');
     var path = require('path');
@@ -16,10 +33,12 @@ ExportPdf.prototype.borrarHtml = function borrarHtml(origen) {
         fsextra.removeSync(directorio);
     }
 };
+
 ExportPdf.prototype.generatePdf = function generatePdf(parametrosPdf) {
     var origen = this.htmltoPdf();
     this.renderPdf(parametrosPdf, origen);
 };
+
 ExportPdf.prototype.renderPdf = function renderPdf(parametrosPdf, origen) {
     var exec = require('child_process').exec;
     var fsextra = require('fs-extra');
@@ -89,7 +108,10 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrosPdf, origen) {
             var destextrafiles = path.dirname(parametrosPdf.path) + "/pdfextrafiles";
             if(fs.existsSync(extrafilesorig)){
             	fsextra.move(extrafilesorig,destextrafiles,function(err){console.log(err);$("#exportpdfwizard").dialog("destroy");});
+            }else{
+                $("#exportpdfwizard").dialog("destroy");
             }
+
             //that.borrarHtml(origen);
         } else {
             $("#exportpdfwizard").find('.waitingOK').css("display", "none");

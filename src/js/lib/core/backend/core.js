@@ -386,10 +386,17 @@ Backend.prototype.deleteSection = function(cbsectionid) {
    */
   var CBStorage = application.storagemanager.getInstance();
   var pool = [cbsectionid];
+  var objects=[];
   while(tempcbsectionid = pool.shift()){
     section = CBStorage.getSectionById(tempcbsectionid);
     pool = pool.concat(section.sections);
+    objects=section.content;
+    objects.forEach(function(elements){
+           CBStorage.deleteCBObjectById(elements);
+    });
+
     CBStorage.deleteSectionById(tempcbsectionid);
+    
   }
 
 };
