@@ -10,6 +10,8 @@ function FillGapBox(objectdata){
   this.fgpidentifier = typeof objectdata.fgpidentifier !== 'undefined' ? objectdata.fgpidentifier : "pem_" + this.uniqueid ; 
   this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : CBI18n.gettext("Description of your activity") ; 
   this.activitytext = typeof objectdata.activitytext !== 'undefined' ? objectdata.activitytext : 'En un lugar de la <span data-gap-fill="gap">Mancha</span>, de cuyo nombre no quiero acordarme,...' ;
+  this.group = typeof objectdata.group !== 'undefined' ? objectdata.group : 1 ;
+  this.pemObject = typeof objectdata.pemObject !== 'undefined' ? objectdata.pemObject : [] ;
   this.gaps = typeof objectdata.gaps !== 'undefined' ? objectdata.gaps : {
         "gap": {
            "words": [],
@@ -87,11 +89,44 @@ FillGapBox.prototype.clickButton = function clickButton(controllerClass) {
   //   );
 };
 
-FillGapBox.prototype.HTMLtags = function HTMLtags(){
-  var tagTypes = ['FGP'];
+FillGapBox.prototype.HTMLtags = function HTMLtags(node){
+  var tagTypes = ['FGP', 'DROP'];
   var score = 0;
+  if(tagTypes.indexOf(node.tagName) > -1)
+  {
+    score ++;
+  }
   return score;
+}
 
+FillGapBox.prototype.importHTML = function importHTML(node, filePath){
+  var i = 0;
+  if(node.tagName != null)
+    {
+      this.description = $(node).data("description");
+      this.activitytext =  $(node).data("activitytext");
+      var counter = $(node).data("fieldsnumber");
+      if(counter > 0){
+        delete(this.gaps["gap"]);
+        var newGap = {
+           "words": ($(node).data("words") != undefined)?$(node).data("words").split(","): [],
+           "showwords": false,
+           "casesensitive": $(node).data("caseSensitive") == "1"?true:false,
+           "placeholder": "?",
+           "autocomplete": "",
+           "adjustgaps": "",
+           "aria-label": "default",
+           "weight": 100
+        };
+        for(i = 0; i < counter; i++)
+        {
+         var name = "gap" + i
+         this.gaps["gap"+i] = newGap;
+        }
+      }
+
+      FillGapBox.super_.prototype.importHTML.call(this,node);
+    }
 }
 
 FillGapBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo,objectcbo) {
@@ -114,6 +149,7 @@ FillGapBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquery
    "fillfromstorage": true,
    "delstorage": true
   };
+  this.pemObject = obj_myprefix_fgp_identifier;
   jsGeork.Questions.Question(obj_myprefix_fgp_identifier);
   jquerycbo.on("resize",function(event,ui){
     var counter = 0;
@@ -171,7 +207,7 @@ FillGapBox.prototype.editButton = function editButton(e) {
   template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   dialog.dialog('option','width',500);
   var templatecompiled = application.util.template.compile(template);
-  dialog.children(".content").append(templatecompiled({description:that.description,toolbar:toolbar,activitytext:that.activitytext}));
+  dialog.children(".content").append(templatecompiled({description:that.description,toolbar:toolbar,activitytext:that.activitytext, 'group':that.group}));
   dialog.find("#activitytext").wysiwyg({extracommandhandler:that.extracommandhandler});
   dialog.callbacks.push(function(){updateText(dialog,that);});
 }
@@ -220,6 +256,7 @@ FillGapBox.prototype.extracommandhandler = function(command) {
 function updateText(dialog,objectcbo){
   objectcbo.activitytext = dialog.find("#activitytext").html();
   objectcbo.description = dialog.find("#description").val();
+  objectcbo.group = dialog.find("#group").html();
 }
 
 function nextNode(node) {

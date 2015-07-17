@@ -1,0 +1,374 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ejemplos PEM</title>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../jsgeork/jquery.jsgeork.js"></script>
+    <link href="../../jsgeork/jquery.jsgeork.css" rel="stylesheet" />
+    <!--[if lt IE 8]>
+	<link rel="stylesheet" href="../../jsgeork/jquery.jsgeork.ie7.css" />
+    <![endif]-->
+</head>
+<body>
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="single_ej_1">
+   <p>Año de publicación de la primera parte de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="single_ej_1">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="single_ej_1">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">Publicado por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_single_ej_1 = {
+        "id": "single_ej_1",
+        "type": "single",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "weight": 100
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "weight": 0
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta con respuestas de elección múltiple - Ejemplo 1",
+        "name": "Ejemplo 1",
+        "random": false,
+        "optsuccess": true,
+        "weighting": 50,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true
+        //"oncheck": function () { alert("oncheck" + "\nattempts: " + this.attempts); }
+    };
+    jsGeork.Questions.Question(obj_single_ej_1);
+</script>
+
+
+    <!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="single_ej_2">
+    <em>Ejemplo con las opciones ordenadas aleatoriamente (<code>"random": true,</code>), sin marcar las opciones como correctas (<code>"optsuccess": false,</code>) y 
+        con dos respuestas compartiendo comentario. Además incluye un comentario al final de la actividad.
+    </em>
+   <p>Año de publicación de la primera parte de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-bottom="single_ej_2">
+       <!-- El interior de este bloque se moverá al final de la actividad -->
+       Seleccione la respuesta que crea correcta.
+       </div>
+       <div data-info-ok="single_ej_2">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="single_ej_2">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">Publicado por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+       <div data-opt="optc">No es el año correcto.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_single_ej_2 = {
+        "id": "single_ej_2",
+        "type": "single",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "weight": 100
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "weight": 0
+            },
+            {
+                "text": "1607",
+                "answer": "optc",
+                "weight": 0
+            },
+            {
+                "text": "1602",
+                "answer": "optc",
+                "weight": 0
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta con respuestas de elección múltiple - Ejemplo 2",
+        "name": "Ejemplo 2",
+        "random": true,
+        "optsuccess": false,
+        "weighting": 100,
+        "lighting": 0,
+        "icons": "csshexent",
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true
+        //"oncheck": function () { alert("oncheck" + "\nattempts: " + this.attempts); }
+    };
+    jsGeork.Questions.Question(obj_single_ej_2);
+</script>
+
+
+
+
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="single_ej_3">
+    <em>Ejemplo con las respuetas en una lista (<code>"list": "ol",</code>), sin desrodenar (<code>"random": false,</code>) y lanzando el
+        evento <code>onok</code> cuando la respuesta seleccionada es correcta.
+    </em>
+   <p>Año de publicación de la primera parte de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="single_ej_3">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="single_ej_3">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">Publicado por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optb">En el año 1615 se publica la segunda parte.</div>
+       <div data-opt="optc">No es el año correcto.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_single_ej_3 = {
+        "id": "single_ej_3",
+        "type": "single",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "weight": 100
+            },
+            {
+                "text": "1615",
+                "answer": "optb",
+                "weight": 0
+            },
+            {
+                "text": "1607",
+                "answer": "optc",
+                "weight": 0
+            },
+            {
+                "text": "1602",
+                "answer": "optc",
+                "weight": 0
+            }
+        ],
+        "fieldset": true,
+        "legend": "Pregunta con respuestas de elección múltiple - Ejemplo 3",
+        "name": "Ejemplo 3",
+        "button": "?",
+        "list": "ol",
+        "random": false,
+        "optsuccess": true,
+        "icons": "csshexent",
+        "weighting": 100,
+        "lighting": 0,
+        "storage": "local",
+        "storagekey": "georkgenej",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true,
+        "onok": function () { alert("onok") }
+        //"oncheck": function () { alert("oncheck" + "\nattempts: " + this.attempts); }
+    };
+    jsGeork.Questions.Question(obj_single_ej_3);
+</script>
+
+<div style="height: 100px;"></div>
+<!-- $addjqueryhead$ -->
+<!-- $addjsgeorkhead$ -->
+<div id="single_ej_4">
+    <em>Ejemplo con muchas respuestas, sin fieldset ni iconos, y con una segunda respuesta (1615) valorada en 80. Al comprobar la respuesta se lanza
+        el evento <code>oncheck</code> y se muestra la puntuación de la respuesta. Las puntuaciones en las actividades individuales son sobre base 100 y, 
+        en principio, solamente se usan cuando forman parte de un test aunque están disponibles desde los eventos con <code>this.score</code>. 
+        De forma predeterminada una actividad se considera realizada correctamente cuando se consigue un score de 100. En este caso se lanza el evento 
+        <code>onok</code> y se guarda en el storage la fecha de la primera y última vez que se ha respondido correctamente la actividad. En caso contrario se lanza el evento <code>onko</code>. 
+        Puede cambiarse este 100% predeterminado mediante la propiedad "<em>threshold</em>", no incluida en el generador. En este ejemplo se ha colocado un umbral de 80 con <code>"threshold": 80,</code> de manera
+        que responder 1615 también hace que se considere a la actividad como realizada correctamente.
+    </em>
+   <p>Año de publicación de 'Don Quijote de la Mancha':</p>
+   <div style="display: none;" aria-hidden="true">
+       <div data-info-ok="single_ej_4">
+           <!-- El interior de este bloque se mostrará cuando se resuelva bien la actividad -->
+           <span class="CSSMsgSuccess">¡CORRECTO!</span>
+       </div>
+       <div data-info-ko="single_ej_4">
+           <!-- El interior de este bloque se mostrará cuando se resuelva mal la actividad -->
+           <span class="CSSMsgFail">¡ERROR!</span>
+       </div>
+       <div data-opt="opta">La primera parte se publica en 1605 por la imprenta de Juan de la Cuesta.</div>
+       <div data-opt="optd">En el año 1615 se publica la segunda parte.</div>
+       <div data-opt="optc">No es el año correcto.</div>
+   </div>
+</div>
+
+
+<script>
+    var obj_single_ej_4 = {
+        "id": "single_ej_4",
+        "type": "single",
+        "opt": [
+            {
+                "text": "1605",
+                "answer": "opta",
+                "weight": 100
+            },
+            {
+                "text": "1627",
+                "answer": "optc",
+                "weight": 0
+            },
+            {
+                "text": "1607",
+                "answer": "optc",
+                "weight": 0
+            },
+            {
+                "text": "1602",
+                "answer": "optc",
+                "weight": 0
+            },
+            {
+                "text": "1615",
+                "answer": "optd",
+                "weight": 80
+            },
+            {
+                "text": "1814",
+                "answer": "optc",
+                "weight": 0
+            },
+            {
+                "text": "1592",
+                "answer": "optc",
+                "weight": 0
+            },
+            {
+                "text": "1046",
+                "answer": "optc",
+                "weight": 0
+            }
+        ],
+        "fieldset": false,
+        "legend": "Pregunta con respuestas de elección múltiple - Ejemplo 4",
+        "name": "Ejemplo 4",
+        "random": true,
+        "icons": "",
+        "optsuccess": true,
+        "threshold": 80,
+        "weighting": 100,
+        "lighting": 0,
+        "storagekey": "georkgenej",
+        "storage": "local",
+        "showstorage": true,
+        "fillfromstorage": true,
+        "delstorage": true,
+        //"onready": function () { alert("onready"); },
+        "oncheck": function () { alert("oncheck\n\nscore: " + this.score); }
+    };
+    jsGeork.Questions.Question(obj_single_ej_4);
+</script>
+
+
+    <div style="height: 200px;"></div>
+    <hr />
+    <p>El siguiente botón muestra la variables públicas (vea la 'NOTA DE ACLARACIÓN' en las opciones avanzadas del generador).</p>
+    <button id="publicattempts">public vars</button>
+    <script>
+        jQuery(function ($) {
+            $('#publicattempts').on('click', function () { alert("\nupdate: " + jsGeork.Questions.Question.update + "\nscore: " + jsGeork.Questions.Question.score + "\nattempts: " + jsGeork.Questions.Question.attempts); console.log(jsGeork.Questions); });
+        });
+    </script>
+
+
+
+    <div style="height: 20px;"></div>
+    <hr />
+    <p>Aquí podemos ver la tabla que evalúa las actividades. Esta tabla está construida con la función <code>jsGeork.Questions.Eval()</code> y es un
+        método alternativo a los test para dar una evaluación de las actividades. Colocada al final de una página conseguimos motivar al alumno para que se asegure de
+        realizar correctamente todas las actividades. Una vez creadas las actividades podemos generar la tabla con una simple línea de código JavaScript.
+    </p>
+    <p>Observe que la primera actividad tiene un peso relativo del 50% (<code>"weighting": 50,</code>). Cuando se evalúa como actividad individual no afecta,
+        pero cuando se evalúa junto a otras actividades su puntuación vale un 50% respecto a la de las otras actividades.
+    </p>
+    <div style="height: 20px;"></div>
+    <div data-info-ko="evalacts" style="display: none;">
+        <p>Complete las actividades y actualice la tabla hasta que las supere.<br />
+            (<em>este contenido se muestra mientras no se realicen todas las actividades y se supere el umbral de nota, establecido en este caso al 50%</em>)
+        </p>
+    </div>
+    
+    <div id="evalacts"></div>
+
+    <div data-info-ok="evalacts" style="display: none;">
+        <p>Muy bien. Ha superado las actividades con nota. <br />
+            (<em>este contenido se muestra cuando se completan todas las actividades
+            con una nota igual o superior al umbral, propiedad 'threshold' con valor inicial del 100%</em>)
+        </p>
+    </div>
+    <!--<button id="evalactsbtn">eval activities</button>-->
+    <p>A continuación tenemos una tabla que evalúa solamente la primera actividad. La diferencia es que lo hace sobre una base de 100 y que muestra como 
+        nombre de la actividad el texto de su leyenda. Además
+    </p>
+    <div id="evalacts2"></div>
+    <script>
+        var objTest = {
+            "id": "evalacts",
+            "qbase": 10,
+            threshold: 50
+            //onok: function () { alert("onok"); },
+            //onko: function () { alert("onko"); }
+        };
+        jQuery(function ($) {
+            //$('#evalactsbtn').on('click', function () {
+            jsGeork.Questions.Eval(objTest, "single_ej_1", "single_ej_2", obj_single_ej_3, obj_single_ej_4);
+            jsGeork.Questions.Eval({ id: "evalacts2", "names":"legend", "qbase": 100, "timer": "5s", "refresh": false }, obj_single_ej_1);
+            //});
+        });
+    </script>
+
+
+
+    
+</body>
+</html>

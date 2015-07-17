@@ -115,6 +115,8 @@ VideoBox.prototype.importHTML = function importHTML(node, filePath){
       {
         if (node.innerHTML.indexOf("src=")!=-1)
           videopath = node.innerHTML.split('src="')[1].split(" ")[0].replace('"','');
+        if (node.outerHTML.indexOf("src=")!=-1)
+          videopath = node.outerHTML.split('src="')[1].split(" ")[0].replace('"','');
         if (node.innerHTML.indexOf("type=")!=-1)
         {
           type = node.innerHTML.split('type="')[1].trim().replace(">","").replace('"','');

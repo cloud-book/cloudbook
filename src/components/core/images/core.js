@@ -14,7 +14,7 @@ util.inherits(ImageBox,CBobject);
 
 ImageBox.prototype.editorView = function editorView() {
   var aux = ImageBox.super_.prototype.editorView.call(this);
-  var imagepath = this.imgpath !== null ? Project.Info.projectpath + "/rsrc/"+ this.imgpath : __module_path__ + "default.png";
+  var imagepath = this.imgpath !== null ? this.imgpath.indexOf("http") != -1? this.imgpath: Project.Info.projectpath + "/rsrc/"+ this.imgpath : __module_path__ + "default.png";
   var imgelement = $(window.document.createElement('img')).attr('src', imagepath);
   imgelement.css('height','100%');
   imgelement.css('width','100%');
@@ -56,8 +56,15 @@ ImageBox.prototype.importHTML = function importHTML(node, filePath){
         imgpath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
       ImageBox.super_.prototype.importHTML.call(this,node);
 
-      var aux = this.copyresource(path.join(path.dirname(filePath),imgpath));
-      this.imgpath = path.basename(aux);
+      if(imgpath.indexOf("http") == -1){
+
+        var aux = (path.dirname(imgpath.replace(Project.Info.projectpath + "/rsrc/", "")) == ".")? 
+         this.copyresource(path.join(filePath.substring(0, filePath.lastIndexOf('/')+1),path.basename(imgpath))):
+         this.copyresource(path.join(filePath.substring(0, filePath.lastIndexOf('/')+1),imgpath.replace(Project.Info.projectpath + "/rsrc/", "")));
+        this.imgpath = path.basename(aux);
+      }else{
+        this.imgpath = imgpath;
+      }
     }
     catch (err) {
         console.log('Errors in Image' + err);

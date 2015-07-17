@@ -72,4 +72,5 @@ describe('Cloudbook', function() {
 			setTimeout(done, 1000)
 		}
 	})
+
 })
