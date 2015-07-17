@@ -246,6 +246,9 @@ Backend.prototype.loadProject = function(projectPath) {
     this.voidProject();
     Project.Info.projectname = projectPath;
 
+    Project.Info.DublinCore = projectdata.info.DublinCore;
+    Project.Info.LOM = projectdata.info.LOM
+    
     projectdata.data.sections.forEach(function(section){
       var cbsectionid = section[0];
       var rawsection = section[1];

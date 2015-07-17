@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>jsGeork. Herramienta JavaScript para crear actividades educativas.</title>
+    <meta name="Description" content="Motor opensource JavaScript/HTML5 para generar actividades educativas y tests para la web" />
+    <meta name="Keywords" content="educación actividades ejercicios educativos enseñanza test evaluar generar codigo fuente abierto librería plugin javascript interactivos" />
+    <meta name="author" content="Jordi cavallé" />
+	<meta name="abstract" content="Generador de ejercicios, actividades y test para la educación" />
+	<meta name="copyright" content="© 2014 Jordi Cavallé" />
+	<link rel="canonical" href="http://jsgeork.geork.com/" />
+    <link href="styles/index.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="cuerpo">
+    <div class="title">
+        <div class="logo">jsGeork</div>
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#use">Utilización</a>
+            <a href="#download">Download</a>
+            <a href="#generator">Generador</a>
+            <a href="#license">Licencia</a>
+        </nav>
+    </div>
+            <div id="inicio">
+                <h1>Biblioteca JavaScript para generar actividades educativas</h1>
+
+                <p><strong>jsGeork</strong> es una biblioteca JavaScript de código abierto que utiliza jQuery para generar distintos tipos de actividades educativas: elección múltiple, multiselección, rellenar huecos, etc. 
+                    Estas actividades individuales pueden agruparse en un test que al entregarse será evaluado con una nota para cada actividad y con una nota global. 
+                    Las actividades individuales también pueden opcionalmente ser evaluadas en unas tablas para incitar al alumno a realizarlas. Los resultados de cada actividad, test 
+                    o tabla de evaluación pueden ser guardados en el Web Storage para que estén disponibles entre sesiones distintas del navegador
+                    y entre distintas páginas del sitio web. El código generado es html5 accesible utilizando la especificación WAI-ARIA.
+                </p>
+                <p>En las siguientes capturas podemos ver algunos ejemplos de actividades, test y tablas evaluadoras creadas por el motor de la biblioteca. Puede ver ejemplos en funcionamiento
+                    en el <a href="#generator">generador de actividades</a>.
+                </p>
+                <div class="imgej">
+                    <img src="img/jsgeork03.jpg" title="Ejemplo de una actividad (captura)" />
+                    <p>Existen varios tipos de actividades. En la captura anterior vemos un ejemplo de una actividad de rellenar huecos.</p>
+                </div>
+
+                <div class="imgej">
+                    <img src="img/jsgeork01.jpg" title="Ejemplo de un  test (captura)" />
+                    <p>Los test están compuestos por una o más actividades.</p>
+                </div>
+
+                <div class="imgej">
+                    <img src="img/jsgeork04.jpg" title="Evaluación de un  test (captura)" />
+                    <p>En un test, las actividades son evaluadas dándose una nota global.
+                    </p>
+                </div>
+
+                <div class="imgej">
+                    <img src="img/jsgeork02.jpg" title="Notas almacenadas de un  test (captura)" />
+                    <p>La nota de los test es guardada en el Web Storage para que se 
+                        conserve entre distintas sesiones del navegador.
+                    </p>
+                </div>
+
+                <div class="imgej">
+                    <img src="img/jsgeork05.jpg" title="Evaluación de una actividad (captura)" />
+                    <p>Las actividades también pueden ser evaluadas de forma individual.
+                    </p>
+                </div>
+
+                <p style="font-size: smaller; padding-left: 4em; padding-right: 4em">
+					El motor javascript se ha testeado en los navegadores Firefox, Chrome, y en el IE <small>(modes 5,7,8,9,10,11)</small>, Opera y Safari 5.1.7 bajo Windows, en páginas servidas como HTML5 y como XHTML5.
+					Se probado también en el Safari de un iPad con iOS 7.1, en Firefox OS Simulator, Android 2.2 y AND Virtual Device 4.2.
+				</p>
+
+            </div>
+            <div id="use" class="bloque">
+                <h1>Utilización</h1>
+
+                <p>Para utilizar la biblioteca jsGeork debemos incluir en la página web los archivos CSS y JS de la propia biblioteca. Además, antes de incluir el archivo
+                    JS de jsGeork debemos incluir la biblioteca jQuery si la página no la incluye ya.
+                </p>
+
+                <div class="codigo">
+                    <pre>
+                        <code>
+                            
+<span class="coment">&lt;!-- Biblioteca jQuery --&gt;</span>
+<span class="htag">&lt;script </span><span class="hattr">src=</span><span class="vattr">"http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"</span><span class="htag">&gt;&lt;/script&gt;</span> 
+
+<span class="coment">&lt;!-- Archivo CSS jsGeork --&gt;</span>
+<span class="htag">&lt;link</span> <span class="hattr">rel=</span><span class="vattr">"stylesheet"</span> <span class="hattr">href=</span><span class="vattr">"jsgeork/jquery.jsgeork.css"</span><span class="htag">&gt;</span> 
+
+<span class="coment">&lt;!-- Archivo JS jsGeork --&gt;</span>
+<span class="htag">&lt;script </span><span class="hattr">src=</span><span class="vattr">"jsgeork/jquery.jsgeork.js"</span><span class="htag">&gt;&lt;/script&gt;</span> 
+
+                        </code>
+                    </pre>
+                </div>
+
+                <p>Revise las rutas a los archivos para asegurarse que son las que usted utiliza. En el ejemplo la biblioteca jQuery se carga desde Internet. Inclúyala
+                    entre sus archivos si deben funcionar en modo local. La versión mínima requerida es la 1.7+.
+                </p>
+
+                <p>Una vez la página incluye los archivos necesarios ya podemos añadir en la misma el código HTML y JS para obtener actividades educativas. Para saber cómo 
+                    crear este código utilice el <a href="generator/index.html">generador de actividades</a>.
+                </p>
+
+            </div>
+            <div id="download" class="bloque">
+                <h1>Download</h1>
+
+                <p>Puede descargar la librería, el código fuente comentado sin minimizar, y el generador de actividades utilizando el siguiente enlace:</p>
+
+                <div>
+                    <a href="http://jsgeork.geork.com/" id="jsgeorkdown">Descargar jsGeork</a>
+                </div>
+
+            </div>
+            <div id="generator" class="bloque">
+                <h1>Generador</h1>
+
+                <p>Para que en una página aparezcan las actividades no es suficiente con añadir los archivos de la biblioteca, debemos definir 
+                    las actividades. Cada actividad se define con una combinación de código HTML+JS. Puede crear este código utilizando un editor,
+					el <a href="generator/index.html">generador de actividades</a>.
+                </p>
+
+            </div>
+            <div id="license" class="bloque">
+                <h1>Licencia</h1>
+
+                <p>La licencia es del tipo BSD y la puede leer <a href="licencia.txt">aquí</a>. Básicamente le permite hacer 
+                    lo que quiera con la biblioteca siempre que conserve el aviso de copyright.
+                </p>
+            </div>
+
+        <div class="linkg">
+            geork@geork.com<br />
+        [ <a href="http://www.geork.com">www.geork.com</a> ]
+        </div>
+    </div>
+</body>
+</html>

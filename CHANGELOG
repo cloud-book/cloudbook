@@ -25,5 +25,11 @@
 	* 
 
 ### Bugs
+* Clone Fillinthegaps and interactiveoneoption components
+* When clone a section with Fillinthegaps or interactiveoneoption components and then remove one of this component in the cloned section the component is delete in the origin section too
+* When a section is delete the content doesn't delete of the project data info
+* The export pdf gui doesn't close when the process end if the project don't have "extrafiles"
+
 * Al seleccionar un elemento `alpha` en la seccion `x`, cambiar a la `z` y volver a la seccion `x` no se puede seleccionar el objeto `alpha`
 * La barra de tipografia del textbox no desaparecia si se seleccionaba otro componente.
+* Al clonar fillinthegaps y multioptions, no se crean copias independientes, sino enlaces simbolicos

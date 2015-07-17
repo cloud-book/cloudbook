@@ -120,9 +120,10 @@ AudioBox.prototype.importHTML = function importHTML(node, filePath){
     try{
 
       AudioBox.super_.prototype.importHTML.call(this,node);
-      this.audioformat = node.attributes.getNamedItem("type") != null? node.attributes.getNamedItem("type").value:"";
+      this.audioformat = node.attributes.getNamedItem("type") != null? node.attributes.getNamedItem("type").value:this.audioformat;
 
-      var audiopath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:"";
+      var audiopath = node.attributes.getNamedItem("src") != null? node.attributes.getNamedItem("src").value:
+      node.attributes.getNamedItem("href") != null?node.attributes.getNamedItem("href").value:"";
       if(node.tagName == "OBJECT")
         audiopath = node.hasAttribute("data")? node.attributes['data'].nodeValue:"";
 

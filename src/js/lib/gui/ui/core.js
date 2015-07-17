@@ -98,6 +98,7 @@ UI.prototype.defaultToolbar = function defaultToolbar() {
           "b966e4b3-05e9-41db-a1ae-7ed1e03a7bc4",
           "87d7b00a-a296-4cd9-af13-f8d9685a6dec",
           "ad2a6410-8dcd-4ca7-9bf7-73043dcd5771",
+          "05696a9f-cc0e-4ef3-b243-0a6b20cefb8b",
           "f5bc49e8-eb52-455f-8c4b-8470dab081c0",
           "4041227c-8738-4787-af3d-71d196aad257",
           "f1ef211a-562a-4e00-bae2-ca5b471bec16",

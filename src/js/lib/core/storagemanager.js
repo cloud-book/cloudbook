@@ -57,6 +57,24 @@ StorageManager.prototype.getCBObjectById = function getCBObjectById(cbobjectid) 
 	return Project.Data._rawobjects[cbobjectid];
 };
 
+StorageManager.prototype.getCBObjectsBySectionAndType = function getCBObjectsBySectionAndType(cbsectionid, cbobjecttype) {
+	var objectArray = [];
+
+	if(Project.Data._rawsections[cbsectionid] === undefined){
+		return undefined;
+	}
+
+	Project.Data._rawsections[cbsectionid].content.forEach(function(element){
+		var objectAux = application.storagemanager.getInstance().getCBObjectById(element);
+
+		if(cbobjecttype.indexOf(objectAux.idtype) > -1)
+		{
+			objectArray.push(objectAux);
+		}
+	});
+	return objectArray;
+};
+
 StorageManager.prototype.setCBObjectById = function setCBObjectById(cbocject,cbobjectid) {
 	Project.Data._rawobjects[cbobjectid] = cbocject;
 	return cbobjectid;
