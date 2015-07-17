@@ -2,9 +2,7 @@
  * @class ImportELP
  * @classdesc This class is responsible to make import data of ELP files
  */
-function ImportELP(){
-	var maxIdTest = 1;
-}
+function ImportELP(){}
 
 /**
  * This method is responsible for getting tags for each component
@@ -100,11 +98,11 @@ function processTextIdevice(node, filePath, idsection)
 		nodeAux = $($($(node).children()[0]).children('unicode[content="true"]')[0]);
 	}
 	
-	if(type == "exe.engine.freetextidevice.FreeTextIdevice" ){
+	if(type == "exe.engine.freetextidevice.FreeTextIdevice" || type == "exe.engine.field.TextAreaField"){
 		 newNode = (newNode == "")?$("<p></p>"):newNode;
 		 newNode.tagName = "P";
 		 newNode.innerHTML = (newNode.innerHTML == undefined)?"":newNode.innerHTML;
-		 if(nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"").indexOf("<p") == 0)
+		 if(nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"").trim().indexOf("<p") == 0)
 		 	newNode.innerHTML += nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"");
 		 else
 		 	newNode.innerHTML += "<P>" + nodeAux.attr("value").replace(/(\\r\\n|\\n|\\r|\\t|\\n\\t)/gm,"") + "</P>";
@@ -144,9 +142,6 @@ function processTextIdevice(node, filePath, idsection)
 			case "exe.engine.reflectionidevice.ReflectionIdevice":
 				typebox = "reflection";
 			break;
-//			case "exe.engine.wikipediaidevice.WikipediaIdevice":
-//				typebox = "custom";
-//			break;
 			case "exe.engine.genericidevice.GenericIdevice":
 				switch($(node).children().find("string[value='class_']").next().attr("value"))
 				{
@@ -348,10 +343,8 @@ function processTrueFalseIdevice(node, filePath, idsection)
 	newNode = $("<test />");
 	newNode.innerHTML = "";
 
-	maxIdTest = 1;
-
 	node.children().find("string[value='questions']").next().children().each(function(){
-		auxContent = processMultiIdevice($(this), filePath, idsection, maxIdTest +1);
+		auxContent = processMultiIdevice($(this), filePath, idsection, ImportELP.maxIdTest +1);
 		newNode.innerHTML += auxContent.innerHTML;
 	});
 
@@ -363,12 +356,10 @@ function processTrueFalseIdevice(node, filePath, idsection)
 	newNode.data("legend", node.children().find("string[value='_title']").next().attr("value"));
 	newNode.innerHTML += "data-legend='" + newNode.data("legend") + "' "; 
 
-	newNode.data("group", maxIdTest +1);
-	newNode.innerHTML += 'data-group="' + (maxIdTest +1) + '" />';
+	newNode.data("group", ImportELP.maxIdTest +1);
+	newNode.innerHTML += 'data-group="' + (ImportELP.maxIdTest +1) + '" />';
 
-//	newNode.data("options", questions);
-//	newNode.innerHTML += 'data-options="' + JSON.stringify(questions).replace(/"/g, "'") + '" />';
-
+	ImportELP.maxIdTest += 1;
 	return newNode;
 }
 
@@ -388,7 +379,6 @@ function processTrueFalseIdevice(node, filePath, idsection)
 		case "exe.engine.genericidevice.GenericIdevice":
 		case "exe.engine.casestudyidevice.CasestudyIdevice":
 		case "exe.engine.reflectionidevice.ReflectionIdevice":
-		case "exe.engine.wikipediaidevice.WikipediaIdevice":
 		case "exe.engine.notaidevice.NotaIdevice":
 			nodeContent = processTextIdevice(node, filePath, idsection);
 		break;
@@ -442,7 +432,8 @@ function processChildren(node, idsection, filePath)
 				$("#tempImportELP").contents().find("html").append(contentSection.innerHTML);
 		});
 		var options = $.parseJSON('{"isELP":'+ true + '}');
-		importationHTML.processHTML($("#tempImportELP").contents().find("html").html(), filePath, idsection, options);
+		if($("#tempImportELP").contents().find("html").html() != "<head></head><body></body>")
+			importationHTML.processHTML($("#tempImportELP").contents().find("html").html(), filePath, idsection, options);
 	}	
 
 	if(node.prop("tagName") == "LIST" && node.prev().attr("value") == "children"){
@@ -519,6 +510,7 @@ ImportELP.prototype.processPackageDataELP = function processPackageDataELP(fileP
 	var fileIndexv2 = "contentv2.xml"
 	var controller = application.controller.getInstance();
 	var destpath = path.join(Project.Info.projectpath, "rsrc");
+	ImportELP.maxIdTest = 1;
 
 	if(fs.existsSync(decodeURIComponent(filePath+fileIndexv2),{encoding:'utf8'})) 
 		dataFile = fs.readFileSync(decodeURIComponent(filePath+fileIndexv2),{encoding:'utf8'});
@@ -544,7 +536,6 @@ ImportELP.prototype.processPackageDataELP = function processPackageDataELP(fileP
 	var elpLOMMetadata = $($($(dataFile.toString()).children("dictionary")).children("string[value='lomEs']")).next("instance[class='exe.engine.lom.lomsubs.lomSub']");
 	if(elpLOMMetadata != undefined)
 		application.importmetadata.getInstance().loadELPLOMMetadata(elpLOMMetadata);
-	debugger;
 	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 }
 CBUtil.createNameSpace('application.importelp');

@@ -107,7 +107,6 @@ TestBox.prototype.HTMLtags = function HTMLtags(node){
 
 TestBox.prototype.importHTML = function importHTML(node, filePath){
   var that = this;
-  debugger;
   if(node.tagName != null)
     {
       var k = 0;
@@ -135,24 +134,13 @@ TestBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo
   };
   
   var args = new Array();
+  filterObjects(this, this.group);
   args.push(obj_myprefix_test_identifier)
   for(i = 0; i < this.questions.length; i++){
     args.push(this.questions[i]);
   }
 
-  jsGeork.Questions.Eval.apply(this, args);
-
-  e = {"type":"click", "originalEvent":"MouseEvent", "data":this};
-  var that = e.data;
-  var dialog = TestBox.super_.prototype.editButton.call(this,e);
-  dialog.dialog('option','width',400);
-
-  var template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
-  var templatecompiled = application.util.template.compile(template);
-  dialog.children(".content").append(templatecompiled({'group':that.group, 'caption': that.caption, 'questions':that.caption}));
-  dialog.callbacks.push(function(){updateQuestions(dialog,that);});
-  updateQuestions(dialog, this);
-  dialog.dialog("close");
+  jsGeork.Questions.Eval.apply(obj_myprefix_test_identifier, args);
 
   jquerycbo.on("resize",function(event,ui){
     var counter = 0;
