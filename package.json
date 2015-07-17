@@ -26,7 +26,6 @@
     "chrome-remote-interface": "~0.7.0",
     "globule": "^0.2.0",
     "gulp": "~3.8.11",
-    "gulp-pretty-data": "^0.1.1",
     "gulp-util": "~3.0.4",
     "jsdoc": "~3.3.0",
     "jsxgettext": "~0.6.3",
