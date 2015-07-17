@@ -10,7 +10,7 @@ var should = require('should')
 
 
 describe('Cloudbook', function() {
-	this.timeout(2000)
+	this.timeout(20000)
 
 	var nw, cri
 
@@ -32,7 +32,7 @@ describe('Cloudbook', function() {
 			// simulate the click
 			inputmanager.click(cri, pos.x + 5, pos.y + 5, function(err, result) {
 				if (err) return done(err)
-				inputmanager.sendtext(cri,"testdir1",function(err,result){
+				inputmanager.sendtext(cri,"testdir",function(err,result){
 					getElementPosition(cri, '#advprojbtn', function(err, pos) {
 						if (err) return done(err);
 						inputmanager.click(cri, pos.x + 5, pos.y + 5, function(err, result) {
@@ -67,7 +67,7 @@ describe('Cloudbook', function() {
 		}
 
 		if (nw.isAppRunning()) {
-	//		nw.getAppProcess().on('close', done).kill()
+			nw.getAppProcess().on('close', done).kill()
 		} else {
 			setTimeout(done, 1000)
 		}
