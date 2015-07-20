@@ -897,8 +897,27 @@ function parserImslrm() {
         }
              
     });
+    trimArray(imslrm);
     return imslrm;
 };
+
+/**
+ *Function to apply a trim to imslrm
+ */
+
+
+function trimArray(data){
+    if (typeof data !=="undefined" || data !==null){
+        var listaclaves = Object.keys(data);
+        listaclaves.forEach(function(e){
+            if (typeof(data[e]) === 'string'){
+                data[e]=data[e].trim()
+            }
+            else{
+                trimArray(data[e]);
+            }
+        })
+    } 
 
 /**
  * Auxiliary function to get the code for metadata language

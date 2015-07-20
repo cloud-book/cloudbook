@@ -1670,6 +1670,25 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
   		});
 		i++;
    	});
+
+	trimArray(Project.Info.LOM);
+}
+
+/** 
+ * This function is responsible for applicate a trim to xml values 
+ */
+function trimArray(data){
+	if (typeof data !=="undefined" || data !==null){
+    	var listaclaves = Object.keys(data);
+    	listaclaves.forEach(function(e){
+    		if (typeof(data[e]) === 'string'){
+    			data[e]=data[e].trim()
+    		}
+    		else{
+    			trimArray(data[e]);
+    		}
+    	})
+    }	
 }
 
 /**
