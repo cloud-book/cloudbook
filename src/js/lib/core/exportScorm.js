@@ -915,9 +915,10 @@ function trimArray(data){
             }
             else{
                 trimArray(data[e]);
-            }
-        })
-    } 
+            };
+        });
+    }; 
+};    
 
 /**
  * Auxiliary function to get the code for metadata language
