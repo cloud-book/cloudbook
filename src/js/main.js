@@ -79,6 +79,8 @@
  	if (options['_'].length > 0 ){
  		var path = require('path');
  		var auxprojectpath = path.resolve(options['_'][0]);
+                var controller = application.controller.getInstance();
+                controller.loadProject(auxprojectpath);
  	}
  	else{
  		var fs = require('fs');
