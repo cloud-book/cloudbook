@@ -132,7 +132,9 @@ function processElementBlock(node, filePath, idsectionselected)
 
 	if(candidates.length > 0)
 	{
-		element = new Cloudbook.Actions[candidates[0]]['component']();
+		var element = new Cloudbook.Actions[candidates[0]]['component']();
+		if(Cloudbook.Actions[candidates[0]].path.indexOf("core/text") != -1)
+			node = extractElements(node, filePath, idsectionselected);
 		element.importHTML(node, filePath);
 		backend.appendCBObjectIntoSection(element, idsectionselected);
 	}
