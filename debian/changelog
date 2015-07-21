@@ -1,0 +1,42 @@
+cloudbook (0.3) trusty; urgency=high
+
+  * Removed flash and ffmpeg
+  * Added depends with chromium-codecs and adobe-flash
+  * Added foreknowledge component
+  * Added Clone CBObjects feature
+  * Added Clone CBSection feature
+  * Added Epub export
+  * Added more sizes to font on cbtextbox
+  * Firsts steps to theme support
+  * When draw cbobject, bar now has opacity.
+  * Migrate to Gulp
+  * Add new devel mode. This mode refresh automatically cloudbook. 
+  * Added variable window.debugMode. If this variable is true, all cbobjects 
+    show her unique id
+  * News events : changesection , 
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Thu, 30 Apr 2015 19:54:48 +0200
+
+cloudbook (0.2.2) trusty; urgency=high
+
+  * add flash
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Wed, 29 Apr 2015 18:36:57 +0200
+
+cloudbook (0.2.1) trusty; urgency=high
+
+  * Fixed bugs 
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Wed, 29 Apr 2015 17:56:09 +0200
+
+cloudbook (0.2.0) trusty; urgency=high
+
+  * First version on ppa
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Wed, 29 Apr 2015 11:15:36 +0200
+
+cloudbook (0.1.1) trusty; urgency=high
+
+  * Initial Release.
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Tue, 03 Mar 2015 16:33:02 +0100
