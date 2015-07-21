@@ -907,7 +907,7 @@ function parserImslrm() {
 
 
 function trimArray(data){
-    if (typeof data !=="undefined" || data !==null){
+    if (!(typeof data == undefined || data ==null)){
         var listaclaves = Object.keys(data);
         listaclaves.forEach(function(e){
             if (typeof(data[e]) === 'string'){
