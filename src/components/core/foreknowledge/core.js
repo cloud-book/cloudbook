@@ -126,6 +126,7 @@ ForeknowledgeBox.prototype.pdfView = function pdfView() {
 ForeknowledgeBox.prototype.epubView = function epubView() {
   var aux = this.pdfView(),
       path = require('path'),
+      that=this,
       abspath = "",
       newpath = "";
 
