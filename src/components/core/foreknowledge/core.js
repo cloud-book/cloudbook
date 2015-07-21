@@ -124,7 +124,20 @@ ForeknowledgeBox.prototype.pdfView = function pdfView() {
 }
 
 ForeknowledgeBox.prototype.epubView = function epubView() {
-   return this.pdfView();
+  var aux = this.pdfView(),
+      path = require('path'),
+      abspath = "",
+      newpath = "";
+
+  abspath = path.resolve(Cloudbook.UI.exportthemepath);
+  if(that.typebox !== "custom"){
+    newpath = `file://${abspath}/img/fkl_${that.typebox}.png` ;
+  }
+  else{
+    newpath = `file://${Project.Info.projectpath}/rsrc/noteimages/${that.customimage}`;
+  }
+  aux.find("img").attr('src',newpath);
+  return aux;
 }
 
 
