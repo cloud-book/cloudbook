@@ -11,21 +11,23 @@ function ExportWebZip(){
 
 ExportWebZip.prototype.createHtml=function createHtml(){
     var fs = require('fs-extra');
-    var path='/tmp/cloudbook/WebZip/';
+    var mktemp = require('mktemp');
+    var path = mktemp.createDirSync("/tmp/cloudbook_XXXX");
+    
     fs.mkdirsSync(path, function (err) {
   	if (err) return console.error(err)
   	console.log("success!")
     }) 
      
     var createhtml = application.exporthtml.core.getInstance();
-    createhtml.do_html('/tmp/cloudbook/WebZip'+'/');
+    createhtml.do_html(path +'/');
     
    return path;
 
 };
 
 
-ExportWebZip.prototype.borrarHtml=function borrarHtml(origen){
+/*ExportWebZip.prototype.borrarHtml=function borrarHtml(origen){
      
      var fs=require('fs');
      var fsextra=require('fs-extra');
@@ -41,7 +43,7 @@ ExportWebZip.prototype.borrarHtml=function borrarHtml(origen){
      });
 
  
-};
+};*/
 
 ExportWebZip.prototype.paramWebZip=function paramWebZip(destino){
           
@@ -74,7 +76,7 @@ ExportWebZip.prototype.createZip=function createZip(directorio,destino){
     		} else {
        			 console.log('EXCELLENT');
 		 	$("#exportwebzipwizard").dialog("destroy");
-                        that.borrarHtml(directorio);
+                  //      that.borrarHtml(directorio);
 			
    		}
 	});
