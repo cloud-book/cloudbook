@@ -20,7 +20,9 @@ ImportPackage.prototype.processPackage = function processPackage(data, filePath,
 	var fs = require('fs');
 	var fs2 = require('fs-extra');
 	var path = require("path");
-	var tempPath = "/tmp/cloudbook/";
+//	var tempPath = "/tmp/cloudbook/";
+    var mktemp = require('mktemp');
+    var tempPath = mktemp.createDirSync("/tmp/cloudbook_XXXX/");
 	var metadataFile = "";
 
 	fs2.emptyDirSync(tempPath);
@@ -76,7 +78,7 @@ ImportPackage.prototype.processPackage = function processPackage(data, filePath,
 		{
 			case "EPUB": application.importepub.getInstance().processPackageDataEPUB(tempPath); break;
 			case "ELP": application.importelp.getInstance().processPackageDataELP(tempPath); break;
-			default: processPackageData(tempPath, fileType); break;
+			default: processPackageData(tempPath, fileType, tempPath); break;
 		}
 	}
 }
@@ -140,11 +142,13 @@ function changeImagePath(htmlCode, filePath)
  * @param  {String} element to be processed
  * @param  {String} name of resource
 */
-function loadElementResources(element, filter)
+function loadElementResources(element, filter, tempPath)
 {
 	var fsextra = require('fs-extra');
 	var path = require('path');
-	var tempPath = "/tmp/cloudbook/";
+//	var tempPath = "/tmp/cloudbook/";
+//    var mktemp = require('mktemp');
+//    var tempPath = mktemp.createDirSync("/tmp/cloudbook_XXXX/");
 
 	var childrenFiles = element.parents().find("resource[identifier='" + filter + "']").children("file");
 	childrenFiles.each(function(){
@@ -161,14 +165,17 @@ function loadElementResources(element, filter)
  * @param  {String} id of section processed
  * @param  {String} path of the elements
  */
- function processSection(element, resourceID, idsection, filePath)
+ function processSection(element, resourceID, idsection, filePath, tempPath, typefile)
 {
 
 	var href = element.parents().find("resource[identifier='" + resourceID + "']").attr("href");
-	application.controller.getInstance().updateSectionName(element.children()[0].innerText,idsection);	
+	if(typefile != undefined && typefile == "IMS")
+		application.controller.getInstance().updateSectionName(element.children()[1].innerText,idsection);	
+	else
+		application.controller.getInstance().updateSectionName(element.children()[0].innerText,idsection);	
 	var html = $.parseHTML(fs.readFileSync(filePath + href).toString());
 	changeImagePath(html);
-	loadElementResources(element, resourceID);
+	loadElementResources(element, resourceID, tempPath);
 	application.importhtml.getInstance().processHTML(html, filePath + href, idsection);
 }
 
@@ -179,7 +186,7 @@ function loadElementResources(element, filter)
  * @param  {Object} node to be processed
  * @param  {String} path of the elements
  */
- function processChildrenData(idsection, element, filePath, fileType)
+ function processChildrenData(idsection, element, filePath, fileType, tempPath, iscloudbook)
 {
 	var idSectionParent = "", html = "", href = "", idSectionPreParent = "";
 	var importationHTML = application.importhtml.getInstance();
@@ -187,9 +194,10 @@ function loadElementResources(element, filter)
 	var iseXeChildren = false;
 
 	idSectionPreParent = idsection;
-	idsection = controller.appendSection(idsection);
+	if(iscloudbook == undefined)
+		idsection = controller.appendSection(idsection);
 	idSectionParent = idsection;
-	processSection(element, $(element.children("item")[0]).attr("identifierref"), idSectionParent, filePath);
+	processSection(element, iscloudbook == undefined?$(element.children("item")[0]).attr("identifierref"):$(element).children("item")[0].attributes['identifierref'].value, idSectionParent, filePath, tempPath, fileType);
 	iseXeChildren = element.parents().find("organizations").attr("default").substr(0,3) == "eXe";
 
 	element.children("item:gt(0)").each(function(){
@@ -198,16 +206,16 @@ function loadElementResources(element, filter)
 				idsection = controller.appendSection(idSectionParent);
 			else
 				idsection = controller.appendSection(idSectionPreParent);
-			processSection($(this), this.attributes['identifierref'].value, idsection, filePath);
-			loadElementResources($(this), $(this).attr("identifierref"));
+			processSection($(this), this.attributes['identifierref'].value, idsection, filePath, tempPath);
+			loadElementResources($(this), $(this).attr("identifierref"), tempPath);
 			if(/*fileType == "IMS" &&*/ $(this).children("item").length > 0)
 			{
-				processChildrenData(idsection, $(this), filePath, fileType);
+				processChildrenData(idsection, $(this), filePath, fileType, tempPath);
 			}
 		}
 		else
 		{
-			processChildrenData(idSectionParent, $(this), filePath, fileType);
+			processChildrenData(idSectionParent, $(this), filePath, fileType, tempPath);
 		}
 	})
 }
@@ -217,7 +225,7 @@ function loadElementResources(element, filter)
  * It reads files to be included and creates sections for each one
  * @param  {String} path of the unzipped elements
  */
-function processPackageData(filePath, fileType)
+function processPackageData(filePath, fileType, tempPath)
 {
 	var fs = require('fs');
 	var fsextra = require('fs-extra')
@@ -225,7 +233,9 @@ function processPackageData(filePath, fileType)
 	var idsection = "", idSectionAux = "", idSectionRoot = "";
 	var ui = application.ui.core.getInstance();
 	var children = "";
-	var tempPath = "/tmp/cloudbook/";
+//	var tempPath = "/tmp/cloudbook/";
+//    var mktemp = require('mktemp');
+//    var tempPath = mktemp.createDirSync("/tmp/cloudbook_XXXX/");
 	var path = require("path");
 	var items, iseXe = false, isCloudBook = false;
 	var existsAnotherIndex = false, isFirst = true;
@@ -234,8 +244,9 @@ function processPackageData(filePath, fileType)
 	fs.readFile(filePath+"imsmanifest.xml", function(err, data) {
 			if(fileType == "IMS"){
 				idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
-				processSection($($(data.toString()).children()[0]), $(data.toString()).find("item:first").attr("identifierref"), idsection, filePath);
+				processSection($($($(data.toString()).find("organization")).find("item")[0]), $(data.toString()).find("item:first").attr("identifierref"), idsection, filePath, tempPath);
 				idSectionRoot = idsection;
+				isFirst = false;
 	  	  	}
 	  	  	iseXe = $(data.toString()).find("organizations").attr("default").substr(0,3) == "eXe";
 	  	  	isCloudBook = $(data.toString()).find("organizations").attr("default").substr(0,9) == "Cloudbook";
@@ -245,7 +256,7 @@ function processPackageData(filePath, fileType)
 	  	  		items = $(data.toString()).find("organization").children("item");
 			items.each(function(){
 				if($(this).attr("identifierref") != undefined){
-					loadElementResources($(this), $(this).attr("identifierref"));
+					loadElementResources($(this), $(this).attr("identifierref"), tempPath);
 		  	  		var href = $(this).parents().find("resource[identifier='" + this.attributes['identifierref'].value + "']").attr("href");
 		  	  		html = $.parseHTML(fs.readFileSync(filePath + href).toString());
 		  	  		if(isFirst){
@@ -270,16 +281,24 @@ function processPackageData(filePath, fileType)
 					importationHTML.processHTML(html, filePath + href, idsection);
 					if($(this).children("item").length > 0)
 					{
-						processChildrenData(idsection, $(this), filePath, fileType);
+						processChildrenData(idsection, $(this), filePath, fileType, tempPath);
 					}
 				}
 				else
 				{
-					if(iseXe || isCloudBook){
+
+					if(iseXe){
 						idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
 						idSectionAux = idsection;
-						processChildrenData(idsection, $(this), filePath, fileType);
+						processChildrenData(idsection, $(this), filePath, fileType, tempPath);
 						idsection = idSectionAux;
+					}
+					if(isCloudBook){
+						idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
+						idSectionAux = idsection;
+						idsection = idSectionAux;
+						processChildrenData(idsection, $(this), filePath, fileType, tempPath, isCloudBook);
+						isFirst = false;
 					}
 				}
 			});
