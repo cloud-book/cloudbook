@@ -374,15 +374,16 @@ function saveContribution(element, childrenName, arrayName, subArrayName, elemen
 		if(norole == null)
 		{
 			var role = $(this).children("role:first-child").find("value").text();
-			saveDataArrayValues(arrayName+i, [[elements[0]+i, getCBI18n(role)], [elements[1]+i, name], [elements[2]+i, email], [elements[3]+i, organization], [elements[4]+i, date.split("T")[0]]], 1);
+			var tempData = date.indexOf("T") != -1?date.split("T")[0]:$(this).children("date").find("datetime").text();
+			saveDataArrayValues(arrayName+i, [[elements[0]+i, getCBI18n(role)], [elements[1]+i, name], [elements[2]+i, email], [elements[3]+i, organization], [elements[4]+i, tempData]], 1);
 		}
 		else
 		{
-			saveDataArrayValues(arrayName+i, [[elements[0]+i, name], [elements[1]+i, email], [elements[2]+i, organization], [elements[3]+i, date.split("T")[0]]], 1);
+			saveDataArrayValues(arrayName+i, [[elements[0]+i, name], [elements[1]+i, email], [elements[2]+i, organization], [elements[3]+i, tempData]], 1);
 		}	
 
 		var j = 1;
-		var arrayElements = $(this).children("date").html().split("description")[1].split("</string>");
+		var arrayElements = $(this).children("date").html().split("description")[1] != undefined?$(this).children("date").html().split("description")[1].split("</string>"):[];
 		arrayElements.pop();
 		arrayElements.forEach(function(element){
 			if(norole == null){
@@ -1634,7 +1635,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
 	$(xml).find("relation").each(function(){
 		saveDataArrayValues('relationRelations_'+i,[['relationRelationsValue_'+i, getCBI18n($(this).find("kind").find("value").text()) ], ['catalogRelations_'+i, $(this).find("resource").find("identifier").find("catalog").text()],
 			['entryRelations_'+i, $(this).find("resource").find("identifier").find("entry").text()], ['DescriptionRelationRelations_'+i, $(this).find("resource").find("description").text()], 
-			['relationRelationsLang_'+i, searchLanguage($(this).find("resource").find("description").html().split('"')[1])]]  ,1);	  	
+			['relationRelationsLang_'+i, searchLanguage($(this).find("resource").find("description").html() != undefined?$(this).find("resource").find("description").html().split('"')[1]:"")]]  ,1);	  	
 	  	i++;
 	 });
 
@@ -1678,7 +1679,7 @@ ImportMetadata.prototype.loadMetadata =  function loadMetadata(xml)
  * This function is responsible for applicate a trim to xml values 
  */
 function trimArray(data){
-	if (typeof data !=="undefined" || data !==null){
+	if (!(typeof data == undefined || data ===null)){
     	var listaclaves = Object.keys(data);
     	listaclaves.forEach(function(e){
     		if (typeof(data[e]) === 'string'){
