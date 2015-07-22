@@ -98,9 +98,11 @@ CBObject.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
 	jquerycbo.rotatable({stop:function(event,ui){ objectcbo.degree = ui.angle.current},angle:objectcbo.degree});
 	jquerycbo.bind('keydown','del',function(e){
 		objectcbo.deleteDialog(objectcbo);
+		$(Cloudbook.UI.targetcontent).trigger("click");
 	});
 	jquerycbo.bind('keydown','backspace',function(e){
 		objectcbo.deleteDialog(objectcbo);
+		$(Cloudbook.UI.targetcontent).trigger("click");
 	});
 };
 
