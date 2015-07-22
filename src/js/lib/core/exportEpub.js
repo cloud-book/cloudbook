@@ -43,7 +43,6 @@ ExportEpub.prototype.renderEpub = function renderEpub(parametrosEpub,contenido) 
 
     var destino=parametrosEpub.path;
 
-    new Epub(option, destino);
     var that = this;
     $("#exportepubwizard").find('.waitingOK').css("display", "inline");
     new Epub(option,destino).promise.then(function(){
