@@ -34,8 +34,8 @@ ProView.prototype.numberSection = function numberSection(cbsecid,parentid){
   cbsection.numbering=finalnumbering;
   CBStorage.setSectionById(cbsection,cbsecid);
 
-  if (finalnumbering < parent.sections.length){
-    this.renumberSection(parentid,finalnumbering)
+  if (numbering < parent.sections.length){
+    this.renumberSection(parentid,numbering)
 
   };
 
@@ -48,28 +48,52 @@ ProView.prototype.numberSubsection=function numberSubsection(cbsecid){
    var cbsection=CBStorage.getSectionById(cbsecid)
     cbsection.sections.forEach(function(subsectionid){
     that.numberSection(subsectionid,cbsecid);
+    that.numberSubsection(subsectionid)
   });
 
 
 };
 
-ProView.prototype.renumberSection=function renumberSection(parentid,neworder){
+ProView.prototype.renumberSection=function renumberSection(parentid,neworder,type){
   var CBStorage=application.storagemanager.getInstance();
   var parent=CBStorage.getSectionById(parentid);
   var that=this;
+  var action=type;
  
-  if (parentid=="root"){
-    parent.sections.forEach(function(e){
-      if ((parent.sections.indexOf(e)+1)>neworder){
-        var cbsection=CBStorage.getSectionById(e);
-        cbsection.numbering=String(parseInt(cbsection.numbering) + 1);
-        CBStorage.setSectionById(cbsection,e);
-      };
-    });   
+  parent.sections.forEach(function(e){
+    if ((parent.sections.indexOf(e)+1)>neworder){
+      var cbsection=CBStorage.getSectionById(e);
+      
+      switch (type) {
 
-  };
+        case 'I':
+          if (parentid==="root"){
+            cbsection.numbering=String(parseInt(cbsection.numbering) + 1);
 
+          }else{
+          cbsection.numbering=parent.numbering + "." + String(parseInt(cbsection.numbering.split(".").pop()) + 1);
+          }
+          break;
+      
+        case 'D':
+          if (parentid==="root"){
+            cbsection.numbering=String(parseInt(cbsection.numbering) - 1);
 
+          }else{
+          cbsection.numbering=parent.numbering + "." + String(parseInt(cbsection.numbering.split(".").pop()) -1 );
+          }
+          break;
+      };    
+
+    
+      CBStorage.setSectionById(cbsection,e);
+        cbsection.sections.forEach(function(cbsection){
+        that.numberSubsection(e)
+      });
+    };
+  
+  });   
+  
 };
 
 ProView.prototype.reloadSortable = function reloadSortable(element){
@@ -299,9 +323,10 @@ ProView.prototype.dialogUpdateSectionName = function dialogUpdateSectionName(cbs
 
 }
 
-ProView.prototype.deleteSection = function deleteSection(cbsectionid) {
-	$('[data-cbsectionid="'+cbsectionid+'"]').remove();
+ProView.prototype.deleteSection = function deleteSection(parentid, cbsectionid) {
+  $('[data-cbsectionid="'+cbsectionid+'"]').remove();
   $(Cloudbook.UI.targetcontent).html("");
+
 };
 
 
@@ -311,7 +336,8 @@ ProView.prototype.dialogDeleteSection = function dialogDeleteSection(cbsectionid
   dialog.children('#delete').click(function(){
     var controller = application.controller.getInstance();
     controller.popSubsection(parentid,cbsectionid);
-    controller.deleteSection(cbsectionid);
+    controller.deleteSection(parentid,cbsectionid);
+
     dialog.dialog('close');
   });  
   dialog.children('#cancel').click(function(){dialog.dialog('close');});
