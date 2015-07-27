@@ -90,7 +90,7 @@ TextBox.prototype.editButton = function editButton(e) {
   textbox.wysiwyg({extracommandhandler:that.handlerExtraCommands});
   e.stopImmediatePropagation();
   textbox.click(that.stopPropagation);
-  document.execCommand('selectAll');
+//  document.execCommand('selectAll');
   toolbar.click(that.stopPropagation);
   $('body').click({that:that},that.disableEditMode);
 };
