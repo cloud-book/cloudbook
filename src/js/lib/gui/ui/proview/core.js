@@ -243,9 +243,17 @@ ProView.prototype.deleteSection = function deleteSection(cbsectionid) {
 
 
 ProView.prototype.dialogDeleteSection = function dialogDeleteSection(cbsectionid,parentid) {
-	var controller = application.controller.getInstance();
-  controller.popSubsection(parentid,cbsectionid);
-	controller.deleteSection(cbsectionid);
+	
+  var dialog = $('<div><button id="delete">'+ CBI18n.gettext("Delete") +'</button><button id="cancel">'+ CBI18n.gettext("Cancel") +'</button></div>');
+  dialog.children('#delete').click(function(){
+    var controller = application.controller.getInstance();
+    controller.popSubsection(parentid,cbsectionid);
+    controller.deleteSection(cbsectionid);
+    dialog.dialog('close');
+  });  
+  dialog.children('#cancel').click(function(){dialog.dialog('close');});
+  dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
+
 };
 
 ProView.prototype.appendSectionToLastPosition = function(cbsectionid,parentid) {

@@ -10,7 +10,7 @@ function PMS(objectdata){
   this.pemidentifier = typeof objectdata.pemidentifier !== 'undefined' ? objectdata.pemidentifier : "pem_" + this.uniqueid ; 
   this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : CBI18n.gettext("Description of your activity") ; 
   this.questions = typeof objectdata.questions !== 'undefined' ? objectdata.questions : [] ;
-  this.random = typeof objectdata.random !== 'undefined' ? objectdata.random : true ;
+  this.random = typeof objectdata.random !== 'undefined' ? objectdata.random : false ;
   this.group = typeof objectdata.group !== 'undefined' ? objectdata.group : 1 ;
   this.pemObject = typeof objectdata.pemObject !== 'undefined' ? objectdata.pemObject : [] ;
 }
