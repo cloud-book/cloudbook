@@ -173,6 +173,8 @@ ProView.prototype.selectSection = function selectSection(e){
   changesectionevent.detail = {'element':this};
   var canceled = false;
   [].forEach.call(document.querySelectorAll(Cloudbook.UI.targetcontent + " .cbobject"),function(element){
+    if($(element).find("[data-textbox-id]").length > 0)
+      changesectionevent.text = $(element).find("[data-textbox-id]").html();
     var auxcanceled = element.dispatchEvent(changesectionevent);
     if (!auxcanceled) canceled = true;
   });
