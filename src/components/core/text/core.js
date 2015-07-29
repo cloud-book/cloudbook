@@ -42,7 +42,9 @@ TextBox.prototype.editorView = function editorView() {
   });
   aux[0].addEventListener('changesection',function(e){
     var idTextBox = $(e.path[0]).attr("data-cbobjectid");
-    application.storagemanager.getInstance().getCBObjectById(idTextBox).text = $(e.path[0]).find("[data-textbox-id='"+ idTextBox + "']").html();
+    var aux = application.storagemanager.getInstance().getCBObjectById(idTextBox);
+    aux.text = $(e.path[0]).find("[data-textbox-id='"+ idTextBox + "']").html();
+    application.storagemanager.getInstance().setCBObjectById(aux,idTextBox);
     $('[data-textbox-id="'+idTextBox+'"]').removeAttr('contentEditable').unbind('click',$(this).stopPropagation);
     $(".cbtextbox-toolbar").remove();
     $('body').unbind('click',$(this).disableEditMode);
