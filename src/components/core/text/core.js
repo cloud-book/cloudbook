@@ -41,7 +41,6 @@ TextBox.prototype.editorView = function editorView() {
     }
   });
   aux[0].addEventListener('changesection',function(e){
-    debugger;
     var idTextBox = $(e.path[0]).attr("data-cbobjectid");
     application.storagemanager.getInstance().getCBObjectById(idTextBox).text = $(e.path[0]).find("[data-textbox-id='"+ idTextBox + "']").html();
     $('[data-textbox-id="'+idTextBox+'"]').removeAttr('contentEditable').unbind('click',$(this).stopPropagation);
