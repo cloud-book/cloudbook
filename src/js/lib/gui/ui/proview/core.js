@@ -18,8 +18,11 @@ ProView.prototype.createFirstSection = function createFirstSection() {
  
 };
 
-
+/**
+ *Feature to assign a number to the section according to their position
+ */
 ProView.prototype.numberSection = function numberSection(cbsecid,parentid){
+  var that=this;
   var CBStorage = application.storagemanager.getInstance();
   var parent = CBStorage.getSectionById(parentid);
   var numbering = parent.sections.indexOf(cbsecid) + 1 ;
@@ -34,13 +37,21 @@ ProView.prototype.numberSection = function numberSection(cbsecid,parentid){
   cbsection.numbering=finalnumbering;
   CBStorage.setSectionById(cbsection,cbsecid);
 
+  if (cbsection.sections.length>0){
+      that.numberSubsection(cbsecid);
+  };
+
   if (numbering < parent.sections.length){
-    this.renumberSection(parentid,numbering)
+    this.renumberSection(parentid,numbering,'I')
 
   };
 
 
 };
+
+/**
+ *Feature to assign a number to the subsections of a section / subsection
+ */
 
 ProView.prototype.numberSubsection=function numberSubsection(cbsecid){
    var CBStorage = application.storagemanager.getInstance();
@@ -54,6 +65,10 @@ ProView.prototype.numberSubsection=function numberSubsection(cbsecid){
 
 };
 
+/**
+ * Function to renumber the sections (and subsections) when you add, delete or move a section / subsection 
+*/ 
+
 ProView.prototype.renumberSection=function renumberSection(parentid,neworder,type){
   var CBStorage=application.storagemanager.getInstance();
   var parent=CBStorage.getSectionById(parentid);
@@ -63,27 +78,27 @@ ProView.prototype.renumberSection=function renumberSection(parentid,neworder,typ
   parent.sections.forEach(function(e){
     if ((parent.sections.indexOf(e)+1)>neworder){
       var cbsection=CBStorage.getSectionById(e);
-      
+     
       switch (type) {
 
-        case 'I':
-          if (parentid==="root"){
-            cbsection.numbering=String(parseInt(cbsection.numbering) + 1);
+         case 'I':
+           if (parentid==="root"){
+              cbsection.numbering=String(parent.sections.indexOf(e)+1);
 
-          }else{
-          cbsection.numbering=parent.numbering + "." + String(parseInt(cbsection.numbering.split(".").pop()) + 1);
-          }
-          break;
+           }else{
+              cbsection.numbering=parent.numbering + "." + (parent.sections.indexOf(e)+1);
+           }
+           break;
       
-        case 'D':
-          if (parentid==="root"){
-            cbsection.numbering=String(parseInt(cbsection.numbering) - 1);
+         case 'D':
+           if (parentid==="root"){
+               cbsection.numbering=String(parseInt(cbsection.numbering) - 1);
 
-          }else{
-          cbsection.numbering=parent.numbering + "." + String(parseInt(cbsection.numbering.split(".").pop()) -1 );
-          }
-          break;
-      };    
+           }else{
+               cbsection.numbering=parent.numbering + "." + String(parseInt(cbsection.numbering.split(".").pop()) -1 );
+           }
+           break;
+       };    
 
     
       CBStorage.setSectionById(cbsection,e);
@@ -96,14 +111,54 @@ ProView.prototype.renumberSection=function renumberSection(parentid,neworder,typ
   
 };
 
+/**
+ * Function to manage the numbered (or renumbered) sections when one moves
+*/ 
+
+
+ProView.prototype.numberMoveSection=function numberMoveSection (oldparentid, newparentid,cbsecid,oldorder){
+  var CBStorage=application.storagemanager.getInstance();
+  var newparent=CBStorage.getSectionById(newparentid);
+  var neworder=newparent.sections.indexOf(cbsecid) + 1 ;
+
+ if (oldparentid===newparentid){
+    if (neworder>oldorder){
+      this.renumberSection(newparentid,oldorder-1,'I');
+
+    }else{
+      this.numberSection(cbsecid,newparentid);
+    }
+
+  }else{
+    this.renumberSection(oldparentid,oldorder-1,'D');
+    this.numberSection(cbsecid,newparentid);
+
+
+  }  
+
+};
+
+
 ProView.prototype.reloadSortable = function reloadSortable(element){
   var that = this;
+  var cbsecid,
+      oldorder;  
+  
+ 
   var backend = application.backend.core.getInstance();
   $(".connectedSortable").sortable({
     placeholder: "ui-state-highlight",
     opacity:0.5,
     axis:"y",
-    start:function(ev,ui){that.oldparent = ui.item.parent().parent().attr('data-cbsectionid');},
+    start:function(ev,ui){
+      var CBStorage=application.storagemanager.getInstance();
+      that.oldparent = ui.item.parent().parent().attr('data-cbsectionid');
+      var parentold=CBStorage.getSectionById(that.oldparent);
+     // that.oldparentid=that.oldparent;
+
+      that.cbsecid=ui.item.attr('data-cbsectionid');
+      that.oldorder=parentold.sections.indexOf(that.cbsecid) + 1 ;
+    },
     stop:function(ev,ui){
       that.newparent = ui.item.parent().parent().attr('data-cbsectionid');
       if (that.oldparent !== that.newparent ){
@@ -111,10 +166,14 @@ ProView.prototype.reloadSortable = function reloadSortable(element){
         listnewparent = $("[data-cbsectionid=" + that.newparent + "] > ul > li").map(function(element){return this.dataset.cbsectionid});
         backend.regenerateSubsection(that.oldparent,listoldparent.toArray());
         backend.regenerateSubsection(that.newparent,listnewparent.toArray());
-
+      }else{
+        listnewparent = $("[data-cbsectionid=" + that.newparent + "] > ul > li").map(function(element){return this.dataset.cbsectionid});
+        backend.regenerateSubsection(that.newparent,listnewparent.toArray());
       }
-
+      that.numberMoveSection(that.oldparent, that.newparent,that.cbsecid,that.oldorder);
+       
     },
+    
     connectWith:".connectedSortable"}).disableSelection();
 
 }
@@ -208,7 +267,7 @@ ProView.prototype.appendBefore = function appendBefore(e){
   var son = that.createSectionView(cbsecid);
   $(listparents[0]).before(son);
   that.reloadSortable();
-  that.numberSection(cbsecid,parent);
+  that.numberSection(cbsecid,parent,'I');
   that.dialogUpdateSectionName(cbsecid);
   
 }
@@ -225,7 +284,7 @@ ProView.prototype.appendSubsection = function appendSubsection(e){
   $(parent[0]).children("ul").append(newsection);
 
   that.reloadSortable();
-  that.numberSection(cbsecid,parentObjectSection);
+  that.numberSection(cbsecid,parentObjectSection,'I');
   that.dialogUpdateSectionName(cbsecid);
 }
 
@@ -246,7 +305,7 @@ ProView.prototype.appendAfter = function appendAfter(e){
   var son = that.createSectionView(cbsecid);
   $(listparents[0]).after(son);
   that.reloadSortable();
-  that.numberSection(cbsecid,parentObjectSection);
+  that.numberSection(cbsecid,parentObjectSection,'I');
   that.dialogUpdateSectionName(cbsecid);
   
 }
@@ -323,21 +382,23 @@ ProView.prototype.dialogUpdateSectionName = function dialogUpdateSectionName(cbs
 
 }
 
-ProView.prototype.deleteSection = function deleteSection(parentid, cbsectionid) {
+ProView.prototype.deleteSection = function deleteSection(cbsectionid) {
   $('[data-cbsectionid="'+cbsectionid+'"]').remove();
   $(Cloudbook.UI.targetcontent).html("");
-
 };
 
 
 ProView.prototype.dialogDeleteSection = function dialogDeleteSection(cbsectionid,parentid) {
-	
+  var that=this;
   var dialog = $('<div><button id="delete">'+ CBI18n.gettext("Delete") +'</button><button id="cancel">'+ CBI18n.gettext("Cancel") +'</button></div>');
   dialog.children('#delete').click(function(){
+    var CBStorage = application.storagemanager.getInstance();
+    var parent=CBStorage.getSectionById(parentid); 
+    var numbersection = parent.sections.indexOf(cbsectionid) + 1 ;
+    that.renumberSection (parentid,numbersection,'D');
     var controller = application.controller.getInstance();
     controller.popSubsection(parentid,cbsectionid);
-    controller.deleteSection(parentid,cbsectionid);
-
+    controller.deleteSection(cbsectionid);
     dialog.dialog('close');
   });  
   dialog.children('#cancel').click(function(){dialog.dialog('close');});
@@ -363,7 +424,7 @@ ProView.prototype.duplicateSection = function(htmlsectionelement) {
   var sectionid = tempsection.attr('data-cbsectionid');
   var parentsectionid = tempsection.parent().closest('[data-cbsectionid]').attr('data-cbsectionid');
   var newsectionid=controller.cloneSection(sectionid,parentsectionid,sectionid);
-  this.numberSection(newsectionid,parentsectionid);
+  this.numberSection(newsectionid,parentsectionid,'I');
   this.numberSubsection(newsectionid);
   
 };
