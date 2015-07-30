@@ -40,6 +40,15 @@ TextBox.prototype.editorView = function editorView() {
       that.disableEditMode(e);
     }
   });
+  aux[0].addEventListener('changesection',function(e){
+    var idTextBox = $(e.path[0]).attr("data-cbobjectid");
+    var aux = application.storagemanager.getInstance().getCBObjectById(idTextBox);
+    aux.text = $(e.path[0]).find("[data-textbox-id='"+ idTextBox + "']").html();
+    application.storagemanager.getInstance().setCBObjectById(aux,idTextBox);
+    $('[data-textbox-id="'+idTextBox+'"]').removeAttr('contentEditable').unbind('click',$(this).stopPropagation);
+    $(".cbtextbox-toolbar").remove();
+    $('body').unbind('click',$(this).disableEditMode);
+  });
   return aux;
 };
 
@@ -90,7 +99,7 @@ TextBox.prototype.editButton = function editButton(e) {
   textbox.wysiwyg({extracommandhandler:that.handlerExtraCommands});
   e.stopImmediatePropagation();
   textbox.click(that.stopPropagation);
-  document.execCommand('selectAll');
+//  document.execCommand('selectAll');
   toolbar.click(that.stopPropagation);
   $('body').click({that:that},that.disableEditMode);
 };
@@ -151,6 +160,9 @@ TextBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo
   });
   jquerycbo.find(".cbtextbox")[0].addEventListener('input',function(){jquerycbo.height(jquerycbo.find('.cbtextbox').outerHeight(true));});
   jquerycbo.height(jquerycbo.find('.cbtextbox').outerHeight(true));
+  jquerycbo.on('changesection', function(e) {
+   jquerycbo.find('.cbtextbox').html($(e.path[0]).find("[data-textbox-id]").html());
+  });
 };
 
 TextBox.prototype.handlerExtraCommands = function handlerExtraCommands(command) {
