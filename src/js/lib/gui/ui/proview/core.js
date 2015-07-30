@@ -38,7 +38,12 @@ ProView.prototype.numberSection = function numberSection(cbsecid,parentid){
   CBStorage.setSectionById(cbsection,cbsecid);
 
   if (cbsection.sections.length>0){
-      that.numberSubsection(cbsecid);
+      cbsection.sections.forEach(function(sectionid){
+        that.numberSection(sectionid,cbsecid)
+
+      });
+
+      //that.numberSubsection(cbsecid);
   };
 
   if (numbering < parent.sections.length){
@@ -53,17 +58,17 @@ ProView.prototype.numberSection = function numberSection(cbsecid,parentid){
  *Feature to assign a number to the subsections of a section / subsection
  */
 
-ProView.prototype.numberSubsection=function numberSubsection(cbsecid){
-   var CBStorage = application.storagemanager.getInstance();
-   var that=this;
-   var cbsection=CBStorage.getSectionById(cbsecid)
-    cbsection.sections.forEach(function(subsectionid){
-    that.numberSection(subsectionid,cbsecid);
-    that.numberSubsection(subsectionid)
-  });
+// ProView.prototype.numberSubsection=function numberSubsection(cbsecid){
+//    var CBStorage = application.storagemanager.getInstance();
+//    var that=this;
+//    var cbsection=CBStorage.getSectionById(cbsecid)
+//     cbsection.sections.forEach(function(subsectionid){
+//     that.numberSection(subsectionid,cbsecid);
+//     that.numberSubsection(subsectionid)
+//   });
 
 
-};
+// };
 
 /**
  * Function to renumber the sections (and subsections) when you add, delete or move a section / subsection 
@@ -102,8 +107,9 @@ ProView.prototype.renumberSection=function renumberSection(parentid,neworder,typ
 
     
       CBStorage.setSectionById(cbsection,e);
-        cbsection.sections.forEach(function(cbsection){
-        that.numberSubsection(e)
+      cbsection.sections.forEach(function(subsectionid){
+          that.numberSection(subsectionid,e)
+      //  that.numberSubsection(e)
       });
     };
   
@@ -425,7 +431,7 @@ ProView.prototype.duplicateSection = function(htmlsectionelement) {
   var parentsectionid = tempsection.parent().closest('[data-cbsectionid]').attr('data-cbsectionid');
   var newsectionid=controller.cloneSection(sectionid,parentsectionid,sectionid);
   this.numberSection(newsectionid,parentsectionid,'I');
-  this.numberSubsection(newsectionid);
+//  this.numberSubsection(newsectionid);
   
 };
 
