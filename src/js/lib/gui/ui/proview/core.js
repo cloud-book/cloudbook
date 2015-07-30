@@ -50,8 +50,7 @@ ProView.prototype.numberSection = function numberSection(cbsecid,parentid){
     this.renumberSection(parentid,numbering,'I')
 
   };
-
-
+  that.redrawNumbering();
 };
 
 /**
@@ -81,6 +80,9 @@ ProView.prototype.renumberSection=function renumberSection(parentid,neworder,typ
   var action=type;
  
   parent.sections.forEach(function(e){
+    if(type === "D"){
+      neworder--;
+    }
     if ((parent.sections.indexOf(e)+1)>neworder){
       var cbsection=CBStorage.getSectionById(e);
      
@@ -136,7 +138,7 @@ ProView.prototype.numberMoveSection=function numberMoveSection (oldparentid, new
     }
 
   }else{
-    this.renumberSection(oldparentid,oldorder-1,'D');
+    this.renumberSection(oldparentid,oldorder,'D');
     this.numberSection(cbsecid,newparentid);
 
 
@@ -160,8 +162,6 @@ ProView.prototype.reloadSortable = function reloadSortable(element){
       var CBStorage=application.storagemanager.getInstance();
       that.oldparent = ui.item.parent().parent().attr('data-cbsectionid');
       var parentold=CBStorage.getSectionById(that.oldparent);
-     // that.oldparentid=that.oldparent;
-
       that.cbsecid=ui.item.attr('data-cbsectionid');
       that.oldorder=parentold.sections.indexOf(that.cbsecid) + 1 ;
     },
@@ -177,25 +177,46 @@ ProView.prototype.reloadSortable = function reloadSortable(element){
         backend.regenerateSubsection(that.newparent,listnewparent.toArray());
       }
       that.numberMoveSection(that.oldparent, that.newparent,that.cbsecid,that.oldorder);
-       
     },
     
     connectWith:".connectedSortable"}).disableSelection();
 
 }
 
+ProView.prototype.redrawNumbering = function redrawNumbering() {
+  var i,node,parent,numbering,CBStorage;
+  var listnumberings = $("#navsections .numbering");
+  for(i=0;i< listnumberings.length; i++){
+    node = listnumberings[i];
+
+    parent = node.closest("[data-cbsectionid]");
+    CBStorage = application.storagemanager.getInstance();
+    var x = $(parent).attr("data-cbsectionid");
+    numbering = CBStorage.getSectionById(x).numbering;
+    $(node).html(numbering);
+  }
+};
+
+ProView.prototype.getFormatSectionName = function(cbsecid) {
+  var cbsection, CBStorage;
+  CBStorage = application.storagemanager.getInstance();
+  cbsection = CBStorage.getSectionById(cbsecid);
+  return '<div class="caption"><div class="numbering">' + cbsection.numbering + "</div><div> " + cbsection.name + "</div></div>";
+};
+
 
 ProView.prototype.createSectionView = function createSectionView(cbsecid) {
 
   var section = $(document.createElement('li')).addClass('cbsection');
   var CBStorage = application.storagemanager.getInstance();
+  var that = this;
   section.attr('data-cbsectionid',cbsecid);
 
   var displaysection = $(document.createElement('div')).addClass('displaysection');
   var textsection = $(document.createElement('div')).addClass('divselector');
   var actions = $(document.createElement('button')).html('+').attr('data-toggle','dropdown').attr('id',cbsecid);
   var subsections = $(document.createElement('ul')).addClass('subsections').addClass("connectedSortable");
-  textsection.append($(document.createElement('div')).html(CBStorage.getSectionById(cbsecid).name).addClass('caption'));
+  textsection.append($(document.createElement('div')).html(that.getFormatSectionName(cbsecid)));
   
   textsection.click({that:this},this.selectSection);
   textsection.dblclick({that:this},this.doubleClick);
@@ -290,7 +311,7 @@ ProView.prototype.appendSubsection = function appendSubsection(e){
   $(parent[0]).children("ul").append(newsection);
 
   that.reloadSortable();
-  that.numberSection(cbsecid,parentObjectSection,'I');
+  that.numberSection(cbsecid,parentObjectSection,'I');  
   that.dialogUpdateSectionName(cbsecid);
 }
 
@@ -343,7 +364,8 @@ ProView.prototype.selectSection = function selectSection(e){
 }
 
 ProView.prototype.updateSectionName = function(name,cbsectionid) {
-  $("li[data-cbsectionid='"+cbsectionid+"'] > div.displaysection > div.divselector").html("<div>"+name+"</div>");
+  var that = this;
+  $("li[data-cbsectionid='"+cbsectionid+"'] > div.displaysection > div.divselector").html(that.getFormatSectionName(cbsectionid));
 };
 
 
@@ -401,10 +423,10 @@ ProView.prototype.dialogDeleteSection = function dialogDeleteSection(cbsectionid
     var CBStorage = application.storagemanager.getInstance();
     var parent=CBStorage.getSectionById(parentid); 
     var numbersection = parent.sections.indexOf(cbsectionid) + 1 ;
-    that.renumberSection (parentid,numbersection,'D');
     var controller = application.controller.getInstance();
     controller.popSubsection(parentid,cbsectionid);
     controller.deleteSection(cbsectionid);
+    that.renumberSection (parentid,numbersection,'D');
     dialog.dialog('close');
   });  
   dialog.children('#cancel').click(function(){dialog.dialog('close');});
