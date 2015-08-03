@@ -38,6 +38,7 @@ Controller.prototype.createProProject = function createProProject(name) {
  	ui.sectionmanager.initSections();
  	ui.sectionmanager.createFirstSection();
  	this.saveProject(Project.Info.projectpath);
+ 
  	
 };
 
