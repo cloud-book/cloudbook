@@ -12,9 +12,9 @@
 %:
 	dh $@
 
-override_dh_install:
-	dh_install
-	cd debian/cloudbook/usr/share/cloudbook/;npm install
+override_dh_clean:
+	cd src;npm install; cd ..
+	dh_clean
 
 #override_dh_shlibdeps: 
 #	echo 'DONE'
