@@ -65,11 +65,26 @@ TestBox.prototype.epubView = function epubView() {
   
 }
 
+function getObjectsByGroup(groupNumber){
+  var CBStorage = application.storagemanager.getInstance(); 
+    var objectsFiltered = CBStorage.getCBObjectsBySectionAndType(Cloudbook.UI.selected.attr('data-cbsectionid'), 
+      ["ad2a6410-8dcd-4ca7-9bf7-73043dcd5771", "87d7b00a-a296-4cd9-af13-f8d9685a6dec"]);
+    var j = 1;
+    var activities = [];
+    objectsFiltered.forEach(function(element){
+      if(element.group == groupNumber){
+        activities.push(element);
+      };
+    });
+
+    return activities;
+}
+
 function filterObjects(object, idGroup)
 {
     var CBStorage = application.storagemanager.getInstance(); 
     var objectsFiltered = CBStorage.getCBObjectsBySectionAndType(Cloudbook.UI.selected.attr('data-cbsectionid'), 
-      ["ad2a6410-8dcd-4ca7-9bf7-73043dcd5771", "87d7b00a-a296-4cd9-af13-f8d9685a6dec", "b966e4b3-05e9-41db-a1ae-7ed1e03a7bc4"]);
+      ["ad2a6410-8dcd-4ca7-9bf7-73043dcd5771", "87d7b00a-a296-4cd9-af13-f8d9685a6dec"]);
     var j = 1;
     object.questions = [];
 
@@ -122,7 +137,7 @@ TestBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo
   var objects_pem = [], obj_myprefix_pem_identifier = {};
 
   TestBox.super_.prototype.triggerAddEditorView.call(this,jquerycbo,objectcbo);
-   
+ 
   var obj_myprefix_test_identifier = {
    "id": this.testidentifier,
    "icons": "csshexent",
@@ -142,23 +157,47 @@ TestBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycbo
 
   jsGeork.Questions.Eval.apply(obj_myprefix_test_identifier, args);
 
-  jquerycbo.on("resize",function(event,ui){
-    var counter = 0;
-    var listelements = jquerycbo.find('fieldset').children().each(function(index,element){
-      counter += $(element).outerHeight(true);
-    });
-    ui.size.height = counter;
-  });
   var z = jquerycbo.find(".CSSActFieldset");  
   z.css('width','100%');
-  if(objectcbo.size[1] === 0){
-    var counter = 0;
-    var listelements = jquerycbo.find('fieldset').children().each(function(index,element){
-        counter += $(element).outerHeight(true);
-      });
-    jquerycbo.css('height',counter+"px");
-    objectcbo.size[1] = counter;
-  }
+  var counter = 0;
+  var listelements = jquerycbo.find('table').children().each(function(index,element){
+      counter += $(element).outerHeight(true);
+    });
+  counter += $(listelements[0]).outerHeight(true);
+  jquerycbo.css('height',counter+"px");
+  objectcbo.size[1] = counter;
+
+  var myFunction = function(){
+    var idTest = $(this).parent().attr("id").replace("_refresh","").replace("test_","");
+    var CBStorage = application.storagemanager.getInstance();
+    var groupNumber = CBStorage.getCBObjectById(idTest).group;
+    var objectsFiltered = getObjectsByGroup(groupNumber);
+    var jqueryObjects = [];
+    var cont = 0, aux = 0;
+
+    objectsFiltered.forEach(function(element){
+        $("#" + element.pemidentifier).find("button").click();
+        var idElement = element.pemidentifier != undefined?element.pemidentifier:element.fgpidentifier;
+        jqueryObjects.push($("#" + idElement)[0]);
+    });
+    $(Cloudbook.UI.selected).find("div[class='divselector']").trigger("click");
+
+    objectsFiltered.forEach(function(element){
+        element2 = jqueryObjects[cont];
+        $(element2).find("[aria-describedby]").each(function(){
+           $("input[data-answer='"  + $(this).attr("data-answer") + "'][name='" + element.pemidentifier + "']").trigger("click");
+        })
+
+        $(element2).find("span[data-gap-fill]").each(function(){
+           $($("[name='" + element.fgpidentifier + "']").find("input[data-gap]")[aux]).val()
+        })
+        cont++;
+        var idelement = element.pemidentifier!=undefined?element.pemidentifier:element.fgpidentifier;
+      $($("#" + idelement).find("button")[0]).click();
+    });
+  };
+
+  $($("#" + this.testidentifier + "_refresh button")).on('click', myFunction);
 };
 
 
@@ -188,11 +227,15 @@ TestBox.prototype.editButton = function editButton(e) {
 
 
 function updateQuestions(dialog,objectcbo){
-  var group = dialog.find("#group").val();
+  var group = "";
+
   var caption = dialog.find("#caption").val();
 
-  filterObjects(objectcbo, group);
-  objectcbo.group = group;
+  if(getObjectsByGroup(dialog.find("#group").val()).length != 0){
+    group = dialog.find("#group").val();
+    filterObjects(objectcbo, group);
+    objectcbo.group = group;
+  }
   objectcbo.caption = caption;
 }
 
