@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cloudbok\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-01 15:57+0000\n"
-"PO-Revision-Date: 2015-04-29 12:19+0200\n"
+"POT-Creation-Date: 2015-07-23 06:20+0000\n"
+"PO-Revision-Date: 2015-07-23 12:07+0200\n"
 "Last-Translator: Pilar Embid Giner <embid_mar@gva.es>\n"
 "Language-Team: LliureX\n"
 "Language: ca\n"
@@ -17,50 +17,55 @@ msgstr ""
 #: src/components/core/foreknowledge/toolbar.hbs:7
 #: src/components/core/text/toolbar.hbs:7
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: src/components/core/foreknowledge/toolbar.hbs:6
 #: src/components/core/text/toolbar.hbs:6
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: src/components/core/foreknowledge/toolbar.hbs:5
 #: src/components/core/text/toolbar.hbs:5
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: src/components/core/foreknowledge/toolbar.hbs:4
 #: src/components/core/text/toolbar.hbs:4
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: src/components/core/foreknowledge/toolbar.hbs:3
 #: src/components/core/text/toolbar.hbs:3
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: src/components/core/foreknowledge/toolbar.hbs:2
 #: src/components/core/text/toolbar.hbs:2
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: src/components/core/foreknowledge/toolbar.hbs:1
 #: src/components/core/text/toolbar.hbs:1
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: src/components/core/audio/core.js:44
-#: src/components/core/whiteboard/core.js:61
+#: src/components/core/whiteboard/core.js:89
 msgid "Click to listen a sound"
 msgstr "Feu clic per a escoltar un so"
 
-#: src/components/core/audio/core.js:76 src/components/core/flash/core.js:72
-#: src/components/core/images/core.js:106
-#: src/components/core/includesite/core.js:73
-#: src/components/core/interactivemultioption/core.js:61
-#: src/components/core/interactiveoneoption/core.js:62
-#: src/components/core/jclic/core.js:34 src/components/core/video/core.js:73
-#: src/components/core/youtube/core.js:76 src/js/lib/gui/menu.js:319
+#: src/components/core/audio/core.js:57
+msgid "Audio component is not compatible with EPUB 2 format"
+msgstr "El component d'àudio no és compatible amb el format EPUB 2."
+
+#: src/components/core/audio/core.js:79 src/components/core/flash/core.js:75
+#: src/components/core/images/core.js:112
+#: src/components/core/includesite/core.js:75
+#: src/components/core/interactivemultioption/core.js:64
+#: src/components/core/interactiveoneoption/core.js:64
+#: src/components/core/jclic/core.js:34 src/components/core/test/core.js:87
+#: src/components/core/video/core.js:79 src/components/core/youtube/core.js:78
+#: src/js/lib/gui/menu.js:333
 msgid "Insert"
 msgstr "Inserix"
 
@@ -74,32 +79,100 @@ msgstr "Descripció de la vostra activitat"
 msgid "Click to view interactive Flash resource"
 msgstr "Feu clic per a veure el recurs interactiu Flash"
 
-#: src/components/core/foreknowledge/core.js:16
-msgid "Lorem Ipsum"
-msgstr ""
+#: src/components/core/flash/core.js:68
+msgid "Flash component is not compatible with EPUB 2 format"
+msgstr "El component Flash no és compatible amb el format EPUB 2."
 
 #: src/components/core/foreknowledge/core.js:17
-msgid "Foreknowledge"
-msgstr ""
+msgid "target"
+msgstr "destinació"
+
+#: src/components/core/foreknowledge/core.js:17
+msgid "note"
+msgstr "nota"
+
+#: src/components/core/foreknowledge/core.js:17
+msgid "custom"
+msgstr "personalitzat"
+
+#: src/components/core/foreknowledge/core.js:18
+msgid "preknowledge"
+msgstr "coneixements previs"
+
+#: src/components/core/foreknowledge/core.js:18
+msgid "case"
+msgstr "cas pràctic"
+
+#: src/components/core/foreknowledge/core.js:18
+msgid "reading"
+msgstr "lectura"
+
+#: src/components/core/foreknowledge/core.js:19
+msgid "reflection"
+msgstr "reflexió"
+
+#: src/components/core/foreknowledge/core.js:19 src/i18n/all.js:14
+msgid "activity"
+msgstr "activitat"
 
 #: src/components/core/includesite/core.js:43
 msgid "Click to view resource"
 msgstr "Feu clic per a veure el recurs"
 
-#: src/components/core/interactivemultioption/core.js:66
-#: src/components/core/interactiveoneoption/core.js:67
+#: src/components/core/includesite/core.js:55
+msgid "Includesite component is not compatible with EPUB 2 format"
+msgstr ""
+"El component d'incloure llocs web no és compatible amb el format EPUB 2."
+
+#: src/components/core/interactivemultioption/core.js:69
+#: src/components/core/interactiveoneoption/core.js:69
 msgid "Correct option"
 msgstr "Opció correcta"
 
-#: src/components/core/interactivemultioption/core.js:68
-#: src/components/core/interactiveoneoption/core.js:69
+#: src/components/core/interactivemultioption/core.js:71
+#: src/components/core/interactiveoneoption/core.js:71
 msgid "Option "
 msgstr "Opció"
 
-#: src/components/core/interactivemultioption/core.js:173
-#: src/components/core/interactiveoneoption/core.js:176
+#: src/components/core/interactivemultioption/core.js:199
+#: src/components/core/interactiveoneoption/core.js:199
 msgid "Option A"
 msgstr "Opció A"
+
+#: src/components/core/test/core.js:11
+msgid "Test exam"
+msgstr "Prova"
+
+#: src/components/core/test/core.js:12
+msgid "Description of your test"
+msgstr "Descripció de la vostra prova"
+
+#: src/components/core/test/core.js:14
+msgid "Answer all questions before clicking button"
+msgstr "Responeu a totes les preguntes abans de fer clic al botó"
+
+#: src/components/core/test/core.js:17
+msgid "Name of your test"
+msgstr "Nom que tindrà la prova"
+
+#: src/components/core/test/core.js:27 src/components/core/test/core.js:38
+#: src/components/core/test/core.js:49 src/components/core/test/core.js:60
+msgid "Test passed"
+msgstr "Heu superat la prova."
+
+#: src/components/core/test/core.js:28 src/components/core/test/core.js:39
+#: src/components/core/test/core.js:50 src/components/core/test/core.js:61
+msgid "Test failed"
+msgstr "Heu suspés la prova."
+
+#: src/components/core/test/core.js:78
+msgid "Question"
+msgstr "Pregunta"
+
+#: src/components/core/test/core.js:87
+#: src/components/core/test/rsrc/templates/activityedit.hbs:1
+msgid "Group"
+msgstr "Grup"
 
 #: src/components/core/url/core.js:65
 msgid "Click view site "
@@ -108,6 +181,10 @@ msgstr "Feu clic per a veure el web"
 #: src/components/core/video/core.js:44
 msgid "Click to view a video"
 msgstr "Feu clic per a veure el vídeo"
+
+#: src/components/core/video/core.js:56
+msgid "Video component is not compatible with EPUB 2 format"
+msgstr "El component de vídeo no és compatible amb el format EPUB 2."
 
 #: src/components/core/youtube/core.js:62
 msgid "Click view youtube video"
@@ -165,15 +242,11 @@ msgstr "Pissarra"
 msgid "Textbox"
 msgstr "Quadre de text"
 
-#: src/i18n/all.js:14
-msgid "activity"
-msgstr "Activitats"
-
 #: src/i18n/all.js:15
 msgid "embed object"
 msgstr "Objectes incrustats"
 
-#: src/js/lib/core/backend/core.js:433
+#: src/js/lib/core/backend/core.js:443
 msgid "New version available :"
 msgstr "Nova versió disponible:"
 
@@ -183,21 +256,22 @@ msgid "Save"
 msgstr "Guarda"
 
 #: src/js/lib/core/components/cbobject.js:108
-#: src/js/lib/core/components/cbobject.js:155
+#: src/js/lib/core/components/cbobject.js:163
 #: src/js/lib/gui/dialogMetadata.js:90
-#: src/templates/exportEpubProject.wizard.hbs:9
+#: src/templates/exportEpubProject.wizard.hbs:11
 #: src/templates/exportHtmlProject.wizard.hbs:3
 #: src/templates/exportPdfProject.wizard.hbs:20
+#: src/templates/exportScormProject.wizard.hbs:2
 #: src/templates/exportWebZipProject.wizard.hbs:2
-#: src/templates/initialwizard.importprojects.hbs:7
+#: src/templates/initialwizard.importprojects.hbs:8
 #: src/templates/initialwizard.step2.hbs:5
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: src/js/lib/core/components/cbobject.js:155
-#: src/js/lib/gui/ui/proview/core.js:87
-#: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:1
-#: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:1
+#: src/js/lib/core/components/cbobject.js:163
+#: src/js/lib/gui/ui/proview/core.js:94
+#: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:2
+#: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:2
 msgid "Delete"
 msgstr "Suprimix"
 
@@ -216,6 +290,14 @@ msgstr "Peu de la secció"
 #: src/js/lib/core/exportHTML.js:114
 msgid "Next"
 msgstr "Següent"
+
+#: src/js/lib/core/importELP.js:273 src/js/lib/core/importELP.js:276
+msgid "True"
+msgstr "Verdader"
+
+#: src/js/lib/core/importELP.js:274 src/js/lib/core/importELP.js:277
+msgid "False"
+msgstr "Fals"
 
 #: src/js/lib/gui/dialogMetadata.js:14
 msgid "Dublin Core"
@@ -809,7 +891,7 @@ msgid "narrative text"
 msgstr "text narratiu"
 
 #: src/js/lib/gui/dialogMetadataValues.js:13
-msgid "hipertext"
+msgid "hypertext"
 msgstr "hipertext"
 
 #: src/js/lib/gui/dialogMetadataValues.js:14
@@ -1493,31 +1575,35 @@ msgstr "Importa el fitxer"
 msgid "Import metadata"
 msgstr "Importa les metadades"
 
-#: src/js/lib/gui/menu.js:200
+#: src/js/lib/gui/menu.js:209
 msgid "Export"
 msgstr "Exporta"
 
-#: src/js/lib/gui/menu.js:204 src/templates/initialwizard.importprojects.hbs:3
+#: src/js/lib/gui/menu.js:213 src/templates/initialwizard.importprojects.hbs:3
 msgid "HTML5"
 msgstr "HTML5"
 
-#: src/js/lib/gui/menu.js:209
+#: src/js/lib/gui/menu.js:218
 msgid "pdf"
 msgstr "PDF"
 
-#: src/js/lib/gui/menu.js:215
+#: src/js/lib/gui/menu.js:224
 msgid "WebZip"
 msgstr "WebZip"
 
-#: src/js/lib/gui/menu.js:220 src/templates/initialwizard.importprojects.hbs:6
+#: src/js/lib/gui/menu.js:229 src/templates/initialwizard.importprojects.hbs:6
 msgid "EPUB"
 msgstr "EPUB"
 
-#: src/js/lib/gui/menu.js:317
+#: src/js/lib/gui/menu.js:234
+msgid "SCORM 2004 4th"
+msgstr "SCORM 2004 4a"
+
+#: src/js/lib/gui/menu.js:331
 msgid "File"
 msgstr "Fitxer"
 
-#: src/js/lib/gui/menu.js:318
+#: src/js/lib/gui/menu.js:332
 msgid "Project"
 msgstr "Projecte"
 
@@ -1533,7 +1619,11 @@ msgstr "Inserix després"
 msgid "Insert subsection"
 msgstr "Inserix una subsecció"
 
-#: src/js/lib/gui/ui/proview/core.js:96
+#: src/js/lib/gui/ui/proview/core.js:87
+msgid "Duplicate section"
+msgstr "Duplica la secció"
+
+#: src/js/lib/gui/ui/proview/core.js:103
 msgid "Edit"
 msgstr "Edita"
 
@@ -1562,22 +1652,34 @@ msgid "Enter the publisher of the book"
 msgstr "Introduïu l'editor/a del llibre"
 
 #: src/templates/exportEpubProject.wizard.hbs:7
+msgid "Language:"
+msgstr "Idioma:"
+
+#: src/templates/exportEpubProject.wizard.hbs:8
+msgid "Choice a language"
+msgstr "Seleccioneu l'idioma"
+
+#: src/templates/exportEpubProject.wizard.hbs:9
 msgid "Path of the cover:"
 msgstr "Camí del fitxer de la coberta:"
 
-#: src/templates/exportEpubProject.wizard.hbs:8
+#: src/templates/exportEpubProject.wizard.hbs:10
 msgid "Path where save of epub file:"
 msgstr "Camí on es guarda el fitxer EPUB:"
 
-#: src/templates/exportEpubProject.wizard.hbs:10
+#: src/templates/exportEpubProject.wizard.hbs:12
 msgid "Generate EPUB"
 msgstr "Genera l'EPUB"
 
-#: src/templates/exportEpubProject.wizard.hbs:11
+#: src/templates/exportEpubProject.wizard.hbs:13
 msgid "EPUB Generation in progress. Please wait a moment..."
 msgstr "S'està generant l'EPUB. Espereu un moment..."
 
-#: src/templates/exportEpubProject.wizard.hbs:12
+#: src/templates/exportEpubProject.wizard.hbs:14
+msgid "EPUB Generation in progress. Copying interactive files..."
+msgstr "S'està generant l'EPUB. S'estan copiant els fitxers interactius..."
+
+#: src/templates/exportEpubProject.wizard.hbs:15
 msgid "There was an error generating EPUB file. Please cancel the process"
 msgstr "S'ha produït un error en la generació de l'EPUB. Cancel·leu el procés."
 
@@ -1671,6 +1773,22 @@ msgstr ""
 msgid "There was an error generating the PDF file. Please cancel de process"
 msgstr "S'ha produït un error en la generació del PDF. Cancel·leu el procés."
 
+#: src/templates/exportScormProject.wizard.hbs:1
+msgid "Path where save of scorm file:"
+msgstr "Camí on es guarda el fitxer SCORM:"
+
+#: src/templates/exportScormProject.wizard.hbs:3
+msgid "Generate Scorm"
+msgstr "Genera l'SCORM"
+
+#: src/templates/exportScormProject.wizard.hbs:4
+msgid "Scorm Generation in progress. Please wait a moment..."
+msgstr "S'està generant l'SCORM. Espereu un moment..."
+
+#: src/templates/exportScormProject.wizard.hbs:5
+msgid "There was an error generating Scorm file. Please cancel the process"
+msgstr "S'ha produït un error en la generació de l'SCORM. Cancel·leu el procés."
+
 #: src/templates/exportWebZipProject.wizard.hbs:1
 msgid "Path where save of zip file:"
 msgstr "Camí on es guarda el fitxer zip:"
@@ -1698,13 +1816,16 @@ msgid "Enter project name"
 msgstr "Introduïu el nom del projecte"
 
 #: src/templates/initialwizard.importprojects.hbs:4
-msgid "SCORM"
-msgstr "SCORM"
+msgid "SCORM2004"
+msgstr "SCORM2004"
 
 #: src/templates/initialwizard.importprojects.hbs:5
-#, fuzzy
 msgid "IMS"
-msgstr "PMS"
+msgstr "IMS"
+
+#: src/templates/initialwizard.importprojects.hbs:7
+msgid "eXe Learning"
+msgstr "eXe Learning"
 
 #: src/templates/initialwizard.step1.hbs:1
 msgid "Open"
@@ -1729,6 +1850,12 @@ msgstr "Projecte simple"
 #: src/templates/updateSectionName.hbs:1
 msgid "Section name"
 msgstr "Nom de secció"
+
+#: src/components/core/fillinthegaps/rsrc/templates/activityedit.hbs:1
+#: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:1
+#: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:1
+msgid "Group:"
+msgstr "Grup:"
 
 #: src/components/core/fillinthegaps/toolbar.hbs:1
 msgid "Huge"
@@ -1767,7 +1894,11 @@ msgstr "Amb capçaleres:"
 msgid "Add"
 msgstr "Afig"
 
-#: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:2
-#: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:2
+#: src/components/core/interactivemultioption/rsrc/templates/activityedit.hbs:3
+#: src/components/core/interactiveoneoption/rsrc/templates/activityedit.hbs:3
 msgid "Add question"
 msgstr "Afig una pregunta"
+
+#: src/components/core/test/rsrc/templates/activityedit.hbs:2
+msgid "Caption"
+msgstr "Títol"

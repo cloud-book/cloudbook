@@ -10,7 +10,7 @@ function FillGapBox(objectdata){
   this.fgpidentifier = typeof objectdata.fgpidentifier !== 'undefined' ? objectdata.fgpidentifier : "pem_" + this.uniqueid ; 
   this.description = typeof objectdata.description !== 'undefined' ? objectdata.description : CBI18n.gettext("Description of your activity") ; 
   this.activitytext = typeof objectdata.activitytext !== 'undefined' ? objectdata.activitytext : 'En un lugar de la <span data-gap-fill="gap">Mancha</span>, de cuyo nombre no quiero acordarme,...' ;
-  this.group = typeof objectdata.group !== 'undefined' ? objectdata.group : 1 ;
+//  this.group = typeof objectdata.group !== 'undefined' ? objectdata.group : 1 ;
   this.pemObject = typeof objectdata.pemObject !== 'undefined' ? objectdata.pemObject : [] ;
   this.gaps = typeof objectdata.gaps !== 'undefined' ? objectdata.gaps : {
         "gap": {
@@ -207,14 +207,13 @@ FillGapBox.prototype.editButton = function editButton(e) {
   template = fs.readFileSync("./"+__module_path__ + 'rsrc/templates/activityedit.hbs',{encoding:'utf8'});
   dialog.dialog('option','width',500);
   var templatecompiled = application.util.template.compile(template);
-  dialog.children(".content").append(templatecompiled({description:that.description,toolbar:toolbar,activitytext:that.activitytext, 'group':that.group}));
+  dialog.children(".content").append(templatecompiled({description:that.description,toolbar:toolbar,activitytext:that.activitytext/*, 'group':that.group*/}));
   dialog.find("#activitytext").wysiwyg({extracommandhandler:that.extracommandhandler});
   dialog.callbacks.push(function(){updateText(dialog,that);});
 }
 
 FillGapBox.prototype.extracommandhandler = function(command) {
   if(command === "fgp"){
-    debugger;
     var range = window.getSelection().getRangeAt(0);
     var node;
     var start = range.startContainer;
@@ -256,7 +255,7 @@ FillGapBox.prototype.extracommandhandler = function(command) {
 function updateText(dialog,objectcbo){
   objectcbo.activitytext = dialog.find("#activitytext").html();
   objectcbo.description = dialog.find("#description").val();
-  objectcbo.group = dialog.find("#group").html();
+  //objectcbo.group = dialog.find("#group").val();
 }
 
 function nextNode(node) {

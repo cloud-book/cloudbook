@@ -96,6 +96,14 @@ CBObject.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
 	//x.addEventListener('click',enableEditable);
 	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]}});
 	jquerycbo.rotatable({stop:function(event,ui){ objectcbo.degree = ui.angle.current},angle:objectcbo.degree});
+	jquerycbo.bind('keydown','del',function(e){
+		objectcbo.deleteDialog(objectcbo);
+		$(Cloudbook.UI.targetcontent).trigger("click");
+	});
+	jquerycbo.bind('keydown','backspace',function(e){
+		objectcbo.deleteDialog(objectcbo);
+		$(Cloudbook.UI.targetcontent).trigger("click");
+	});
 };
 
 
@@ -160,6 +168,10 @@ CBObject.prototype.backwardButton = function backwardButton(e) {
 
 CBObject.prototype.deleteButton = function deleteButton(e) {
 	var that = e.data.that;
+	that.deleteDialog(that);
+};
+
+CBObject.prototype.deleteDialog = function(that) {
 	var dialog = $('<div><button id="delete">'+ CBI18n.gettext("Delete") +'</button><button id="cancel">'+ CBI18n.gettext("Cancel") +'</button></div>');
 	dialog.children('#delete').click(function(){
 		var controller = application.controller.getInstance();
@@ -169,7 +181,6 @@ CBObject.prototype.deleteButton = function deleteButton(e) {
 	dialog.children('#cancel').click(function(){dialog.dialog('close');});
 	dialog.dialog({dialogClass: "cbdialog",modal:true,close:function(){$(this).remove()}});
 };
-
 
 CBObject.prototype.exportHTML = function exportHTML() {
 	var aux = $("<div></div>");
