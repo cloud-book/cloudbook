@@ -517,24 +517,24 @@ Backend.prototype.cloneSection = function(cbsectionid,parentsection,needle) {
   };
 
   if (numbering < parent.sections.length){
-    this.renumberSection(parentid,numbering,'I')
+    this.renumberSection(parentid,numbering,'I',parentid)
 
   };
   
 };
 
 
-Backend.prototype.renumberSection=function renumberSection(parentid,neworder,type){
+Backend.prototype.renumberSection=function renumberSection(parentid,neworder,type,oldparentid){
   var CBStorage=application.storagemanager.getInstance();
   var parent=CBStorage.getSectionById(parentid);
   var that=this;
   var action=type;
  
   parent.sections.forEach(function(e){
-    if(type === "D"){
-      neworder--;
+    if((type === "D") && (parentid===oldparentid)){
+        neworder--;
     }
-    if ((parent.sections.indexOf(e)+1)>neworder){
+    if ((parent.sections.indexOf(e)+1)>=neworder){
       var cbsection=CBStorage.getSectionById(e);
      
       switch (type) {
@@ -581,14 +581,14 @@ Backend.prototype.numberMoveSection=function numberMoveSection (oldparentid, new
 
  if (oldparentid===newparentid){
     if (neworder>oldorder){
-      this.renumberSection(newparentid,oldorder-1,'I');
+      this.renumberSection(newparentid,oldorder-1,'I',oldparentid);
 
     }else{
       this.numberSection(cbsecid,newparentid);
     }
 
   }else{
-    this.renumberSection(oldparentid,oldorder,'D');
+    this.renumberSection(oldparentid,oldorder,'D',newparentid);
     this.numberSection(cbsecid,newparentid);
 
 
