@@ -316,7 +316,7 @@ ProView.prototype.appendSectionToLastPosition = function(cbsectionid,parentid) {
   var ui = application.ui.core.getInstance();
   var dest = $("[data-cbsectionid='"+parentid+"'] > ul").children(".cbsection:last");
   if (dest.length > 0 )
-    dest.append(that.createSectionView(cbsectionid));
+    dest.after(that.createSectionView(cbsectionid));
   else
     $("[data-cbsectionid='"+parentid+"'] > ul").append(that.createSectionView(cbsectionid));
   that.reloadSortable();
