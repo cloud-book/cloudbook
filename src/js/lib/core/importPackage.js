@@ -199,7 +199,7 @@ ImportPackage.prototype.loadElementResources = function loadElementResources(ele
 	var importationHTML = application.importhtml.getInstance();
 	var controller = application.controller.getInstance();
 	var iseXeChildren = false;
-
+    
 	idSectionPreParent = idsection;
 	if(iscloudbook == undefined)
 		idsection = controller.appendSection(idsection);
@@ -342,7 +342,7 @@ ImportPackage.prototype.processImsmanifest = function processImsmanifest(content
 		//generatorimportfilesoftware,
 		//idrsrcfirstsection,
 		items;
-        debugger;
+        
  
 	//generatorimportfilesoftware = that.detectImportSoftware(contentfile);
 
@@ -369,7 +369,7 @@ ImportPackage.prototype.processImsmanifest = function processImsmanifest(content
 
 	items = $(contentfile.toString()).find("organization").children("item");
 	items.each(function(){
-		debugger;
+		
 		var item = $(this);
 		if(item.attr("identifierref")){
 			if(item.children("item").length > 0){
@@ -391,18 +391,19 @@ ImportPackage.prototype.processImsmanifest = function processImsmanifest(content
 ImportPackage.prototype.processItemWithChildren = function processItemWithChildren(item,idparentsection,filePath,tempPath,idsection) {
 	var that = this, 
 		result;
+	
 	result = that.processContent(item,idparentsection,filePath,tempPath,idsection);
 	result.idparentsection = result.idsection;
 	idsection = result.idsection;
 	delete result.idsection;
-	debugger;
+	
 	that.updateSectionName(item,idsection);
 	that.processChilds(item,filePath,tempPath,result);
 };
 
 
 ImportPackage.prototype.updateSectionName = function updateSectionName(item,idsection) {
-	debugger;
+	
 	var title = item.children("title").html(),
 		controller = application.controller.getInstance();
 	controller.updateSectionName(title,idsection);
@@ -418,11 +419,11 @@ ImportPackage.prototype.processContent = function processContent(item, idparents
 		No tenemos seccion creada
 	
 		*/
-    debugger;
+    
 	if(!idsection){
 		idsection = controller.appendSection(idparentsection);
 	}
-
+    that.updateSectionName (item,idsection); 
 	var href, html, resourceid;
 	if(item.attr("identifierref")){
 		resourceid = item.attr("identifierref");
@@ -456,9 +457,9 @@ ImportPackage.prototype.processChilds = function processChilds(item,filePath,tem
 	else{
 		children = item.children("item");
 	}
-	debugger;
+	
 	children.each(function(){
-		debugger;
+		
 		var item = $(this);
 		if(item.attr("identifierref")){
 			/**
@@ -484,7 +485,7 @@ ImportPackage.prototype.processChilds = function processChilds(item,filePath,tem
 
 ImportPackage.prototype.getHtmlFromItem = function getHtmlFromItem(item,filePath) {
 	var href, html, resourceid;
-	debugger;
+	
 	if(item.attr("identifierref")){
 		resourceid = item.attr("identifierref");
 	}
