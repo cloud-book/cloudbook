@@ -72,7 +72,7 @@ ImportPackage.prototype.processPackage = function processPackage(data, filePath,
 	});
 
 	if(exists)
-		processPackageMetaData(fileType, tempPath, filePath, metadataFile);
+		that.processPackageMetaData(fileType, tempPath, filePath, metadataFile);
 
 	if(exists2){
 		switch(fileType)
@@ -92,7 +92,7 @@ ImportPackage.prototype.processPackage = function processPackage(data, filePath,
  * @param  {String} path of the SCORM/IMS/EPUB element
  * @param  {String} name of the metadata file
  */
-function processPackageMetaData(fileType, tempPath, filePath, metadataFileName)
+ImportPackage.prototype.processPackageMetaData=function processPackageMetaData (fileType, tempPath, filePath, metadataFileName)
 {
 
 	var fs = require('fs');
@@ -159,160 +159,158 @@ ImportPackage.prototype.loadElementResources = function loadElementResources(ele
 }
 
 
-// /**
-//  * This method is responsible for processing content of a section
-//  * It builds the name and the content of a section
-//  * @param  {Object} node to be processed
-//  * @param  {String} id of resource
-//  * @param  {String} id of section processed
-//  * @param  {String} path of the elements
-//  */
+/**
+ * This method is responsible for processing content of a section
+ * It builds the name and the content of a section
+ * @param  {Object} node to be processed
+ * @param  {String} id of resource
+ * @param  {String} id of section processed
+ * @param  {String} path of the elements
+ */
 
-//  ImportPackage.prototype.processSection = function processSection(element, resourceID, idsection, filePath, tempPath, typefile) {
-// 	var href = element.parents().find("resource[identifier='" + resourceID + "']").attr("href");
-// 	/**
-// 	Porque buscas el titulo en el segundo hijo solo en los IMS
-// 	*/
-// 	if(typefile != undefined && typefile == "IMS")
-// 		application.controller.getInstance().updateSectionName(element.children()[1].innerText,idsection);	
-// 	else
-// 		application.controller.getInstance().updateSectionName(element.children("title")[0].innerText,idsection);	
-// 	var html = $.parseHTML(fs.readFileSync(filePath + href).toString());
-// 	/**
-// 	Actualiza las rutas del html para que todas apunten a la carpeta raiz que en este caso es rsrc
-// 	*/
-// 	changeImagePath(html);
-// 	loadElementResources(element, resourceID, tempPath);
-// 	application.importhtml.getInstance().processHTML(html, filePath + href, idsection);
-// }
 
-// /**
-//  * This method is responsible for processing children sections
-//  * It reads section and if there isn't id process subsections
-//  * @param  {String} id of section processed
-//  * @param  {Object} node to be processed
-//  * @param  {String} path of the elements
-//  */
-//  ImportPackage.prototype.processChildrenData = function processChildrenData(idsection, element, filePath, fileType, tempPath, iscloudbook)
-// {
-// 	var that = this;
-// 	var idSectionParent = "", html = "", href = "", idSectionPreParent = "";
-// 	var importationHTML = application.importhtml.getInstance();
-// 	var controller = application.controller.getInstance();
-// 	var iseXeChildren = false;
+ /*ImportPackage.prototype.processSection = function processSection(element, resourceID, idsection, filePath, tempPath, typefile) {
+	var href = element.parents().find("resource[identifier='" + resourceID + "']").attr("href");
+	
+	if(typefile != undefined && typefile == "IMS")
+		application.controller.getInstance().updateSectionName(element.children()[1].innerText,idsection);	
+	else
+		application.controller.getInstance().updateSectionName(element.children("title")[0].innerText,idsection);	
+	var html = $.parseHTML(fs.readFileSync(filePath + href).toString());
+	
+	changeImagePath(html);
+	loadElementResources(element, resourceID, tempPath);
+	application.importhtml.getInstance().processHTML(html, filePath + href, idsection);
+}*/
+
+/**
+ * This method is responsible for processing children sections
+ * It reads section and if there isn't id process subsections
+ * @param  {String} id of section processed
+ * @param  {Object} node to be processed
+ * @param  {String} path of the elements
+ */
+ /*ImportPackage.prototype.processChildrenData = function processChildrenData(idsection, element, filePath, fileType, tempPath, iscloudbook)
+{
+	var that = this;
+	var idSectionParent = "", html = "", href = "", idSectionPreParent = "";
+	var importationHTML = application.importhtml.getInstance();
+	var controller = application.controller.getInstance();
+	var iseXeChildren = false;
     
-// 	idSectionPreParent = idsection;
-// 	if(iscloudbook == undefined)
-// 		idsection = controller.appendSection(idsection);
-// 	idSectionParent = idsection;
-// 	that.processSection(element, iscloudbook == undefined?$(element.children("item")[0]).attr("identifierref"):$(element).children("item")[0].attributes['identifierref'].value, idSectionParent, filePath, tempPath, fileType);
-// 	iseXeChildren = element.parents().find("organizations").attr("default").substr(0,3) == "eXe";
+	idSectionPreParent = idsection;
+	if(iscloudbook == undefined)
+		idsection = controller.appendSection(idsection);
+	idSectionParent = idsection;
+	that.processSection(element, iscloudbook == undefined?$(element.children("item")[0]).attr("identifierref"):$(element).children("item")[0].attributes['identifierref'].value, idSectionParent, filePath, tempPath, fileType);
+	iseXeChildren = element.parents().find("organizations").attr("default").substr(0,3) == "eXe";
 
-// 	element.children("item:gt(0)").each(function(){
-// 		if( this.attributes['identifierref'] != undefined){
-// 			if(fileType == "SCORM" && iseXeChildren)
-// 				idsection = controller.appendSection(idSectionParent);
-// 			else
-// 				idsection = controller.appendSection(idSectionPreParent);
-// 			that.processSection($(this), this.attributes['identifierref'].value, idsection, filePath, tempPath);
-// 			loadElementResources($(this), $(this).attr("identifierref"), tempPath);
-// 			if(/*fileType == "IMS" &&*/ $(this).children("item").length > 0)
-// 			{
-// 				that.processChildrenData(idsection, $(this), filePath, fileType, tempPath);
-// 			}
-// 		}
-// 		else
-// 		{
-// 			that.processChildrenData(idSectionParent, $(this), filePath, fileType, tempPath);
-// 		}
-// 	})
-// }
+	element.children("item:gt(0)").each(function(){
+		if( this.attributes['identifierref'] != undefined){
+			if(fileType == "SCORM" && iseXeChildren)
+				idsection = controller.appendSection(idSectionParent);
+			else
+				idsection = controller.appendSection(idSectionPreParent);
+			that.processSection($(this), this.attributes['identifierref'].value, idsection, filePath, tempPath);
+			loadElementResources($(this), $(this).attr("identifierref"), tempPath);
+			if(/fileType == "IMS" &&*/ /*$(this).children("item").length > 0)
+			{
+				that.processChildrenData(idsection, $(this), filePath, fileType, tempPath);
+			}
+		}
+		else
+		{
+			that.processChildrenData(idSectionParent, $(this), filePath, fileType, tempPath);
+		}
+	})
+}*/
 
-// /**
-//  * This method is responsible for reading SCORM/IMS data
-//  * It reads files to be included and creates sections for each one
-//  * @param  {String} path of the unzipped elements
-//  */
-// function processPackageData(filePath, fileType, tempPath)
-// {
-// 	var fs = require('fs');
-// 	var fsextra = require('fs-extra')
-// 	var controller = application.controller.getInstance();
-// 	var idsection = "", idSectionAux = "", idSectionRoot = "";
-// 	var ui = application.ui.core.getInstance();
-// 	var children = "";
-// //	var tempPath = "/tmp/cloudbook/";
-// //    var mktemp = require('mktemp');
-// //    var tempPath = mktemp.createDirSync("/tmp/cloudbook_XXXX/");
-// 	var path = require("path");
-// 	var items, iseXe = false, isCloudBook = false;
-// 	var existsAnotherIndex = false, isFirst = true;
+/**
+ * This method is responsible for reading SCORM/IMS data
+ * It reads files to be included and creates sections for each one
+ * @param  {String} path of the unzipped elements
+ */
 
-// 	var importationHTML = application.importhtml.getInstance();
-// 	fs.readFile(filePath+"imsmanifest.xml", function(err, data) {
-// 			if(fileType == "IMS"){
-// 				idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
-// 				processSection($($($(data.toString()).find("organization")).find("item")[0]), $(data.toString()).find("item:first").attr("identifierref"), idsection, filePath, tempPath);
-// 				idSectionRoot = idsection;
-// 				isFirst = false;
-// 	  	  	}
-// 	  	  	iseXe = $(data.toString()).find("organizations").attr("default").substr(0,3) == "eXe";
-// 	  	  	isCloudBook = $(data.toString()).find("organizations").attr("default").substr(0,9) == "Cloudbook";
-// 	  	  	if(iseXe)
-// 				items = ($(data.toString()).find("item:first").children("item").length == 0)?$(data.toString()).find("item:first"):$(data.toString()).find("item:first").children("item");
-// 			else
-// 	  	  		items = $(data.toString()).find("organization").children("item");
-// 			items.each(function(){
-// 				if($(this).attr("identifierref") != undefined){
-// 					loadElementResources($(this), $(this).attr("identifierref"), tempPath);
-// 		  	  		var href = $(this).parents().find("resource[identifier='" + this.attributes['identifierref'].value + "']").attr("href");
-// 		  	  		html = $.parseHTML(fs.readFileSync(filePath + href).toString());
-// 		  	  		if(isFirst){
-// 		  	  			if(!existsAnotherIndex)
-// 	  						idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
-// 	  					else
-// 	  						idsection = controller.appendSection('root');
-// 	  					idSectionRoot = idsection;
-// 	  					existsAnotherIndex = true;
-// 	  					isFirst = false;
-// 	  				}else{
-// 	  					if(iseXe)
-// 	  						idsection = controller.appendSection(idSectionRoot);
-// 	  					else
-// 	  						idsection = controller.appendSection('root');
-// 	  				}
-// 	  				if($(this).children("title")[0].innerText == "<-")
-// 	  					controller.updateSectionName($(this).prev()[0].innerText,idsection);
-// 	  				else
-//   					controller.updateSectionName($(this).children("title")[0].innerText,idsection);
-// 					changeImagePath(html, path.dirname(href));
-// 					importationHTML.processHTML(html, filePath + href, idsection);
-// 					if($(this).children("item").length > 0)
-// 					{
-// 						processChildrenData(idsection, $(this), filePath, fileType, tempPath);
-// 					}
-// 				}
-// 				else
-// 				{
+/*function processPackageData(filePath, fileType, tempPath)
+{
+	var fs = require('fs');
+	var fsextra = require('fs-extra')
+	var controller = application.controller.getInstance();
+	var idsection = "", idSectionAux = "", idSectionRoot = "";
+	var ui = application.ui.core.getInstance();
+	var children = "";
+//	var tempPath = "/tmp/cloudbook/";
+//    var mktemp = require('mktemp');
+//    var tempPath = mktemp.createDirSync("/tmp/cloudbook_XXXX/");
+	var path = require("path");
+	var items, iseXe = false, isCloudBook = false;
+	var existsAnotherIndex = false, isFirst = true;
 
-// 					if(iseXe){
-// 						idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
-// 						idSectionAux = idsection;
-// 						processChildrenData(idsection, $(this), filePath, fileType, tempPath);
-// 						idsection = idSectionAux;
-// 					}
-// 					if(isCloudBook){
-// 						idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
-// 						idSectionAux = idsection;
-// 						idsection = idSectionAux;
-// 						processChildrenData(idsection, $(this), filePath, fileType, tempPath, isCloudBook);
-// 						isFirst = false;
-// 					}
-// 				}
-// 			});
-// 	});
-// 	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
-// }
+	var importationHTML = application.importhtml.getInstance();
+	fs.readFile(filePath+"imsmanifest.xml", function(err, data) {
+			if(fileType == "IMS"){
+				idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
+				processSection($($($(data.toString()).find("organization")).find("item")[0]), $(data.toString()).find("item:first").attr("identifierref"), idsection, filePath, tempPath);
+				idSectionRoot = idsection;
+				isFirst = false;
+	  	  	}
+	  	  	iseXe = $(data.toString()).find("organizations").attr("default").substr(0,3) == "eXe";
+	  	  	isCloudBook = $(data.toString()).find("organizations").attr("default").substr(0,9) == "Cloudbook";
+	  	  	if(iseXe)
+				items = ($(data.toString()).find("item:first").children("item").length == 0)?$(data.toString()).find("item:first"):$(data.toString()).find("item:first").children("item");
+			else
+	  	  		items = $(data.toString()).find("organization").children("item");
+			items.each(function(){
+				if($(this).attr("identifierref") != undefined){
+					loadElementResources($(this), $(this).attr("identifierref"), tempPath);
+		  	  		var href = $(this).parents().find("resource[identifier='" + this.attributes['identifierref'].value + "']").attr("href");
+		  	  		html = $.parseHTML(fs.readFileSync(filePath + href).toString());
+		  	  		if(isFirst){
+		  	  			if(!existsAnotherIndex)
+	  						idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
+	  					else
+	  						idsection = controller.appendSection('root');
+	  					idSectionRoot = idsection;
+	  					existsAnotherIndex = true;
+	  					isFirst = false;
+	  				}else{
+	  					if(iseXe)
+	  						idsection = controller.appendSection(idSectionRoot);
+	  					else
+	  						idsection = controller.appendSection('root');
+	  				}
+	  				if($(this).children("title")[0].innerText == "<-")
+	  					controller.updateSectionName($(this).prev()[0].innerText,idsection);
+	  				else
+  					controller.updateSectionName($(this).children("title")[0].innerText,idsection);
+					changeImagePath(html, path.dirname(href));
+					importationHTML.processHTML(html, filePath + href, idsection);
+					if($(this).children("item").length > 0)
+					{
+						processChildrenData(idsection, $(this), filePath, fileType, tempPath);
+					}
+				}
+				else
+				{
+
+					if(iseXe){
+						idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
+						idSectionAux = idsection;
+						processChildrenData(idsection, $(this), filePath, fileType, tempPath);
+						idsection = idSectionAux;
+					}
+					if(isCloudBook){
+						idsection = Cloudbook.UI.selected.attr('data-cbsectionid');
+						idSectionAux = idsection;
+						idsection = idSectionAux;
+						processChildrenData(idsection, $(this), filePath, fileType, tempPath, isCloudBook);
+						isFirst = false;
+					}
+				}
+			});
+	});
+	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
+}*/
 
 /**
  * This method is responsible for reading SCORM/IMS data
@@ -370,8 +368,7 @@ ImportPackage.prototype.processItemWithChildren = function processItemWithChildr
 	idsection = result.idsection;
 	delete result.idsection;
 	
-//	that.updateSectionName(item,idsection);
-	that.processChilds(item,filePath,tempPath,result);
+    that.processChilds(item,filePath,tempPath,result);
 };
 
 
@@ -388,10 +385,7 @@ ImportPackage.prototype.processContent = function processContent(item, idparents
 	contentinchildren = false;
 	controller = application.controller.getInstance(),
 	importhtml = application.importhtml.getInstance();
-	/**
-		No tenemos seccion creada
-	
-		*/
+
     
 	if(!idsection){
 		idsection = controller.appendSection(idparentsection);
