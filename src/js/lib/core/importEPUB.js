@@ -66,20 +66,25 @@ function getSectionPath(sectionPath)
  * @param  {Object} a JSON object with additional options
  * @return  {Boolean} indicates if it's first time to access
  */
-function processSectionEPUB(sectionPath, sectionName, filePath, mainDir, element, options)//isFirst, hasTOC)
+ImportEPUB.prototype.processSectionEPUB = function processSectionEPUB(sectionPath, sectionName, filePath, mainDir, element, options)
 {
 
 	var controller = application.controller.getInstance();
 	var idsection = "", idSectionAux = "", sectionPathwAnchor = "";
 	var fs = require('fs');
 	var importationHTML = application.importhtml.getInstance();
-	var foundXML = true, foundComment = true, hasAnchor = false;
+	var foundXML = true, foundComment = true;//, hasAnchor = false;
 	var opt = $.extend({},options);
 
 	sectionPathwAnchor = getSectionPath(sectionPath);
-	hasAnchor  = (sectionPath.indexOf("#") != -1)?true:false;
-	var dataSectionFile = fs.readFileSync(decodeURIComponent(filePath + mainDir + sectionPathwAnchor));
-	var html = dataSectionFile.toString();
+	//hasAnchor  = (sectionPath.indexOf("#") != -1)?true:false;
+	//var dataSectionFile = fs.readFileSync(decodeURIComponent(filePath + mainDir + sectionPathwAnchor));
+	//var html = dataSectionFile.toString();
+
+	//AQUÍ OBTENDREMOS EL HTML
+	var html = fs.readFileSync(decodeURIComponent(filePath + mainDir + sectionPathwAnchor)).toString();
+
+	//var html = dataSectionFile.toString();
 	html = removeExtraElements(html);
 
 	if(opt.isFirst)
@@ -94,6 +99,8 @@ function processSectionEPUB(sectionPath, sectionName, filePath, mainDir, element
 		controller.updateSectionName(sectionName,idsection);	
 	}
 	idsectionAux = idsection;
+
+	//LAS DOS SIGUIENTES LÍNEAS IRÁN COMENTADAS Y EL OBJ DE LA LLAMADA SE ELIMINARÁ
 	var auxSection = sectionPath.split("#")[1] != undefined?"#" + sectionPath.split("#")[1]:undefined;
 	var obj = auxSection != undefined? $.parseJSON('{"idtoprocess":"' + auxSection + '"}'): undefined;
 	importationHTML.processHTML(html, filePath + mainDir + sectionPathwAnchor, idsection, obj);
@@ -148,8 +155,7 @@ function processSubSectionEPUB(filePath, mainDir, hasTOC, element, idsectionAux)
 }
 /**
  * This method is responsible for reading EPUB data
- * It reads first container.xml and search ncx element (TOC) and searches toc element
- * In addition saves toc into array of sections
+ * It reads ncx File and process depending on this file
  * @param  {String} path of the unzipped elements
  */
 ImportEPUB.prototype.processPackageDataEPUB = function processPackageDataEPUB(filePath)
@@ -164,52 +170,86 @@ ImportEPUB.prototype.processPackageDataEPUB = function processPackageDataEPUB(fi
 	var counter = 0;
 	var sectionName = "", sectionPath = "";
 	sectionsToProcess = [];
+	that = this;
 
 	dataFile = fs.readFileSync(decodeURIComponent(filePath+fileIndex),{encoding:'utf8'});
-	$(dataFile.toString()).find("manifest").children("item").each(function(){
-		if($(this).attr("id") == "ncx") ncxFile =  $(this).attr("href");
-	});
+	ncxFile = $(dataFile.toString()).find("manifest").children('item[id="ncx"]').attr("href");
 
-	if(ncxFile != "")
-	{
-		 fs.readFile(decodeURIComponent(filePath+ mainDir + ncxFile), function(err, data) {
-	   	  	$(data.toString()).find("navMap").children("navPoint").each(function(){
-		   	  	sectionName = $(this).find('navlabel')[0].textContent.trim();
-		   	  	sectionPath = $($(this).find('content')[0]).attr("src");
-		   	  	sectionsToProcess[sectionName] = {"sectionPath": sectionPath, "subsections":[]};
-		   	  	$(this).children("navPoint").each(function(){
-		   	  		var subSectionName = $(this).find('navlabel')[0].textContent.trim();
-		   	  		var subSectionPath = $($(this).find('content')[0]).attr("src");
-		   	  		sectionsToProcess[sectionName].subsections.push({"name":subSectionName, "sectionPath":subSectionPath});
-		   	  	})
-		   	  	var options = $.parseJSON('{"isFirst":'+ isFirst + ', "hasTOC":' + true + '}');
-		 		isFirst = processSectionEPUB(sectionPath, sectionName, filePath, mainDir, this, options)//isFirst, true);
-		 	});
-		 });
-	}
+	if(ncxFile != undefined)
+		that.processncxFile(filePath, mainDir, ncxFile);
 	else
-	{
-		fs.readFile(decodeURIComponent(filePath + fileIndex), function(err, data) {
-			tocFile = ($(data.toString()).find("manifest").children("item#toc").length != 0)?$(data.toString()).find("manifest").children("item#toc").attr("href"):$($(data.toString()).find("manifest").children("item#nav")).attr("href");
-			fs.readFile(decodeURIComponent(filePath+ mainDir + tocFile), function(err1, data1) {
-				$($.parseXML((data1.toString()))).find('nav').each(function(){if($(this).attr("epub:type") == "toc") tocList = $(this);});
-				tocList.children("ol").children("li").each(function(){ 
-					sectionName = $(this).children("a").text();
-	  	  			sectionPath = $(this).children("a").attr("href");
-	  	  			sectionsToProcess[sectionName] = {"sectionPath": sectionPath, "subsections":[]};
-	  	  			$(this).children("ol[hidden!='']").children("li").each(function(){
-			   	  		var subSectionName = $(this).children("a").attr("href");
-			   	  		var subSectionPath = $(this).children("a").text();
-			   	  		sectionsToProcess[sectionName].subsections.push({"name":subSectionName, "sectionPath":subSectionPath});
-			   	  	})
-		   	  		var options = $.parseJSON('{"isFirst":'+ isFirst + ', "hasTOC":' + false + '}');
-					isFirst = processSectionEPUB(sectionPath, sectionName, filePath, 
-						mainDir + ((tocFile.indexOf("/") != 0)?tocFile.substring(0, tocFile.lastIndexOf("/"))+"/":""), this, options);//isFirst, false);
-				});
-			});
-		});
-	}
+		that.processTOCFile(filePath, fileIndex, mainDir);
+
 	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 }
+
+/**
+ * This method is responsible for reading ncxFiles
+ * It reads navPoints and process them
+ * @param  {String} path of the unzipped elements
+ * @param  {String} main dir of unzipped elements
+ * @param  {String} name of the ncxFile
+ */
+ImportEPUB.prototype.processncxFile = function processncxFile(filePath, mainDir, ncxFile)
+{
+	var fs = require('fs');
+	var sectionName = "", sectionPath = "";
+	var sectionsToProcess = [];
+	var isFirst = true;
+	var that = this;
+
+	fs.readFile(decodeURIComponent(filePath+ mainDir + ncxFile), function(err, data) {
+	  	$(data.toString()).find("navMap").children("navPoint").each(function(){
+		  	sectionName = $(this).find('navlabel')[0].textContent.trim();
+		  	sectionPath = $($(this).find('content')[0]).attr("src");
+		  	sectionsToProcess[sectionName] = {"sectionPath": sectionPath, "subsections":[]};
+		  	$(this).children("navPoint").each(function(){
+		  		var subSectionName = $(this).find('navlabel')[0].textContent.trim();
+		  		var subSectionPath = $($(this).find('content')[0]).attr("src");
+		  		sectionsToProcess[sectionName].subsections.push({"name":subSectionName, "sectionPath":subSectionPath});
+		  	})
+		  	var options = $.parseJSON('{"isFirst":'+ isFirst + ', "hasTOC":' + true + '}');
+			isFirst = that.processSectionEPUB(sectionPath, sectionName, filePath, mainDir, this, options)//isFirst, true);
+		});
+	});
+
+}
+/**
+ * This method is responsible for reading TOC Files
+ * It reads navs and process them
+ * @param  {String} path of the unzipped elements
+ * @param  {String} name of the TOC file
+ * @param  {String} main dir of unzipped elements
+ */
+ImportEPUB.prototype.processTOCFile = function processTOCFile(filePath, fileIndex, mainDir)
+{
+	var fs = require('fs');
+	var tocFile = "";
+	var sectionName = "", sectionPath = "";
+	var sectionsToProcess = [];
+	var isFirst = true;
+	var that = this;
+
+	fs.readFile(decodeURIComponent(filePath + fileIndex), function(err, data) {
+		tocFile = ($(data.toString()).find("manifest").children("item#toc").length != 0)?$(data.toString()).find("manifest").children("item#toc").attr("href"):$($(data.toString()).find("manifest").children("item#nav")).attr("href");
+		fs.readFile(decodeURIComponent(filePath+ mainDir + tocFile), function(err1, data1) {
+			$($.parseXML((data1.toString()))).find('nav').each(function(){if($(this).attr("epub:type") == "toc") tocList = $(this);});
+			tocList.children("ol").children("li").each(function(){ 
+				sectionName = $(this).children("a").text();
+  	  			sectionPath = $(this).children("a").attr("href");
+  	  			sectionsToProcess[sectionName] = {"sectionPath": sectionPath, "subsections":[]};
+  	  			$(this).children("ol[hidden!='']").children("li").each(function(){
+		   	  		var subSectionName = $(this).children("a").attr("href");
+		   	  		var subSectionPath = $(this).children("a").text();
+		   	  		sectionsToProcess[sectionName].subsections.push({"name":subSectionName, "sectionPath":subSectionPath});
+		   	  	})
+	   	  		var options = $.parseJSON('{"isFirst":'+ isFirst + ', "hasTOC":' + false + '}');
+				isFirst = that.processSectionEPUB(sectionPath, sectionName, filePath, 
+					mainDir + ((tocFile.indexOf("/") != 0)?tocFile.substring(0, tocFile.lastIndexOf("/"))+"/":""), this, options);//isFirst, false);
+			});
+		});
+	});
+}
+
 CBUtil.createNameSpace('application.importepub');
 application.importepub = CBUtil.singleton(ImportEPUB);
