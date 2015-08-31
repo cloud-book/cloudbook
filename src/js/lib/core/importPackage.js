@@ -24,6 +24,7 @@ ImportPackage.prototype.processPackage = function processPackage(data, filePath,
     var mktemp = require('mktemp');
     var tempPath = mktemp.createDirSync("/tmp/cloudbook_XXXX/");
 	var metadataFile = "";
+	var that = this;
 
 	fs2.emptyDirSync(tempPath);
 	if(fileType == "EPUB" && zip.file("META-INF/container.xml") != null){  
@@ -71,14 +72,14 @@ ImportPackage.prototype.processPackage = function processPackage(data, filePath,
 	});
 
 	if(exists)
-		processPackageMetaData(fileType, tempPath, filePath, metadataFile);
+		that.processPackageMetaData(fileType, tempPath, filePath, metadataFile);
 
 	if(exists2){
 		switch(fileType)
 		{
 			case "EPUB": application.importepub.getInstance().processPackageDataEPUB(tempPath); break;
 			case "ELP": application.importelp.getInstance().processPackageDataELP(tempPath); break;
-			default: processPackageData(tempPath, fileType, tempPath); break;
+			default: that.processPackageData(tempPath, fileType, tempPath); break;
 		}
 	}
 }
@@ -91,7 +92,7 @@ ImportPackage.prototype.processPackage = function processPackage(data, filePath,
  * @param  {String} path of the SCORM/IMS/EPUB element
  * @param  {String} name of the metadata file
  */
-function processPackageMetaData(fileType, tempPath, filePath, metadataFileName)
+ImportPackage.prototype.processPackageMetaData=function processPackageMetaData (fileType, tempPath, filePath, metadataFileName)
 {
 
 	var fs = require('fs');
@@ -127,7 +128,7 @@ function processPackageMetaData(fileType, tempPath, filePath, metadataFileName)
  * This method is responsible for adapt paths of imgs 
  * @param  {String} code to be processed
 */
-function changeImagePath(htmlCode, filePath)
+ImportPackage.prototype.changeImagePath = function changeImagePath(htmlCode, filePath)
 {
 	filePath = filePath == undefined?"":filePath;
 
@@ -142,7 +143,7 @@ function changeImagePath(htmlCode, filePath)
  * @param  {String} element to be processed
  * @param  {String} name of resource
 */
-function loadElementResources(element, filter, tempPath)
+ImportPackage.prototype.loadElementResources = function loadElementResources(element, filter, tempPath)
 {
 	var fsextra = require('fs-extra');
 	var path = require('path');
@@ -157,6 +158,7 @@ function loadElementResources(element, filter, tempPath)
 	});
 }
 
+
 /**
  * This method is responsible for processing content of a section
  * It builds the name and the content of a section
@@ -165,19 +167,21 @@ function loadElementResources(element, filter, tempPath)
  * @param  {String} id of section processed
  * @param  {String} path of the elements
  */
- function processSection(element, resourceID, idsection, filePath, tempPath, typefile)
-{
 
+
+ /*ImportPackage.prototype.processSection = function processSection(element, resourceID, idsection, filePath, tempPath, typefile) {
 	var href = element.parents().find("resource[identifier='" + resourceID + "']").attr("href");
+	
 	if(typefile != undefined && typefile == "IMS")
 		application.controller.getInstance().updateSectionName(element.children()[1].innerText,idsection);	
 	else
-		application.controller.getInstance().updateSectionName(element.children()[0].innerText,idsection);	
+		application.controller.getInstance().updateSectionName(element.children("title")[0].innerText,idsection);	
 	var html = $.parseHTML(fs.readFileSync(filePath + href).toString());
+	
 	changeImagePath(html);
 	loadElementResources(element, resourceID, tempPath);
 	application.importhtml.getInstance().processHTML(html, filePath + href, idsection);
-}
+}*/
 
 /**
  * This method is responsible for processing children sections
@@ -186,18 +190,19 @@ function loadElementResources(element, filter, tempPath)
  * @param  {Object} node to be processed
  * @param  {String} path of the elements
  */
- function processChildrenData(idsection, element, filePath, fileType, tempPath, iscloudbook)
+ /*ImportPackage.prototype.processChildrenData = function processChildrenData(idsection, element, filePath, fileType, tempPath, iscloudbook)
 {
+	var that = this;
 	var idSectionParent = "", html = "", href = "", idSectionPreParent = "";
 	var importationHTML = application.importhtml.getInstance();
 	var controller = application.controller.getInstance();
 	var iseXeChildren = false;
-
+    
 	idSectionPreParent = idsection;
 	if(iscloudbook == undefined)
 		idsection = controller.appendSection(idsection);
 	idSectionParent = idsection;
-	processSection(element, iscloudbook == undefined?$(element.children("item")[0]).attr("identifierref"):$(element).children("item")[0].attributes['identifierref'].value, idSectionParent, filePath, tempPath, fileType);
+	that.processSection(element, iscloudbook == undefined?$(element.children("item")[0]).attr("identifierref"):$(element).children("item")[0].attributes['identifierref'].value, idSectionParent, filePath, tempPath, fileType);
 	iseXeChildren = element.parents().find("organizations").attr("default").substr(0,3) == "eXe";
 
 	element.children("item:gt(0)").each(function(){
@@ -206,26 +211,27 @@ function loadElementResources(element, filter, tempPath)
 				idsection = controller.appendSection(idSectionParent);
 			else
 				idsection = controller.appendSection(idSectionPreParent);
-			processSection($(this), this.attributes['identifierref'].value, idsection, filePath, tempPath);
+			that.processSection($(this), this.attributes['identifierref'].value, idsection, filePath, tempPath);
 			loadElementResources($(this), $(this).attr("identifierref"), tempPath);
-			if(/*fileType == "IMS" &&*/ $(this).children("item").length > 0)
+			if(/fileType == "IMS" &&*/ /*$(this).children("item").length > 0)
 			{
-				processChildrenData(idsection, $(this), filePath, fileType, tempPath);
+				that.processChildrenData(idsection, $(this), filePath, fileType, tempPath);
 			}
 		}
 		else
 		{
-			processChildrenData(idSectionParent, $(this), filePath, fileType, tempPath);
+			that.processChildrenData(idSectionParent, $(this), filePath, fileType, tempPath);
 		}
 	})
-}
+}*/
 
 /**
  * This method is responsible for reading SCORM/IMS data
  * It reads files to be included and creates sections for each one
  * @param  {String} path of the unzipped elements
  */
-function processPackageData(filePath, fileType, tempPath)
+
+/*function processPackageData(filePath, fileType, tempPath)
 {
 	var fs = require('fs');
 	var fsextra = require('fs-extra')
@@ -304,7 +310,161 @@ function processPackageData(filePath, fileType, tempPath)
 			});
 	});
 	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
-}
+}*/
+
+/**
+ * This method is responsible for reading SCORM/IMS data
+ * It reads files to be included and creates sections for each one
+ * @param  {String} path of the unzipped elements
+ */
+ImportPackage.prototype.processPackageData = function processPackageData(filePath, fileType, tempPath) {
+	var fs = require("fs"),
+		fsextra = require("fs-extra"),
+		path = require("path"),
+		controller = application.controller.getInstance(),
+		ui = application.ui.core.getInstance(),
+		importationHTML = application.importhtml.getInstance(),
+		that = this;
+	contentfile = fs.readFileSync(path.join(filePath,"imsmanifest.xml"));
+	that.processImsmanifest(contentfile,filePath, fileType, tempPath);
+	ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
+};
+
+
+ImportPackage.prototype.processImsmanifest = function processImsmanifest(contentfile,filePath, fileType, tempPath) {
+	var that = this,
+		idsection = Cloudbook.UI.selected.attr('data-cbsectionid'),
+		idsectionroot = $(`[data-cbsectionid=${idsection}]`).parent().closest("[data-cbsectionid]").attr("data-cbsectionid"),
+		items;
+        
+ 
+	items = $(contentfile.toString()).find("organization").children("item");
+	items.each(function(){
+		
+		var item = $(this);
+		if(item.attr("identifierref")){
+			if(item.children("item").length > 0){
+				that.processItemWithChildren(item,idsectionroot,filePath,tempPath,idsection);
+				idsection = null;
+			}
+			else{
+				that.processContent(item,idsectionroot,filePath,tempPath,idsection);
+			  	idsection = null;
+			}
+		}
+		else{
+			that.processItemWithChildren(item,idsectionroot,filePath,tempPath,idsection);
+			idsection = null;
+		}
+	});
+};
+
+ImportPackage.prototype.processItemWithChildren = function processItemWithChildren(item,idparentsection,filePath,tempPath,idsection) {
+	var that = this, 
+		result;
+	
+	result = that.processContent(item,idparentsection,filePath,tempPath,idsection);
+	result.idparentsection = result.idsection;
+	idsection = result.idsection;
+	delete result.idsection;
+	
+    that.processChilds(item,filePath,tempPath,result);
+};
+
+
+ImportPackage.prototype.updateSectionName = function updateSectionName(item,idsection) {
+	
+	var title = item.children("title").html(),
+		controller = application.controller.getInstance();
+	controller.updateSectionName(title,idsection);
+};
+
+ImportPackage.prototype.processContent = function processContent(item, idparentsection,filePath,tempPath, idsection) {
+	var result,
+	that = this,
+	contentinchildren = false;
+	controller = application.controller.getInstance(),
+	importhtml = application.importhtml.getInstance();
+
+    
+	if(!idsection){
+		idsection = controller.appendSection(idparentsection);
+	}
+   
+    that.updateSectionName (item,idsection); 
+	var href, html, resourceid;
+	if(item.attr("identifierref")){
+		resourceid = item.attr("identifierref");
+	}
+	else{
+		resourceid = item.children("item:first").attr("identifierref");
+		contentinchildren = true;
+	}
+	href = item.parents().find("resource[identifier='" + resourceid + "']").attr("href");
+	html = $.parseHTML(fs.readFileSync(filePath + href).toString());
+
+
+
+	
+	that.changeImagePath(html);
+	that.loadElementResources(item, resourceid, tempPath);
+	importhtml.processHTML(html, filePath + href, idsection);
+	return {idsection:idsection,contentinchildren:contentinchildren};
+};
+/**
+ * @param  {Object}  options
+ * 		   {String}  options.idparentsection
+ * 		   {String}	 options.contentinchildren
+ */
+ImportPackage.prototype.processChilds = function processChilds(item,filePath,tempPath,options) {
+	var children,
+		that = this;
+	if (options.contentinchildren){
+		children = item.children("item:gt(0)");
+	}
+	else{
+		children = item.children("item");
+	}
+	
+	children.each(function(){
+		
+		var item = $(this);
+		if(item.attr("identifierref")){
+			/**
+				Tenemos el recurso completo
+			*/
+			if(item.children("item").length > 0){
+				that.processItemWithChildren(item,options.idparentsection,filePath,tempPath);
+				idsection = null;
+			}
+			else{
+				that.processContent(item,options.idparentsection,filePath,tempPath);
+				idsection = null;
+			}
+		}
+		else{
+			/**
+			listado de items entre los cuales esta el titulo y el contenido, que el contenido es el primer item
+			*/
+			that.processItemWithChildren(item,options.idparentsection,filePath,tempPath);
+		}
+	})
+};
+
+ImportPackage.prototype.getHtmlFromItem = function getHtmlFromItem(item,filePath) {
+	var href, html, resourceid;
+	
+	if(item.attr("identifierref")){
+		resourceid = item.attr("identifierref");
+	}
+	else{
+		resourceid = item.children("item:first").attr("identifierref");
+	}
+	href = item.parents().find("resource[identifier='" + resourceid + "']").attr("href");
+	html = $.parseHTML(fs.readFileSync(filePath + href).toString());
+	return {html:html,resourceid:resourceid};
+};
+
 
 
 CBUtil.createNameSpace('application.importpackage');
