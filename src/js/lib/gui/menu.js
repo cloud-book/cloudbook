@@ -94,6 +94,14 @@
       }
     };
 
+    var renumber_project={
+      label:CBI18n.gettext('Update number sections'),
+      click:function renumber_project(){
+        controller.renumberProject();
+      }
+
+    };
+
     // var import_html5 = {
     //   label: CBI18n.gettext('HTML5'),
     //   click: function import_html5(){
@@ -267,6 +275,7 @@
     file.append(new gui.MenuItem({type:'separator'}));
     file.append(new gui.MenuItem(quit));
     project.append(new gui.MenuItem(load_metadata));
+    project.append(new gui.MenuItem(renumber_project));
 
 
     /**

@@ -38,6 +38,7 @@ Controller.prototype.createProProject = function createProProject(name) {
  	ui.sectionmanager.initSections();
  	ui.sectionmanager.createFirstSection();
  	this.saveProject(Project.Info.projectpath);
+ 	   	
 };
 
 /**
@@ -70,6 +71,9 @@ Controller.prototype.loadProject = function loadProject(path) {
 	ui.emptyTargetContent();
 	backend.loadProject(path);
 	ui.loadProject(path);
+	ui.sectionmanager.reloadSortable();
+	this.renumberProject();
+
 };
 
 Controller.prototype.saveProject = function(path) {
@@ -157,6 +161,53 @@ Controller.prototype.cloneSection = function cloneSection(cbsectionid,parentsect
 	return cbsectionid;
 
 };
+
+
+/**
+ *Function to assign a number to the section according to their position
+ 
+ */ 	
+
+Controller.prototype.numberSection=function numberSection(cbsecid,parentid){
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+	backend.numberSection(cbsecid,parentid);
+	ui.sectionmanager.redrawNumbering();
+};
+
+/**
+ * Function to renumber the sections (and subsections) when you add, delete or move a section / subsection 
+*/  
+
+Controller.prototype.renumberSection=function renumberSection(parentid,numbersection,type){
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+	backend.renumberSection(parentid,numbersection,type);
+	ui.sectionmanager.redrawNumbering();
+};	
+
+
+/**
+ * Function to manage the numbered (or renumbered) sections when one moves
+*/ 
+ 
+Controller.prototype.numberMoveSection=function numberMoveSection(oldparent,newparent,cbsecid,oldorder){
+	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+	backend.numberMoveSection(oldparent,newparent,cbsecid,oldorder);
+	ui.sectionmanager.redrawNumbering();
+};
+
+/**
+ * Function to update the section's number when a project is load
+ */
+
+ Controller.prototype.renumberProject=function renumberProject(){
+ 	var backend = application.backend.core.getInstance();
+	var ui = application.ui.core.getInstance();
+	backend.renumberProject();
+	ui.sectionmanager.redrawNumbering();
+ };
 
 
 /**
