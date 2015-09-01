@@ -15,17 +15,29 @@ ProView.prototype.createFirstSection = function createFirstSection() {
   list.append(son);
   $($(son.children('.displaysection')).children('.divselector')).click();
   this.reloadSortable();
+ 
 };
 
 
 ProView.prototype.reloadSortable = function reloadSortable(element){
   var that = this;
+  var cbsecid,
+      oldorder;  
+  
+ 
   var backend = application.backend.core.getInstance();
+  var controller = application.controller.getInstance();
   $(".connectedSortable").sortable({
     placeholder: "ui-state-highlight",
     opacity:0.5,
     axis:"y",
-    start:function(ev,ui){that.oldparent = ui.item.parent().parent().attr('data-cbsectionid');},
+    start:function(ev,ui){
+      var CBStorage=application.storagemanager.getInstance();
+      that.oldparent = ui.item.parent().parent().attr('data-cbsectionid');
+      var parentold=CBStorage.getSectionById(that.oldparent);
+      that.cbsecid=ui.item.attr('data-cbsectionid');
+      that.oldorder=parentold.sections.indexOf(that.cbsecid) + 1 ;
+    },
     stop:function(ev,ui){
       that.newparent = ui.item.parent().parent().attr('data-cbsectionid');
       if (that.oldparent !== that.newparent ){
@@ -33,23 +45,51 @@ ProView.prototype.reloadSortable = function reloadSortable(element){
         listnewparent = $("[data-cbsectionid=" + that.newparent + "] > ul > li").map(function(element){return this.dataset.cbsectionid});
         backend.regenerateSubsection(that.oldparent,listoldparent.toArray());
         backend.regenerateSubsection(that.newparent,listnewparent.toArray());
+      }else{
+        listnewparent = $("[data-cbsectionid=" + that.newparent + "] > ul > li").map(function(element){return this.dataset.cbsectionid});
+        backend.regenerateSubsection(that.newparent,listnewparent.toArray());
       }
+      controller.numberMoveSection(that.oldparent, that.newparent,that.cbsecid,that.oldorder);
     },
+    
     connectWith:".connectedSortable"}).disableSelection();
+
 }
+
+ProView.prototype.redrawNumbering = function redrawNumbering() {
+  var i,node,parent,numbering,CBStorage;
+  var listnumberings = $("#navsections .numbering");
+  for(i=0;i< listnumberings.length; i++){
+    node = listnumberings[i];
+
+    parent = node.closest("[data-cbsectionid]");
+    CBStorage = application.storagemanager.getInstance();
+    var x = $(parent).attr("data-cbsectionid");
+    numbering = CBStorage.getSectionById(x).numbering;
+    $(node).html(numbering);
+  }
+};
+
+ProView.prototype.getFormatSectionName = function(cbsecid) {
+  var cbsection, CBStorage;
+  CBStorage = application.storagemanager.getInstance();
+  cbsection = CBStorage.getSectionById(cbsecid);
+  return '<div class="caption"><div class="numbering">' + cbsection.numbering + "</div><div> " + cbsection.name + "</div></div>";
+};
 
 
 ProView.prototype.createSectionView = function createSectionView(cbsecid) {
 
   var section = $(document.createElement('li')).addClass('cbsection');
   var CBStorage = application.storagemanager.getInstance();
+  var that = this;
   section.attr('data-cbsectionid',cbsecid);
 
   var displaysection = $(document.createElement('div')).addClass('displaysection');
   var textsection = $(document.createElement('div')).addClass('divselector');
   var actions = $(document.createElement('button')).html('+').attr('data-toggle','dropdown').attr('id',cbsecid);
   var subsections = $(document.createElement('ul')).addClass('subsections').addClass("connectedSortable");
-  textsection.append($(document.createElement('div')).html(CBStorage.getSectionById(cbsecid).name).addClass('caption'));
+  textsection.append($(document.createElement('div')).html(that.getFormatSectionName(cbsecid)));
   
   textsection.click({that:this},this.selectSection);
   textsection.dblclick({that:this},this.doubleClick);
@@ -61,7 +101,7 @@ ProView.prototype.createSectionView = function createSectionView(cbsecid) {
 
 ProView.prototype.doubleClick=function doubleClick(e){
         
-        var that = e.data.that;
+  var that = e.data.that;
 	var actualcbsectionid = $(e.currentTarget).closest('[data-cbsectionid]').attr('data-cbsectionid');
 	that.dialogUpdateSectionName(actualcbsectionid);
       
@@ -112,6 +152,7 @@ ProView.prototype.createMenu = function createMenu(e) {
 
 ProView.prototype.appendBefore = function appendBefore(e){
   var CBStorage = application.storagemanager.getInstance();
+  var controller = application.controller.getInstance();
   var that = e.data.that;
   var actualcbsectionid = $(e.currentTarget).closest('[data-cbsectionid]').attr('data-cbsectionid');
   var listparents = $(e.currentTarget).parents('.cbsection');
@@ -127,26 +168,32 @@ ProView.prototype.appendBefore = function appendBefore(e){
   var son = that.createSectionView(cbsecid);
   $(listparents[0]).before(son);
   that.reloadSortable();
+  controller.numberSection(cbsecid,parent);
   that.dialogUpdateSectionName(cbsecid);
+  
 }
 
 
 ProView.prototype.appendSubsection = function appendSubsection(e){
   var that = e.data.that;
   var CBStorage = application.storagemanager.getInstance();
+  var controller = application.controller.getInstance();
   var parent = $(e.currentTarget).parents('.cbsection');
   var backend = application.backend.core.getInstance();
   var parentObjectSection = $(parent[0]).attr('data-cbsectionid');
   var cbsecid = backend.appendNewSectionObjectByUID(parentObjectSection,'basic');
   var newsection = that.createSectionView(cbsecid);
   $(parent[0]).children("ul").append(newsection);
+
   that.reloadSortable();
+  controller.numberSection(cbsecid,parentObjectSection);  
   that.dialogUpdateSectionName(cbsecid);
 }
 
 ProView.prototype.appendAfter = function appendAfter(e){
   var that = e.data.that;
   var actualcbsectionid = $(e.currentTarget).closest('[data-cbsectionid]').attr('data-cbsectionid');
+  var controller = application.controller.getInstance();
   var CBStorage = application.storagemanager.getInstance();
   var backend = application.backend.core.getInstance();
   var listparents = $(e.currentTarget).parents('.cbsection');
@@ -161,7 +208,9 @@ ProView.prototype.appendAfter = function appendAfter(e){
   var son = that.createSectionView(cbsecid);
   $(listparents[0]).after(son);
   that.reloadSortable();
+  controller.numberSection(cbsecid,parentObjectSection);
   that.dialogUpdateSectionName(cbsecid);
+  
 }
 
 ProView.prototype.selectSection = function selectSection(e){
@@ -191,7 +240,8 @@ ProView.prototype.selectSection = function selectSection(e){
 }
 
 ProView.prototype.updateSectionName = function(name,cbsectionid) {
-  $("li[data-cbsectionid='"+cbsectionid+"'] > div.displaysection > div.divselector").html("<div>"+name+"</div>");
+  var that = this;
+  $("li[data-cbsectionid='"+cbsectionid+"'] > div.displaysection > div.divselector").html(that.getFormatSectionName(cbsectionid));
 };
 
 
@@ -237,18 +287,23 @@ ProView.prototype.dialogUpdateSectionName = function dialogUpdateSectionName(cbs
 }
 
 ProView.prototype.deleteSection = function deleteSection(cbsectionid) {
-	$('[data-cbsectionid="'+cbsectionid+'"]').remove();
+  $('[data-cbsectionid="'+cbsectionid+'"]').remove();
   $(Cloudbook.UI.targetcontent).html("");
 };
 
 
 ProView.prototype.dialogDeleteSection = function dialogDeleteSection(cbsectionid,parentid) {
-	
+  var that=this;
   var dialog = $('<div><button id="delete">'+ CBI18n.gettext("Delete") +'</button><button id="cancel">'+ CBI18n.gettext("Cancel") +'</button></div>');
   dialog.children('#delete').click(function(){
+    var CBStorage = application.storagemanager.getInstance();
+    var parent=CBStorage.getSectionById(parentid); 
+    var numbersection = parent.sections.indexOf(cbsectionid) + 1 ;
     var controller = application.controller.getInstance();
+    var backend = application.backend.core.getInstance();
     controller.popSubsection(parentid,cbsectionid);
     controller.deleteSection(cbsectionid);
+    controller.renumberSection (parentid,numbersection,'D');
     dialog.dialog('close');
   });  
   dialog.children('#cancel').click(function(){dialog.dialog('close');});
@@ -261,18 +316,21 @@ ProView.prototype.appendSectionToLastPosition = function(cbsectionid,parentid) {
   var ui = application.ui.core.getInstance();
   var dest = $("[data-cbsectionid='"+parentid+"'] > ul").children(".cbsection:last");
   if (dest.length > 0 )
-    dest.append(that.createSectionView(cbsectionid));
+    dest.after(that.createSectionView(cbsectionid));
   else
     $("[data-cbsectionid='"+parentid+"'] > ul").append(that.createSectionView(cbsectionid));
   that.reloadSortable();
 };
 
 ProView.prototype.duplicateSection = function(htmlsectionelement) {
+  var backend = application.backend.core.getInstance();
   var controller = application.controller.getInstance();
   var tempsection  = $(htmlsectionelement);
   var sectionid = tempsection.attr('data-cbsectionid');
   var parentsectionid = tempsection.parent().closest('[data-cbsectionid]').attr('data-cbsectionid');
-  controller.cloneSection(sectionid,parentsectionid,sectionid);
+  var newsectionid=controller.cloneSection(sectionid,parentsectionid,sectionid);
+  controller.numberSection(newsectionid,parentsectionid);
+  
 };
 
 ProView.prototype.appendSection = function(cbsectionid,parentid,needle,position) {
@@ -290,7 +348,10 @@ ProView.prototype.appendSection = function(cbsectionid,parentid,needle,position)
     that.appendSection(subsectionid,cbsectionid);
   });
   that.reloadSortable();
+    
 };
+
+
 
 module.exports = ProView;
 //@ sourceURL=file:///usr/share/cloudbook/src/js/lib/gui/proview/core.js

@@ -232,6 +232,8 @@ ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectio
 {
 	var that = this;
 	var opt = $.extend({},options);
+	var controller = application.controller.getInstance();
+
 	
 	setTimeout(function(){
 		var temp = $('<iframe id="tempImportHTML" width="100%" height="100%" ;/>');
@@ -269,6 +271,8 @@ ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectio
 		debugger;
 		ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 	}, 500);
+	controller.renumberProject();
+
 }
 CBUtil.createNameSpace('application.importhtml');
 application.importhtml = CBUtil.singleton(ImportHTML);
