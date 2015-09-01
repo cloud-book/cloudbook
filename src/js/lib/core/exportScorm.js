@@ -784,32 +784,34 @@ function parserImslrm() {
             Object.keys(aux).forEach(function(field){
                 //field : key of aux
                 if(field.indexOf("nameAnnotations_")===0){
-                  ExportScorm.prototype.checkname(annotation,"entity",{last:"list"})  
-                  annotation.entity.name = aux[field];
+                    ExportScorm.prototype.checkname(annotation,"entity",{last:"list"})  
+                    annotation.entity.name = aux[field];
                 }
                
                 if(field.indexOf("emailAnnotations_")===0){
-                  annotation.entity.email=aux[field];
+                    annotation.entity.email=aux[field];
                 }
 
                 if(field.indexOf("organAnnotations_")===0){
-                  annotation.entity.organization=aux[field];
+                    annotation.entity.organization=aux[field];
                 } 
 
                 if(field.indexOf("dateAnnotations_")===0){
-                  ExportScorm.prototype.checkname(annotation,"date",{last:"list"})  
-                  annotation.date.dateTime=aux[field];
-                }     
-                
+                    ExportScorm.prototype.checkname(annotation,"date",{last:"list"})  
+                    annotation.date.dateTime=aux[field];
+                               
+                }
+
                 if(field.indexOf("DescriptionDateAnnotations_")===0){
-                   ExportScorm.prototype.checkname(annotation,"date.description",{last:"list"})
-                   annotation.date.description.DescriptionDateAnnotations=aux[field];
+                    ExportScorm.prototype.checkname(annotation,"date.description",{last:"list"})
+                    annotation.date.description.DescriptionDateAnnotations=aux[field];
                 }    
                 
                 if(field.indexOf("langDateAnnotations_")===0){
-                   annotation.date.description.langDateAnnotations=searchCodelanguage(aux[field]);
+                    annotation.date.description.langDateAnnotations=searchCodelanguage(aux[field]);
                 }     
- 
+               
+                
                 if(field.indexOf("DescriptionAnnotations_")===0){
                    ExportScorm.prototype.checkname(annotation,"description",{last:"list"})
                    annotation.description.DescriptionAnnotations=aux[field];
@@ -822,14 +824,14 @@ function parserImslrm() {
                           
             });
 
-            if (annotation.date.description.DescriptionDateAnnotations===""){
+         /*  if (annotation.date.description.DescriptionDateAnnotations==="" || typeof annotation.date.description.DescriptionDateAnnotations==="undefined"){
                 delete annotation.date.description
             } 
 
-            if (annotation.description.DescriptionAnnotations===""){
+            if (annotation.description.DescriptionAnnotations==="" || typeof annotation.description.DescriptionAnnotations==="undefined"){
                 delete annotation.description
             } 
-
+        */
            imslrm.annotation.push(annotation);
           
         }   
@@ -901,9 +903,10 @@ function parserImslrm() {
 
             });
 
-            if (classification.description.DescriptionTaxonClassification === "" ){
+         /*   if (classification.description.DescriptionTaxonClassification === "" ){
                     delete classification.description;
             }
+         */   
            imslrm.classification.push(classification);  
         }
              
