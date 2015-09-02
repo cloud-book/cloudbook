@@ -535,3 +535,13 @@ body{
 #cbobjecttoolbar.ui-draggable-dragging{
     opacity: 0.2;
 }
+
+.displaysection div.caption div{
+    display: inline-block;
+}
+.displaysection div.caption .numbering{
+    border-right: 1px solid #888;
+    padding-right: 3px;
+    margin-right: 3px;
+}
+
