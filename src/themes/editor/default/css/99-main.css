@@ -124,9 +124,8 @@ body{
     display: none;
 }
 
-.coloreado{
+.ui-state-highlight{
     height: 30px;
-    margin-left: 15px;
 }
 
 #navactions button{
@@ -535,15 +534,4 @@ body{
 
 #cbobjecttoolbar.ui-draggable-dragging{
     opacity: 0.2;
-}
-
-.modificada{
-    min-height: 20px;
-    
-}
-.coloreada{
-    background-color: green;
-}
-.coloreado{
-    border: 1px solid white;
 }

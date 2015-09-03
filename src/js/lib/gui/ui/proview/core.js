@@ -22,18 +22,10 @@ ProView.prototype.reloadSortable = function reloadSortable(element){
   var that = this;
   var backend = application.backend.core.getInstance();
   $(".connectedSortable").sortable({
-    placeholder: "coloreado",
+    placeholder: "ui-state-highlight",
     opacity:0.5,
     axis:"y",
-    start:function(ev,ui){
-      that.oldparent = ui.item.parent().parent().attr('data-cbsectionid');
-      var list = $("#navsections .connectedSortable");
-      list.each(function(){
-        if($(this).find("li").length <= 0){
-          $(this).addClass("modificada");
-        }
-      });
-    },
+    start:function(ev,ui){that.oldparent = ui.item.parent().parent().attr('data-cbsectionid');},
     stop:function(ev,ui){
       that.newparent = ui.item.parent().parent().attr('data-cbsectionid');
       if (that.oldparent !== that.newparent ){
@@ -42,21 +34,6 @@ ProView.prototype.reloadSortable = function reloadSortable(element){
         backend.regenerateSubsection(that.oldparent,listoldparent.toArray());
         backend.regenerateSubsection(that.newparent,listnewparent.toArray());
       }
-      var list = $("#navsections .connectedSortable");
-      list.each(function(){
-        if($(this).find("li").length <= 0){
-          $(this).removeClass("modificada");
-        }
-      });
-      $(".coloreada").removeClass("coloreada");
-    },
-    over:function(ev,ui){
-      $(ui.placeholder).closest("[data-cbsectionid]").children(".displaysection").addClass("coloreada");
-      debugger;
-      $(ui.placeholder).closest("[data-cbsectionid]").parents("[data-cbsectionid]").children(".coloreada").removeClass("coloreada");
-    },
-    out:function(ev,ui){
-      $(ui.placeholder).closest("[data-cbsectionid]").children(".displaysection").removeClass("coloreada");
     },
     connectWith:".connectedSortable"}).disableSelection();
 }
