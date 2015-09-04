@@ -680,7 +680,7 @@ function parserImslrm() {
 
         // Analyzing rigths cost
         if(e.indexOf("costRightsValue_1") === 0 ){
-                       
+            ExportScorm.prototype.checkname(imslrm,"rights.cost",{last:"list"})           
             imslrm.rights.cost=Project.Info.LOM[e];
        
         } 
@@ -688,7 +688,7 @@ function parserImslrm() {
         // Analyzing rights copyrightAndOtherRestrictions
 
         if(e.indexOf("copyrightRightsValue_1") === 0 ){
-
+            ExportScorm.prototype.checkname(imslrm,"rights.copyrightAndOtherRestrictions",{last:"list"})
             imslrm.rights.copyrightAndOtherRestrictions=Project.Info.LOM[e];
        
         }
