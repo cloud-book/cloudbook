@@ -1,0 +1,411 @@
+<lom:lom>
+  <lom:general uniqueElementName="general">
+    {{#each general.identifier}}
+    <lom:identifier>
+      <lom:catalog uniqueElementName="catalog">{{this.catalog}}</lom:catalog>
+      <lom:entry uniqueElementName="entry">{{this.entry}}</lom:entry>
+    </lom:identifier>
+    {{/each}}
+    <lom:title uniqueElementName="title">
+        {{#each general.title}}
+      <lom:string language="{{this.titleLang}}">{{this.title}}</lom:string>
+        {{/each}}
+    </lom:title>
+     {{#each general.language}}
+    <lom:language>{{this.mainLang}}</lom:language>
+    {{/each}}
+    {{#each general.description}}
+    <lom:description>
+      <lom:string language="{{this.descGeneralLang}}">{{this.Description}}</lom:string>
+    </lom:description>
+    {{/each}}  
+    {{#each general.keyword}} 
+    <lom:keyword>
+      <lom:string language="{{this.keywordGeneralLang}}">{{this.keywordGeneral1}}</lom:string> 
+    </lom:keyword>
+    {{/each}}   
+    {{#each general.coverage}} 
+    <lom:coverage>
+      <lom:string language="{{this.coverageLang}}">{{this.coverage1}}</lom:string> 
+    </lom:coverage>
+    {{/each}} 
+    {{#if general.structure}}
+    <lom:structure uniqueElementName="structure">
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{general.structure}}</lom:value> 
+    </lom:structure>
+    {{/if}}
+    <lom:aggregationLevel uniqueElementName="aggregationLevel"> 
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{general.aggregationLevel}}</lom:value>
+    </lom:aggregationLevel>
+  </lom:general>      
+
+  <lom:lifeCycle uniqueElementName="lifeCycle">
+    
+    <lom:version uniqueElementName="version">
+      {{#each lifeCycle.version}}
+      <lom:string language="{{this.lifeCycleLang}}">{{this.versionlifecycle1}}</lom:string>
+      {{/each}}
+    </lom:version>
+
+
+    {{#if lifeCycle.status}} 
+    <lom:status uniqueElementName="status">
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{lifeCycle.status}}</lom:value>
+    </lom:status>
+    {{/if}}
+
+  {{#each lifeCycle.contribute}}
+    <lom:contribute>
+      <lom:role uniqueElementName="role">
+        <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+        <lom:value uniqueElementName="value">{{this.rolesLifeCycle}}</lom:value>
+      </lom:role>
+    
+      <lom:entity>  
+          BEGIN:VCARD VERSION:3.0 FN:{{this.entity.nameContribLifeCycle}}
+          EMAIL;TYPE=INTERNET:{{this.entity.emailContribLifeCycle}} ORG:{{this.entity.organContribLifeCycle}}
+          END:VCARD
+      </lom:entity>
+   
+      <lom:date uniqueElementName="date"> 
+        
+        <lom:dateTime uniqueElementName="dateTime">{{this.dateContribLifeCycle}}</lom:dateTime>
+        <lom:description>
+          {{#each this.description }}
+          <lom:string language="{{this.ContribLifeCycleLang}}">{{this.DescriptionContribLifeCycle}}</lom:string>
+            {{/each}} 
+        </lom:description>
+      </lom:date>
+    </lom:contribute>
+   {{/each}} 
+     
+  </lom:lifeCycle>
+ 
+
+  <lom:metaMetadata uniqueElementName="metaMetadata">
+      {{#each metaMetadata.identifier}}
+    <lom:identifier>
+      <lom:catalog uniqueElementName="catalog">{{this.metametadataCatalog}}</lom:catalog>
+      <lom:entry uniqueElementName="entry">{{this.metametadataEntry}}</lom:entry>
+    </lom:identifier>
+      {{/each}}
+      
+    <lom:metadataSchema>{{metaMetadata.metadataSchema}}</lom:metadataSchema> 
+     
+      {{#if metaMetadata.langMetametada}}
+    <lom:language>{{metaMetadata.langMetametada}}</lom:language>
+      {{/if}}
+
+      {{#each metaMetadata.contribute}}
+    <lom:contribute>
+      
+      <lom:role uniqueElementName="role">
+        <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+          <lom:value uniqueElementName="value">{{this.rolesMetametadata}}</lom:value>
+      </lom:role>
+      
+      <lom:entity>  
+          BEGIN:VCARD VERSION:3.0 FN:{{this.entity.nameContribMetametadata}}
+          EMAIL;TYPE=INTERNET:{{this.entity.emailContribMetametadata}} ORG:{{this.entity.organContribMetametadata}}
+          END:VCARD
+      </lom:entity>
+           
+      <lom:date uniqueElementName="date"> 
+        <lom:dateTime uniqueElementName="dateTime">{{this.dateContribMetametadata}}</lom:dateTime>
+        <lom:description>
+            {{#each this.description }}
+          <lom:string language="{{this.ContribMetametadataLang}}">{{this.DescriptionContribMetametadata}}</lom:string>
+            {{/each}} 
+        </lom:description>
+      </lom:date>
+
+    </lom:contribute>
+      {{/each}}    
+          
+  </lom:metaMetadata>    
+
+{{#if technical}}   
+  <lom:technical uniqueElementName="technical">
+    {{#each technical.format}}
+    <lom:format>{{this.formatTechnicalValue}}</lom:format>
+    {{/each}}
+    
+    {{#if technical.size}}
+    <lom:size uniqueElementName="size">{{technical.size}}</lom:size>
+    {{/if}} 
+       
+    {{#each technical.location}}
+    <lom:location>{{this.locationTechnicalValue}}</lom:location> 
+    {{/each}}
+      
+
+    {{#each technical.requirement}} 
+    <lom:requirement>
+      <lom:orComposite>
+        <lom:type uniqueElementName="type">        
+          <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+          <lom:value uniqueElementName="value">{{this.typeTechnicalReq}}</lom:value>
+        </lom:type>
+        
+        <lom:name uniqueElementName="name">
+          <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+          <lom:value uniqueElementName="value">{{this.nameTechnicalReq}}</lom:value>
+        </lom:name>
+     
+        <lom:minimumVersion uniqueElementName="minimumVersion">{{this.minVerTechnicalReq}}</lom:minimumVersion>
+        <lom:maximumVersion uniqueElementName="maximumVersion">{{this.maxVerTechnicalReq}}</lom:maximumVersion>   
+      
+      </lom:orComposite>
+    </lom:requirement>  
+    {{/each}}
+
+    {{#if technical.installationRemarks}}      
+    <lom:installationRemarks uniqueElementName="installationRemarks"> 
+      {{#each technical.installationRemarks}}
+      <lom:string language="{{this.LangRemTech}}">{{this.installRemTechValue}}</lom:string>
+      {{/each}}
+    </lom:installationRemarks>
+    {{/if}}
+    
+    {{#if technical.otherPlatformRequirements}}      
+    <lom:otherPlatformRequirements> 
+      {{#each technical.otherPlatformRequirements}}
+      <lom:string language="{{this.LangOtherTech}}">{{this.requirementsRemTechValue}}</lom:string>
+      {{/each}}
+    </lom:otherPlatformRequirements>
+    {{/if}}
+
+    {{#if technical.duration}}   
+    <lom_duration uniqueElementName="duration">
+      <lom:duration uniqueElementName="duration">P{{technical.duration.durationYearsDurTech}}Y{{technical.duration.durationMonthsDurTech}}M{{technical.duration.durationDaysDurTech}}DT{{technical.duration.durationHoursDurTech}}H{{technical.duration.durationMinutesDurTech}}M{{technical.duration.durationSecondsDurTech}}S</lom:duration>
+      <lom:description>
+          {{#each technical.duration.description}}
+        <lom:string language="{{this.languageDescDurTech}}">{{this.DescriptionDurTech}}</lom:string>
+          {{/each}}
+      </lom:description>
+    </lom:duration>
+    {{/if}}  
+   
+  </lom:technical>
+{{/if}}
+
+{{#if educational}}
+  <lom:educational>
+ 
+  {{#if educational.interactivityType}}  
+    <lom:interactivityType uniqueElementName="interactivityType">
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{educational.interactivityType}}</lom:value>
+    </lom:interactivityType>
+  {{/if}}
+  
+  {{#each educational.learningResourceType}}
+    <lom:learningResourceType>
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{this.resourceTypeEducationalValue}}</lom:value>
+    </lom:learningResourceType>
+  {{/each}}
+  
+  {{#if educational.levelIntEducational}} 
+    <lom:interactivityLevel uniqueElementName="interactivityLevel">
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{educational.levelIntEducational}}</lom:value>
+    </lom:interactivityLevel>
+  {{/if}}
+
+  {{#if educational.levelDensEducational }} 
+    <lom:semanticDensity uniqueElementName="semanticDensity">
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{educational.levelDensEducational}}</lom:value>
+    </lom:semanticDensity>
+  {{/if}}
+
+  {{#each educational.intendedEndUserRole}}
+    <lom:intendedEndUserRole>
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{this.endUserEducationalValue}}</lom:value>
+    </lom:intendedEndUserRole>
+  {{/each}}
+
+  {{#each educational.context}}
+    <lom:context>
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{this.contextEducationalValue}}</lom:value>
+    </lom:context>
+  {{/each}}
+
+  {{#each educational.typicalAgeRange}}
+    <lom:typicalAgeRange>
+      <lom:string language="{{this.languageRangeEducational}}">{{this.rangeAgeEducationalValue}}</lom:string>
+    </lom:typicalAgeRange>
+  {{/each}}
+
+  {{#if educational.difficulty}}
+    <lom:difficulty uniqueElementName="difficulty">
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{educational.difficulty}}</lom:value>
+    </lom:difficulty>
+  {{/if}}
+  
+    <lom:typicalLearningTime uniqueElementName="typicalLearningTime">
+      <lom:duration uniqueElementName="duration">P{{educational.typicalLearningTime.durationYearsEducational}}Y{{educational.typicalLearningTime.durationMonthsEducational}}M{{educational.typicalLearningTime.durationDaysEducational}}DT{{educational.typicalLearningTime.durationHoursEducational}}H{{educational.typicalLearningTime.durationMinutesEducational}}M{{educational.typicalLearningTime.durationSecondsEducational}}S</lom:duration> 
+      
+      <lom:description>
+         {{#each educational.typicalLearningTime.description}} 
+        <lom:string language="{{this.langDurationEducational}}">{{this.DescriptionLearningEducational}}</lom:string>
+         {{/each}}
+      </lom:description>
+      
+    </lom:typicalLearningTime>
+
+  
+  {{#each educational.description}}
+    <lom:description>
+      <lom:string language="{{this.langDescrEducational}}">{{this.descEducationUseValue}}</lom:string>
+    </lom:description>
+  {{/each}}
+  
+  {{#each educational.language}}
+    <lom:language>{{this.languageEducationalUseValue}}</lom:language>
+  {{/each}} 
+
+  {{#each educational.cognitiveProcess}}
+    <lom:cognitiveProcess uniqueElementName="cognitiveProcess">
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+        <lom:value uniqueElementName="value">{{this.processcogEducationalValue}}</lom:value>
+    </lom:cognitiveProcess>
+  {{/each}}
+
+  </lom:educational>           
+{{/if}}
+
+  <lom:rights uniqueElementName="rights">
+  
+  {{#if rights.cost}}
+    <lom:cost uniqueElementName="cost">
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{rights.cost}}</lom:value>
+    </lom:cost>
+  {{/if}}
+
+  {{#if rights.copyrightAndOtherRestrictions}}   
+    <lom:copyrightAndOtherRestrictions uniqueElementName="copyrightAndOtherRestrictions">
+      <lom:source uniqueElementName="source">LOM-ESv1.0</source>
+      <lom:value uniqueElementName="value">{{rights.copyrightAndOtherRestrictions}}</lom:value>
+    </lom:copyrightAndOtherRestrictions>
+  {{/if}}
+
+ 
+   {{#if rights.description}}
+    <lom:description>
+      <lom:string language="{{rights.description.descRightsLang}}">{{rights.description.descRightsValue}}</lom:string>
+    </lom:description>
+  {{/if}}
+
+    <lom:access uniqueElementName="access">
+      <lom:accessType uniqueElementName="accessType">
+        <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+        <lom:value uniqueElementName="value">{{rights.access.accessType}}</lom:value>
+      </lom:accessType>
+      
+      <lom:description>
+        <lom:string language="{{rights.access.description.descRightsLang}}">{{rights.access.description.descRightsValue}}</lom:string>
+      </lom:description>
+    </lom:access>
+  </lom:rights>  
+  
+{{#each relation}}
+  <lom:relation>
+  
+    <lom:kind uniqueElementName="kind">
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{this.kind}}</lom:value>
+    </lom:kind>
+
+    <lom:resource uniqueElementName="resource">
+      <lom:identifier>
+        <lom:catalog uniqueElementName="catalog">{{this.resource.catalogRelations}}</lom:catalog>
+        <lom:entry uniqueElementName="entry">{{this.resource.entryRelations}}</lom:entry>
+      </lom:identifier>
+    
+    {{#if this.resource.description}}
+    <lom:description>
+      <lom:string language="{{this.resource.description.relationRelationsLang}}">{{this.resource.description.DescriptionRelationRelations}}</lom:string>
+    </lom:description>
+    {{/if}}
+    </lom:resource>
+  
+  </lom:relation>
+{{/each}}
+
+{{#each annotation}}
+  <lom:annotation>
+    <lom:entity>
+        BEGIN:VCARD VERSION:3.0 FN:{{this.entity.name}}
+        EMAIL;TYPE=INTERNET:{{this.entity.email}} ORG:{{this.entity.organization}} END:VCARD
+    </lom:entity>
+   
+    <lom:date uniqueElementName="date">    
+      <lom:dateTime uniqueElementName="dateTime">{{this.date.dateTime}}</lom:dateTime>
+       {{#if this.date.description}}    
+      <lom:description>
+        <lom:string language="{{this.date.description.langDateAnnotations}}">{{this.date.description.DescriptionDateAnnotations}}</lom:string>
+      </lom:description>  
+       {{/if}} 
+    </lom:date> 
+
+  
+  {{#if this.description}} 
+    <lom:description>
+      <lom:string language="{{this.description.LangAnnotations}}">{{this.description.DescriptionAnnotations}}</lom:string>
+    </lom:description>  
+  
+  {{/if}} 
+  </lom:annotation>
+{{/each}}
+
+{{#each classification}}
+  <lom:classification>
+    <lom:purpose uniqueElementName="purpose">  
+      <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
+      <lom:value uniqueElementName="value">{{this.purpose}}</lom:value>
+    </lom:purpose>
+
+
+  {{#each this.taxonPath}}  
+    <lom:taxonPath>
+      <lom:source uniqueElementName="source">
+        <lom:string>{{this.sourceNameClassification}}</lom:string>
+      </lom:source>  
+ 
+      <lom:taxon>
+        <lom:id>{{this.idTaxonClassification}}</lom:id>
+          <lom:entry>
+            <lom:string language="{{this.langClassificationTaxon}}">{{this.nameTaxonClassification}}</lom:string>
+          </lom:entry>
+      </lom:taxon>
+  
+    </lom:taxonPath>
+  {{/each}} 
+  
+  {{#if this.description}}
+    <lom:description>  
+      <lom:string language="{{this.description.LangTaxonClassification}}">{{this.description.DescriptionTaxonClassification}}</lom:string>
+    </lom:description>
+  {{/if}}
+
+  {{#each this.keywords}}  
+    <lom:keyword>  
+      <lom:string language="{{this.titleLangKeywordTaxonClassification}}">{{this.KeywordTaxonClassification}}</lom:string>
+    </lom:keyword>
+  {{/each}}   
+  </lom:classification>
+{{/each}}  
+
+</lom:lom>
+      
+    
+    

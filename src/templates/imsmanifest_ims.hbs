@@ -1,0 +1,24 @@
+<manifest identifier="{{OrganizationID}}" xsi:schemaLocation = "http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 imsmd_v1p2p2.xsd">
+
+	<metadata>
+    	<schema>IMS Content</schema>
+    	<schemaversion>1.1.3</schemaversion>
+   		{{> imsmetadata}}
+	</metadata>
+
+
+	<organizations default="{{OrganizationID}}">
+    	<organization identifier="{{OrganizationID}}"  structure="hierarchical">
+      	<title>{{Title_Proyect}}</title>
+				{{#each items}}
+					{{> imsitem}}
+				{{/each}}
+       
+	</organizations>	
+
+	<resources>
+		{{#each items}}
+			{{> resourceitem}}
+		{{/each}}
+	  	</resources>
+</manifest>	
