@@ -225,7 +225,8 @@ ImportEPUB.prototype.processPackageDataEPUB = function processPackageDataEPUB(fi
 	that = this;
 
 	dataFile = fs.readFileSync(decodeURIComponent(filePath+fileIndex),{encoding:'utf8'});
-	ncxFile = $(dataFile.toString()).find("manifest").children('item[id^="ncx"]').attr("href");
+	ncxFile = $(dataFile.toString()).find("manifest").children('item[id^="ncx"]').attr("href") == undefined? 
+	$(dataFile.toString()).find('[id^="ncx"]').attr("href"): $(dataFile.toString()).find('[id^="ncx"]').attr("href");
 
 	if(ncxFile != undefined)
 		that.processncxFile(filePath, mainDir, ncxFile);
