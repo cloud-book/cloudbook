@@ -20,6 +20,13 @@ set -e
 
 case "$1" in
     configure)
+
+	#creates asociation between mime file and program
+	xdg-mime default cloudbook.desktop application/cloudbook
+
+	#update databases
+	update-desktop-database
+	update-mime-database /usr/share/mime
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
