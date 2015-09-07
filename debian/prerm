@@ -18,7 +18,14 @@ set -e
 
 
 case "$1" in
-    remove|upgrade|deconfigure)
+    remove)
+	pathapp="/usr/share/cloudbook/"
+	files="icudtl.dat nw nw.pak libffmpegsumo.so locales"
+	for x in $files; do
+		rm ${pathapp}${x}
+	done
+    ;;
+    upgrade|deconfigure)
     ;;
 
     failed-upgrade)
