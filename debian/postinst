@@ -32,12 +32,12 @@ case "$1" in
 	if [ "$nwjsdevice" = "$appdevice" ]
 	then
 		# Same device. Hard link files
-		for filetolink in hardlinks; do
+		for filetolink in $hardlinks; do
 			ln ${nwjspath}${filetolink} ${apppath}${filetolink}
 		done	
 	else
 		# Different device. Copy files
-		for filetocopy in hardlinks; do
+		for filetocopy in $hardlinks; do
                         cp ${nwjspath}${filetocopy} ${apppath}${filetocopy}
                 done
 	fi
