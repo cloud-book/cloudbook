@@ -235,15 +235,18 @@ Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectB
 Backend.prototype.loadProject = function(projectPath) {
   var fs = require('fs');
   var path = require('path');
+  
+
   if (fs.existsSync(projectPath)){
     var contentproject = fs.readFileSync(projectPath);
     var CBStorage = application.storagemanager.getInstance();
     var projectdata = JSON.parse(contentproject);
+    var newproject=false;
 
     Project.Info.projectpath = path.dirname(projectPath);
     Project.Info.projectname = projectdata.name;
 
-    this.voidProject();
+    this.voidProject(newproject);
     Project.Info.projectname = projectPath;
 
     Project.Info.DublinCore = projectdata.info.DublinCore;
@@ -263,6 +266,7 @@ Backend.prototype.loadProject = function(projectPath) {
       CBStorage.setCBObjectById(x,cbobjectid);
 
     });
+   
   }
 };
 
@@ -310,10 +314,15 @@ Backend.prototype.saveProject = function(projectfolder) {
 
 
 /**
- * Empty project sections
+ * Empty project sections and project data when change the project
  */
-Backend.prototype.voidProject = function() {
-  this.initSections();
+Backend.prototype.voidProject = function(newproject) {
+
+  if (!newproject) {
+   this.initSections();
+  }
+  this.initVarProject();
+   
 };
 
 /**
@@ -339,6 +348,8 @@ Backend.prototype.createProject = function createProject(projectname) {
    * Path project save all files
    * @type {String}
    */
+  var newproject=true;
+  this.voidProject(newproject);
   Project.Info.projectpath = Cloudbook.workspace + projectname;
   /**
    * Project name
@@ -483,6 +494,142 @@ Backend.prototype.cloneSection = function(cbsectionid,parentsection,needle) {
   storagemanager.setSectionById(auxsection,newcbsectionid);
   return newcbsectionid;
 };
+
+
+/**
+ * Function to numbering the sections of de project
+ */
+
+ Backend.prototype.numberSection=function numberSection(cbsecid,parentid){
+  var that=this;
+  var CBStorage = application.storagemanager.getInstance();
+  var parent = CBStorage.getSectionById(parentid);
+  var numbering = parent.sections.indexOf(cbsecid) + 1 ;
+
+  if (parentid==="root"){
+    var finalnumbering = String(numbering);
+
+  }else{
+    var finalnumbering = parent.numbering + "." + numbering;
+   
+  }
+  var cbsection = CBStorage.getSectionById(cbsecid);
+  cbsection.numbering=finalnumbering;
+  CBStorage.setSectionById(cbsection,cbsecid);
+
+  if (cbsection.sections.length>0){
+      cbsection.sections.forEach(function(sectionid){
+        that.numberSection(sectionid,cbsecid)
+
+      });
+
+      
+  };
+
+  if (numbering < parent.sections.length){
+    this.renumberSection(parentid,numbering,'I',parentid)
+
+  };
+  
+};
+
+
+Backend.prototype.renumberSection=function renumberSection(parentid,neworder,type,oldparentid){
+  var CBStorage=application.storagemanager.getInstance();
+  var parent=CBStorage.getSectionById(parentid);
+  var that=this;
+  var action=type;
+ 
+  parent.sections.forEach(function(e){
+    if((type === "D") && (parentid===oldparentid)){
+        neworder--;
+    }
+    if ((parent.sections.indexOf(e)+1)>=neworder){
+      var cbsection=CBStorage.getSectionById(e);
+     
+      switch (type) {
+
+         case 'I':
+           if (parentid==="root"){
+              cbsection.numbering=String(parent.sections.indexOf(e)+1);
+
+           }else{
+              cbsection.numbering=parent.numbering + "." + (parent.sections.indexOf(e)+1);
+           }
+           break;
+      
+         case 'D':
+           if (parentid==="root"){
+               cbsection.numbering=String(parseInt(cbsection.numbering) - 1);
+
+           }else{
+               cbsection.numbering=parent.numbering + "." + String(parseInt(cbsection.numbering.split(".").pop()) -1 );
+           }
+           break;
+       };    
+
+    
+      CBStorage.setSectionById(cbsection,e);
+      cbsection.sections.forEach(function(subsectionid){
+          that.numberSection(subsectionid,e)
+      
+      });
+    };
+  
+  });   
+  
+};
+
+/**
+ * Function to manage the numbered (or renumbered) sections when one moves
+*/ 
+
+Backend.prototype.numberMoveSection=function numberMoveSection (oldparentid, newparentid,cbsecid,oldorder){
+  var CBStorage=application.storagemanager.getInstance();
+  var newparent=CBStorage.getSectionById(newparentid);
+  var neworder=newparent.sections.indexOf(cbsecid) + 1 ;
+
+ if (oldparentid===newparentid){
+    if (neworder>oldorder){
+      this.renumberSection(newparentid,oldorder-1,'I',oldparentid);
+
+    }else{
+      this.numberSection(cbsecid,newparentid);
+    }
+
+  }else{
+    this.renumberSection(oldparentid,oldorder,'D',newparentid);
+    this.numberSection(cbsecid,newparentid);
+
+
+  }  
+
+};
+
+/**
+ * Function to number the project when its load this
+ */ 
+Backend.prototype.renumberProject=function renumberProject(){
+  var CBStorage=application.storagemanager.getInstance();
+  var parent=CBStorage.getSectionById("root");
+  var cbsectionid=parent.sections[0];
+
+  this.numberSection(cbsectionid,"root");
+ 
+}; 
+
+/**
+ * Function to init de project var
+ */
+
+Backend.prototype.initVarProject=function initVarProject(){
+
+    Project.Data._rawsections = {};
+    Project.Data._rawobjects = {};
+    Project.Info.DublinCore={};
+    Project.Info.LOM={};
+};
+
 
 /**
  * This namespace has singleton instance of Backend class
