@@ -211,6 +211,14 @@
    
     };
 
+    function export_ims(){
+      var exportwizard=application.ui.exportimswizard.core.getInstance();
+      exportwizard.initializeWizardDiv();
+      exportwizard.showExportImsProject({data:{that:exportwizard}});
+
+
+    }
+
 
 
     var export_project={
@@ -218,13 +226,13 @@
     };
 
     var export_html = {
-	      label: CBI18n.gettext('HTML5'),
-        click: export_html
+	    label: CBI18n.gettext('HTML5'),
+      click: export_html
     };
 
     var export_pdf= {
-	label:CBI18n.gettext('pdf'),
-        click:export_pdf
+	    label:CBI18n.gettext('pdf'),
+      click:export_pdf
         
     }; 		    
  
@@ -243,6 +251,11 @@
       click:export_scorm
     };
     
+    var export_ims={
+       label:CBI18n.gettext('IMS'),
+       click:export_ims
+    };
+
     /**
      * Generate menubar
      */
@@ -261,6 +274,7 @@
     export_project_menu.append(new gui.MenuItem(export_webzip));
     export_project_menu.append(new gui.MenuItem(export_epub));
     export_project_menu.append(new gui.MenuItem(export_scorm)); 
+    export_project_menu.append(new gui.MenuItem(export_ims));
     
     export_project.submenu=export_project_menu;
 

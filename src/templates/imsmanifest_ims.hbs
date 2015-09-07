@@ -1,4 +1,4 @@
-<manifest identifier="{{OrganizationID}}" xsi:schemaLocation = "http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 imsmd_v1p2p2.xsd">
+<manifest identifier="{{objects.OrganizationID}}" xsi:schemaLocation = "http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 imsmd_v1p2p2.xsd">
 
 	<metadata>
     	<schema>IMS Content</schema>
@@ -7,18 +7,18 @@
 	</metadata>
 
 
-	<organizations default="{{OrganizationID}}">
-    	<organization identifier="{{OrganizationID}}"  structure="hierarchical">
-      	<title>{{Title_Proyect}}</title>
-				{{#each items}}
+	<organizations default="{{objects.OrganizationID}}">
+    	<organization identifier="{{objects.OrganizationID}}"  structure="hierarchical">
+      	<title>{{objects.Title_Proyect}}</title>
+				{{#each objects.items}}
 					{{> imsitem}}
 				{{/each}}
-       
+       	</organization>
 	</organizations>	
 
 	<resources>
-		{{#each items}}
+		{{#each objects.items}}
 			{{> resourceitem}}
 		{{/each}}
-	  	</resources>
+	</resources>
 </manifest>	

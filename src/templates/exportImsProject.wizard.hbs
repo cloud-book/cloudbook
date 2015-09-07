@@ -1,0 +1,14 @@
+<div id="exportImsProject"class="form-group has-feedback ">
+      
+     <div>
+		<label>{{gettext "Path where save of IMS file:"}}</label><input name="path" type="file" nwsaveas="project_ims.zip"</label> 
+     </div>
+</div>
+<p><p>
+<div> 
+<button id="exportimsback">{{gettext "Cancel"}}</button>
+<button id="exportimsbtn" disabled="disabled">{{gettext "Generate IMS"}}</button>
+</div>
+<p><p>
+<div class="waitingOK" style="display:none"><font color="#FC0202"><strong>{{gettext "IMS Generation in progress. Please wait a moment..."}}</strong></font></div>
+<div class="waitingER" style="display:none"><font color="#FC0202"><strong>{{gettext "There was an error generating IMS file. Please cancel the process"}}</strong></font></div>

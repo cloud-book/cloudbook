@@ -1,63 +1,63 @@
 <lom:lom>
   <lom:general uniqueElementName="general">
-    {{#each general.identifier}}
+    {{#each metadata.general.identifier}}
     <lom:identifier>
       <lom:catalog uniqueElementName="catalog">{{this.catalog}}</lom:catalog>
       <lom:entry uniqueElementName="entry">{{this.entry}}</lom:entry>
     </lom:identifier>
     {{/each}}
     <lom:title uniqueElementName="title">
-        {{#each general.title}}
+        {{#each metadata.general.title}}
       <lom:string language="{{this.titleLang}}">{{this.title}}</lom:string>
         {{/each}}
     </lom:title>
-     {{#each general.language}}
+     {{#each metadata.general.language}}
     <lom:language>{{this.mainLang}}</lom:language>
     {{/each}}
-    {{#each general.description}}
+    {{#each metadata.general.description}}
     <lom:description>
       <lom:string language="{{this.descGeneralLang}}">{{this.Description}}</lom:string>
     </lom:description>
     {{/each}}  
-    {{#each general.keyword}} 
+    {{#each metadata.general.keyword}} 
     <lom:keyword>
       <lom:string language="{{this.keywordGeneralLang}}">{{this.keywordGeneral1}}</lom:string> 
     </lom:keyword>
     {{/each}}   
-    {{#each general.coverage}} 
+    {{#each metadata.general.coverage}} 
     <lom:coverage>
       <lom:string language="{{this.coverageLang}}">{{this.coverage1}}</lom:string> 
     </lom:coverage>
     {{/each}} 
-    {{#if general.structure}}
+    {{#if metadata.general.structure}}
     <lom:structure uniqueElementName="structure">
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
-      <lom:value uniqueElementName="value">{{general.structure}}</lom:value> 
+      <lom:value uniqueElementName="value">{{metadata.general.structure}}</lom:value> 
     </lom:structure>
     {{/if}}
     <lom:aggregationLevel uniqueElementName="aggregationLevel"> 
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
-      <lom:value uniqueElementName="value">{{general.aggregationLevel}}</lom:value>
+      <lom:value uniqueElementName="value">{{metadata.general.aggregationLevel}}</lom:value>
     </lom:aggregationLevel>
   </lom:general>      
 
   <lom:lifeCycle uniqueElementName="lifeCycle">
     
     <lom:version uniqueElementName="version">
-      {{#each lifeCycle.version}}
+      {{#each metadata.lifeCycle.version}}
       <lom:string language="{{this.lifeCycleLang}}">{{this.versionlifecycle1}}</lom:string>
       {{/each}}
     </lom:version>
 
 
-    {{#if lifeCycle.status}} 
+    {{#if metadata.lifeCycle.status}} 
     <lom:status uniqueElementName="status">
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
-      <lom:value uniqueElementName="value">{{lifeCycle.status}}</lom:value>
+      <lom:value uniqueElementName="value">{{metadata.lifeCycle.status}}</lom:value>
     </lom:status>
     {{/if}}
 
-  {{#each lifeCycle.contribute}}
+  {{#each metadata.lifeCycle.contribute}}
     <lom:contribute>
       <lom:role uniqueElementName="role">
         <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
@@ -86,20 +86,20 @@
  
 
   <lom:metaMetadata uniqueElementName="metaMetadata">
-      {{#each metaMetadata.identifier}}
+      {{#each metadata.metaMetadata.identifier}}
     <lom:identifier>
       <lom:catalog uniqueElementName="catalog">{{this.metametadataCatalog}}</lom:catalog>
       <lom:entry uniqueElementName="entry">{{this.metametadataEntry}}</lom:entry>
     </lom:identifier>
       {{/each}}
       
-    <lom:metadataSchema>{{metaMetadata.metadataSchema}}</lom:metadataSchema> 
+    <lom:metadataSchema>{{metadata.metaMetadata.metadataSchema}}</lom:metadataSchema> 
      
-      {{#if metaMetadata.langMetametada}}
-    <lom:language>{{metaMetadata.langMetametada}}</lom:language>
+      {{#if metadata.metaMetadata.langMetametada}}
+    <lom:language>{{metadata.metaMetadata.langMetametada}}</lom:language>
       {{/if}}
 
-      {{#each metaMetadata.contribute}}
+      {{#each metadata.metaMetadata.contribute}}
     <lom:contribute>
       
       <lom:role uniqueElementName="role">
@@ -127,22 +127,22 @@
           
   </lom:metaMetadata>    
 
-{{#if technical}}   
+{{#if metadata.technical}}   
   <lom:technical uniqueElementName="technical">
-    {{#each technical.format}}
+    {{#each metadata.technical.format}}
     <lom:format>{{this.formatTechnicalValue}}</lom:format>
     {{/each}}
     
-    {{#if technical.size}}
-    <lom:size uniqueElementName="size">{{technical.size}}</lom:size>
+    {{#if metadata.technical.size}}
+    <lom:size uniqueElementName="size">{{metadata.technical.size}}</lom:size>
     {{/if}} 
        
-    {{#each technical.location}}
+    {{#each metadata.technical.location}}
     <lom:location>{{this.locationTechnicalValue}}</lom:location> 
     {{/each}}
       
 
-    {{#each technical.requirement}} 
+    {{#each metadata.technical.requirement}} 
     <lom:requirement>
       <lom:orComposite>
         <lom:type uniqueElementName="type">        
@@ -162,27 +162,27 @@
     </lom:requirement>  
     {{/each}}
 
-    {{#if technical.installationRemarks}}      
+    {{#if metadata.technical.installationRemarks}}      
     <lom:installationRemarks uniqueElementName="installationRemarks"> 
-      {{#each technical.installationRemarks}}
+      {{#each metadata.technical.installationRemarks}}
       <lom:string language="{{this.LangRemTech}}">{{this.installRemTechValue}}</lom:string>
       {{/each}}
     </lom:installationRemarks>
     {{/if}}
     
-    {{#if technical.otherPlatformRequirements}}      
+    {{#if metadata.technical.otherPlatformRequirements}}      
     <lom:otherPlatformRequirements> 
-      {{#each technical.otherPlatformRequirements}}
+      {{#each metadata.technical.otherPlatformRequirements}}
       <lom:string language="{{this.LangOtherTech}}">{{this.requirementsRemTechValue}}</lom:string>
       {{/each}}
     </lom:otherPlatformRequirements>
     {{/if}}
 
-    {{#if technical.duration}}   
+    {{#if metadata.technical.duration}}   
     <lom_duration uniqueElementName="duration">
-      <lom:duration uniqueElementName="duration">P{{technical.duration.durationYearsDurTech}}Y{{technical.duration.durationMonthsDurTech}}M{{technical.duration.durationDaysDurTech}}DT{{technical.duration.durationHoursDurTech}}H{{technical.duration.durationMinutesDurTech}}M{{technical.duration.durationSecondsDurTech}}S</lom:duration>
+      <lom:duration uniqueElementName="duration">P{{metadata.technical.duration.durationYearsDurTech}}Y{{metadata.technical.duration.durationMonthsDurTech}}M{{metadata.technical.duration.durationDaysDurTech}}DT{{metadata.technical.duration.durationHoursDurTech}}H{{metadata.technical.duration.durationMinutesDurTech}}M{{metadata.technical.duration.durationSecondsDurTech}}S</lom:duration>
       <lom:description>
-          {{#each technical.duration.description}}
+          {{#each metadata.technical.duration.description}}
         <lom:string language="{{this.languageDescDurTech}}">{{this.DescriptionDurTech}}</lom:string>
           {{/each}}
       </lom:description>
@@ -192,69 +192,69 @@
   </lom:technical>
 {{/if}}
 
-{{#if educational}}
+{{#if metadata.educational}}
   <lom:educational>
  
-  {{#if educational.interactivityType}}  
+  {{#if metadata.educational.interactivityType}}  
     <lom:interactivityType uniqueElementName="interactivityType">
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
-      <lom:value uniqueElementName="value">{{educational.interactivityType}}</lom:value>
+      <lom:value uniqueElementName="value">{{metadata.educational.interactivityType}}</lom:value>
     </lom:interactivityType>
   {{/if}}
   
-  {{#each educational.learningResourceType}}
+  {{#each metadata.educational.learningResourceType}}
     <lom:learningResourceType>
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
       <lom:value uniqueElementName="value">{{this.resourceTypeEducationalValue}}</lom:value>
     </lom:learningResourceType>
   {{/each}}
   
-  {{#if educational.levelIntEducational}} 
+  {{#if metadata.educational.levelIntEducational}} 
     <lom:interactivityLevel uniqueElementName="interactivityLevel">
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
-      <lom:value uniqueElementName="value">{{educational.levelIntEducational}}</lom:value>
+      <lom:value uniqueElementName="value">{{metadata.educational.levelIntEducational}}</lom:value>
     </lom:interactivityLevel>
   {{/if}}
 
-  {{#if educational.levelDensEducational }} 
+  {{#if metadata.educational.levelDensEducational }} 
     <lom:semanticDensity uniqueElementName="semanticDensity">
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
-      <lom:value uniqueElementName="value">{{educational.levelDensEducational}}</lom:value>
+      <lom:value uniqueElementName="value">{{metadata.educational.levelDensEducational}}</lom:value>
     </lom:semanticDensity>
   {{/if}}
 
-  {{#each educational.intendedEndUserRole}}
+  {{#each metadata.educational.intendedEndUserRole}}
     <lom:intendedEndUserRole>
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
       <lom:value uniqueElementName="value">{{this.endUserEducationalValue}}</lom:value>
     </lom:intendedEndUserRole>
   {{/each}}
 
-  {{#each educational.context}}
+  {{#each metadata.educational.context}}
     <lom:context>
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
       <lom:value uniqueElementName="value">{{this.contextEducationalValue}}</lom:value>
     </lom:context>
   {{/each}}
 
-  {{#each educational.typicalAgeRange}}
+  {{#each metadata.educational.typicalAgeRange}}
     <lom:typicalAgeRange>
       <lom:string language="{{this.languageRangeEducational}}">{{this.rangeAgeEducationalValue}}</lom:string>
     </lom:typicalAgeRange>
   {{/each}}
 
-  {{#if educational.difficulty}}
+  {{#if metadata.educational.difficulty}}
     <lom:difficulty uniqueElementName="difficulty">
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
-      <lom:value uniqueElementName="value">{{educational.difficulty}}</lom:value>
+      <lom:value uniqueElementName="value">{{metadata.educational.difficulty}}</lom:value>
     </lom:difficulty>
   {{/if}}
   
     <lom:typicalLearningTime uniqueElementName="typicalLearningTime">
-      <lom:duration uniqueElementName="duration">P{{educational.typicalLearningTime.durationYearsEducational}}Y{{educational.typicalLearningTime.durationMonthsEducational}}M{{educational.typicalLearningTime.durationDaysEducational}}DT{{educational.typicalLearningTime.durationHoursEducational}}H{{educational.typicalLearningTime.durationMinutesEducational}}M{{educational.typicalLearningTime.durationSecondsEducational}}S</lom:duration> 
+      <lom:duration uniqueElementName="duration">P{{metadata.educational.typicalLearningTime.durationYearsEducational}}Y{{metadata.educational.typicalLearningTime.durationMonthsEducational}}M{{metadata.educational.typicalLearningTime.durationDaysEducational}}DT{{metadata.educational.typicalLearningTime.durationHoursEducational}}H{{metadata.educational.typicalLearningTime.durationMinutesEducational}}M{{metadata.educational.typicalLearningTime.durationSecondsEducational}}S</lom:duration> 
       
       <lom:description>
-         {{#each educational.typicalLearningTime.description}} 
+         {{#each metadata.educational.typicalLearningTime.description}} 
         <lom:string language="{{this.langDurationEducational}}">{{this.DescriptionLearningEducational}}</lom:string>
          {{/each}}
       </lom:description>
@@ -262,17 +262,17 @@
     </lom:typicalLearningTime>
 
   
-  {{#each educational.description}}
+  {{#each metadata.educational.description}}
     <lom:description>
       <lom:string language="{{this.langDescrEducational}}">{{this.descEducationUseValue}}</lom:string>
     </lom:description>
   {{/each}}
   
-  {{#each educational.language}}
+  {{#each metadata.educational.language}}
     <lom:language>{{this.languageEducationalUseValue}}</lom:language>
   {{/each}} 
 
-  {{#each educational.cognitiveProcess}}
+  {{#each metadata.educational.cognitiveProcess}}
     <lom:cognitiveProcess uniqueElementName="cognitiveProcess">
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
         <lom:value uniqueElementName="value">{{this.processcogEducationalValue}}</lom:value>
@@ -284,40 +284,40 @@
 
   <lom:rights uniqueElementName="rights">
   
-  {{#if rights.cost}}
+  {{#if metadata.rights.cost}}
     <lom:cost uniqueElementName="cost">
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
-      <lom:value uniqueElementName="value">{{rights.cost}}</lom:value>
+      <lom:value uniqueElementName="value">{{metadata.rights.cost}}</lom:value>
     </lom:cost>
   {{/if}}
 
-  {{#if rights.copyrightAndOtherRestrictions}}   
+  {{#if metadata.rights.copyrightAndOtherRestrictions}}   
     <lom:copyrightAndOtherRestrictions uniqueElementName="copyrightAndOtherRestrictions">
       <lom:source uniqueElementName="source">LOM-ESv1.0</source>
-      <lom:value uniqueElementName="value">{{rights.copyrightAndOtherRestrictions}}</lom:value>
+      <lom:value uniqueElementName="value">{{metadata.rights.copyrightAndOtherRestrictions}}</lom:value>
     </lom:copyrightAndOtherRestrictions>
   {{/if}}
 
  
-   {{#if rights.description}}
+   {{#if metadata.rights.description}}
     <lom:description>
-      <lom:string language="{{rights.description.descRightsLang}}">{{rights.description.descRightsValue}}</lom:string>
+      <lom:string language="{{metadata.rights.description.descRightsLang}}">{{metadata.rights.description.descRightsValue}}</lom:string>
     </lom:description>
   {{/if}}
 
     <lom:access uniqueElementName="access">
       <lom:accessType uniqueElementName="accessType">
         <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
-        <lom:value uniqueElementName="value">{{rights.access.accessType}}</lom:value>
+        <lom:value uniqueElementName="value">{{metadata.rights.access.accessType}}</lom:value>
       </lom:accessType>
       
       <lom:description>
-        <lom:string language="{{rights.access.description.descRightsLang}}">{{rights.access.description.descRightsValue}}</lom:string>
+        <lom:string language="{{metadata.rights.access.description.descRightsLang}}">{{metadata.rights.access.description.descRightsValue}}</lom:string>
       </lom:description>
     </lom:access>
   </lom:rights>  
   
-{{#each relation}}
+{{#each metadata.relation}}
   <lom:relation>
   
     <lom:kind uniqueElementName="kind">
@@ -341,7 +341,7 @@
   </lom:relation>
 {{/each}}
 
-{{#each annotation}}
+{{#each metadata.annotation}}
   <lom:annotation>
     <lom:entity>
         BEGIN:VCARD VERSION:3.0 FN:{{this.entity.name}}
@@ -367,7 +367,7 @@
   </lom:annotation>
 {{/each}}
 
-{{#each classification}}
+{{#each metadata.classification}}
   <lom:classification>
     <lom:purpose uniqueElementName="purpose">  
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
