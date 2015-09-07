@@ -670,7 +670,7 @@ function parserImslrm() {
 
         // Analyzing rigths cost
         if(e.indexOf("costRightsValue_1") === 0 ){
-            ExportScorm.prototype.checkname(imslrm,"rights",{last:"list"});
+            ExportScorm.prototype.checkname(imslrm,"rights.cost",{last:"list"});
             imslrm.rights.cost=Project.Info.LOM[e];
        
         } 
@@ -678,6 +678,7 @@ function parserImslrm() {
         // Analyzing rights copyrightAndOtherRestrictions
 
         if(e.indexOf("copyrightRightsValue_1") === 0 ){
+            ExportScorm.prototype.checkname(imslrm,"rights.copyrightAndOtherRestrictions",{last:"list"});
             imslrm.rights.copyrightAndOtherRestrictions=Project.Info.LOM[e];
        
         }
@@ -811,13 +812,7 @@ function parserImslrm() {
                           
             });
 
-            if (annotation.date.description.DescriptionDateAnnotations===""){
-                delete annotation.date.description
-            } 
-
-            if (annotation.description.DescriptionAnnotations===""){
-                delete annotation.description
-            } 
+          
 
            imslrm.annotation.push(annotation);
           
@@ -890,9 +885,7 @@ function parserImslrm() {
 
             });
 
-            if (classification.description.DescriptionTaxonClassification === "" ){
-                    delete classification.description;
-            }
+           
            imslrm.classification.push(classification);  
         }
              
