@@ -16,14 +16,35 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
+uninstall_icon()
+{
+    xdg-icon-resource uninstall "$@" >/dev/null 2>&1
+}
+
+
+UnInstallIcons()
+{
+    install_dir="$1/Adobe/Reader9/Resource/Icons"
+
+    for icon_size in 16 22 24 32 48 64 128; do
+        uninstall_icon --novendor --context mimetypes --size $icon_size "$install_dir/${icon_size}x${icon_size}/adobe.pdf.png" 'application-pdf'
+    done
+}
+
 
 case "$1" in
     remove)
+
+	UnInstallIcons
+	xdg-icon-resource forceupdate >/dev/null 2>&1
+
 	pathapp="/usr/share/cloudbook/"
 	files="icudtl.dat nw nw.pak libffmpegsumo.so locales"
 	for x in $files; do
 		rm ${pathapp}${x}
 	done
+
+	
     ;;
     upgrade|deconfigure)
     ;;

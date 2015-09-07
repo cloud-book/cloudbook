@@ -53,12 +53,9 @@ Import.prototype.importMetadata = function importMetadata(filePath)
 function processPackageFile(filePath, fileType)
 {
 	var fs = require('fs');
-	fs.readFile(filePath, function(err, data) {
-		if (err) throw err;
-		var importPackage = application.importpackage.getInstance();
-		importPackage.processPackage(data, filePath, fileType);
-	});
-
+	var data = fs.readFileSync(filePath)
+	var importPackage = application.importpackage.getInstance();
+	importPackage.processPackage(data, filePath, fileType);
 };
 
 /**

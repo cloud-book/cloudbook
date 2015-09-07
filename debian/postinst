@@ -16,11 +16,42 @@ set -e
 #          <conflicting-package> <version>
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
+
+install_icon()
+{
+    xdg-icon-resource install "$@" >/dev/null 2>&1
+}
+
+InstallIcons()
+{
+    install_dir="/usr/share/icons/hicolor"
+
+    for icon_size in 16 20 22 24 32 36 48 64 96 128 192; do
+        install_icon --noupdate --novendor --context mimetypes --size $icon_size "$install_dir/${icon_size}x${icon_size}/mimetypes/cloudbook-filetype.png" 'application-cloudbook'
+    done
+}
+
+
+
+
 hardlinks="icudtl.dat nw nw.pak"
 links="libffmpegsumo.so locales"
 
+
+
+
 case "$1" in
     configure)
+
+	InstallIcons
+	xdg-icon-resource forceupdate >/dev/null 2>&1
+
+	#creates asociation between mime file and program
+	xdg-mime default cloudbook.desktop application/cloudbook
+	#update databases
+	update-desktop-database
+	update-mime-database /usr/share/mime
+
 	set +e
 	nwjspath=`dirname $(dpkg -L nwjs0.12 | grep nw$ )`/
 	nwjsdevice=$(df $nwjspath | awk '/^\/dev/ {print $1}')
@@ -44,6 +75,9 @@ case "$1" in
 	mv ${apppath}nw ${apppath}cloudbook
 	chmod +x ${apppath}cloudbook
 	set -e
+
+	#
+
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
