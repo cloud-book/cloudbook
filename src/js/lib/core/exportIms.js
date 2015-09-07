@@ -1,7 +1,7 @@
 
 /**
  * @class Export
- * @classdesc This class is responsible to export project to WebZip file
+ * @classdesc This class is responsible to export project to IMS file
  */
 
 function ExportIms(){
@@ -12,7 +12,7 @@ function ExportIms(){
 
 /**
  * Function to create a temp folder with copy all the files needed to
-   generate a scorm project
+   generate a ims project
  */  
 
 ExportIms.prototype.createTemppath=function createTemppath(){
@@ -23,23 +23,6 @@ ExportIms.prototype.createTemppath=function createTemppath(){
 };
 
 
-/**
- * Function to generate the imslrm.xml file
- */
-ExportIms.prototype.renderImslrm=function renderImslrm(dest){
-    
-    var fs = require('fs');
-    var fileimslrm = "";
-  
-    var fullmetainfo = parserImslrm();
-    var template = fs.readFileSync('./templates/imslrm.hbs',{encoding:'utf8'});
-    var templatecompiled = application.util.template.compile(template);
-    fileimslrm = templatecompiled(fullmetainfo);
-
-    fs.writeFileSync(dest+"imslrm.xml", fileimslrm);
-
-   
-};    
 
 /** 
  * Function to get the html files of the project
@@ -78,7 +61,7 @@ ExportIms.prototype.renderImsmanifest=function renderImsmanifest(dest){
 };
 
 /**
- * Function to copy the extra files (xsd) indicates by the standar scorm
+ * Function to copy the extra files (xsd) indicates by the standar ims
  */
 
 ExportIms.prototype.copyImsfiles=function copyImsfiles(dest){
@@ -102,13 +85,12 @@ ExportIms.prototype.copyImsfiles=function copyImsfiles(dest){
 
 
 /**
- * Function to manage the scorm generation
+ * Function to manage the ims generation
  */
 ExportIms.prototype.paramIms=function paramIms(destino){
      
    var tempath = this.createTemppath();       
    
- //  this.renderImslrm(tempath);
    this.copyImsfiles(tempath);
    this.renderImsmanifest(tempath);
    this.createZip(tempath,destino);
@@ -118,7 +100,7 @@ ExportIms.prototype.paramIms=function paramIms(destino){
 
 
 /** 
- * Function to create a zip with the files that make up the scorm project
+ * Function to create a zip with the files that make up the ims project
  */
 ExportIms.prototype.createZip=function createZip(directorio,destino){    
     
