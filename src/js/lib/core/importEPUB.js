@@ -183,7 +183,7 @@ ImportEPUB.prototype.processSubSectionEPUB = function processSubSectionEPUB(file
 
 				if(sectionPathAux != sectionPathAuxwAnchor){ 
 					if(!hasTOC)
-						var nextSubSectionPath = $(this).next("li").length == 0?$(this).find("li:first-child").length == 0?"undefined":$(this).find("li:first-child").children("a").attr("href"):$(this).next().children("a").attr("href");
+						var nextSubSectionPath = $(this).find("li:first-child").length == 0? $(this).next("li").length == 0?$(this).parent().parent().next("li").length == 0?"undefined":$(this).parent().parent().next("li").children("a").attr("href"):$(this).next().children("a").attr("href"):$(this).find("li:first-child").children("a").attr("href");
 					else
 						var nextSubSectionPath = $(this).children("navPoint").length == 0? $(this).next("navPoint").length == 0?$(this).parent().next("navPoint").length == 0?$(element).parent().next().length == 0?"undefined":
 					$(element).parent().next().children("content").attr("src"):$(this).parent().next("navPoint").children("content").attr("src"):$(this).next("navPoint").children("content").attr("src"):$(this).children("navPoint").children("content").attr("src");

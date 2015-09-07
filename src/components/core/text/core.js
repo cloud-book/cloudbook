@@ -127,7 +127,7 @@ TextBox.prototype.HTMLtags = function HTMLtags(node){
   'BR','DT', 'FORM', 'DETAILS', 'SELECT', 'Q', 'RUBY', 'TEXTAREA', 'EM','B', 'I', 'U', 'FONT', 'STRONG', 'PRE', 'CODE'];
   
   if(tagTypes.indexOf(node.tagName) > -1) score ++;
-  if($(node).children("table").length > 0) score=2;
+  if(node.tagName == "FIGURE" && $(node).children("table").length > 0) score=2;
 
   return score;
 };
