@@ -17,16 +17,47 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
+hardlinks="icudtl.dat nw nw.pak"
+links="libffmpegsumo.so locales"
+
+
+
 
 case "$1" in
     configure)
 
 	#creates asociation between mime file and program
 	xdg-mime default cloudbook.desktop application/cloudbook
-
 	#update databases
 	update-desktop-database
 	update-mime-database /usr/share/mime
+
+	set +e
+	nwjspath=`dirname $(dpkg -L nwjs0.12 | grep nw$ )`/
+	nwjsdevice=$(df $nwjspath | awk '/^\/dev/ {print $1}')
+	apppath="/usr/share/cloudbook/"
+	appdevice=$(df $apppath | awk '/^\/dev/ {print $1}')
+	for filetolink in links; do
+		ln -s ${nwjspath}${filetolink} ${apppath}${filetolink}
+	done
+	if [ "$nwjsdevice" = "$appdevice" ]
+	then
+		# Same device. Hard link files
+		for filetolink in $hardlinks; do
+			ln ${nwjspath}${filetolink} ${apppath}${filetolink}
+		done	
+	else
+		# Different device. Copy files
+		for filetocopy in $hardlinks; do
+                        cp ${nwjspath}${filetocopy} ${apppath}${filetocopy}
+                done
+	fi
+	mv ${apppath}nw ${apppath}cloudbook
+	chmod +x ${apppath}cloudbook
+	set -e
+
+	#
+
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
