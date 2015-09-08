@@ -15,24 +15,11 @@
 override_dh_clean:
 	cd src;npm install; cd ..
 	dh_clean
-
-#override_dh_shlibdeps: 
-#	echo 'DONE'
-
-#override_dh_strip:
-#	echo 'goodbye'
-
-# Build architecture-dependent files here.
-#custom-files:
-
-#ifeq ($(DEB_BUILD_ARCH), i386)
-#	cp -r webkitbuilds/CloudBook/linux32/* ./install/usr/share/cloudbook/
-#	rm ./install/usr/share/cloudbook/libffmpegsumo.so
-#
-#endif
-#
-#ifeq ($(DEB_BUILD_ARCH), amd64)
-#	cp -r webkitbuilds/CloudBook/linux64/* ./install/usr/share/cloudbook/
-#	rm ./install/usr/share/cloudbook/libffmpegsumo.so
-#endif
-
+override_dh_llxsrcinstall:
+	mkdir -p llx-resources/cloudbook/icons/apps
+	mkdir -p llx-resources/cloudbook/icons/mimetypes
+	mkdir -p llx-resources/cloudbook/desktops
+	cp rsrc/Cloudbook.svg llx-resources/cloudbook/icons/apps/cloudbook.svg
+	cp rsrc/filetype-cloudbook.svg llx-resources/cloudbook/icons/mimetypes/application-cloudbook.svg
+	cp rsrc/cloudbook.desktop llx-resources/cloudbook/desktops/cloudbook.desktop
+	dh_llxsrcinstall
