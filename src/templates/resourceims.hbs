@@ -4,6 +4,9 @@
 		{{#each content}}
 		<file href="{{this}}"/>
 		{{/each}}
+		{{#each depends}}
+		<dependency identifierref="{{this}}"/>
+		{{/each}}
       	
  	</resource>
     {{#each sections.items}}
@@ -15,6 +18,10 @@
 		{{#each content}}
 		<file href="{{this}}"/>
 		{{/each}}
+		 
+ 	    {{#each depends}}
+ 		<dependency identifierref="{{this}}"/>
+ 		{{/each}}
  	</resource>
  {{/if}}			
 	
