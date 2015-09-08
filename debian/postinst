@@ -43,8 +43,8 @@ links="libffmpegsumo.so locales"
 case "$1" in
     configure)
 
-	InstallIcons
-	xdg-icon-resource forceupdate >/dev/null 2>&1
+	#InstallIcons
+	#xdg-icon-resource forceupdate >/dev/null 2>&1
 
 	#creates asociation between mime file and program
 	xdg-mime default cloudbook.desktop application/cloudbook

@@ -35,8 +35,8 @@ UnInstallIcons()
 case "$1" in
     remove)
 
-	UnInstallIcons
-	xdg-icon-resource forceupdate >/dev/null 2>&1
+	#UnInstallIcons
+	#xdg-icon-resource forceupdate >/dev/null 2>&1
 
 	pathapp="/usr/share/cloudbook/"
 	files="icudtl.dat nw nw.pak libffmpegsumo.so locales"
