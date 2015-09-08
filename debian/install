@@ -1,2 +1,2 @@
-rsrc/mime-cloudbook.xml /usr/share/mime/packages/cloudbook.xml 
+rsrc/mime/cloudbook.xml /usr/share/mime/packages/
 src/*	/usr/share/cloudbook/
