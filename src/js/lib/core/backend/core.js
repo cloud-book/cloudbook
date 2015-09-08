@@ -235,15 +235,18 @@ Backend.prototype.appendNewSectionObjectByUID = function appendNewSectionObjectB
 Backend.prototype.loadProject = function(projectPath) {
   var fs = require('fs');
   var path = require('path');
+  
+
   if (fs.existsSync(projectPath)){
     var contentproject = fs.readFileSync(projectPath);
     var CBStorage = application.storagemanager.getInstance();
     var projectdata = JSON.parse(contentproject);
+    var newproject=false;
 
     Project.Info.projectpath = path.dirname(projectPath);
     Project.Info.projectname = projectdata.name;
 
-    this.voidProject();
+    this.voidProject(newproject);
     Project.Info.projectname = projectPath;
 
     Project.Info.DublinCore = projectdata.info.DublinCore;
@@ -311,10 +314,15 @@ Backend.prototype.saveProject = function(projectfolder) {
 
 
 /**
- * Empty project sections
+ * Empty project sections and project data when change the project
  */
-Backend.prototype.voidProject = function() {
-  this.initSections();
+Backend.prototype.voidProject = function(newproject) {
+
+  if (!newproject) {
+   this.initSections();
+  }
+  this.initVarProject();
+   
 };
 
 /**
@@ -340,6 +348,8 @@ Backend.prototype.createProject = function createProject(projectname) {
    * Path project save all files
    * @type {String}
    */
+  var newproject=true;
+  this.voidProject(newproject);
   Project.Info.projectpath = Cloudbook.workspace + projectname;
   /**
    * Project name
@@ -595,7 +605,10 @@ Backend.prototype.numberMoveSection=function numberMoveSection (oldparentid, new
   }  
 
 };
- 
+
+/**
+ * Function to number the project when its load this
+ */ 
 Backend.prototype.renumberProject=function renumberProject(){
   var CBStorage=application.storagemanager.getInstance();
   var parent=CBStorage.getSectionById("root");
@@ -604,6 +617,19 @@ Backend.prototype.renumberProject=function renumberProject(){
   this.numberSection(cbsectionid,"root");
  
 }; 
+
+/**
+ * Function to init de project var
+ */
+
+Backend.prototype.initVarProject=function initVarProject(){
+
+    Project.Data._rawsections = {};
+    Project.Data._rawobjects = {};
+    Project.Info.DublinCore={};
+    Project.Info.LOM={};
+};
+
 
 /**
  * This namespace has singleton instance of Backend class
