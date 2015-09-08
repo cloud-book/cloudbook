@@ -969,15 +969,16 @@ MetadataManager.prototype.renderImslrm=function renderImslrm(dest){
     
     var fs = require('fs');
     var fileimslrm = "";
-  
-    var fullmetainfo =this.parserMetadata();
-    var template = fs.readFileSync('./templates/imslrm.hbs',{encoding:'utf8'});
-    var templatecompiled = application.util.template.compile(template);
-    fileimslrm = templatecompiled(fullmetainfo);
-
-    fs.writeFileSync(dest+"imslrm.xml", fileimslrm);
-
-   
+    try{
+        var fullmetainfo =this.parserMetadata();
+        var template = fs.readFileSync('./templates/imslrm.hbs',{encoding:'utf8'});
+        var templatecompiled = application.util.template.compile(template);
+        fileimslrm = templatecompiled(fullmetainfo);
+        fs.writeFileSync(dest+"imslrm.xml", fileimslrm);
+    }
+    catch(e){
+        return e;
+    }
 };    
 
 

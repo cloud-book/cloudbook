@@ -215,10 +215,13 @@
       var exportwizard=application.ui.exportimswizard.core.getInstance();
       exportwizard.initializeWizardDiv();
       exportwizard.showExportImsProject({data:{that:exportwizard}});
-
-
     }
 
+    function export_imslrm(){
+      var exportwizard=application.ui.exportimslrmwizard.core.getInstance();
+      exportwizard.initializeWizardDiv();
+      exportwizard.showExportImslrmFile({data:{that:exportwizard}});
+    }
 
 
     var export_project={
@@ -252,10 +255,16 @@
     };
     
     var export_ims={
-       label:CBI18n.gettext('IMS'),
-       click:export_ims
+      label:CBI18n.gettext('IMS'),
+      click:export_ims
     };
 
+    var export_imslrm={
+      label:CBI18n.gettext('Export metatada file (imslrm.xml)'),
+      click:export_imslrm
+
+
+    };
     /**
      * Generate menubar
      */
@@ -275,6 +284,7 @@
     export_project_menu.append(new gui.MenuItem(export_epub));
     export_project_menu.append(new gui.MenuItem(export_scorm)); 
     export_project_menu.append(new gui.MenuItem(export_ims));
+    export_project_menu.append(new gui.MenuItem(export_imslrm));
     
     export_project.submenu=export_project_menu;
 
