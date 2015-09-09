@@ -47,13 +47,13 @@
   </general>      
 
   <lifeCycle uniqueElementName="lifeCycle">
-    
+      {{#if lifeCycle.version}}
       <version uniqueElementName="version">
       {{#each lifeCycle.version}}
         <string language="{{this.lifeCycleLang}}">{{this.versionlifecycle1}}</string>
       {{/each}}
       </version>
-
+      {{/if}}
 
     {{#if lifeCycle.status}} 
       <status uniqueElementName="status">
@@ -97,12 +97,14 @@
 
   <metaMetadata uniqueElementName="metaMetadata">
       {{#each metaMetadata.identifier}}
+      {{#if metaMetadata.identifier}}
       <identifier>
             <catalog uniqueElementName="catalog">{{this.metametadataCatalog}}</catalog>
             <entry uniqueElementName="entry">{{this.metametadataEntry}}</entry>
       </identifier>
+      {{/if}}
       {{/each}}
-      
+
       <metadataSchema>{{metaMetadata.metadataSchema}}</metadataSchema> 
      
       {{#if metaMetadata.langMetametada}}
