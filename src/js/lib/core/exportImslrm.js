@@ -20,7 +20,7 @@ ExportImslrm.prototype.getImslrm=function getImslrm(destino){
         
    var metadatamanager = application.metadatamanager.getInstance();
    var destino=destino + "/"; 
-
+   var that = this;
    $("#exportimslrmwizard").find('.waitingOK').css("display","inline");
 
    var err = metadatamanager.renderImslrm(destino);

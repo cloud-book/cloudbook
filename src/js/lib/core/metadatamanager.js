@@ -3,18 +3,18 @@
  * @class MetadadaManager
  */
 
-function MetadataManager(){
-	 languages=[]
-	 var fs = require('fs');
-	  var data = JSON.parse(fs.readFileSync('js/lib/gui/languages.json', 'utf8'));
-  	  data.forEach(function(languageelement){
-	      var item = [languageelement.code, languageelement.name];
-	      languages.push(item);
-      });
+function MetadataManager() {
+    var fs = require('fs');
+    var data = JSON.parse(fs.readFileSync('js/lib/gui/languages.json', 'utf8'));
+    this.languages = [];
+    data.forEach(function(languageelement) {
+        var item = [languageelement.code, languageelement.name];
+        this.languages.push(item);
+    });
 }
 
 MetadataManager.prototype.parserMetadata=function parserMetadata(){
-    var metadatos=Project.Info.LOM;
+    var metadatos = Project.Info.LOM;
     var listaclaves = Object.keys(metadatos);
     var imslrm = {};
     var that=this;
@@ -28,7 +28,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         // Analyzing categories
         if(e.indexOf("cat_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"general.identifier",{last:"array"});
+           that.checkname(imslrm,"general.identifier",{last:"array"});
             var x = {"catalog":"", "entry":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
@@ -40,13 +40,13 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
        //analyzing titles
         if(e.indexOf("tit_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"general.title",{last:"array"});
+            that.checkname(imslrm,"general.title",{last:"array"});
             var x = {"titleLang":"", "title":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="titleLang"){
    
-                    x[field.split("_")[0]] =  MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] =  that.searchCodeLanguage(aux[field]);
                 }else{                            
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -59,11 +59,11 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         //Analyzingo languages
         if(e.indexOf("idiom_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"general.language",{last:"array"});
+            that.checkname(imslrm,"general.language",{last:"array"});
             var x = {"mainLang":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
-                x[field.split("_")[0]] =MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                x[field.split("_")[0]] =that.searchCodeLanguage(aux[field]);
                
             }
             imslrm.general.language.push(x);
@@ -72,7 +72,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         //Analyzing descriptions
         if(e.indexOf("descGeneral_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"general.description",{last:"array"});
+            that.checkname(imslrm,"general.description",{last:"array"});
             var x = {"descGeneralLang":"","Description":""};
             var aux = Project.Info.LOM[e]
             for(var field in aux){
@@ -80,7 +80,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
                 if (field.split("_")[0]==="descGeneralLang"){
    
-                    x[field.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -95,13 +95,13 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
          //Analyzing keywords
         if(e.indexOf("keywordGeneral_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"general.keyword",{last:"array"});
+            that.checkname(imslrm,"general.keyword",{last:"array"});
             var x = {"keywordGeneralLang":"","keywordGeneral1":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="keywordGeneralLang"){
    
-                    x[field.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -116,13 +116,13 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         //Analyzing coverage
         if(e.indexOf("coverage_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"general.coverage",{last:"array"});
+            that.checkname(imslrm,"general.coverage",{last:"array"});
             var x = {"coverageLang":"","coverage1":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="coverageLang"){
    
-                    x[field.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -144,7 +144,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
          //Analyzing aggregationLevel
                
         if(e.indexOf("aggregationLevels_1") === 0 ){
-            imslrm.general.aggregationLevel=MetadataManager.prototype.searchCodeAggregation(Project.Info.LOM[e]);;
+            imslrm.general.aggregationLevel=that.searchCodeAggregation(Project.Info.LOM[e]);;
         
         }
       
@@ -154,13 +154,13 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
          //Analyzing versionlifeCycle
         if(e.indexOf("versionlifecycle_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"lifeCycle.version",{last:"array"});
+            that.checkname(imslrm,"lifeCycle.version",{last:"array"});
             var x = {"lifeCycleLang":"","versionlifecycle1":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="lifeCycleLang"){
    
-                    x[field.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -181,7 +181,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                
         if(e.indexOf("contrLyfeCycle_") === 0){
             var aux = metadatos[e];
-            MetadataManager.prototype.checkname(imslrm,"lifeCycle.contribute",{last:"array"})
+            that.checkname(imslrm,"lifeCycle.contribute",{last:"array"})
             var contribute = {};
             Object.keys(aux).forEach(function(field){
                 //field : key of aux
@@ -189,15 +189,15 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                     contribute.rolesLifeCycle = aux[field];
                 }
                 if( field.indexOf("nameContribLifeCycle_")===0){
-                    MetadataManager.prototype.checkname(contribute,"entity");
+                    that.checkname(contribute,"entity");
                     contribute.entity.nameContribLifeCycle = aux[field];
                 }
                 if( field.indexOf("emailContribLifeCycle_")===0){
-                    MetadataManager.prototype.checkname(contribute,"entity");
+                    that.checkname(contribute,"entity");
                     contribute.entity.emailContribLifeCycle = aux[field];
                 }
                 if( field.indexOf("organContribLifeCycle_")===0){
-                    MetadataManager.prototype.checkname(contribute,"entity");
+                    that.checkname(contribute,"entity");
                     contribute.entity.organContribLifeCycle = aux[field];
                 }
                 if( field.indexOf("dateContribLifeCycle_")===0){
@@ -205,12 +205,12 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                     contribute.dateContribLifeCycle = aux[field];
                 }
                 if( field.indexOf("DIVdescContribLifeCycle_")===0){
-                    MetadataManager.prototype.checkname(contribute,"description",{last:"array"});
+                    that.checkname(contribute,"description",{last:"array"});
                     var x = {"ContribLifeCycleLang":"","DescriptionContribLifeCycle":""};
                     for( var info in aux[field]){
                        if (info.split("_")[0]==="ContribLifeCycleLang"){
    
-                            x[info.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field][info]);
+                            x[info.split("_")[0]] = that.searchCodeLanguage(aux[field][info]);
                         }else{
                             x[info.split("_")[0]] = aux[field][info];
                         }
@@ -233,7 +233,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         //Analyzing Identifier
         if(e.indexOf("catMetadata_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"metaMetadata.identifier",{last:"array"});
+            that.checkname(imslrm,"metaMetadata.identifier",{last:"array"});
             var x = {"metametadataCatalog":"", "metametadataEntry":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
@@ -254,7 +254,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
         if (e.indexOf("langMetametadataValue_")===0){
               
-            imslrm.metaMetadata.langMetametada=MetadataManager.prototype.searchCodeLanguage(Project.Info.LOM[e]);
+            imslrm.metaMetadata.langMetametada=that.searchCodeLanguage(Project.Info.LOM[e]);
         }
 
        // Analyzing MetaMetada contribute
@@ -262,7 +262,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                       
         if(e.indexOf("contrMetametadata_") === 0){
             var aux = metadatos[e];
-            MetadataManager.prototype.checkname(imslrm,"metaMetadata.contribute",{last:"array"})
+            that.checkname(imslrm,"metaMetadata.contribute",{last:"array"})
             var contribute = {};
             Object.keys(aux).forEach(function(field){
                 //field : key of aux
@@ -270,28 +270,28 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                     contribute.rolesMetametadata = aux[field];
                 }
                 if( field.indexOf("nameContribMetametadata_")===0){
-                    MetadataManager.prototype.checkname(contribute,"entity");
+                    that.checkname(contribute,"entity");
                     contribute.entity.nameContribMetametadata = aux[field];
                 }
                 if( field.indexOf("emailContribMetametadata_")===0){
-                    MetadataManager.prototype.checkname(contribute,"entity");
+                    that.checkname(contribute,"entity");
                     contribute.entity.emailContribMetametadata = aux[field];
                 }
                 if( field.indexOf("organContribMetametadata_")===0){
-                    MetadataManager.prototype.checkname(contribute,"entity");
+                    that.checkname(contribute,"entity");
                     contribute.entity.organContribMetametadata = aux[field];
                 }
                 if( field.indexOf("dateContribMetametadata_")===0){
-               //     MetadataManager.prototype.checkname(contribute,"date");
+               //     that.checkname(contribute,"date");
                     contribute.dateContribMetametadata = aux[field];
                 }
                 if( field.indexOf("DIVdescContribMetametadata_")===0){
-                    MetadataManager.prototype.checkname(contribute,"description",{last:"array"});
+                    that.checkname(contribute,"description",{last:"array"});
                     var x = {"ContribMetametadataLang":"","DescriptionContribMetametadata":""};
                     for( var info in aux[field]){
                         if (info.split("_")[0]==="ContribMetametadataLang"){
    
-                            x[info.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field][info]);
+                            x[info.split("_")[0]] = that.searchCodeLanguage(aux[field][info]);
                         }else{
                             x[info.split("_")[0]] = aux[field][info];
                         }
@@ -311,7 +311,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         //Analyzing format Technical
         if(e.indexOf("formatTechnical_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"technical.format",{last:"array"});
+            that.checkname(imslrm,"technical.format",{last:"array"});
             var x = {"formatTechnicalValue":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
@@ -330,7 +330,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         //Analyzing  location Technical
         if(e.indexOf("locationTechnical_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"technical.location",{last:"array"});
+            that.checkname(imslrm,"technical.location",{last:"array"});
             var x = {"locationTechnicalValue":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
@@ -346,7 +346,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
        if(e.indexOf("requirementsTechnical_") === 0){
             var aux = metadatos[e];
-            MetadataManager.prototype.checkname(imslrm,"technical.requirement",{last:"array"})
+            that.checkname(imslrm,"technical.requirement",{last:"array"})
             var requirement = {};
             Object.keys(aux).forEach(function(field){
                 //field : key of aux
@@ -372,14 +372,14 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
           
         if(e.indexOf("installRemTech_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"technical.installationRemarks",{last:"array"});
+            that.checkname(imslrm,"technical.installationRemarks",{last:"array"});
             var x = {"installRemTechValue":"", "LangRemTech":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 
                 if (field.split("_")[0]==="LangRemTech"){
    
-                    x[field.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -395,13 +395,13 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
         if(e.indexOf("requirementsRemTech_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"technical.otherPlatformRequirements",{last:"array"});
+            that.checkname(imslrm,"technical.otherPlatformRequirements",{last:"array"});
             var x = {"requirementsRemTechValue":"", "LangOtherTech":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="LangOtherTech"){
    
-                    x[field.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -414,7 +414,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
         //Analizando duration technical
 
-        MetadataManager.prototype.checkname(imslrm,"technical.duration",{last:"list"})
+        that.checkname(imslrm,"technical.duration",{last:"list"})
 
         if (e.indexOf("durationYearsDurTech_1")===0){
                         
@@ -449,13 +449,13 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
 
         if(e.indexOf("descdurationDurTech_") === 0){
-            MetadataManager.prototype.checkname(imslrm,"technical.duration.description",{last:"array"})
+            that.checkname(imslrm,"technical.duration.description",{last:"array"})
             var x = {"DescriptionDurTech":"","languageDescDurTech":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="languageDescDurTech"){
    
-                    x[field.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -471,7 +471,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         
         // Analyzing Educational Interactivity Type
         if(e.indexOf("intTypeEducationalValue_1") === 0 ){
-            MetadataManager.prototype.checkname(imslrm,"educational",{last:"list"});
+            that.checkname(imslrm,"educational",{last:"list"});
             imslrm.educational.interactivityType=Project.Info.LOM[e];
        
         } 
@@ -479,7 +479,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         // Analyzing Educational Resource Type
         if(e.indexOf("resourceTypeEducational_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"educational.learningResourceType",{last:"array"});
+            that.checkname(imslrm,"educational.learningResourceType",{last:"array"});
             var x = {"resourceTypeEducationalValue":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
@@ -507,7 +507,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         // Analyzing intendedEndUserRole
         if(e.indexOf("endUserEducational_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"educational.intendedEndUserRole",{last:"array"});
+            that.checkname(imslrm,"educational.intendedEndUserRole",{last:"array"});
             var x = {"endUserEducationalValue":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
@@ -520,7 +520,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         // Analyzing contextEducational_
         if(e.indexOf("contextEducational_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"educational.context",{last:"array"});
+            that.checkname(imslrm,"educational.context",{last:"array"});
             var x = {"contextEducationalValue":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
@@ -533,13 +533,13 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         // Analyzing rangeAgeEducational_
         if(e.indexOf("rangeAgeEducational_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"educational.typicalAgeRange",{last:"array"});
+            that.checkname(imslrm,"educational.typicalAgeRange",{last:"array"});
             var x = {"rangeAgeEducationalValue":"","languageRangeEducational":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="languageRangeEducational"){
    
-                    x[field.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -561,7 +561,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
         //Analyzing dtypicalLearningTime
 
-        MetadataManager.prototype.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})
+        that.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})
 
         if (e.indexOf("durationYearsEducational_1")===0){
                         
@@ -596,13 +596,13 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
 
         if(e.indexOf("descLearningTimeEducational_") === 0){
-            MetadataManager.prototype.checkname(imslrm,"educational.typicalLearningTime.description",{last:"array"})
+            that.checkname(imslrm,"educational.typicalLearningTime.description",{last:"array"})
             var x = {"DescriptionLearningEducational":"","langDurationEducational":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="langDurationEducational"){
    
-                    x[field.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -616,13 +616,13 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         // Analyzing description
         if(e.indexOf("descEducationUse_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"educational.description",{last:"array"});
+            that.checkname(imslrm,"educational.description",{last:"array"});
             var x = {"descEducationUseValue":"","langDescrEducational":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="langDescrEducational"){
    
-                    x[field.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                    x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
                     x[field.split("_")[0]] = aux[field];
                 }
@@ -636,11 +636,11 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         // Analyzing language
         if(e.indexOf("languageEducationalUse_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"educational.language",{last:"array"});
+            that.checkname(imslrm,"educational.language",{last:"array"});
             var x = {"languageEducationalUseValue":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
-                x[field.split("_")[0]] =MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                x[field.split("_")[0]] =that.searchCodeLanguage(aux[field]);
                
             }
             imslrm.educational.language.push(x);
@@ -649,7 +649,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         // Analyzing cognitiveProcess
         if(e.indexOf("processcogEducational_") === 0 ){
             
-            MetadataManager.prototype.checkname(imslrm,"educational.cognitiveProcess",{last:"array"});
+            that.checkname(imslrm,"educational.cognitiveProcess",{last:"array"});
             var x = {"processcogEducationalValue":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
@@ -664,7 +664,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
         // Analyzing rigths cost
         if(e.indexOf("costRightsValue_1") === 0 ){
-            MetadataManager.prototype.checkname(imslrm,"rights.cost",{last:"list"});
+            that.checkname(imslrm,"rights.cost",{last:"list"});
             imslrm.rights.cost=Project.Info.LOM[e];
        
         } 
@@ -672,7 +672,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         // Analyzing rights copyrightAndOtherRestrictions
 
         if(e.indexOf("copyrightRightsValue_1") === 0 ){
-            MetadataManager.prototype.checkname(imslrm,"rights.copyrightAndOtherRestrictions",{last:"list"});
+            that.checkname(imslrm,"rights.copyrightAndOtherRestrictions",{last:"list"});
             imslrm.rights.copyrightAndOtherRestrictions=Project.Info.LOM[e];
        
         }
@@ -682,7 +682,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         if(e.indexOf("descRights_") === 0 ){
            
             var aux = metadatos[e];
-            MetadataManager.prototype.checkname(imslrm,"rights.description",{last:"list"});
+            that.checkname(imslrm,"rights.description",{last:"list"});
             Object.keys(aux).forEach(function(field){
                 //field : key of aux
                 
@@ -703,20 +703,20 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         // Analyzing rights access
 
         if(e.indexOf("accessTypeRights_1") === 0 ){
-             MetadataManager.prototype.checkname(imslrm,"rights.access",{last:"list"});
+             that.checkname(imslrm,"rights.access",{last:"list"});
              imslrm.rights.access.accessType=Project.Info.LOM[e];
        
         }
 
         if(e.indexOf("DescriptionAccessRights_") === 0 ){
-             MetadataManager.prototype.checkname(imslrm,"rights.access.description",{last:"list"});
+             that.checkname(imslrm,"rights.access.description",{last:"list"});
              imslrm.rights.access.description.descRightsValue=Project.Info.LOM[e];
        
         }
 
           if(e.indexOf("langAccessRights_") === 0 ){
-             MetadataManager.prototype.checkname(imslrm,"rights.access.description",{last:"list"});
-             imslrm.rights.access.description.descRightsLang=MetadataManager.prototype.searchCodeLanguage(Project.Info.LOM[e]);
+             that.checkname(imslrm,"rights.access.description",{last:"list"});
+             imslrm.rights.access.description.descRightsLang=that.searchCodeLanguage(Project.Info.LOM[e]);
        
         }
 
@@ -724,7 +724,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         
        if(e.indexOf("relationRelations_") === 0){
             var aux = metadatos[e];
-            MetadataManager.prototype.checkname(imslrm,"relation",{last:"array"})
+            that.checkname(imslrm,"relation",{last:"array"})
             var relation = {};
             Object.keys(aux).forEach(function(field){
                 //field : key of aux
@@ -733,7 +733,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 }
                
                 if(field.indexOf("catalogRelations_")===0){
-                  MetadataManager.prototype.checkname(relation,"resource",{last:"list"})  
+                  that.checkname(relation,"resource",{last:"list"})  
                   relation.resource.catalogRelations=aux[field];
                 }
 
@@ -742,11 +742,11 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 } 
 
                 if(field.indexOf("DescriptionRelationRelations_")===0){
-                  MetadataManager.prototype.checkname(relation,"resource.description",{last:"list"})  
+                  that.checkname(relation,"resource.description",{last:"list"})  
                   relation.resource.description.DescriptionRelationRelations=aux[field];
                 }     
                 if(field.indexOf("relationRelationsLang_")===0){
-                  relation.resource.description.relationRelationsLang=MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                  relation.resource.description.relationRelationsLang=that.searchCodeLanguage(aux[field]);
                 }     
 
                 
@@ -763,12 +763,12 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
         if(e.indexOf("annotationAnnotations_") === 0){
             var aux = metadatos[e];
-            MetadataManager.prototype.checkname(imslrm,"annotation",{last:"array"})
+            that.checkname(imslrm,"annotation",{last:"array"})
             var annotation = {};
             Object.keys(aux).forEach(function(field){
                 //field : key of aux
                 if(field.indexOf("nameAnnotations_")===0){
-                  MetadataManager.prototype.checkname(annotation,"entity",{last:"list"})  
+                  that.checkname(annotation,"entity",{last:"list"})  
                   annotation.entity.name = aux[field];
                 }
                
@@ -781,27 +781,27 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 } 
 
                 if(field.indexOf("dateAnnotations_")===0){
-                  MetadataManager.prototype.checkname(annotation,"date",{last:"list"})  
+                  that.checkname(annotation,"date",{last:"list"})  
                   annotation.date.dateTime=aux[field];
                 }     
                 
                 if(field.indexOf("DescriptionDateAnnotations_")===0){
-                   MetadataManager.prototype.checkname(annotation,"date.description",{last:"list"})
+                   that.checkname(annotation,"date.description",{last:"list"})
                    annotation.date.description.DescriptionDateAnnotations=aux[field];
                 }    
                 
                 if(field.indexOf("langDateAnnotations_")===0){
-                   annotation.date.description.langDateAnnotations=MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                   annotation.date.description.langDateAnnotations=that.searchCodeLanguage(aux[field]);
                 }     
  
                 if(field.indexOf("DescriptionAnnotations_")===0){
-                   MetadataManager.prototype.checkname(annotation,"description",{last:"list"})
+                   that.checkname(annotation,"description",{last:"list"})
                    annotation.description.DescriptionAnnotations=aux[field];
                 }
                 
                 if(field.indexOf("LangAnnotations_")===0){
                    var x=searchCodeLanguage(aux[field]);
-                   annotation.description.LangAnnotations=MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                   annotation.description.LangAnnotations=that.searchCodeLanguage(aux[field]);
                 }
                           
             });
@@ -817,7 +817,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         if(e.indexOf("classificationsClassification_") === 0){  
             var aux = metadatos[e];
             var that=this;
-            MetadataManager.prototype.checkname(imslrm,"classification",{last:"array"})
+            that.checkname(imslrm,"classification",{last:"array"})
             var classification = {};
             Object.keys(aux).forEach(function(field){ 
                 if(field.indexOf("typePurposeClassification_")===0){
@@ -825,23 +825,23 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 }
 
                 if(field.indexOf("DescriptionTaxonClassification_")===0){
-                  MetadataManager.prototype.checkname(classification,"description",{last:"list"})
+                  that.checkname(classification,"description",{last:"list"})
                   classification.description.DescriptionTaxonClassification = aux[field];
                 }
 
                 if(field.indexOf("tituloLangTaxonClassification_")===0){
-                   classification.description.LangTaxonClassification =MetadataManager.prototype.searchCodeLanguage(aux[field]);
+                   classification.description.LangTaxonClassification =that.searchCodeLanguage(aux[field]);
                 }
                 
                 
                 if(field.indexOf("DIVkeyClassification_") === 0 ){
-                    MetadataManager.prototype.checkname(classification,"keywords",{last:"array"});
+                    that.checkname(classification,"keywords",{last:"array"});
                     var x = {"KeywordTaxonClassification":"", "titleLangKeywordTaxonClassification":""};
                     var auxKey=aux[field];
                     for(var fieldK in auxKey){
                        if (fieldK.split("_")[0]==="titleLangKeywordTaxonClassification"){
    
-                            x[fieldK.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(auxKey[fieldK]);
+                            x[fieldK.split("_")[0]] = that.searchCodeLanguage(auxKey[fieldK]);
                         }else{
                             x[fieldK.split("_")[0]] = auxKey[fieldK];
                         }
@@ -855,13 +855,13 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 
 
                 if(field.indexOf("DIVpathClassification_") === 0 ){
-                    MetadataManager.prototype.checkname(classification,"taxonPath",{last:"array"});
+                    that.checkname(classification,"taxonPath",{last:"array"});
                     var x = {"sourceNameClassification":"", "langClassification":"","nameTaxonClassification":"","idTaxonClassification":"","langClassificationTaxon":""};
                     var auxKey=aux[field];
                     for(var fieldK in auxKey){
                         if ((fieldK.split("_")[0]==="langClassification") || (fieldK.split("_")[0]==="langClassificationTaxon")){
    
-                            x[fieldK.split("_")[0]] = MetadataManager.prototype.searchCodeLanguage(auxKey[fieldK]);
+                            x[fieldK.split("_")[0]] = that.searchCodeLanguage(auxKey[fieldK]);
                         }else{
                             x[fieldK.split("_")[0]] = auxKey[fieldK];
                         }
@@ -891,14 +891,16 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 MetadataManager.prototype.trimArray=function trimArray(data){
     if (!(typeof data == undefined || data ==null)){
         var listaclaves = Object.keys(data);
-        listaclaves.forEach(function(e){
+
+       // listaclaves.forEach(function(e){
+        for (i=0; i<listaclaves.length;i++){
             if (typeof(data[e]) === 'string'){
                 data[e]=data[e].trim()
             }
             else{
-                trimArray(data[e]);
+                this.trimArray(data[e]);
             };
-        });
+        };
     }; 
 };   
 
@@ -910,7 +912,7 @@ MetadataManager.prototype.trimArray=function trimArray(data){
 MetadataManager.prototype.searchCodeLanguage=function searchCodeLanguage(language)
 {
     var result = "";
-    languages.forEach(function(element){
+    this.languages.forEach(function(element){
         if(element[1] == language){
             result = element[0];
         } 
@@ -963,6 +965,7 @@ MetadataManager.prototype.checkname=function checkname(dest,namespace,options){
         }
         parent = parent[names[i]];
     }
+    return true;
 };
 
 MetadataManager.prototype.renderImslrm=function renderImslrm(dest){
@@ -975,6 +978,7 @@ MetadataManager.prototype.renderImslrm=function renderImslrm(dest){
         var templatecompiled = application.util.template.compile(template);
         fileimslrm = templatecompiled(fullmetainfo);
         fs.writeFileSync(dest+"imslrm.xml", fileimslrm);
+        return null;
     }
     catch(e){
         return e;
