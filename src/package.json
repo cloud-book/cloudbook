@@ -30,6 +30,7 @@
     "mktemp": "~0.4.0",
     "zip-folder": "^1.0.0",
     "epub-gen": "0.0.9",
+    "htmlsplitter" : "0.1.4",
     "epub3tohtml": "0.0.1",
     "pretty-data": "~0.40.0"
   }
