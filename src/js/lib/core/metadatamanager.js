@@ -19,7 +19,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
     var imslrm = {};
     var that=this;
        
-
+   
 
     listaclaves.forEach(function(e){
       
