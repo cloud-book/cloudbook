@@ -5,7 +5,7 @@
 * Import Epub's
 * Open project with double click on project file (with extension .cloudbook)
 * Automatic numbering on sections. This numbering is only on editor, not to export.
-* New component: result test.
+* New component: result test. Show
 * Open project by command line as argument
 * Project file has icon.
 * Open confirm dialog when delete section
