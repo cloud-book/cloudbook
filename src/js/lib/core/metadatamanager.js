@@ -18,11 +18,11 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
     var listaclaves = Object.keys(metadatos);
     var imslrm = {};
     var that=this;
-       
+     
    
 
     listaclaves.forEach(function(e){
-      
+        var that=application.metadatamanager.getInstance();
     // General
         
         // Analyzing categories
@@ -237,8 +237,9 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
             var x = {"metametadataCatalog":"", "metametadataEntry":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
-                x[field.split("_")[0]] = aux[field];
-               
+                if (aux[field]!==""){
+                    x[field.split("_")[0]] = aux[field];
+                }
             }
             imslrm.metaMetadata.identifier.push(x);
         }
@@ -690,7 +691,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                     imslrm.rights.description.descRightsValue = aux[field];
                 }
                 if( field.indexOf("descRightsLang_")===0){
-                    var lang=searchCodeLanguage(aux[field]);
+                    var lang=that.searchCodeLanguage(aux[field]);
                     imslrm.rights.description.descRightsLang =lang;
                 }
             });
@@ -800,7 +801,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 }
                 
                 if(field.indexOf("LangAnnotations_")===0){
-                   var x=searchCodeLanguage(aux[field]);
+                   var x=that.searchCodeLanguage(aux[field]);
                    annotation.description.LangAnnotations=that.searchCodeLanguage(aux[field]);
                 }
                           
@@ -816,7 +817,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
     
         if(e.indexOf("classificationsClassification_") === 0){  
             var aux = metadatos[e];
-            var that=this;
+            
             that.checkname(imslrm,"classification",{last:"array"})
             var classification = {};
             Object.keys(aux).forEach(function(field){ 
