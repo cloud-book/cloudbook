@@ -1,6 +1,18 @@
-cloudbook (0.4) UNRELEASED; urgency=high
+cloudbook (0.4) trusty; urgency=high
 
-  * 
+  * Delete cbobject with press delete key
+  * Import Epub's
+  * Open project with double click on project file (with extension .cloudbook)
+  * Automatic numbering on sections. This numbering is only on editor, not to export.
+  * New component: result test. Show
+  * Open project by command line as argument
+  * Project file has icon.
+  * Open confirm dialog when delete section
+  * New icon on entry desktop.
+  * When import project if create new section, parent's section from this section is first section project.
+  * When work with some projects, exports function fail.
+  * Double click on textbox select all text inside word.
+  * Not work import scorms generated with cloudbook
 
  -- Raul Rodrigo Segura <raurodse@gmail.com>  Tue, 08 Sep 2015 13:23:11 +0200
 
