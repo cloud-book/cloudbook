@@ -21,7 +21,7 @@ case "$1" in
 
 	pathapp="/usr/share/cloudbook/"
 	files="icudtl.dat nw nw.pak libffmpegsumo.so locales"
-	
+	mv ${pathapp}cloudbook ${pathapp}nw || true
 	for x in $files; do
 		[ ! -e ${pathapp}${x} ] || rm ${pathapp}${x}
 	done
