@@ -4,6 +4,7 @@
   xmlns="http://ltsc.ieee.org/xsd/LOM" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM lomCustom.xsd">
+  {{#if general}} 
   <general uniqueElementName="general">
     {{#each general.identifier}}
       <identifier>
@@ -11,11 +12,13 @@
         <entry uniqueElementName="entry">{{this.entry}}</entry>
       </identifier>
     {{/each}}
+      {{#if general.title}}
        <title uniqueElementName="title">
         {{#each general.title}}
           <string language="{{this.titleLang}}">{{this.title}}</string>
         {{/each}}
       </title>
+      {{/if}}
      {{#each general.language}}
       <language>{{this.mainLang}}</language>
     {{/each}}
@@ -26,12 +29,12 @@
     {{/each}}  
     {{#each general.keyword}} 
       <keyword>
-         <string language="{{this.keywordGeneralLang}}">{{this.keywordGeneral1}}</string> 
+         <string language="{{this.keywordGeneralLang}}">{{this.keywordGeneral}}</string> 
       </keyword>
     {{/each}}   
     {{#each general.coverage}} 
       <coverage>
-         <string language="{{this.coverageLang}}">{{this.coverage1}}</string> 
+         <string language="{{this.coverageLang}}">{{this.coverage}}</string> 
       </coverage>
     {{/each}} 
     {{#if general.structure}}
@@ -40,17 +43,20 @@
         <value uniqueElementName="value">{{general.structure}}</value> 
       </structure>
     {{/if}}
+     {{#if general.aggregationLevel}}
       <aggregationLevel uniqueElementName="aggregationLevel"> 
         <source uniqueElementName="source">LOM-ESv1.0</source>
         <value uniqueElementName="value">{{general.aggregationLevel}}</value>
       </aggregationLevel>
+     {{/if}} 
   </general>      
-
+  {{/if}}
+  {{#if lifeCycle}}
   <lifeCycle uniqueElementName="lifeCycle">
       {{#if lifeCycle.version}}
       <version uniqueElementName="version">
       {{#each lifeCycle.version}}
-        <string language="{{this.lifeCycleLang}}">{{this.versionlifecycle1}}</string>
+        <string language="{{this.lifeCycleLang}}">{{this.versionlifecycle}}</string>
       {{/each}}
       </version>
       {{/if}}
@@ -65,36 +71,38 @@
   
   {{#each lifeCycle.contribute}}
       <contribute>
-
         <role uniqueElementName="role">
           <source uniqueElementName="source">LOM-ESv1.0</source>
-          <value uniqueElementName="value">{{this.rolesLifeCycle}}</value>
+          <value uniqueElementName="value">{{this.rol}}</value>
         </role>
-    
+       
         <entity>  
           BEGIN:VCARD VERSION:3.0 FN:{{this.entity.nameContribLifeCycle}}
           EMAIL;TYPE=INTERNET:{{this.entity.emailContribLifeCycle}} ORG:{{this.entity.organContribLifeCycle}}
           END:VCARD
         </entity>
-   
+        {{#if this.date.dateContribLifeCycle}}
         <date uniqueElementName="date"> 
-        
-          <dateTime uniqueElementName="dateTime">{{this.dateContribLifeCycle}}</dateTime>
-         
-            <description>
-            {{#each this.description }}
+          {{#if this.date}}
+          <dateTime uniqueElementName="dateTime">{{this.date.dateContribLifeCycle}}</dateTime>
+          {{/if}}
+          {{#if this.date.description}}
+          <description>
+            {{#each this.date.description }}
               <string language="{{this.ContribLifeCycleLang}}">{{this.DescriptionContribLifeCycle}}</string>
             {{/each}} 
-            </description>
-      
+          </description>
+          {{/if}}
+            
         </date>
- 
-      </contribute>
+        {{/if}}
+       </contribute>
    {{/each}} 
-     
+    
   </lifeCycle>
- 
+  {{/if}} 
 
+  {{#if metaMetadata}}
   <metaMetadata uniqueElementName="metaMetadata">
       {{#each metaMetadata.identifier}}
       <identifier>
@@ -102,9 +110,9 @@
           <entry uniqueElementName="entry">{{this.metametadataEntry}}</entry>
       </identifier>
       {{/each}}
-
+      {{#if metaMetadata.metadataSchema}}
       <metadataSchema>{{metaMetadata.metadataSchema}}</metadataSchema> 
-     
+      {{/if}} 
       {{#if metaMetadata.langMetametada}}
       <language>{{metaMetadata.langMetametada}}</language>
       {{/if}}
@@ -123,23 +131,28 @@
           EMAIL;TYPE=INTERNET:{{this.entity.emailContribMetametadata}} ORG:{{this.entity.organContribMetametadata}}
           END:VCARD
         </entity>
-           
+        {{#if this.date.dateContribMetametadata}}   
         <date uniqueElementName="date"> 
-          <dateTime uniqueElementName="dateTime">{{this.dateContribMetametadata}}</dateTime>
-         
-            <description>
-            {{#each this.description }}
-              <string language="{{this.ContribMetametadataLang}}">{{this.DescriptionContribMetametadata}}</string>
+          {{#if this.date}}
+          <dateTime uniqueElementName="dateTime">{{this.date.dateContribMetametadata}}</dateTime>
+          {{/if}}
+          {{#if this.date.description}}
+          <description>
+           {{#each this.date.description }}
+            <string language="{{this.ContribMetametadataLang}}">{{this.DescriptionContribMetametadata}}</string>
             {{/each}} 
-            </description>
+          </description>
+          {{/if}}
        
         </date>
+        {{/if}}
 
       </contribute>
       {{/each}}    
          
   
   </metaMetadata>    
+  {{/if}}
 
 {{#if technical}}   
   <technical uniqueElementName="technical">
@@ -150,9 +163,7 @@
     {{#if technical.size}}
       <size uniqueElementName="size">{{technical.size}}</size>
     {{/if}} 
-    
-  
-    
+      
     {{#each technical.location}}
       <location>{{this.locationTechnicalValue}}</location> 
     {{/each}}
@@ -171,11 +182,12 @@
             <source uniqueElementName="source">LOM-ESv1.0</source>
             <value uniqueElementName="value">{{this.nameTechnicalReq}}</value>
           </name>
-     
+          {{#if this.minVerTechnicalReq}}
           <minimumVersion uniqueElementName="minimumVersion">{{this.minVerTechnicalReq}}</minimumVersion>
-    
+          {{/if}} 
+          {{#if this.maxVerTecnicalReg}}
           <maximumVersion uniqueElementName="maximumVersion">{{this.maxVerTechnicalReq}}</maximumVersion>
-   
+          {{/if}}
       
         </orComposite>
       </requirement>  
@@ -202,13 +214,13 @@
         
           <duration uniqueElementName="duration">P{{technical.duration.durationYearsDurTech}}Y{{technical.duration.durationMonthsDurTech}}M{{technical.duration.durationDaysDurTech}}DT{{technical.duration.durationHoursDurTech}}H{{technical.duration.durationMinutesDurTech}}M{{technical.duration.durationSecondsDurTech}}S</duration>
        
-        
+         {{#if technical.duration.description}}
           <description>
           {{#each technical.duration.description}}
               <string language="{{this.languageDescDurTech}}">{{this.DescriptionDurTech}}</string>
           {{/each}}
           </description>
-        
+          {{/if}}
       </duration>
     {{/if}}  
    
@@ -272,20 +284,20 @@
       <value uniqueElementName="value">{{educational.difficulty}}</value>
     </difficulty>
   {{/if}}
-  
+    {{#if educational.typicalLearningTime}}
     <typicalLearningTime uniqueElementName="typicalLearningTime">
       
         <duration uniqueElementName="duration">P{{educational.typicalLearningTime.durationYearsEducational}}Y{{educational.typicalLearningTime.durationMonthsEducational}}M{{educational.typicalLearningTime.durationDaysEducational}}DT{{educational.typicalLearningTime.durationHoursEducational}}H{{educational.typicalLearningTime.durationMinutesEducational}}M{{educational.typicalLearningTime.durationSecondsEducational}}S</duration> 
       
-     
+       {{#if educational.typicalLearningTime.description}}
         <description>
          {{#each educational.typicalLearningTime.description}} 
             <string language="{{this.langDurationEducational}}">{{this.DescriptionLearningEducational}}</string>
          {{/each}}
         </description>
-      
+        {{/if}}
     </typicalLearningTime>
-
+    {{/if}}
   
   {{#each educational.description}}
     <description>
@@ -307,6 +319,7 @@
   </educational>           
 {{/if}}
 
+ {{#if rigths}}
   <rights uniqueElementName="rights">
   
   {{#if rights.cost}}
@@ -341,7 +354,8 @@
       </description>
     </access>
   </rights>  
-  
+ {{/if}}
+
 {{#each relation}}
   <relation>
   
@@ -350,22 +364,22 @@
       <value uniqueElementName="value">{{this.kind}}</value>
     </kind>
 
-
-  
+    {{#if this.resource.catalogRelations}}  
     <resource uniqueElementName="resource">
    
       <identifier>
           <catalog uniqueElementName="catalog">{{this.resource.catalogRelations}}</catalog>
           <entry uniqueElementName="entry">{{this.resource.entryRelations}}</entry>
       </identifier>
+     
     
-    {{#if this.resource.description}}
+    {{#if this.resource.description.DescriptionRelationRelations}}
       <description>
           <string language="{{this.resource.description.relationRelationsLang}}">{{this.resource.description.DescriptionRelationRelations}}</string>
       </description>
-    {{/if}}
+    {{/if}} 
     </resource>
-  
+    {{/if}}
   </relation>
 {{/each}}
 
@@ -377,22 +391,22 @@
         EMAIL;TYPE=INTERNET:{{this.entity.email}} ORG:{{this.entity.organization}} END:VCARD
     </entity>
   
-
-  
+    {{#if this.date.dateTime}}   
     <date uniqueElementName="date">    
-   
+        {{#if this.date.dateTime}}
         <dateTime uniqueElementName="dateTime">{{this.date.dateTime}}</dateTime>
-
-        
-       {{#if this.date.description}}    
+         {{/if}}
+         
+       {{#if this.date.description.DescriptionDateAnnotations}}    
         <description>
           <string language="{{this.date.description.langDateAnnotations}}">{{this.date.description.DescriptionDateAnnotations}}</string>
         </description>  
        {{/if}} 
     </date> 
+    {{/if}}
 
   
-  {{#if this.description}} 
+  {{#if this.description.DescriptionAnnotations}} 
     <description>
         <string language="{{this.description.LangAnnotations}}">{{this.description.DescriptionAnnotations}}</string>
     </description>  
@@ -428,7 +442,7 @@
     </taxonPath>
   {{/each}} 
   
-  {{#if this.description}}
+  {{#if this.description.DescriptionTaxonClassification}}
     <description>  
        <string language="{{this.description.LangTaxonClassification}}">{{this.description.DescriptionTaxonClassification}}</string>
     </description>

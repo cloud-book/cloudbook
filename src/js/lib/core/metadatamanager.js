@@ -22,7 +22,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
    
 
     listaclaves.forEach(function(e){
-        var that=application.metadatamanager.getInstance();
+   
     // General
         
         // Analyzing categories
@@ -33,9 +33,11 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 x[field.split("_")[0]] = aux[field];
-               
+                
             }
-            imslrm.general.identifier.push(x);
+            if ((x["catalog"]!=="")&&(x["entry"]!=="")){
+                imslrm.general.identifier.push(x);
+            }
         }
        //analyzing titles
         if(e.indexOf("tit_") === 0 ){
@@ -76,8 +78,6 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
             var x = {"descGeneralLang":"","Description":""};
             var aux = Project.Info.LOM[e]
             for(var field in aux){
-
-
                 if (field.split("_")[0]==="descGeneralLang"){
    
                     x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
@@ -96,19 +96,19 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         if(e.indexOf("keywordGeneral_") === 0 ){
             
             that.checkname(imslrm,"general.keyword",{last:"array"});
-            var x = {"keywordGeneralLang":"","keywordGeneral1":""};
+            var x = {"keywordGeneralLang":"","keywordGeneral":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="keywordGeneralLang"){
    
                     x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
-                    x[field.split("_")[0]] = aux[field];
+                    x["keywordGeneral"] = aux[field];
                 }
              
                
             }
-            if (x["keywordGeneral1"]!==""){
+            if (x["keywordGeneral"]!==""){
                 imslrm.general.keyword.push(x);
             }    
         }    
@@ -117,18 +117,18 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         if(e.indexOf("coverage_") === 0 ){
             
             that.checkname(imslrm,"general.coverage",{last:"array"});
-            var x = {"coverageLang":"","coverage1":""};
+            var x = {"coverageLang":"","coverage":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="coverageLang"){
    
                     x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
-                    x[field.split("_")[0]] = aux[field];
+                    x["coverage"] = aux[field];
                 }
                             
             }
-            if (x["coverage1"]!==""){
+            if (x["coverage"]!==""){
                 imslrm.general.coverage.push(x);
             }    
         }    
@@ -155,18 +155,18 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         if(e.indexOf("versionlifecycle_") === 0 ){
             
             that.checkname(imslrm,"lifeCycle.version",{last:"array"});
-            var x = {"lifeCycleLang":"","versionlifecycle1":""};
+            var x = {"lifeCycleLang":"","versionlifecycle":""};
             var aux = Project.Info.LOM[e]
             for( var field in aux){
                 if (field.split("_")[0]==="lifeCycleLang"){
    
                     x[field.split("_")[0]] = that.searchCodeLanguage(aux[field]);
                 }else{
-                    x[field.split("_")[0]] = aux[field];
+                    x["versionlifecycle"] = aux[field];
                 }
                           
             }
-            if (x["versionlifecycle1"]!==""){
+            if (x["versionlifecycle"]!==""){
                 imslrm.lifeCycle.version.push(x);
             }
         }    
@@ -186,7 +186,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
             Object.keys(aux).forEach(function(field){
                 //field : key of aux
                 if( field.indexOf("rolesLifeCycle_")===0){
-                    contribute.rolesLifeCycle = aux[field];
+                    contribute.rol = aux[field];
                 }
                 if( field.indexOf("nameContribLifeCycle_")===0){
                     that.checkname(contribute,"entity");
@@ -201,26 +201,29 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                     contribute.entity.organContribLifeCycle = aux[field];
                 }
                 if( field.indexOf("dateContribLifeCycle_")===0){
-             
-                    contribute.dateContribLifeCycle = aux[field];
+                    that.checkname(contribute,"date",{last:"list"});
+                    if (aux[field]!==""){
+                        contribute.date.dateContribLifeCycle = aux[field];
+                    }    
                 }
-                if( field.indexOf("DIVdescContribLifeCycle_")===0){
-                    that.checkname(contribute,"description",{last:"array"});
-                    var x = {"ContribLifeCycleLang":"","DescriptionContribLifeCycle":""};
-                    for( var info in aux[field]){
-                       if (info.split("_")[0]==="ContribLifeCycleLang"){
+                    if( field.indexOf("DIVdescContribLifeCycle_")===0){
+                        that.checkname(contribute.date,"description",{last:"array"});
+                        var x = {"ContribLifeCycleLang":"","DescriptionContribLifeCycle":""};
+                        for( var info in aux[field]){
+                            if (info.split("_")[0]==="ContribLifeCycleLang"){
    
-                            x[info.split("_")[0]] = that.searchCodeLanguage(aux[field][info]);
-                        }else{
-                            x[info.split("_")[0]] = aux[field][info];
-                        }
+                                x[info.split("_")[0]] = that.searchCodeLanguage(aux[field][info]);
+                            }else{
+                                x[info.split("_")[0]] = aux[field][info];
+                            }
          
                
-                     }
-                     if (x["DescriptionContribLifeCycle"]!==""){
-                        contribute.description.push(x);
-                     }   
-                }     
+                        }
+                        if (x["DescriptionContribLifeCycle"]!==""){
+                            contribute.date.description.push(x);
+                        }   
+                    }
+                        
                 
                 
             });
@@ -241,7 +244,9 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                     x[field.split("_")[0]] = aux[field];
                 }
             }
-            imslrm.metaMetadata.identifier.push(x);
+            if ((x["metametadataCatalog"]!=="")&&(x["metametadataEntry"]!=="")){
+               imslrm.metaMetadata.identifier.push(x);
+            }
         }
 
         //Analyzing MetaMetadata Schema
@@ -283,11 +288,14 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                     contribute.entity.organContribMetametadata = aux[field];
                 }
                 if( field.indexOf("dateContribMetametadata_")===0){
-               //     that.checkname(contribute,"date");
-                    contribute.dateContribMetametadata = aux[field];
+                    that.checkname(contribute,"date",{last:"list"});
+                    if (aux[field]!==""){
+                        contribute.date.dateContribMetametadata = aux[field];
+                    } 
+                   
                 }
                 if( field.indexOf("DIVdescContribMetametadata_")===0){
-                    that.checkname(contribute,"description",{last:"array"});
+                    that.checkname(contribute.date,"description",{last:"array"});
                     var x = {"ContribMetametadataLang":"","DescriptionContribMetametadata":""};
                     for( var info in aux[field]){
                         if (info.split("_")[0]==="ContribMetametadataLang"){
@@ -298,7 +306,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                         }
                      }
                      if (x["DescriptionContribMetametadata"]!==""){
-                        contribute.description.push(x);
+                        contribute.date.description.push(x);
                      }   
                 }     
                 
@@ -319,7 +327,9 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 x[field.split("_")[0]] = aux[field];
                
             }
-            imslrm.technical.format.push(x);
+            if (x["formatTechnicalValue"]!==""){
+                imslrm.technical.format.push(x);
+            }    
         }        
 
         //Analyzing size Technical
@@ -358,10 +368,14 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                     requirement.nameTechnicalReq = aux[field];
                 }
                 if( field.indexOf("minVerTechnicalReq_")===0){
-                    requirement.minVerTechnicalReq = aux[field];
+                    if (aux[field]!==""){
+                        requirement.minVerTechnicalReq = aux[field];
+                    }    
                 }
                 if( field.indexOf("versmaxTechnicalReq_")===0){
-                    requirement.maxVerTechnicalReq = aux[field];
+                    if (aux[field]!==""){
+                        requirement.maxVerTechnicalReq = aux[field];
+                    }
                 }
                           
             });
@@ -415,10 +429,10 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
         //Analizando duration technical
 
+        
         that.checkname(imslrm,"technical.duration",{last:"list"})
-
         if (e.indexOf("durationYearsDurTech_1")===0){
-                        
+                       
             imslrm.technical.duration.durationYearsDurTech=Project.Info.LOM[e];
         }
 
@@ -450,6 +464,7 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
 
         if(e.indexOf("descdurationDurTech_") === 0){
+
             that.checkname(imslrm,"technical.duration.description",{last:"array"})
             var x = {"DescriptionDurTech":"","languageDescDurTech":""};
             var aux = Project.Info.LOM[e]
@@ -467,6 +482,9 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
             }    
           
         }  
+
+
+
 
     // Analyzing Educational
         
@@ -487,7 +505,9 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 x[field.split("_")[0]] = aux[field];
                
             }
-            imslrm.educational.learningResourceType.push(x);
+            if (x["resourceTypeEducationalValue"]!==""){
+                 imslrm.educational.learningResourceType.push(x);
+            }     
         }  
 
 
@@ -515,7 +535,9 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 x[field.split("_")[0]] = aux[field];
                
             }
-            imslrm.educational.intendedEndUserRole.push(x);
+            if (x["endUserEducationalValue"]!==""){
+                imslrm.educational.intendedEndUserRole.push(x);
+            }    
         }  
 
         // Analyzing contextEducational_
@@ -528,7 +550,9 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 x[field.split("_")[0]] = aux[field];
                
             }
-            imslrm.educational.context.push(x);
+            if (x["contextEducationalValue"]!==""){
+                imslrm.educational.context.push(x);
+            }    
         }  
 
         // Analyzing rangeAgeEducational_
@@ -644,7 +668,9 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 x[field.split("_")[0]] =that.searchCodeLanguage(aux[field]);
                
             }
-            imslrm.educational.language.push(x);
+            if (x["languageEducationalUseValue"]!==""){
+                imslrm.educational.language.push(x);
+            }    
         }  
 
         // Analyzing cognitiveProcess
@@ -657,7 +683,9 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 x[field.split("_")[0]] = aux[field];
                
             }
-            imslrm.educational.cognitiveProcess.push(x);
+            if (x["processcogEducationalValue"]!==""){
+                imslrm.educational.cognitiveProcess.push(x);
+            }    
         }  
 
       //Analyzing  rigths
@@ -753,9 +781,9 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                 
           
             });
-            if (relation.resource.description.DescriptionRelationRelations === "" || typeof relation.resource.description.DescriptionRelationRelations === "undefined"){
-                    delete relation.resource.description;
-            }
+         //   if (relation.resource.description.DescriptionRelationRelations === "" || typeof relation.resource.description.DescriptionRelationRelations === "undefined"){
+         //           delete relation.resource.description;
+         //   }
             imslrm.relation.push(relation);
           
         }     
@@ -868,20 +896,17 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
                         }
                
                     }
-                    if (x["sourceNameClassification"]===""){
-                            delete x.sourceNameClassification;
-                            delete x.langClassification
+                    if (x["sourceNameClassification"]!==""){
+                            classification.taxonPath.push(x);
                     }
                    
-                    classification.taxonPath.push(x);
+                   
                  } 
 
-            
-
-            });
+             });
 
            
-           imslrm.classification.push(classification);  
+            imslrm.classification.push(classification);  
         }
              
     });
@@ -913,7 +938,7 @@ MetadataManager.prototype.trimArray=function trimArray(data){
 MetadataManager.prototype.searchCodeLanguage=function searchCodeLanguage(language)
 {
     var result = "";
-    this.languages.forEach(function(element){
+    languages.forEach(function(element){
         if(element[1] == language){
             result = element[0];
         } 
