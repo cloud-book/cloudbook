@@ -96,16 +96,21 @@ CBObject.prototype.triggerAddEditorView = function triggerAddEditorView(jquerycb
 	//x.addEventListener('click',enableEditable);
 	jquerycbo.resizable({stop: function(event,ui){ objectcbo.size = [ui.size.width,ui.size.height]}});
 	jquerycbo.rotatable({stop:function(event,ui){ objectcbo.degree = ui.angle.current},angle:objectcbo.degree});
-	jquerycbo.bind('keydown','del',function(e){
-		objectcbo.deleteDialog(objectcbo);
-		$(Cloudbook.UI.targetcontent).trigger("click");
-	});
-	jquerycbo.bind('keydown','backspace',function(e){
-		objectcbo.deleteDialog(objectcbo);
-		$(Cloudbook.UI.targetcontent).trigger("click");
-	});
+	objectcbo.enableHotkeysDelete();
 };
 
+CBObject.prototype.enableHotkeysDelete = function enableHotkeysDelete() {
+	var that = this;
+	var jquerycbo = $(Cloudbook.UI.targetcontent + " [data-cbobjectid='"+that.uniqueid+"']");
+	function _deleteObject(e){
+		if(!jquerycbo.attr('disablehotkey')){
+			that.deleteDialog(that);
+			$(Cloudbook.UI.targetcontent).trigger("click");
+		}	
+	}
+	jquerycbo.bind('keydown','del',_deleteObject);
+	jquerycbo.bind('keydown','backspace',_deleteObject);
+};
 
 CBObject.prototype.clickButton = function clickButton(controllerClass) {
 	controllerClass.addCBObjectIntoSelectedSection(this.editorView(),this);

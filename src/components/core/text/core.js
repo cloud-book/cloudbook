@@ -81,6 +81,8 @@ TextBox.prototype.epubView = function epubView() {
 
 TextBox.prototype.editButton = function editButton(e) {
   var that = e.data.that;
+  var jquerycbo = $(Cloudbook.UI.targetcontent + " [data-cbobjectid="+that.uniqueid+"]");
+  jquerycbo.attr("disablehotkey","disablehotkey");
   var template = application.util.template.getTemplate(__module_path__+'/toolbar.hbs');
   var toolbar = $(template({identifier:"[data-textbox-id='"+that.uniqueid+"']"}));
   var textbox = $('[data-textbox-id="'+that.uniqueid+'"]');
@@ -113,6 +115,7 @@ TextBox.prototype.disableEditMode = function(e) {
 	var that = e.data.that;
   if(document.getSelection().getRangeAt(0).toString().length === 0){
   	$('[data-textbox-id="'+that.uniqueid+'"]').removeAttr('contentEditable').unbind('click',that.stopPropagation);
+    $('[data-cbobjectid="'+that.uniqueid+'"]').removeAttr('disablehotkey');
   	$(".cbtextbox-toolbar").remove();
   	$('body').unbind('click',that.disableEditMode);
   	var CBStorage = application.storagemanager.getInstance();
