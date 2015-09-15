@@ -1,4 +1,5 @@
 <lom:lom>
+ {{#if metadata.general}}
   <lom:general uniqueElementName="general">
     {{#each metadata.general.identifier}}
     <lom:identifier>
@@ -6,11 +7,14 @@
       <lom:entry uniqueElementName="entry">{{this.entry}}</lom:entry>
     </lom:identifier>
     {{/each}}
+    {{#if metadata.general.title}}
     <lom:title uniqueElementName="title">
         {{#each metadata.general.title}}
       <lom:string language="{{this.titleLang}}">{{this.title}}</lom:string>
         {{/each}}
     </lom:title>
+    {{/if}}
+
      {{#each metadata.general.language}}
     <lom:language>{{this.mainLang}}</lom:language>
     {{/each}}
@@ -21,12 +25,12 @@
     {{/each}}  
     {{#each metadata.general.keyword}} 
     <lom:keyword>
-      <lom:string language="{{this.keywordGeneralLang}}">{{this.keywordGeneral1}}</lom:string> 
+      <lom:string language="{{this.keywordGeneralLang}}">{{this.keywordGeneral}}</lom:string> 
     </lom:keyword>
     {{/each}}   
     {{#each metadata.general.coverage}} 
     <lom:coverage>
-      <lom:string language="{{this.coverageLang}}">{{this.coverage1}}</lom:string> 
+      <lom:string language="{{this.coverageLang}}">{{this.coverage}}</lom:string> 
     </lom:coverage>
     {{/each}} 
     {{#if metadata.general.structure}}
@@ -35,20 +39,23 @@
       <lom:value uniqueElementName="value">{{metadata.general.structure}}</lom:value> 
     </lom:structure>
     {{/if}}
+    {{#if metadata.general.aggregationLevel}}
     <lom:aggregationLevel uniqueElementName="aggregationLevel"> 
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
       <lom:value uniqueElementName="value">{{metadata.general.aggregationLevel}}</lom:value>
     </lom:aggregationLevel>
+    {{/if}}
   </lom:general>      
-
+  {{/if}}
+  {{#if metadata.lifeCycle}}
   <lom:lifeCycle uniqueElementName="lifeCycle">
-    
+    {{#if metadata.lifeCycle.version}}
     <lom:version uniqueElementName="version">
       {{#each metadata.lifeCycle.version}}
-      <lom:string language="{{this.lifeCycleLang}}">{{this.versionlifecycle1}}</lom:string>
+      <lom:string language="{{this.lifeCycleLang}}">{{this.versionlifecycle}}</lom:string>
       {{/each}}
     </lom:version>
-
+     {{/if}}
 
     {{#if metadata.lifeCycle.status}} 
     <lom:status uniqueElementName="status">
@@ -61,7 +68,7 @@
     <lom:contribute>
       <lom:role uniqueElementName="role">
         <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
-        <lom:value uniqueElementName="value">{{this.rolesLifeCycle}}</lom:value>
+        <lom:value uniqueElementName="value">{{this.rol}}</lom:value>
       </lom:role>
     
       <lom:entity>  
@@ -69,22 +76,27 @@
           EMAIL;TYPE=INTERNET:{{this.entity.emailContribLifeCycle}} ORG:{{this.entity.organContribLifeCycle}}
           END:VCARD
       </lom:entity>
-   
+      {{#if this.date.dateContribLifeCycle}}
       <lom:date uniqueElementName="date"> 
-        
-        <lom:dateTime uniqueElementName="dateTime">{{this.dateContribLifeCycle}}</lom:dateTime>
+         {{#if this.date}}
+        <lom:dateTime uniqueElementName="dateTime">{{this.date.dateContribLifeCycle}}</lom:dateTime>
+         {{/if}} 
+         {{#if this.date.description}}
         <lom:description>
-          {{#each this.description }}
+          {{#each this.date.description }}
           <lom:string language="{{this.ContribLifeCycleLang}}">{{this.DescriptionContribLifeCycle}}</lom:string>
             {{/each}} 
         </lom:description>
+         {{/if}}
       </lom:date>
+      {{/if}}
     </lom:contribute>
    {{/each}} 
      
   </lom:lifeCycle>
+  {{/if}}
  
-
+  {{#if metadata.metaMetadata}}
   <lom:metaMetadata uniqueElementName="metaMetadata">
       {{#each metadata.metaMetadata.identifier}}
     <lom:identifier>
@@ -92,9 +104,9 @@
       <lom:entry uniqueElementName="entry">{{this.metametadataEntry}}</lom:entry>
     </lom:identifier>
       {{/each}}
-      
+     {{#if metadata.metaMetadata.metadataSchema}} 
     <lom:metadataSchema>{{metadata.metaMetadata.metadataSchema}}</lom:metadataSchema> 
-     
+     {{/if}}
       {{#if metadata.metaMetadata.langMetametada}}
     <lom:language>{{metadata.metaMetadata.langMetametada}}</lom:language>
       {{/if}}
@@ -112,20 +124,25 @@
           EMAIL;TYPE=INTERNET:{{this.entity.emailContribMetametadata}} ORG:{{this.entity.organContribMetametadata}}
           END:VCARD
       </lom:entity>
-           
+       {{#if this.date.dateContribMetametadata}}     
       <lom:date uniqueElementName="date"> 
+        {{#if this.date}}
         <lom:dateTime uniqueElementName="dateTime">{{this.dateContribMetametadata}}</lom:dateTime>
+        {{/if}}
+        {{#if this.date.description}}
         <lom:description>
             {{#each this.description }}
           <lom:string language="{{this.ContribMetametadataLang}}">{{this.DescriptionContribMetametadata}}</lom:string>
             {{/each}} 
         </lom:description>
+         {{/if}}
       </lom:date>
-
+      {{/if}}
     </lom:contribute>
       {{/each}}    
           
-  </lom:metaMetadata>    
+  </lom:metaMetadata>   
+  {{/if}} 
 
 {{#if metadata.technical}}   
   <lom:technical uniqueElementName="technical">
@@ -154,9 +171,12 @@
           <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
           <lom:value uniqueElementName="value">{{this.nameTechnicalReq}}</lom:value>
         </lom:name>
-     
+         {{#if this.minVerTechnicalReq}}
         <lom:minimumVersion uniqueElementName="minimumVersion">{{this.minVerTechnicalReq}}</lom:minimumVersion>
-        <lom:maximumVersion uniqueElementName="maximumVersion">{{this.maxVerTechnicalReq}}</lom:maximumVersion>   
+        {{/if}}
+        {{#if this.maxVerTecnicalReg}}
+        <lom:maximumVersion uniqueElementName="maximumVersion">{{this.maxVerTechnicalReq}}</lom:maximumVersion> 
+        {{/if}}  
       
       </lom:orComposite>
     </lom:requirement>  
@@ -181,11 +201,13 @@
     {{#if metadata.technical.duration}}   
     <lom:duration uniqueElementName="duration">
       <lom:duration uniqueElementName="duration">P{{metadata.technical.duration.durationYearsDurTech}}Y{{metadata.technical.duration.durationMonthsDurTech}}M{{metadata.technical.duration.durationDaysDurTech}}DT{{metadata.technical.duration.durationHoursDurTech}}H{{metadata.technical.duration.durationMinutesDurTech}}M{{metadata.technical.duration.durationSecondsDurTech}}S</lom:duration>
+     {{#if metadata.technical.duration.description}}
       <lom:description>
           {{#each metadata.technical.duration.description}}
         <lom:string language="{{this.languageDescDurTech}}">{{this.DescriptionDurTech}}</lom:string>
           {{/each}}
       </lom:description>
+      {{/if}}
     </lom:duration>
     {{/if}}  
    
@@ -249,18 +271,18 @@
       <lom:value uniqueElementName="value">{{metadata.educational.difficulty}}</lom:value>
     </lom:difficulty>
   {{/if}}
-  
+    {{#if metadata.educational.typicalLearningTime}}
     <lom:typicalLearningTime uniqueElementName="typicalLearningTime">
       <lom:duration uniqueElementName="duration">P{{metadata.educational.typicalLearningTime.durationYearsEducational}}Y{{metadata.educational.typicalLearningTime.durationMonthsEducational}}M{{metadata.educational.typicalLearningTime.durationDaysEducational}}DT{{metadata.educational.typicalLearningTime.durationHoursEducational}}H{{metadata.educational.typicalLearningTime.durationMinutesEducational}}M{{metadata.educational.typicalLearningTime.durationSecondsEducational}}S</lom:duration> 
-      
+       {{#if metadata.educational.typicalLearningTime.description}}
       <lom:description>
          {{#each metadata.educational.typicalLearningTime.description}} 
         <lom:string language="{{this.langDurationEducational}}">{{this.DescriptionLearningEducational}}</lom:string>
          {{/each}}
       </lom:description>
-      
+      {{/if}}
     </lom:typicalLearningTime>
-
+    {{/if}}
   
   {{#each metadata.educational.description}}
     <lom:description>
@@ -324,20 +346,20 @@
       <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
       <lom:value uniqueElementName="value">{{this.kind}}</lom:value>
     </lom:kind>
-
+    {{#if this.resource.catalogRelations}}  
     <lom:resource uniqueElementName="resource">
       <lom:identifier>
         <lom:catalog uniqueElementName="catalog">{{this.resource.catalogRelations}}</lom:catalog>
         <lom:entry uniqueElementName="entry">{{this.resource.entryRelations}}</lom:entry>
       </lom:identifier>
     
-    {{#if this.resource.description}}
+    {{#if this.resource.description.DescriptionRelationRelations}}
     <lom:description>
       <lom:string language="{{this.resource.description.relationRelationsLang}}">{{this.resource.description.DescriptionRelationRelations}}</lom:string>
     </lom:description>
     {{/if}}
     </lom:resource>
-  
+    {{/if}}
   </lom:relation>
 {{/each}}
 
@@ -347,18 +369,20 @@
         BEGIN:VCARD VERSION:3.0 FN:{{this.entity.name}}
         EMAIL;TYPE=INTERNET:{{this.entity.email}} ORG:{{this.entity.organization}} END:VCARD
     </lom:entity>
-   
+    
+    {{#if this.date.dateTime}} 
     <lom:date uniqueElementName="date">    
       <lom:dateTime uniqueElementName="dateTime">{{this.date.dateTime}}</lom:dateTime>
-       {{#if this.date.description}}    
+       {{#if this.date.description.DescriptionDateAnnotations}}    
       <lom:description>
         <lom:string language="{{this.date.description.langDateAnnotations}}">{{this.date.description.DescriptionDateAnnotations}}</lom:string>
       </lom:description>  
        {{/if}} 
-    </lom:date> 
+    </lom:date>
+    {{/if}} 
 
   
-  {{#if this.description}} 
+  {{#if this.description.DescriptionAnnotations}} 
     <lom:description>
       <lom:string language="{{this.description.LangAnnotations}}">{{this.description.DescriptionAnnotations}}</lom:string>
     </lom:description>  
@@ -391,7 +415,7 @@
     </lom:taxonPath>
   {{/each}} 
   
-  {{#if this.description}}
+  {{#if this.description.DescriptionTaxonClassification}}
     <lom:description>  
       <lom:string language="{{this.description.LangTaxonClassification}}">{{this.description.DescriptionTaxonClassification}}</lom:string>
     </lom:description>
