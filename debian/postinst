@@ -37,7 +37,7 @@ case "$1" in
 	nwjsdevice=$(df $nwjspath | awk '/^\/dev/ {print $1}')
 	apppath="/usr/share/cloudbook/"
 	appdevice=$(df $apppath | awk '/^\/dev/ {print $1}')
-	for filetolink in links; do
+	for filetolink in $links; do
 		ln -s ${nwjspath}${filetolink} ${apppath}${filetolink}
 	done
 	if [ "$nwjsdevice" = "$appdevice" ]
