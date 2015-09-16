@@ -118,20 +118,21 @@
         <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
           <lom:value uniqueElementName="value">{{this.rolesMetametadata}}</lom:value>
       </lom:role>
-      
+      {{#if this.entity}}
       <lom:entity>  
           BEGIN:VCARD VERSION:3.0 FN:{{this.entity.nameContribMetametadata}}
           EMAIL;TYPE=INTERNET:{{this.entity.emailContribMetametadata}} ORG:{{this.entity.organContribMetametadata}}
           END:VCARD
       </lom:entity>
+      {{/if}}
        {{#if this.date.dateContribMetametadata}}     
       <lom:date uniqueElementName="date"> 
         {{#if this.date}}
-        <lom:dateTime uniqueElementName="dateTime">{{this.dateContribMetametadata}}</lom:dateTime>
+        <lom:dateTime uniqueElementName="dateTime">{{this.date.dateContribMetametadata}}</lom:dateTime>
         {{/if}}
         {{#if this.date.description}}
         <lom:description>
-            {{#each this.description }}
+            {{#each this.date.description }}
           <lom:string language="{{this.ContribMetametadataLang}}">{{this.DescriptionContribMetametadata}}</lom:string>
             {{/each}} 
         </lom:description>
@@ -303,7 +304,8 @@
 
   </lom:educational>           
 {{/if}}
-
+ 
+ {{#if metadata.rights}}
   <lom:rights uniqueElementName="rights">
   
   {{#if metadata.rights.cost}}
@@ -326,19 +328,21 @@
       <lom:string language="{{metadata.rights.description.descRightsLang}}">{{metadata.rights.description.descRightsValue}}</lom:string>
     </lom:description>
   {{/if}}
-
+    {{#if metadata.rights.access.accessType}}
     <lom:access uniqueElementName="access">
       <lom:accessType uniqueElementName="accessType">
         <lom:source uniqueElementName="source">LOM-ESv1.0</lom:source>
         <lom:value uniqueElementName="value">{{metadata.rights.access.accessType}}</lom:value>
       </lom:accessType>
-      
+      {{#if metadata.rights.access.description}}
       <lom:description>
         <lom:string language="{{metadata.rights.access.description.descRightsLang}}">{{metadata.rights.access.description.descRightsValue}}</lom:string>
       </lom:description>
+      {{/if}}
     </lom:access>
+    {{/if}}
   </lom:rights>  
-  
+ {{/if}} 
 {{#each metadata.relation}}
   <lom:relation>
   
@@ -365,11 +369,12 @@
 
 {{#each metadata.annotation}}
   <lom:annotation>
+  {{#if this.entity}}
     <lom:entity>
         BEGIN:VCARD VERSION:3.0 FN:{{this.entity.name}}
         EMAIL;TYPE=INTERNET:{{this.entity.email}} ORG:{{this.entity.organization}} END:VCARD
     </lom:entity>
-    
+  {{/if}} 
     {{#if this.date.dateTime}} 
     <lom:date uniqueElementName="date">    
       <lom:dateTime uniqueElementName="dateTime">{{this.date.dateTime}}</lom:dateTime>

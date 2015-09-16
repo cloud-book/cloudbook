@@ -430,35 +430,35 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
         //Analizando duration technical
 
         
-        that.checkname(imslrm,"technical.duration",{last:"list"})
+       
         if (e.indexOf("durationYearsDurTech_1")===0){
-                       
+            that.checkname(imslrm,"technical.duration",{last:"list"})           
             imslrm.technical.duration.durationYearsDurTech=Project.Info.LOM[e];
         }
 
         if (e.indexOf("durationMonthsDurTech_1")===0){
-                        
+            that.checkname(imslrm,"technical.duration",{last:"list"})            
             imslrm.technical.duration.durationMonthsDurTech=Project.Info.LOM[e];
         }
 
         if (e.indexOf("durationDaysDurTech_1")===0){
-                        
+            that.checkname(imslrm,"technical.duration",{last:"list"})            
             imslrm.technical.duration.durationDaysDurTech=Project.Info.LOM[e];
         }
         
         if (e.indexOf("durationHoursDurTech_1")===0){
-                        
+           that.checkname(imslrm,"technical.duration",{last:"list"})              
             imslrm.technical.duration.durationHoursDurTech=Project.Info.LOM[e];
         }
 
 
         if (e.indexOf("durationminutesDurTech_1")===0){
-                        
+            that.checkname(imslrm,"technical.duration",{last:"list"})            
             imslrm.technical.duration.durationMinutesDurTech=Project.Info.LOM[e];
         }
 
         if (e.indexOf("durationsecondsDurTech_1")===0){
-                        
+            that.checkname(imslrm,"technical.duration",{last:"list"})            
             imslrm.technical.duration.durationSecondsDurTech=Project.Info.LOM[e];
         }
 
@@ -586,36 +586,36 @@ MetadataManager.prototype.parserMetadata=function parserMetadata(){
 
         //Analyzing dtypicalLearningTime
 
-        that.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})
+        
 
         if (e.indexOf("durationYearsEducational_1")===0){
-                        
+            that.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})            
             imslrm.educational.typicalLearningTime.durationYearsEducational=Project.Info.LOM[e];
         }
 
         if (e.indexOf("durationMonthsEducational_1")===0){
-                        
+            that.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})            
             imslrm.educational.typicalLearningTime.durationMonthsEducational=Project.Info.LOM[e];
         }
 
         if (e.indexOf("durationDaysEducational_1")===0){
-                        
+            that.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})            
             imslrm.educational.typicalLearningTime.durationDaysEducational=Project.Info.LOM[e];
         }
         
         if (e.indexOf("durationHoursEducational_1")===0){
-                        
+            that.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})            
             imslrm.educational.typicalLearningTime.durationHoursEducational=Project.Info.LOM[e];
         }
 
 
         if (e.indexOf("durationminutesEducational_1")===0){
-                        
+           that.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})             
             imslrm.educational.typicalLearningTime.durationMinutesEducational=Project.Info.LOM[e];
         }
 
         if (e.indexOf("durationsecondsEducational_1")===0){
-                        
+            that.checkname(imslrm,"educational.typicalLearningTime",{last:"list"})             
             imslrm.educational.typicalLearningTime.durationSecondsEducational=Project.Info.LOM[e];
         }
 

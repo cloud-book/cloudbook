@@ -75,12 +75,13 @@
           <source uniqueElementName="source">LOM-ESv1.0</source>
           <value uniqueElementName="value">{{this.rol}}</value>
         </role>
-       
+        {{#if this.entity}}
         <entity>  
           BEGIN:VCARD VERSION:3.0 FN:{{this.entity.nameContribLifeCycle}}
           EMAIL;TYPE=INTERNET:{{this.entity.emailContribLifeCycle}} ORG:{{this.entity.organContribLifeCycle}}
           END:VCARD
         </entity>
+        {{/if}}
         {{#if this.date.dateContribLifeCycle}}
         <date uniqueElementName="date"> 
           {{#if this.date}}
@@ -125,12 +126,13 @@
           <value uniqueElementName="value">{{this.rolesMetametadata}}</value>
         </role>
        
-      
+        {{#if this.entity}}
         <entity>  
           BEGIN:VCARD VERSION:3.0 FN:{{this.entity.nameContribMetametadata}}
           EMAIL;TYPE=INTERNET:{{this.entity.emailContribMetametadata}} ORG:{{this.entity.organContribMetametadata}}
           END:VCARD
         </entity>
+        {{/if}}
         {{#if this.date.dateContribMetametadata}}   
         <date uniqueElementName="date"> 
           {{#if this.date}}
@@ -319,7 +321,7 @@
   </educational>           
 {{/if}}
 
- {{#if rigths}}
+ {{#if rights}}
   <rights uniqueElementName="rights">
   
   {{#if rights.cost}}
@@ -342,17 +344,19 @@
       <string language="{{rights.description.descRightsLang}}">{{rights.description.descRightsValue}}</string>
    </description>
   {{/if}}
-
+   {{#if rights.access.accessType}}
     <access uniqueElementName="access">
       <accessType uniqueElementName="accessType">
           <source uniqueElementName="source">LOM-ESv1.0</source>
           <value uniqueElementName="value">{{rights.access.accessType}}</value>
       </accessType>
-      
+      {{#if rights.access.description}}
       <description>
           <string language="{{rights.access.description.descRightsLang}}">{{rights.access.description.descRightsValue}}</string>
       </description>
+       {{/if}}
     </access>
+    {{/if}} 
   </rights>  
  {{/if}}
 
