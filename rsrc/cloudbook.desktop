@@ -18,5 +18,5 @@ Exec=/usr/bin/cloudbook %f
 TryExec=/usr/bin/cloudbook
 Icon=cloudbook
 Terminal=false
-Categories=ODE-Creation;
+Categories=ODE-Creation;Office;Utility;
 MimeType=application/cloudbook;
