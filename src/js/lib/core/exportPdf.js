@@ -26,15 +26,13 @@ ExportPdf.prototype.htmltoPdf = function htmltoPdf(temppath) {
 ExportPdf.prototype.createTemppath=function createTemppath(){
     var mktemp = require('mktemp');
     var temppath = mktemp.createDirSync("/tmp/cloudbook_XXXX");
-    return temppath + "/";    
+    return temppath;    
 
 };
 
 ExportPdf.prototype.generatePdf = function generatePdf(parametrospdf) {
-  
+    debugger;
     var temppath=this.createTemppath();
-   
-    $("#exportpdfwizard").find('.waitingOK').css("display", "inline");
     var htmlfiles = this.htmltoPdf(temppath);
     var pdfiles=this.renderPdf(parametrospdf,htmlfiles,temppath);
     this.joinPdf(pdfiles,parametrospdf.path)
@@ -75,7 +73,7 @@ ExportPdf.prototype.renderHeader=function renderHeader(pdfpath,textheader,positi
 ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temppath) {
     var mktemp = require('mktemp');
     var pdfpath = mktemp.createDirSync(temppath+"pdf/");
-    var exec = require('child_process').execSync;
+    var exec = require('child_process').execSync
     var fsextra = require('fs-extra');
     var fs = require('fs');
     var path = require('path');
@@ -83,14 +81,15 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
     var ficheroorigen = "";
     
     var that = this;
-    var cont=0;
-    var pdffiles=[];
-    var pdf=0;
-    var numberpage=0;
-    var newpage=0;
+    var contfiles=0,
+        numberpage=0,
+        newpage=0;
     var positionfooter="", 
         positionheader="",
-        textheader=""; 
+        textheader="",
+        pdf="",
+        wkhtmloptions = "";
+    var pdffiles=[];     
 
     if (htmlfiles instanceof Array) {
         htmlfiles.forEach(function(path) {
@@ -102,13 +101,14 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
     }
    
     /* Se calculan los parametros para el pdf a generar */
-    var wkhtmloptions = "";
+
     var orientationpage = '-O' + " " + parametrospdf.orientationpage;
     wkhtmloptions = wkhtmloptions + orientationpage;
+    
     var sizepage = ' -s' + " " + parametrospdf.page;
     wkhtmloptions = wkhtmloptions + sizepage;
 
-    if (parametrospdf.posicionH !==""){
+    if (parametrospdf.positionheader !==""){
            textheader=parametrospdf.textheader;
            positionheader=parametrospdf.positionheader; 
            this.renderHeader(pdfpath,textheader,positionheader)
@@ -116,7 +116,7 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
            wkhtmloptions = wkhtmloptions + header;
     }
   
-    if (parametrospdf.posicionfooter !== "") {
+    if (parametrospdf.positionfooter !== "") {
             positionfooter = parametrospdf.positionfooter;
 
     }
@@ -124,9 +124,9 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
    /*Se ejecuta el proceso para generar el pdf*/
      
     htmlfiles.forEach(function(element){
-        cont=cont+1;
-        pdf=pdfpath + cont + ".pdf";
-        pdffiles.push(pdfpath + cont+".pdf");
+        contfiles=contfiles+1;
+        pdf=pdfpath + contfiles + ".pdf";
+        pdffiles.push(pdf);
        
         if (positionfooter !==""){
             numberpage=numberpage+parseInt(newpage)
@@ -138,6 +138,7 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
 
         wkhtmloptions += " --load-error-handling ignore ";
         var cmd = "wkhtmltopdf" + " " + wkhtmloptions + " " + element + " " + pdf;
+
        
         exec(cmd, function(err, stdout, stderr) {
         //process.stdout.write( stderr );
@@ -155,7 +156,7 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
             }else{
                 $("#exportpdfwizard").find('.waitingOK').css("display", "none");
                 $("#exportpdfwizard").find('.waitingER').css("display", "inline");
-                console.log(stderr);
+               
             }
         });
 
@@ -171,8 +172,8 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
 };
 
 ExportPdf.prototype.getNumberPage=function getNumberPage(pdfpath){
-    var s = require('child_process').spawnSync;
-    var proc = s('pdftk',[pdfpath,'dump_data']);
+    var spawn = require('child_process').spawnSync;
+    var proc = spawn('pdftk',[pdfpath,'dump_data']);
     var info = {}
     var that=this;
     var page;
@@ -187,30 +188,29 @@ ExportPdf.prototype.getNumberPage=function getNumberPage(pdfpath){
 
 
 ExportPdf.prototype.joinPdf=function joinPdf(pdffiles,dest){
-   var exec = require('child_process').execSync;
+   var spawn = require('child_process').spawnSync;
    var fsextra = require('fs-extra');
    var fs = require('fs');
-   var dest = " '" + dest + "' ";
-   var cmd = "pdftk" + " "+ pdffiles.join(" ") + " " + "output" + dest;
+   //var cmd = "pdftk" + " "+ pdffiles.join(" ") + " " + "output" + dest;
+   pdffiles.push("cat");
+   pdffiles.push("output");
+   pdffiles.push(dest);
 
    $("#exportpdfwizard").find('.waitingPdf').css("display", "inline");
-   exec(cmd, function(err,stdout,stderr){
-       
-        if (err===null){
-            if (fs.existsSync(dest)){
-               $("#exportpdfwizard").find('.waitingPdf').css("display", "none") 
-               $("#exportpdfwizard").dialog("destroy");
-            }else{
-                 $("#exportpdfwizard").find('.waitingPdf').css("display", "none");
-                 $("#exportpdfwizard").find('.waitingER').css("display", "inline");
-            }
+   var result = spawn("pdftk",pdffiles);
+   if(result.stderr.toString() === ""){
+        if (fs.existsSync(dest)){    
+            $("#exportpdfwizard").find('.waitingPdf').css("display", "none") 
+            $("#exportpdfwizard").dialog("destroy");
         }else{
             $("#exportpdfwizard").find('.waitingPdf').css("display", "none");
             $("#exportpdfwizard").find('.waitingER').css("display", "inline");
-            console.log(stderr);    
         }
-
-   });
+   }else{
+       $("#exportpdfwizard").find('.waitingPdf').css("display", "none");
+       $("#exportpdfwizard").find('.waitingER').css("display", "inline");
+       console.log(result.stderr.toString());
+   }
  //  $("#exportpdfwizard").dialog("destroy"); 
 };
 

@@ -174,7 +174,9 @@ ExportPdfWizard.prototype.showExportPdfProject = function showExportPdfProject(e
           parametrospdf['textheader']=textoH;
    
           var exportpdf = application.core.exports.exportPdf.core.getInstance();
+          $("#exportpdfwizard").find('.waitingOK').css("display", "inline");
 		  exportpdf.generatePdf(parametrospdf);	
+
 
 	});
 
