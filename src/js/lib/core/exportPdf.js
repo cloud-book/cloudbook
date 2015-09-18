@@ -25,7 +25,9 @@ ExportPdf.prototype.htmltoPdf = function htmltoPdf(temppath) {
 
 ExportPdf.prototype.createTemppath=function createTemppath(){
     var mktemp = require('mktemp');
-    var temppath = mktemp.createDirSync("/tmp/cloudbook_XXXX");
+    var temppath={}
+    temppath.htmlpath = mktemp.createDirSync("/tmp/cloudbook_XXXX");
+    temppath.pdfpath = mktemp.createDirSync(temppath.htmlpath+"/pdf/");
     return temppath;    
 
 };
@@ -33,8 +35,8 @@ ExportPdf.prototype.createTemppath=function createTemppath(){
 ExportPdf.prototype.generatePdf = function generatePdf(parametrospdf) {
     debugger;
     var temppath=this.createTemppath();
-    var htmlfiles = this.htmltoPdf(temppath);
-    var pdfiles=this.renderPdf(parametrospdf,htmlfiles,temppath);
+    var htmlfiles = this.htmltoPdf(temppath.htmlpath);
+    var pdfiles=this.renderPdf(parametrospdf,htmlfiles,temppath.pdfpath);
     this.joinPdf(pdfiles,parametrospdf.path)
 
 };
@@ -70,9 +72,9 @@ ExportPdf.prototype.renderHeader=function renderHeader(pdfpath,textheader,positi
 }
 
 
-ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temppath) {
+ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,pdfpath) {
     var mktemp = require('mktemp');
-    var pdfpath = mktemp.createDirSync(temppath+"pdf/");
+   // var pdfpath = mktemp.createDirSync(temppath+"pdf/");
     var exec = require('child_process').execSync
     var fsextra = require('fs-extra');
     var fs = require('fs');
@@ -124,7 +126,8 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
    /*Se ejecuta el proceso para generar el pdf*/
      
     htmlfiles.forEach(function(element){
-        $("#exportpdfwizard.waitingOK #pdfCount").html("File:" + contfiles);
+        $("#exportpdfwizard").find('.waitingPdf').css("display", "inline");
+       // $("#exportpdfwizard.waitingOK #pdfCount").html("File:" + contfiles);
         contfiles=contfiles+1;
         pdf=pdfpath + contfiles + ".pdf";
         pdffiles.push(pdf);
@@ -142,7 +145,7 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
 
        
         exec(cmd, function(err, stdout, stderr) {
-        //process.stdout.write( stderr );
+      
             if (err === null) {
                
                 $("#exportpdfwizard").find('.waitingFiles').css("display", "inline");
@@ -212,7 +215,7 @@ ExportPdf.prototype.joinPdf=function joinPdf(pdffiles,dest){
        $("#exportpdfwizard").find('.waitingER').css("display", "inline");
        console.log(result.stderr.toString());
    }
- //  $("#exportpdfwizard").dialog("destroy"); 
+
 };
 
 
