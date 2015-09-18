@@ -165,16 +165,16 @@ ExportPdfWizard.prototype.showExportPdfProject = function showExportPdfProject(e
 			
         }	
           
-          var parametrosPdf={};
-          parametrosPdf['page']=page;
-          parametrosPdf['orientacion']=orientacion;
-          parametrosPdf['path']=path;
-          parametrosPdf['posicionN']=posicionN;
-          parametrosPdf['posicionH']=posicionH;
-          parametrosPdf['textoH']=textoH;
+          var parametrospdf={};
+          parametrospdf['page']=page;
+          parametrospdf['orientationpage']=orientacion;
+          parametrospdf['path']=path;
+          parametrospdf['positionfooter']=posicionN;
+          parametrospdf['positionheader']=posicionH;
+          parametrospdf['textheader']=textoH;
    
           var exportpdf = application.core.exports.exportPdf.core.getInstance();
-		  exportpdf.generatePdf(parametrosPdf);	
+		  exportpdf.generatePdf(parametrospdf);	
 
 	});
 
