@@ -79,8 +79,7 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
     var fsextra = require('fs-extra');
     var fs = require('fs');
     var path = require('path');
-    /*Ruta donde se guardará el fichero pdf */
-   // var pdfFileName = " '" + parametrosPdf.path + "' ";
+  
     var ficheroorigen = "";
     
     var that = this;
@@ -123,8 +122,7 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
     }
    
    /*Se ejecuta el proceso para generar el pdf*/
-  
-   
+     
     htmlfiles.forEach(function(element){
         cont=cont+1;
         pdf=pdfpath + cont + ".pdf";
@@ -168,8 +166,7 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
 
    $("#exportpdfwizard").find('.waitingOK').css("display", "none");
    return pdffiles;
-  // this.joinPdf(pdffiles,pdfFileName);
-    
+     
 
 };
 
