@@ -124,6 +124,7 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,temp
    /*Se ejecuta el proceso para generar el pdf*/
      
     htmlfiles.forEach(function(element){
+        $("#exportpdfwizard.waitingOK #pdfCount").html("File:" + contfiles);
         contfiles=contfiles+1;
         pdf=pdfpath + contfiles + ".pdf";
         pdffiles.push(pdf);
