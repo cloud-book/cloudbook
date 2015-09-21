@@ -36,8 +36,10 @@ ExportPdf.prototype.generatePdf = function generatePdf(parametrospdf) {
     debugger;
     var temppath=this.createTemppath();
     var htmlfiles = this.htmltoPdf(temppath.htmlpath);
-    var pdfiles=this.renderPdf(parametrospdf,htmlfiles,temppath.pdfpath);
-    this.joinPdf(pdfiles,parametrospdf.path)
+    var resultrender=this.renderPdf(parametrospdf,htmlfiles,temppath.pdfpath);
+    if (typeof resultrender.error ==="undefined"){
+      this.joinPdf(resultrender.pdffiles,parametrospdf.path)
+    }
 
 };
 
@@ -76,6 +78,7 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,pdfp
     var mktemp = require('mktemp');
    // var pdfpath = mktemp.createDirSync(temppath+"pdf/");
     var exec = require('child_process').execSync
+    var spawn=require('child_process').spawSync
     var fsextra = require('fs-extra');
     var fs = require('fs');
     var path = require('path');
@@ -91,16 +94,17 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,pdfp
         textheader="",
         pdf="",
         wkhtmloptions = "";
+    var resultrender={};    
     var pdffiles=[];     
 
-    if (htmlfiles instanceof Array) {
-        htmlfiles.forEach(function(path) {
-            ficheroorigen += " '" + path + "' ";
+    // if (htmlfiles instanceof Array) {
+    //     htmlfiles.forEach(function(path) {
+    //         ficheroorigen += " '" + path + "' ";
             
-        });
-    } else {
-        ficheroorigen = " '" + htmlfiles + "' ";
-    }
+    //     });
+    // } else {
+    //     ficheroorigen = " '" + htmlfiles + "' ";
+    // }
    
     /* Se calculan los parametros para el pdf a generar */
 
@@ -124,29 +128,28 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,pdfp
     }
    
    /*Se ejecuta el proceso para generar el pdf*/
-     
-    htmlfiles.forEach(function(element){
-        $("#exportpdfwizard").find('.waitingPdf').css("display", "inline");
-       // $("#exportpdfwizard.waitingOK #pdfCount").html("File:" + contfiles);
-        contfiles=contfiles+1;
-        pdf=pdfpath + contfiles + ".pdf";
-        pdffiles.push(pdf);
+
+    try {     
+        htmlfiles.forEach(function(element){
+          $("#exportpdfwizard").find('.waitingOK').css("display", "inline");
+          $("#exportpdfwizard.waitingOK #pdfCount").html("File:" + contfiles);
+          contfiles=contfiles+1;
+          pdf=pdfpath + contfiles + ".pdf";
+          pdffiles.push(pdf);
        
-        if (positionfooter !==""){
+          if (positionfooter !==""){
             numberpage=numberpage+parseInt(newpage)
             that.renderFooter(pdfpath,numberpage,positionfooter)
             var footer= ' --footer-html' + ' ' + pdfpath + 'footerpdf.html'
             wkhtmloptions = wkhtmloptions + footer;
-        }
+          }
 
-
-        wkhtmloptions += " --load-error-handling ignore ";
-        var cmd = "wkhtmltopdf" + " " + wkhtmloptions + " " + element + " " + pdf;
-
-       
-        exec(cmd, function(err, stdout, stderr) {
+          wkhtmloptions += " --load-error-handling ignore ";
+          var cmd = "wkhtmltopdf" + " " + wkhtmloptions + " " + element + " " + pdf;
+          exec(cmd) 
+              
       
-            if (err === null) {
+           /* if (err === null) {
                
                 $("#exportpdfwizard").find('.waitingFiles').css("display", "inline");
                 var extrafilesorig = Project.Info.projectpath + "/pdfextrafiles/";
@@ -162,16 +165,28 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles,pdfp
                 $("#exportpdfwizard").find('.waitingER').css("display", "inline");
                
             }
-        });
+        });*/
 
-        if (positionfooter!==""){
+         if (positionfooter!==""){
             newpage=that.getNumberPage(pdf);
-        }
-   });
+         }
+      });
+      resultrender.pdffiles=pdffiles;
+      $("#exportpdfwizard").find('.waitingFiles').css("display", "inline");
+                var extrafilesorig = Project.Info.projectpath + "/pdfextrafiles/";
+                var destextrafiles = path.dirname(parametrospdf.path) + "/pdfextrafiles";
+                if(fs.existsSync(extrafilesorig)){
+                   fsextra.move(extrafilesorig,destextrafiles,function(err){console.log(err);
+                    });
+                };   
 
-   $("#exportpdfwizard").find('.waitingOK').css("display", "none");
-   return pdffiles;
-     
+    }catch(error){
+      $("#exportpdfwizard").find('.waitingOK').css("display", "none");
+      $("#exportpdfwizard").find('.waitingER').css("display", "inline");
+      $("#exportpdfwizard.waitingER #pdfErr").html("Error:" + error);
+      resultrender.error=error;
+    }
+    return resultrender;  
 
 };
 
