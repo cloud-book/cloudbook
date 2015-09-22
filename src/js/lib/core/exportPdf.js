@@ -38,18 +38,18 @@ ExportPdf.prototype.generatePdf = function generatePdf(parametrospdf) {
     
 };
 
-ExportPdf.prototype.renderFooter=function renderFooter(pdfpath,numberpage,positionfooter){
+ExportPdf.prototype.renderFooter=function renderFooter(footerop){
     var fs = require('fs');
     var footerpdf = "";
     var paramfooter={}
     var template = fs.readFileSync('./templates/footerPdf.hbs',{encoding:'utf8'});
     var templatecompiled = application.util.template.compile(template);
     
-    paramfooter.numberpage=numberpage;
-    paramfooter.positionfooter=positionfooter;
+    paramfooter.numberpage=footerop.numberpage;
+    paramfooter.positionfooter=footerop.positionfooter;
     footerpdf = templatecompiled(paramfooter);
     
-    fs.writeFileSync(pdfpath+"footerpdf.html", footerpdf);
+    fs.writeFileSync(footerop.pdfpath+"footerpdf.html", footerpdf);
 
 }
 
@@ -70,7 +70,7 @@ ExportPdf.prototype.renderHeader=function renderHeader(pdfpath,textheader,positi
 
 
 ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles, pdfpath, callback) {
-    //var exec = require('child_process').execSync  
+   
     var mktemp = require('mktemp'),
         fsextra = require('fs-extra'),
         fs = require('fs'),
@@ -80,12 +80,12 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles, pdf
 
     var contfiles = 0,
         numberpage = 0,
-        positionfooter = "",
         positionheader = "",
         textheader = "",
         pdffiles = [],
         wkop = [],
-        asyncCounter = 0;
+        generateop={}
+      
 
     wkop = wkop.concat(['-O', parametrospdf.orientationpage]);
     wkop = wkop.concat(['-s', parametrospdf.page]);
@@ -101,45 +101,60 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles, pdf
         positionfooter = parametrospdf.positionfooter;
 
     }*/
+    generateop.htmlfiles=htmlfiles;
+    generateop.contfiles=contfiles;
+    generateop.pdffiles=pdffiles;
+    generateop.wkop=wkop;
+    generateop.numberpage=numberpage;
+    generateop.pdfpath=pdfpath;
+    generateop.parametrospdf=parametrospdf
+    generateop.that=that
 
-    this.generateTemporalPdf(htmlfiles,contfiles,pdffiles,wkop,numberpage,pdfpath,parametrospdf,that,callback);
+
+    this.generateTemporalPdf(generateop,callback);
   
 };
 
-ExportPdf.prototype.generateTemporalPdf = function generateTemporalPdf(htmlfiles,contfiles,pdffiles,wkop,numberpage,pdfpath,parametrospdf,that,callback) {
+ExportPdf.prototype.generateTemporalPdf = function generateTemporalPdf(generateop,callback) {
   var optionsThisFile = [],
       newpage = 0,
       pdf,
       spawn = require('child_process').spawn,
-      indexPosition = contfiles;
+      indexPosition = generateop.contfiles;
+      footerop={};
 
-  contfiles++;
+  generateop.contfiles++;
   
-  pdf = pdfpath + contfiles + ".pdf";
-  pdffiles.push(pdf);
-  if (parametrospdf.positionfooter !== "") {
-      that.renderFooter( pdfpath, numberpage, parametrospdf.positionfooter);
-      optionsThisFile = optionsThisFile.concat(['--footer-html', pdfpath +'footerpdf.html']);
+  pdf = generateop.pdfpath + generateop.contfiles + ".pdf";
+  generateop.pdffiles.push(pdf);
+
+  if (generateop.parametrospdf.positionfooter !== "") {
+      footerop.pdfpath=generateop.pdfpath;
+      footerop.numberpage=generateop.numberpage;
+      footerop.positionfooter=generateop.parametrospdf.positionfooter;
+
+      generateop.that.renderFooter(footerop);
+      optionsThisFile = optionsThisFile.concat(['--footer-html', generateop.pdfpath +'footerpdf.html']);
   }
   optionsThisFile = optionsThisFile.concat(['--load-error-handling', 'ignore']);
-  optionsThisFile = optionsThisFile.concat([htmlfiles[indexPosition], pdf]);
+  optionsThisFile = optionsThisFile.concat([generateop.htmlfiles[indexPosition], pdf]);
   
 
-  var wkcommand = spawn('wkhtmltopdf', wkop.concat(optionsThisFile));
-  console.log("Se esta generando el fichero " + contfiles);
+  var wkcommand = spawn('wkhtmltopdf', generateop.wkop.concat(optionsThisFile));
+  console.log("Se esta generando el fichero " + generateop.contfiles);
 
   wkcommand.on('close',function wkhtmltopdfCloseCommand(code){
-    if(contfiles === htmlfiles.length){
+    if(generateop.contfiles === generateop.htmlfiles.length){
       $("#exportpdfwizard").find('.waitingOK').css("display", "none");
-      that.copyResources(parametrospdf);
-      callback(pdffiles);
+      generateop.that.copyResources(generateop.parametrospdf);
+      callback(generateop.pdffiles);
     } 
     else{
-      if (parametrospdf.positionfooter !== "") {
-        numberpage = numberpage + parseInt(that.getNumberPage(pdf));
+      if (generateop.parametrospdf.positionfooter !== "") {
+        generateop.numberpage = generateop.numberpage + parseInt(generateop.that.getNumberPage(pdf));
       }
-      $("#exportpdfwizard .waitingOK #pdfCount").html("File" + " " + contfiles + " " + "of" + " " + htmlfiles.length)
-      that.generateTemporalPdf(htmlfiles,contfiles,pdffiles,wkop,numberpage,pdfpath,parametrospdf,that,callback);
+      $("#exportpdfwizard .waitingOK #pdfCount").html("File" + " " + generateop.contfiles + " " + "of" + " " + generateop.htmlfiles.length)
+        generateop.that.generateTemporalPdf(generateop,callback);
     }
   });
   
