@@ -33,7 +33,8 @@ ExportPdf.prototype.generatePdf = function generatePdf(parametrospdf) {
     var htmlfiles = this.htmltoPdf(temppath.htmlpath);
 
     this.renderPdf(parametrospdf,htmlfiles,temppath.pdfpath,function(pdffiles){
-      _this.joinPdf(pdffiles,parametrospdf.path);
+       _this.joinPdf(pdffiles,parametrospdf.path);
+
     });
     
 };
@@ -84,7 +85,7 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles, pdf
         textheader = "",
         pdffiles = [],
         wkop = [],
-        generateop={}
+        tmppdf={};
       
 
     wkop = wkop.concat(['-O', parametrospdf.orientationpage]);
@@ -97,64 +98,60 @@ ExportPdf.prototype.renderPdf = function renderPdf(parametrospdf, htmlfiles, pdf
         wkop = wkop.concat(['--header-html', pdfpath + 'headerpdf.html']);
     }
 
-   /* if (parametrospdf.positionfooter !== "") {
-        positionfooter = parametrospdf.positionfooter;
-
-    }*/
-    generateop.htmlfiles=htmlfiles;
-    generateop.contfiles=contfiles;
-    generateop.pdffiles=pdffiles;
-    generateop.wkop=wkop;
-    generateop.numberpage=numberpage;
-    generateop.pdfpath=pdfpath;
-    generateop.parametrospdf=parametrospdf
-    generateop.that=that
+    tmppdf.htmlfiles=htmlfiles;
+    tmppdf.contfiles=contfiles;
+    tmppdf.pdffiles=pdffiles;
+    tmppdf.wkop=wkop;
+    tmppdf.numberpage=numberpage;
+    tmppdf.pdfpath=pdfpath;
+    tmppdf.parametrospdf=parametrospdf
+    tmppdf.that=that
 
 
-    this.generateTemporalPdf(generateop,callback);
+    this.generateTemporalPdf(tmppdf,callback);
   
 };
 
-ExportPdf.prototype.generateTemporalPdf = function generateTemporalPdf(generateop,callback) {
+ExportPdf.prototype.generateTemporalPdf = function generateTemporalPdf(tmppdf,callback) {
   var optionsThisFile = [],
       newpage = 0,
       pdf,
       spawn = require('child_process').spawn,
-      indexPosition = generateop.contfiles;
+      indexPosition = tmppdf.contfiles;
       footerop={};
 
-  generateop.contfiles++;
+  tmppdf.contfiles++;
   
-  pdf = generateop.pdfpath + generateop.contfiles + ".pdf";
-  generateop.pdffiles.push(pdf);
+  pdf = tmppdf.pdfpath + tmppdf.contfiles + ".pdf";
+  tmppdf.pdffiles.push(pdf);
 
-  if (generateop.parametrospdf.positionfooter !== "") {
-      footerop.pdfpath=generateop.pdfpath;
-      footerop.numberpage=generateop.numberpage;
-      footerop.positionfooter=generateop.parametrospdf.positionfooter;
+  if (tmppdf.parametrospdf.positionfooter !== "") {
+      footerop.pdfpath=tmppdf.pdfpath;
+      footerop.numberpage=tmppdf.numberpage;
+      footerop.positionfooter=tmppdf.parametrospdf.positionfooter;
 
-      generateop.that.renderFooter(footerop);
-      optionsThisFile = optionsThisFile.concat(['--footer-html', generateop.pdfpath +'footerpdf.html']);
+      tmppdf.that.renderFooter(footerop);
+      optionsThisFile = optionsThisFile.concat(['--footer-html', tmppdf.pdfpath +'footerpdf.html']);
   }
   optionsThisFile = optionsThisFile.concat(['--load-error-handling', 'ignore']);
-  optionsThisFile = optionsThisFile.concat([generateop.htmlfiles[indexPosition], pdf]);
+  optionsThisFile = optionsThisFile.concat([tmppdf.htmlfiles[indexPosition], pdf]);
   
 
-  var wkcommand = spawn('wkhtmltopdf', generateop.wkop.concat(optionsThisFile));
-  console.log("Se esta generando el fichero " + generateop.contfiles);
+  var wkcommand = spawn('wkhtmltopdf', tmppdf.wkop.concat(optionsThisFile));
+  console.log("Se esta generando el fichero " + tmppdf.contfiles);
 
   wkcommand.on('close',function wkhtmltopdfCloseCommand(code){
-    if(generateop.contfiles === generateop.htmlfiles.length){
+    if(tmppdf.contfiles === tmppdf.htmlfiles.length){
       $("#exportpdfwizard").find('.waitingOK').css("display", "none");
-      generateop.that.copyResources(generateop.parametrospdf);
-      callback(generateop.pdffiles);
+      tmppdf.that.copyResources(tmppdf.parametrospdf);
+      callback(tmppdf.pdffiles);
     } 
     else{
-      if (generateop.parametrospdf.positionfooter !== "") {
-        generateop.numberpage = generateop.numberpage + parseInt(generateop.that.getNumberPage(pdf));
+      if (tmppdf.parametrospdf.positionfooter !== "") {
+        tmppdf.numberpage = tmppdf.numberpage + parseInt(tmppdf.that.getNumberPage(pdf));
       }
-      $("#exportpdfwizard .waitingOK #pdfCount").html("File" + " " + generateop.contfiles + " " + "of" + " " + generateop.htmlfiles.length)
-        generateop.that.generateTemporalPdf(generateop,callback);
+      $("#exportpdfwizard .waitingOK #pdfCount").html(CBI18n.gettext('File') + " " + tmppdf.contfiles + " " + CBI18n.gettext('of') + " " + tmppdf.htmlfiles.length)
+        tmppdf.that.generateTemporalPdf(tmppdf,callback);
     }
   });
   
