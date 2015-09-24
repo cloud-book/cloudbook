@@ -1,0 +1,12 @@
+{{#if sections}}
+	<item identifier="{{@key}}" isvisible="true" identifierref="{{resourcecode}}">
+		<title>{{title}}</title>
+		{{#each sections.items}}
+		{{> imsitem}}
+		{{/each}}
+	</item>
+{{else}}
+	<item identifier="{{@key}}" isvisible="true" identifierref="{{resourcecode}}">
+		<title>{{title}}</title>
+	</item>
+{{/if}}

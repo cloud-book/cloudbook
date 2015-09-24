@@ -109,6 +109,7 @@ ExportHTMLSplited.prototype.exportProject = function(dest,rendermethod) {
 			htmlinfo["Title_Proyect"] = "Cloudbook project";
 	}
 	htmlinfo['OrganizationID'] = 'Cloudbook-'+CBUtil.uniqueId();
+	htmlinfo['ManifestID']='Cloudbook-'+CBUtil.uniqueId();
 	return htmlinfo;
 };
 
