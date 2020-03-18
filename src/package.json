@@ -26,7 +26,7 @@
     "fs-extra": "~0.18.0",
     "image-size": "~0.3.5",
     "jed": "~1.1.0",
-    "minimist": "~1.1.1",
+    "minimist": "~1.2.5",
     "mktemp": "~0.4.0",
     "zip-folder": "^1.0.0",
     "epub-gen": "0.0.9",
