@@ -1,0 +1,37 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <script>
+            function subst() {
+                var vars={};
+                var addNumber = {{numberpage}};
+                var ww=document.location.search.substring(1).split('&amp;amp;');
+                for (var i in ww) {var z=ww[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+                var x=['page','title'];
+                for (var i in x) {
+                    var y = document.getElementsByClassName(x[i]);
+                    for (var j=0; j<y.length; ++j) 
+                    {
+                      if(x[i] === "page"){
+                        y[j].textContent = (parseInt(vars[x[i]]) + addNumber).toString();  
+                      }
+                      else{
+                        y[j].textContent = vars[x[i]];
+                      }
+                      
+                    }
+                      
+                  }
+              }
+          </script>
+                <style type="text/css">
+              .pie{
+                  text-align:{{positionfooter}};
+              }
+          </style>
+         </head>
+  <body style="border:0; margin: 0;">
+          <div class="pie"><span class="page"></span></div>
+    <script type="text/javascript">subst()</script>
+        </body> 
+</html>
