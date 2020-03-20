@@ -309,7 +309,7 @@ Backend.prototype.saveProject = function(projectfolder) {
     objectProject['data']['objects'].push([id,auxobject]);
   });
   var result_string = JSON.stringify(objectProject,null," ");
-  fs.writeFile(projectpath,result_string);
+  fs.writeFileSync(projectpath,result_string);
 };
 
 
