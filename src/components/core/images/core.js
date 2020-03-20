@@ -14,8 +14,8 @@ util.inherits(ImageBox,CBobject);
 
 ImageBox.prototype.editorView = function editorView() {
   var aux = ImageBox.super_.prototype.editorView.call(this);
-  var imagepath = this.imgpath !== null ? this.imgpath.indexOf("http") != -1? this.imgpath: Project.Info.projectpath + "/rsrc/"+ this.imgpath : __module_path__ + "default.png";
-  var imgelement = $(window.document.createElement('img')).attr('src', imagepath);
+  var imagepath = this.imgpath !== null ?  Project.Info.projectpath + "/rsrc/"+ this.imgpath : __module_path__ + "default.png";
+  var imgelement = $(window.document.createElement('img')).attr('src', 'file:///' + imagepath);
   imgelement.css('height','100%');
   imgelement.css('width','100%');
   aux.children('.cbcontainer').append(imgelement);
