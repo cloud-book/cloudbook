@@ -21,17 +21,16 @@
   "webkit": {
     "plugin": true
   },
-  "chromium-args": "--ppapi-flash-path=/usr/lib/adobe-flashplugin/libpepflashplayer.so",
   "dependencies": {
-    "fs-extra": "~0.18.0",
+    "epub-gen": "0.0.9",
+    "epub3tohtml": "0.0.1",
+    "fs-extra": "^8.1.0",
+    "htmlsplitter": "0.1.4",
     "image-size": "~0.3.5",
     "jed": "~1.1.0",
     "minimist": "~1.1.1",
     "mktemp": "~0.4.0",
-    "zip-folder": "^1.0.0",
-    "epub-gen": "0.0.9",
-    "htmlsplitter" : "0.1.4",
-    "epub3tohtml": "0.0.1",
-    "pretty-data": "~0.40.0"
+    "pretty-data": "~0.40.0",
+    "zip-folder": "^1.0.0"
   }
 }
