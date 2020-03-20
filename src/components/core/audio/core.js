@@ -17,7 +17,7 @@ util.inherits(AudioBox,CBobject);
 AudioBox.prototype.editorView = function editorView() {
   var aux = AudioBox.super_.prototype.editorView.call(this);
   var audioelement = $(window.document.createElement('audio')).attr('controls','');
-  var source = $(window.document.createElement('source')).attr('src',Project.Info.projectpath + "/rsrc/"+ this.audiopath).attr('type',this.audioformat);
+  var source = $(window.document.createElement('source')).attr('src','file:///'+Project.Info.projectpath + "/rsrc/"+ this.audiopath).attr('type',this.audioformat);
   audioelement.css('height','100%');
   audioelement.css('width','100%');
   audioelement.append(source);
@@ -29,8 +29,6 @@ AudioBox.prototype.htmlView = function htmlView() {
   var aux = AudioBox.super_.prototype.htmlView.call(this);
   var audioelement = $(window.document.createElement('audio')).attr('controls','');
   var source = $(window.document.createElement('source')).attr('src',"rsrc/"+ this.audiopath).attr('type',this.audioformat);
-  audioelement.css('height','100%');
-  audioelement.css('width','100%');
   audioelement.append(source);
   aux.children('.cbcontainer').append([audioelement]);
   return aux;
