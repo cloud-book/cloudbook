@@ -17,10 +17,11 @@ UI.prototype.loadTheme = function loadTheme(){
 
   var cssbasepath = path.join(Cloudbook.UI.themeeditorpath,'css');
   if(fs.existsSync(cssbasepath)){
-    fs.readdirSync(cssbasepath).forEach(function(csspath){
+    fs.readdirSync(cssbasepath,{withFileTypes:true}).forEach(function(csspath){
+      if(csspath.isDirectory()) { return; }
       var css = document.createElement('link');
       css.rel = 'stylesheet';
-      css.href = path.join(cssbasepath,csspath);
+      css.href = path.join(cssbasepath,csspath.name);
       document.head.appendChild(css);
     });
   }
