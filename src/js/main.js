@@ -19,8 +19,6 @@
  			north:{
  				resizable:false,
  				closable:false,
- 				size: 40
-
  			},
  			south:{
  				resizable:false,
@@ -61,7 +59,7 @@
 
  	backend.prepareWorkspace();
  	backend.loadComponents();
- 	backend.checkUpstreamVersion();
+	backend.checkUpstreamVersion();
  	ui.loadTheme();
  	ui.loadExportTheme('default');
  	
@@ -86,33 +84,7 @@
  		var fs = require('fs');
  		var initialwizard = application.ui.initialwizard.core.getInstance();
  		initialwizard.showIntro();
- 		var testplugin=require('./package.json');
- 		var t=testplugin['chromium-args'].split(' ');
- 		t=t[0];
- 		if (t.indexOf('pepflash') != -1){
- 			t=t.split('=');
- 			t=t[1];
- 			var fs = require('fs');
- 			fs.exists(t,function(exists){ 
- 				if (! exists) { 
- 					fs.exists('/opt/google/chrome/PepperFlash/libpepflashplayer.so',function(exists){
- 						if (exists){
- 							if (confirm('Chrome instalado, desea copiar el plugin a '+t+'?')){
- 								var path=t.split('libpep');
- 								fs.mkdirSync(path[0]);
- 								fs.createReadStream('/opt/google/chrome/PepperFlash/libpepflashplayer.so').pipe(fs.createWriteStream(t));
- 							}else{
- 								alert('Los componentes basados en flash no seran funcionales')
- 							}
- 						}else{
- 							alert('Chrome no instalado, los componentes basados en flash no seran funcionales')
- 						}
- 					}) 
- 				}else{
- 					//alert('Plugin Flash encontrado, todos los componentes estan disponibles')
- 				}
- 			})
- 		}
+		var testplugin=require('./package.json');
  	}	
  };
 
