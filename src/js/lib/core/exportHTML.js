@@ -83,7 +83,6 @@ ExportHTML.prototype.do_html = function do_html(path){
 
 	this.files_to_copy = [];
 	this.myhead = "";
-	
 	this.htmlBasicHead();
 	this.htmlHeadHTMLExport();
 
@@ -128,7 +127,7 @@ ExportHTML.prototype.do_html = function do_html(path){
  //    		console.log("The file was saved!");
  //    	}
 	// });
-	fs.writeFileSync(path+"index.html", total);
+	fs.writeFileSync(path+"/index.html", total);
 	var that = this;
 	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,path)});
 	var nodejspath = require('path') ;
