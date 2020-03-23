@@ -342,7 +342,8 @@ Backend.prototype.regenerateSubsection = function regenerateSubsection(sectionid
  * @param  {String} projectname Project name
  */
 Backend.prototype.createProject = function createProject(projectname) {
-  var fs = require('fs'),
+  let fs = require('fs'),
+      path = require('path'),
       userconfig = application.config.user.getInstance();
   /**
    * Path project save all files
@@ -350,7 +351,7 @@ Backend.prototype.createProject = function createProject(projectname) {
    */
   var newproject=true;
   this.voidProject(newproject);
-  Project.Info.projectpath = Cloudbook.workspace + projectname;
+  Project.Info.projectpath = path.join(Cloudbook.workspace, projectname);
   /**
    * Project name
    * @type {String}
@@ -367,8 +368,9 @@ Backend.prototype.createProject = function createProject(projectname) {
  * @return {Boolean}             True exists project, False not exists
  */
 Backend.prototype.checkProjectExists = function checkProjectExists(projectname) {
-  var fs = require('fs');
-  if(fs.existsSync(Cloudbook.workspace + projectname)){
+  var fs = require('fs'),
+      path = require('path');
+  if(fs.existsSync(path.join(Cloudbook.workspace, projectname))){
     return true;
   }
   return false;

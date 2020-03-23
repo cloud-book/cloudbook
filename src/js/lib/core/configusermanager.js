@@ -3,16 +3,18 @@
  * @class ConfigUserManager
  */
 function ConfigUserManager(){
+  let path = require('path');
 	/**
    * Path to workspace folder by default
    * @type {String}
    */
-   Cloudbook.workspace = process.env['HOME'] + "/cloudbook-workspace/";
+   Cloudbook.workspace = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.cloudbook-workspace");
+   
   /**
    * File where store all project project metadata
    * @type {String}
    */
-   Cloudbook.userconfigpath = Cloudbook.workspace + ".conf";
+   Cloudbook.userconfigpath = path.join(Cloudbook.workspace,".conf");
 
 }
 ConfigUserManager.prototype.initialize = function initialize() {
