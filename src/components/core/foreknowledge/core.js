@@ -54,7 +54,7 @@ ForeknowledgeBox.prototype.editorView = function editorView() {
     pathimage = `${Cloudbook.UI.exportthemepath}/img/fkl_${that.typebox}.png` ;
   }
   else{
-    pathimage = `${Project.Info.projectpath}/rsrc/noteimages/${that.customimage}`;
+    pathimage = `file://${Project.Info.projectpath}/rsrc/noteimages/${that.customimage}`;
   }
   titleimage.attr('src',pathimage);
   var title = $(window.document.createElement('span')).html(this.title)
