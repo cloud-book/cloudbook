@@ -63,6 +63,7 @@ UI.prototype.loadExportTheme = function loadExportTheme(themename) {
       userconfigmanager.saveUserConfig(userconfig);
     }
     userconfig['toolbar'].forEach(function(identifier){
+        if (!Cloudbook.Actions.hasOwnProperty(identifier)){return;}
         var componentpath = Cloudbook.Actions[identifier]['path'];
         var description = Cloudbook.Actions[identifier]['metadata'];
         $(Cloudbook.UI.navactions).append($(document.createElement('button'))
