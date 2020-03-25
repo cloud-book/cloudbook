@@ -13,12 +13,15 @@
   ;Name and file
   !define MUI_PRODUCT "Cloudbook"
   !define MUI_FILE "nw"
+  !define MUI_ICON "cloudbook.ico"
+  !define MUI_HEADERIMAGE_BITMAP "cloudbook.bmp"
+  !define MUI_HEADERIMAGE_BITMAP_RTL "cloudbook.bmp"
   Name "Cloudbook"
   OutFile "Cloudbook-installer.exe"
   Unicode True
 
   ;Default installation folder
-  InstallDir $PROGRAMFILES\${MUI_PRODUCT}
+  InstallDir $PROGRAMFILES64\${MUI_PRODUCT}
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
@@ -36,7 +39,6 @@
 ;--------------------------------
 ;Pages
 
-  !insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   
@@ -57,7 +59,7 @@
 ;--------------------------------
 ;Installer Sections
 
-Section "Dummy Section" SecDummy
+Section "CloudBook" SecCloudbook
 
   SetOutPath "$INSTDIR"
   
@@ -81,11 +83,11 @@ SectionEnd
 ;Descriptions
 
   ;Language strings
-  LangString DESC_SecDummy ${LANG_ENGLISH} "A test section."
+  LangString DESC_SecCloudbook ${LANG_ENGLISH} "Install cloudbook application"
 
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} $(DESC_SecDummy)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecCloudbook} $(DESC_SecCloudbook)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
  
 ;--------------------------------
@@ -102,6 +104,7 @@ Section "Uninstall"
   !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
     
   Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
+  Delete "$SMPROGRAMS\${MUI_PRODUCT}\${MUI_PRODUCT}.lnk"
   RMDir "$SMPROGRAMS\$StartMenuFolder"
 
 SectionEnd
