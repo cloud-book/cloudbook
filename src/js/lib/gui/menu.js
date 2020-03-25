@@ -279,12 +279,12 @@
     import_project.submenu = import_project_menu;
 
     export_project_menu.append(new gui.MenuItem(export_html));
-    export_project_menu.append(new gui.MenuItem(export_pdf));
+    //export_project_menu.append(new gui.MenuItem(export_pdf));
     export_project_menu.append(new gui.MenuItem(export_webzip));
-    export_project_menu.append(new gui.MenuItem(export_epub));
-    export_project_menu.append(new gui.MenuItem(export_scorm)); 
-    export_project_menu.append(new gui.MenuItem(export_ims));
-    export_project_menu.append(new gui.MenuItem(export_imslrm));
+    //export_project_menu.append(new gui.MenuItem(export_epub));
+    //export_project_menu.append(new gui.MenuItem(export_scorm)); 
+    //export_project_menu.append(new gui.MenuItem(export_ims));
+    //export_project_menu.append(new gui.MenuItem(export_imslrm));
     
     export_project.submenu=export_project_menu;
 
@@ -292,8 +292,8 @@
     file.append(new gui.MenuItem(load_project));
     file.append(new gui.MenuItem(save_as_project));
     file.append(new gui.MenuItem(save_project));
-    file.append(new gui.MenuItem({type:'separator'}));
-    file.append(new gui.MenuItem(import_project));
+    //file.append(new gui.MenuItem({type:'separator'}));
+    //file.append(new gui.MenuItem(import_project));
     file.append(new gui.MenuItem({type:'separator'}));
     file.append(new gui.MenuItem(export_project));
     file.append(new gui.MenuItem({type:'separator'}));
