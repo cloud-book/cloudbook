@@ -268,7 +268,6 @@ ImportHTML.prototype.processHTML = function processHTML(data, filePath, idsectio
 		var ui = application.ui.core.getInstance();
 		$('#tempImportHTML').remove();
 		$('#layer').remove();
-		debugger;
 		ui.loadContent(Cloudbook.UI.selected.attr('data-cbsectionid'));
 	}, 500);
 	controller.renumberProject();
