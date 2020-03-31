@@ -30,7 +30,7 @@ $(document).ready(
 			}
 		);		  	
 		$(function() {	
-			$("aside>ol>li>a,button")
+			$("aside>ol>li>a")
 				.button()
 				.click(function( event ) { 
 					event.preventDefault(); 
