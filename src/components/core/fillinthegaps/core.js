@@ -149,13 +149,15 @@ FillGapBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquery
    "fillfromstorage": true,
    "delstorage": true
   };
+
   this.pemObject = obj_myprefix_fgp_identifier;
   jsGeork.Questions.Question(obj_myprefix_fgp_identifier);
   jquerycbo.on("resize",function(event,ui){
     var counter = 0;
     var listelements = jquerycbo.find('fieldset').children().each(function(index,element){
-      counter += $(element).outerHeight(true);
+      counter += CBUtil.getAbsoluteHeight(element);
     });
+    counter += parseInt(document.defaultView.getComputedStyle(jquerycbo.find('fieldset')[0], '').getPropertyValue('padding-top')) + parseInt(document.defaultView.getComputedStyle(jquerycbo.find('fieldset')[0], '').getPropertyValue('padding-bottom'))
     ui.size.height = counter;
   });
   var z = jquerycbo.find(".CSSActFieldset");  
@@ -169,7 +171,7 @@ FillGapBox.prototype.triggerAddEditorView = function triggerAddEditorView(jquery
     jquerycbo.css('height',counter+"px");
     objectcbo.size[1] = counter;
   }
-  jquerycbo[0].addEventListener('input',function(){jquerycbo.height(jquerycbo.outerHeight(true));});
+  //jquerycbo[0].addEventListener('input',function(){jquerycbo.height(jquerycbo.outerHeight(true));});
 };
 
 
