@@ -139,6 +139,13 @@ Util.prototype.include = function include(path) {
 	document.head.appendChild(script);
 };
 
+Util.prototype.getAbsoluteHeight = function getAbsoluteHeight(htmlelement){
+
+	let result = 0;
+	result += htmlelement.offsetHeight;
+	result += parseInt(document.defaultView.getComputedStyle(htmlelement, '').getPropertyValue('margin-top')) + parseInt(document.defaultView.getComputedStyle(htmlelement, '').getPropertyValue('margin-bottom'))
+	return result;
+}
 
 /**
  * With this function apply singleton pattern. Get library by argument and return object that 
