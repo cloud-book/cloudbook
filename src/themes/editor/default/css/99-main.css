@@ -14,12 +14,23 @@ body{
  * 
  *******************************/
 
+ #lliurexlogo{
+    text-align: center;
+    display: flex;
+    flex-direction: column-reverse;
+    padding-bottom: 5px;
+ }
+
+ #lliurexlogo img{
+     height: 100px;
+ }
+
 .ui-layout-west{
     padding: 0 !important;
     background: #4c4c4c url('../img/back.png') repeat !important;
     border: none !important;
     border-top: 1px solid black !important;
-
+    display: grid !important;
 }
 
 .ui-layout-north{
@@ -65,6 +76,8 @@ body{
 ::-webkit-scrollbar-corner{
     background-color: #c4c4c4;
 }
+
+
 
 
 #navsections ul{

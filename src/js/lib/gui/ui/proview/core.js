@@ -5,6 +5,12 @@ function ProView(){
 ProView.prototype.initSections = function initSections() {
   var list = $(document.createElement('ul')).addClass("connectedSortable");
   $(Cloudbook.UI.navsections).html(list).attr('data-cbsectionid','root');
+  var x = document.createElement('div');
+  var y = document.createElement('img');
+  y.src = 'rsrc/lliurex-logo.svg';
+  x.appendChild(y);
+  x.id = "lliurexlogo";
+  document.querySelector(Cloudbook.UI.navsections).appendChild(x);
 };
 
 ProView.prototype.createFirstSection = function createFirstSection() {
