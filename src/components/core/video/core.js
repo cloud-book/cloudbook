@@ -17,7 +17,7 @@ util.inherits(VideoBox,CBobject);
 VideoBox.prototype.editorView = function editorView() {
   var aux = VideoBox.super_.prototype.editorView.call(this);
   var videoelement = $(window.document.createElement('video')).attr('controls','');
-  var source = $(window.document.createElement('source')).attr('src',Project.Info.projectpath + "/rsrc/"+ this.videopath).attr('type',this.videoformat);
+  var source = $(window.document.createElement('source')).attr('src','file://' + Project.Info.projectpath + "/rsrc/"+ this.videopath).attr('type',this.videoformat);
   videoelement.css('height','100%');
   videoelement.css('width','100%');
   videoelement.append(source);
