@@ -23,12 +23,13 @@
  			south:{
  				resizable:false,
  				cssReq:{height:"2px"},
- 				initClosed:true
  			},
  			west:{
  				size:200
  			}
  		});
+ 		$('body').layout().close('west');
+ 		$('body').layout().close('south');
  	});
  }
 

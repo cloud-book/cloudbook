@@ -197,14 +197,21 @@ UI.prototype.loadProject = function loadProject(path) {
     var objraw = CBStorage.getSectionById(node.identifier);
     pool = pool.concat(objraw.sections.map(function(el){return {parent:node.identifier,identifier:el}}));
   }
+
   $("#navsections > ul > li:first-child > .displaysection .divselector").click();
 };
 
+
+UI.prototype.showPanes = function showPanes(){
+  $('body').layout().open('west');
+  $('body').layout().open('south');
+}
 UI.prototype.emptyTargetContent = function emptyTargetContent() {
   var targetcontent = $(Cloudbook.UI.targetcontent);
   targetcontent.get()[0].removeEventListener('click',this.removeSelectElement);
   targetcontent.get()[0].addEventListener('click',this.removeSelectElement);
   targetcontent.empty();
+
 };
 
 UI.prototype.removeSelectElement = function removeSelectElement(event) {

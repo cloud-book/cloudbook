@@ -35,6 +35,7 @@ Controller.prototype.createProProject = function createProProject(name) {
  	ui.setSectionManager('Pro');
  	ui.renderActionsButtons();
  	ui.emptyTargetContent();
+ 	ui.showPanes();
  	ui.sectionmanager.initSections();
  	ui.sectionmanager.createFirstSection();
  	this.saveProject(Project.Info.projectpath);
@@ -70,6 +71,7 @@ Controller.prototype.loadProject = function loadProject(path) {
 	ui.renderActionsButtons();
 	ui.emptyTargetContent();
 	backend.loadProject(path);
+	ui.showPanes();
 	ui.loadProject(path);
 	ui.sectionmanager.reloadSortable();
 	this.renumberProject();
