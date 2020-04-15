@@ -27,8 +27,12 @@
 				language = 'es_ES.UTF-8';
 			}
 			else if(process.platform.indexOf('linux') >= 0){
-				let lang = proces.env.LANG.toLowerCase() ;
-				let string_languages = process.env.LANGUAGES.toLowerCase();
+				let lang = "";
+				let string_languages = [];
+				if( process.env.LANG != undefined)
+					lang = process.env.LANG.toLowerCase() ;
+				if ( process.env.LANGUAGES != undefined )
+					string_languages = process.env.LANGUAGES.toLowerCase();
 				if (string_languages != ""){
 					list_languages = string_languages.split(';');
 					for( index in list_languages ){
