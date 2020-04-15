@@ -22,7 +22,41 @@
 		<script type="text/javascript" src="js/lib/gui/i18n.js"></script>
 		<script type="text/javascript" charset="utf-8" async defer>
 			CBUtil = new Util();
-			var translationspaht = './i18n/' + process.env.LANG + '.js';
+			let language = 'en';
+			if (process.platform.indexOf('win') >= 0 ) {
+				language = 'es_ES.UTF-8';
+			}
+			else if(process.platform.indexOf('linux') >= 0){
+				let lang = proces.env.LANG.toLowerCase() ;
+				let string_languages = process.env.LANGUAGES.toLowerCase();
+				if (string_languages != ""){
+					list_languages = string_languages.split(';');
+					for( index in list_languages ){
+						if(list_languages[index].indexOf('valencia') >0 || lang.startsWith('ca') ){
+							language = "ca_ES.UTF-8@valencia";
+							break;
+						}
+						if(lang.startsWith('es') ){
+							language = "es_ES.UTF-8";
+							break;
+						}
+					}
+				}
+				else{
+					if (lang.indexOf('valencia') > 0 || lang.startsWith('ca')){
+						language = "ca_ES.UTF-8@valencia";
+					}
+					else{
+						if (lang.startsWith('es')){
+							language = "es_ES.UTF-8";
+						}
+
+					}
+				}
+
+			}
+			
+			var translationspaht = './i18n/' + language + '.js';
 			var fs = require('fs');
 			if( ! fs.existsSync(translationspaht)){
 				translationspaht = './i18n/en.js';
