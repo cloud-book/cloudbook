@@ -10,20 +10,16 @@ function ExportWebZip(){
 
 
 ExportWebZip.prototype.createHtml=function createHtml(){
-    var fs = require('fs-extra');
-    var mktemp = require('mktemp');
-    var path = mktemp.createDirSync("/tmp/cloudbook_XXXX");
     
-    fs.mkdirsSync(path, function (err) {
-  	if (err) return console.error(err)
-  	console.log("success!")
-    }) 
-     
-    var createhtml = application.exporthtml.core.getInstance();
-    createhtml.do_html(path +'/');
+   var fs = require('fs');
+   var os = require('os');
+   var path = require('path');
+    
+   var temp_path = fs.mkdtempSync(path.join(os.tmpdir,'cloudbook_'));
+   var createhtml = application.exporthtml.core.getInstance();
+   createhtml.do_html(path +'/');
     
    return path;
-
 };
 
 

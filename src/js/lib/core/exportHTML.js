@@ -79,7 +79,9 @@ ExportHTML.prototype.allTypesObjects = function(sections) {
 	return all_types_used;
 };
 
-ExportHTML.prototype.do_html = function do_html(path){
+ExportHTML.prototype.do_html = function do_html(folder_path){
+
+	var path = require('path') ;
 
 	this.files_to_copy = [];
 	this.myhead = "";
@@ -127,12 +129,12 @@ ExportHTML.prototype.do_html = function do_html(path){
  //    		console.log("The file was saved!");
  //    	}
 	// });
-	fs.writeFileSync(path+"/index.html", total);
+	fs.writeFileSync(path.join(folder_path,"index.html"), total);
 	var that = this;
-	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,path)});
-	var nodejspath = require('path') ;
+	this.files_to_copy.forEach(function(item){that.copyFileToPath(item,folder_path)});
+	
 	var fsextra = require('fs-extra');
-	var themefolder = nodejspath.join(path,'theme');
+	var themefolder = path.join(folder_path,'theme');
 	fsextra.ensureDirSync(themefolder);
 	fsextra.copySync( Cloudbook.UI.exportthemepath , themefolder);
 
@@ -187,11 +189,10 @@ ExportHTML.prototype.formatXml = function formatXml(xml) {
     return formatted;
 }
 
-ExportHTML.prototype.copyFileToPath = function copyFileToPath(filename,path){
+ExportHTML.prototype.copyFileToPath = function copyFileToPath( filename, path ){
     var fs = window.require('fs');
     var fsextra = window.require('fs-extra');
     var pathUtil = window.require('path');
-
 
     /*
      * Copy file from project dir to export dir
@@ -202,26 +203,24 @@ ExportHTML.prototype.copyFileToPath = function copyFileToPath(filename,path){
     if (stat.isDirectory()){
     	//fsextra.copySync(filename, path);
     	this.copyFileFromDirToPath(filename,path);
-    }else{
+	}
+	else{
     	var originalbasename = pathUtil.basename(filename);
 	    if (filename == originalbasename){
-		    var filename = Project.Info.projectpath +"/rsrc/";
+		    var filename = pathUtil.join(Project.Info.projectpath,"/rsrc/");
 		}
-	  	//if(! fsextra.existsSync(path+originalbasename)){
-	    //	fsextra.copySync(filename,path+originalbasename);
-	    //}
 	    var slices = originalbasename.split('.');
 		var ext = slices[slices.length -1];
 		var fsextra = window.require('fs-extra');
 		if (ext === 'js'){
-			fsextra.ensureDirSync(path+'js');
-			fsextra.copySync(filename,path+'js/'+originalbasename);
+			fsextra.ensureDirSync( pathUtil.join(path,'js') );
+			fsextra.copySync( filename, pathUtil.join( path, 'js', originalbasename ) );
 		}else{
 			if (ext === 'css'){
-				fsextra.ensureDirSync(path+'css');
-				fsextra.copySync(filename,path+'css/'+originalbasename);
+				fsextra.ensureDirSync( pathUtil.join( path,'css') );
+				fsextra.copySync( filename, pathUtil.join( path , 'css/', originalbasename));
 			}else{
-				fsextra.copySync(filename,path+originalbasename);
+				fsextra.copySync(filename,pathUtil.join(path, originalbasename));
 			}
 		}
 	}
