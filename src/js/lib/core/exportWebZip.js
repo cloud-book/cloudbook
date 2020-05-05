@@ -15,11 +15,11 @@ ExportWebZip.prototype.createHtml=function createHtml(){
    var os = require('os');
    var path = require('path');
     
-   var temp_path = fs.mkdtempSync(path.join(os.tmpdir,'cloudbook_'));
+   var temp_path = fs.mkdtempSync(path.join(os.tmpdir(),'cloudbook_'));
    var createhtml = application.exporthtml.core.getInstance();
-   createhtml.do_html(path +'/');
+   createhtml.do_html(temp_path);
     
-   return path;
+   return temp_path;
 };
 
 
