@@ -30,7 +30,7 @@
     "gulp-util": "~3.0.4",
     "jsdoc": "~3.3.0",
     "jsxgettext": "~0.6.3",
-    "lodash": "~3.8.0",
+    "lodash": "~4.17.19",
     "mocha": "~2.2.5",
     "node-webkit-builder": "~1.0.11",
     "po2json": "~0.4.1",
